@@ -95,7 +95,7 @@
 
           <!-- Demo GIF -->
           <div class="mt-14">
-            <div class="relative mx-auto max-w-5xl">
+            <div class="relative mx-auto max-w-3xl">
               <div class="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-2 shadow-2xl">
                 <div class="overflow-hidden rounded-xl border border-white/10 bg-black/70">
                   <!-- top bar -->
@@ -127,13 +127,13 @@
     <section id="features" class="relative py-20 md:py-28">
       <div class="mx-auto w-full max-w-6xl px-6">
         <div class="mx-auto max-w-2xl text-center">
-          <span class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">Features</span>
-          <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">A sane base for your own taste.</h2>
+          <span class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">{site.features.eyebrow}</span>
+          <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">{site.features.title}</h2>
           <p class="mt-4 text-pretty text-white/70">Use this as scaffolding. Replace every sentence. Keep the layout rhythm.</p>
         </div>
 
         <div class="mt-10 grid gap-4 md:grid-cols-3">
-          {#each features as f}
+          {#each site.features.items as f}
             <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
               <div class="text-base font-semibold">{f.title}</div>
               <p class="mt-3 text-sm leading-relaxed text-white/70">{f.desc}</p>
@@ -199,7 +199,7 @@
         </div>
 
         <div class="mt-10 grid gap-4 md:grid-cols-3">
-          {#each tiers as t}
+          {#each site.pricing.plans as t}
             <div class={"relative rounded-2xl border p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] " + (t.featured ? "border-white/20 bg-white/10" : "border-white/10 bg-white/5")}>
               {#if t.featured}
                 <div class="absolute -top-3 left-1/2 -translate-x-1/2">
@@ -239,7 +239,7 @@
         </div>
 
         <div class="mx-auto mt-10 max-w-3xl space-y-3">
-          {#each faq as it}
+          {#each site.faq.items as it}
             <details class="group rounded-2xl border border-white/10 bg-white/5 p-5">
               <summary class="flex cursor-pointer list-none items-center justify-between gap-4">
                 <span class="text-sm font-semibold">{it.q}</span>
