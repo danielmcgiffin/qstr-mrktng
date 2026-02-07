@@ -193,7 +193,7 @@
               {/each}
             </div>
 
-            <div class="mt-8 flex gap-3">
+            <div class="mt-8 flex justify-center gap-3">
               <a
                 class="rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
                 href="#pricing"

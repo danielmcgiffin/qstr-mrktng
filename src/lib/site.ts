@@ -1,7 +1,7 @@
 export type NavItem = { label: string; href: string };
 export type CTA = { label: string; href: string };
 
-export type FeatureItem = { title: string; desc: string };
+export type FeatureItem = { title: string; desc: string; icon: string };
 export type StepItem = { n: string; title: string; desc: string };
 export type FaqItem = { q: string; a: string };
 
@@ -160,26 +160,32 @@ export const site = {
       {
         title: "Onboarding in days, not weeks",
         desc: "Generate role-specific guides from the graph. New hires find answers without finding you.",
+        icon: "rocket",
       },
       {
         title: "Clean handoffs",
         desc: "Every handoff point is explicit and owned. No more mystery meat between teams.",
+        icon: "refresh-cw",
       },
       {
         title: "The vacation test",
         desc: "When the map is real, the owner can leave for a week without everything falling apart.",
+        icon: "palmtree",
       },
       {
         title: "Stale steps get flagged",
         desc: "Ownership is explicit. When a linked system changes, affected steps surface before they hurt.",
+        icon: "bell-ring",
       },
       {
         title: "Dynamic outputs",
         desc: "Onboarding guides, role charters, process playbooks — assembled from the graph, not written by hand.",
+        icon: "users",
       },
       {
         title: "Deploys across engagements",
         desc: "Same framework, different businesses. The operating model works whether it's one company or ten.",
+        icon: "trending-up",
       },
     ],
   } satisfies {
