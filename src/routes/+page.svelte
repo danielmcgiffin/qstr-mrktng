@@ -1,7 +1,17 @@
 <script lang="ts">
   import { site } from "$lib/site";
   import RotatingWords from "$lib/components/RotatingWords.svelte";
+  import { Rocket, RefreshCw, Palmtree, BellRing, Users, TrendingUp } from "lucide-svelte";
   const year = new Date().getFullYear();
+
+  const iconMap: Record<string, typeof Rocket> = {
+    'rocket': Rocket,
+    'refresh-cw': RefreshCw,
+    'palmtree': Palmtree,
+    'bell-ring': BellRing,
+    'users': Users,
+    'trending-up': TrendingUp,
+  };
 </script>
 
 <svelte:head>
@@ -148,6 +158,9 @@
         <div class="mt-10 grid gap-4 md:grid-cols-3">
           {#each site.features.items as f}
             <div class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6">
+              <div class="mb-3 flex h-9 w-9 items-center justify-center rounded-lg border border-[rgb(var(--border))] bg-white/5">
+                <svelte:component this={iconMap[f.icon]} size={18} class="text-[rgb(var(--muted))]" />
+              </div>
               <div class="text-base font-semibold">{f.title}</div>
               <p class="mt-3 text-sm leading-relaxed text-[rgb(var(--muted))]">{f.desc}</p>
             </div>
