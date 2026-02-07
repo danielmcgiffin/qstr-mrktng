@@ -20,9 +20,9 @@ export const site = {
 
   nav: [
     { label: "Home", href: "/" },
+    { label: "Method", href: "/method" },
     { label: "Blog", href: "https://blog.cursus.tools" },
     { label: "Demo", href: "https://qstr.cursus.tools/demo/process" },
-    { label: "Method", href: "/method" },
     { label: "Partners", href: "/partners" },
     { label: "Contact", href: "/contact" }
   ] satisfies NavItem[],

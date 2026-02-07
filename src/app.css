@@ -1,3 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap");
+
 :root {
-  --accent: 357 78 57; /* tailwind-ish red-600 in RGB-ish HSL space */
+  --accent: 220 38 38;
+  --bg: 9 10 12;
+  --bg-elev: 16 18 22;
+  --bg-elev-2: 22 24 29;
+  --text: 240 242 245;
+  --muted: 150 156 168;
+  --border: 255 255 255 / 0.08;
+  --border-strong: 255 255 255 / 0.16;
+}
+
+html {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  font-family: "Work Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: rgb(var(--bg));
+  color: rgb(var(--text));
+}
+
+code,
+pre,
+.font-mono {
+  font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,
+    "Liberation Mono", "Courier New", monospace;
 }
