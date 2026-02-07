@@ -24,10 +24,15 @@
       <header class="sticky top-0 z-50 border-b border-white/10 bg-black/50 backdrop-blur supports-[backdrop-filter]:bg-black/40">
         <div class="mx-auto flex h-16 w-full max-w-6xl items-center justify-between px-6">
           <!-- Brand -->
-            <a href="/" class="flex items-center gap-2">
-              <div class="h-8 w-8 rounded-xl bg-white/10 ring-1 ring-white/10"></div>
-              <span class="text-sm font-semibold tracking-tight text-white">{site.brand}</span>
-            </a>
+          <a href="/" class="flex items-center gap-3">
+            <img
+              src="/logo.avif"
+              alt="Quaestor"
+              width="64"
+              height="64"
+              class="h-12 w-48 object-contain"
+            />
+          </a>
 
           <!-- Links -->
             <nav class="hidden items-center gap-6 md:flex">
@@ -68,7 +73,7 @@
 
           <h1 class="mt-6 text-balance text-4xl font-semibold tracking-tight text-white md:text-6xl leading-[1.05]">
             <span class="grid w-full grid-cols-2 items-baseline">
-              <span class="justify-self-end text-white/80 pr-2 whitespace-nowrap">No more&nbsp</span>
+              <span class="justify-self-end text-white/80 pr-2 whitespace-nowrap">{ site.hero.headline }&nbsp;</span>
               <span class="justify-self-start whitespace-nowrap">
                 <RotatingWords
                   words={[
@@ -77,6 +82,7 @@
                     "dropped balls",
                     "wiki sprawl",
                     "tribal ops",
+                    "\"Who does this?\"",
                     "SOP graveyards",
                     "document theater",
                     "bad handoffs",
@@ -109,7 +115,7 @@
       </div>
     </section>
 
-          <!-- Demo GIF -->
+          <!-- Demo PNG -->
           <div class="mt-14">
             <div class="relative mx-auto max-w-3xl">
               <div class="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-2 shadow-2xl">
@@ -144,8 +150,8 @@
       <div class="mx-auto w-full max-w-6xl px-6">
         <div class="mx-auto max-w-2xl text-center">
           <span class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">{site.features.eyebrow}</span>
-          <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">{site.features.title}</h2>
-          <p class="mt-4 text-pretty text-white/70">Use this as scaffolding. Replace every sentence. Keep the layout rhythm.</p>
+          <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">{site.features.headline}</h2>
+          <p class="mt-4 text-pretty text-white/70">{site.features.subhead}</p>
         </div>
 
         <div class="mt-10 grid gap-4 md:grid-cols-3">
@@ -162,44 +168,64 @@
     <!-- Workflow -->
     <section id="workflow" class="relative py-20 md:py-28">
       <div class="mx-auto w-full max-w-6xl px-6">
-        <div class="grid items-start gap-10 md:grid-cols-2 md:gap-12">
-          <div>
-            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">Workflow</span>
-            <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">Keep the vibe. Change everything else.</h2>
-            <p class="mt-4 text-pretty text-white/70">
-              If you want a “Linear-like” feel, you mostly want spacing, typography, restrained borders, and a dark surface system.
-            </p>
+        <!-- full-width header -->
+        <div class="mx-auto max-w-3xl text-center">
+          <span class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">
+            {site.howItWorks.eyebrow}
+          </span>
+          <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">
+            {site.howItWorks.headline}
+          </h2>
+          <p class="mt-4 text-pretty text-white/70">
+            {site.howItWorks.subhead}
+          </p>
+        </div>
 
-            <ul class="mt-8 space-y-3 text-sm text-white/75">
-              {#each ["Use this as a single marketing page","Break into routes: /product, /pricing, /docs","Swap mock panel for real screenshots","Add MDsvex/Content later"] as x}
-                <li class="flex items-start gap-2"><span class="mt-0.5 text-white/70">✓</span><span>{x}</span></li>
+        <!-- two columns below -->
+        <div class="mt-10 grid items-stretch gap-10 md:grid-cols-2 md:gap-12">
+          <div class="flex flex-col">
+            <!-- LEFT: steps -->
+            <div class="space-y-3">
+              {#each site.howItWorks.steps as s}
+                <div class="flex gap-4 rounded-2xl border border-white/10 bg-white/5 p-4">
+                  <div class="shrink-0">
+                    <div class="inline-flex items-center rounded-full border border-white/10 bg-black/30 px-2.5 py-1 text-[11px] text-white/70">
+                      {s.n}
+                    </div>
+                  </div>
+                  <div>
+                    <div class="text-sm font-semibold text-white">{s.title}</div>
+                    <div class="mt-1 text-sm text-white/70">{s.desc}</div>
+                  </div>
+                </div>
               {/each}
-            </ul>
+            </div>
 
+            <!-- CTA row (optional) -->
             <div class="mt-8 flex gap-3">
-              <button class="rounded-xl bg-white px-4 py-2 text-sm font-medium text-black hover:bg-white/90">Start editing</button>
-              <a class="inline-flex items-center gap-2 text-sm font-medium text-white/80 hover:text-white" href="#pricing">See pricing →</a>
+              <a class="rounded-xl bg-white px-4 py-2 text-sm font-medium text-black hover:bg-white/90" href="#pricing">See pricing →</a>
             </div>
           </div>
 
           <div class="space-y-4">
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-sm font-semibold">Design tokens (simple)</div>
-              <div class="mt-3 grid gap-3 text-sm text-white/70">
-                {#each [{k:"Radius",v:"2xl"},{k:"Borders",v:"white/10"},{k:"Surface",v:"white/5"},{k:"Copy",v:"white/70"}] as r}
-                  <div class="flex items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3">
-                    <span>{r.k}</span><span class="font-mono text-xs text-white/60">{r.v}</span>
-                  </div>
-                {/each}
-              </div>
-            </div>
+            <!-- RIGHT: your side cards -->
+            {#each site.howItWorksSide.cards as c}
+              <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
+                <div class="text-sm font-semibold">{c.title}</div>
 
-            <div class="rounded-2xl border border-white/10 bg-white/5 p-6">
-              <div class="text-sm font-semibold">What you should NOT copy</div>
-              <p class="mt-3 text-sm leading-relaxed text-white/70">
-                Don’t copy their brand/logo/illustrations/screenshots/wording. Copy the layout principles and your own taste.
-              </p>
-            </div>
+                {#if c.items}
+                  <div class="mt-3 grid gap-3 text-sm text-white/70">
+                    {#each c.items as r}
+                      <div class="flex items-center justify-between rounded-xl border border-white/10 bg-black/30 px-4 py-3">
+                        <span>{r.k}</span><span class="font-mono text-xs text-white/60">{r.v}</span>
+                      </div>
+                    {/each}
+                  </div>
+                {:else}
+                  <p class="mt-3 text-sm leading-relaxed text-white/70">{c.body}</p>
+                {/if}
+              </div>
+            {/each}
           </div>
         </div>
       </div>
@@ -209,9 +235,9 @@
     <section id="pricing" class="relative py-20 md:py-28">
       <div class="mx-auto w-full max-w-6xl px-6">
         <div class="mx-auto max-w-2xl text-center">
-          <span class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">Pricing</span>
-          <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">Replace with your pricing.</h2>
-          <p class="mt-4 text-pretty text-white/70">These are placeholders. Keep the structure, swap the numbers.</p>
+          <span class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/80">{site.pricing.eyebrow}</span>
+          <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">{site.pricing.headline}</h2>
+          <p class="mt-4 text-pretty text-white/70">{site.pricing.subhead}</p>
         </div>
 
         <div class="mt-10 grid gap-4 md:grid-cols-3">
@@ -225,10 +251,11 @@
 
               <div class="flex items-baseline justify-between">
                 <div class="text-lg font-semibold">{t.name}</div>
-                <div class="text-sm text-white/60">/mo</div>
+                {#if t.price !== "Custom"}
+                  <div class="text-sm text-white/60">/mo</div>
+                {/if}
               </div>
               <div class="mt-3 text-3xl font-semibold">{t.price}</div>
-              <div class="mt-2 text-sm text-white/70">{t.desc}</div>
 
               <ul class="mt-6 space-y-2 text-sm text-white/75">
                 {#each t.perks as p}
@@ -237,7 +264,12 @@
               </ul>
 
               <div class="mt-8">
-                <button class="w-full rounded-xl bg-white px-4 py-2 text-sm font-medium text-black hover:bg-white/90">{t.cta}</button>
+                <a
+                  class="block w-full rounded-xl bg-white px-4 py-2 text-center text-sm font-medium text-black hover:bg-white/90"
+                  href={t.cta.href}
+                >
+                  {t.cta.label}
+                </a>
               </div>
             </div>
           {/each}
