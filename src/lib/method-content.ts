@@ -19,272 +19,203 @@ export type MethodContentSection = {
 
 export const methodContent: MethodContentSection[] = [
   {
-    slug: "introduction",
-    title: "How to Map Your Operations",
-    summary: "The core ideas, the way to use them, and the traps along the way.",
+    slug: "diagnosis",
+    title: "Why Most Ops Documentation Fails",
+    summary:
+      "The patterns that kill every documentation effort — and why yours probably already has.",
     intro:
-      "This is the foundation of operational discipline, which separates the great companies from the rest. These ideas are at the heart of great management, and these practices keep the system clear and effective as the company grows.",
+      "You've seen this before. Maybe you built it yourself, maybe you inherited it. Either way, the result is the same: documentation that looked great on day one and became a liability by month three. These are the four failure modes we designed Quaestor to eliminate.",
     groups: [
       {
-        title: "The Big Ideas",
         items: [
           {
-            id: "simple-easy",
-            title: "Simple isn't Easy",
-            desc: "Operations boils down to some simple principles: great people, clear goals, and a solid understanding of reality. But that doesn't mean great operations comes easily. It requires constant attention and awareness and an ability to see the big picture."
+            id: "theater",
+            title: "Documentation theater",
+            desc: "Long SOPs that look professional in the binder and rot within a month. Everyone's built these. Nobody uses them. The effort goes into the writing, not the maintaining — and the business outgrows the docs before the ink is dry.",
           },
           {
-            id: "operating-model",
-            title: "The Operating Model",
-            desc: "The operating model is a way to describe how work works across a team, a division, or the entire business. It's made up of a combination of the operational factors \(how work gets done and money gets made) and the administrative factors \(how internal resources are allocated and aligned)."
+            id: "duplicates",
+            title: "Duplicate systems of record",
+            desc: "The same process described in a Google Doc, a wiki page, and an email thread — none of them current. Work happens in the tool. The docs just add confusion and make people second-guess which version is real.",
           },
           {
-            id: "coordination",
-            title: "Operations is Coordination",
-            desc: "What we're trying to do when we document business processes is to reduce the friction involved in coordination across people, teams, and systems. So the documentation must be universal, understandable, and useful to everyone in the business if it's to actually serve its function."
+            id: "unowned",
+            title: "Unowned workflows",
+            desc: "Processes that exist on paper but have no accountable owner. When something breaks, everyone points at someone else. When something changes, nobody updates the map. Accountability isn't optional — it's structural.",
           },
           {
-            id: "accountability",
-            title: "Ambiguity Solves Short-term Friction for Long-term Pain",
-            desc: "Any ambiguity results from an unwillingness to make a decision and assign accountability. But avoiding that pain in the short-term keeps you stuck in the operational friction for the long-term, impacting the growth of your business, and of your people."
+            id: "graveyard",
+            title: "The documentation graveyard",
+            desc: "Wikis nobody reads. SOPs from two reorgs ago. A SharePoint that answers questions nobody's asking anymore. The saddest part: someone spent real time building all of it.",
           },
-          {
-            id: "fewer-docs",
-            title: "Fewer docs, more links",
-            desc: "Short, linked steps beat long documents. Capture the essential minimum and connect it to everything else as needed. This helps prevent any violations of Gall's Law, and keeps the documentation lean enough to be understood but robust enough to be useful."
-          },
-          {
-            id: "keep-it-alive",
-            title: "Keep it alive",
-            desc: "Outdated steps are worse than missing ones. Develop systems to make sure how you say you work and how you actually work match each other."
-          }
-        ]
+        ],
       },
-      {
-        title: "Practices",
-        items: [
-          {
-            id: "meaningful-direction",
-            title: "Start with the bottleneck",
-            desc: "Pick the workflow that interrupts you most. Map that first and let it set the system."
-          },
-          {
-            id: "define-interfaces",
-            title: "Define the interfaces",
-            desc: "Where teams hand off is where momentum dies. Make those edges explicit and owned."
-          },
-          {
-            id: "system-of-record",
-            title: "Name the system of record",
-            desc: "Every step should point to the system where the work happens. Notion isn't a system of record."
-          },
-          {
-            id: "ship-80",
-            title: "Ship the 80%",
-            desc: "Don’t wait for perfection. Publish the draft map and refine it in the open."
-          }
-        ]
-      },
-      {
-        title: "What We Won’t Do",
-        items: [
-          {
-            id: "no-theater",
-            title: "No documentation theater",
-            desc: "Long, static docs that look good but go stale are worse than no docs."
-          },
-          {
-            id: "no-duplicate-systems",
-            title: "No duplicate systems of record",
-            desc: "If work happens in a system, the map links to it — it doesn’t copy it."
-          },
-          {
-            id: "no-unowned",
-            title: "No unowned workflows",
-            desc: "If a process doesn’t have an owner, it doesn’t get published."
-          }
-        ]
-      }
-    ]
+    ],
   },
   {
-    slug: "principles",
-    title: "Principles",
-    summary: "The rules that keep the atlas trustworthy.",
-    intro: "The method is simple, but it only works when these principles are non‑negotiable.",
+    slug: "model",
+    title: "The Operating Model",
+    summary:
+      "Three primitives. Infinite connections. One source of truth.",
+    intro:
+      "Every business operation — no matter the industry, no matter the size — reduces to three elements and the relationships between them. Quaestor maps these relationships into a living graph so the picture of how work works is always current, always connected, and always queryable.",
     groups: [
       {
         items: [
+          {
+            id: "primitives",
+            title: "Three primitives: Roles, Processes, Systems",
+            desc: "Who does what, and where. Every action in your business has one accountable role, belongs to one process, and executes in one system. This isn't a simplification — it's the atomic structure of operations itself.",
+          },
+          {
+            id: "connections",
+            title: "Everything connected, nothing duplicated",
+            desc: "Each element links to every other element it touches. Change a role's responsibilities and every affected process updates. Retire a system and every step that depended on it gets flagged. One change, one place, zero drift.",
+          },
           {
             id: "source-of-truth",
-            title: "Make the map the source of truth",
-            desc: "Processes, roles, and systems are connected, not scattered. If it isn't connected, it isn't real."
+            title: "The map is the source of truth",
+            desc: "Not a copy of your docs — a live graph that links to your systems of record. Quaestor doesn't replace your tools. It connects them into one place where you can see how work actually works, not how you hope it works.",
           },
           {
-            id: "one-owner",
-            title: "One owner, one outcome",
-            desc: "Every workflow has a single accountable owner and a clear definition of done. No shared ambiguity."
+            id: "outputs",
+            title: "Atomic knowledge, dynamic outputs",
+            desc: "Capture knowledge once at the smallest useful level. Then generate onboarding guides, role charters, process playbooks, and compliance docs on demand — assembled from the graph, not written by hand.",
           },
-          {
-            id: "fewer-docs",
-            title: "Fewer docs, more links",
-            desc: "Short, linked steps beat long documents. Capture the minimum and connect it to everything else."
-          },
-          {
-            id: "keep-it-alive",
-            title: "Keep it alive",
-            desc: "Outdated steps are worse than missing ones. Routine reviews and alerts prevent rot."
-          }
-        ]
-      }
-    ]
+        ],
+      },
+    ],
   },
   {
-    slug: "direction",
-    title: "Direction",
-    summary: "Pick the first workflow and set the edges.",
+    slug: "method",
+    title: "How to Map Your Operations",
+    summary: "Four steps. Start where it hurts. Ship before it's perfect.",
     intro:
-      "Start with the part of the business that costs you the most time. That’s where the map earns its keep.",
+      "This isn't a six-month implementation. Start with the workflow that costs the most time, map it in a sitting, and let the structure grow from there. The method works whether you're mapping your own business or deploying it across multiple client engagements.",
     groups: [
       {
         items: [
           {
             id: "bottleneck",
             title: "Start with the bottleneck",
-            desc: "Pick the workflow that interrupts you most. Map that first and let it set the system."
+            desc: "Find the workflow that generates the most interruptions — the process where the owner gets pulled in every time. Map that first. It proves immediate value, sets the pattern for everything else, and builds the momentum to keep going.",
           },
           {
             id: "interfaces",
-            title: "Define the interfaces",
-            desc: "Where teams hand off is where momentum dies. Make those edges explicit and owned."
+            title: "Define the handoffs",
+            desc: "Where work passes between people is where operations break down. Make those edges explicit: who hands off to whom, what triggers the handoff, and who owns the next step. Handoffs without owners are just hopes.",
           },
-          {
-            id: "system-of-record",
-            title: "Name the system of record",
-            desc: "Every step should point to the system where the work happens. Notion isn't a system of record."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    slug: "building",
-    title: "Building",
-    summary: "Write steps that can be executed without meetings.",
-    intro:
-      "Write steps to be executed. Link the system of record and keep each step clear enough to run without a meeting.",
-    groups: [
-      {
-        items: [
           {
             id: "commands",
-            title: "Write steps like commands",
-            desc: "Use verbs, not paragraphs. Each step is an action someone can execute without a meeting."
+            title: "Write steps as commands",
+            desc: "Verbs, not paragraphs. Each step should be executable without a meeting and linked to the system where the work actually happens. If a step requires interpretation, it's not a step — it's a suggestion.",
           },
           {
-            id: "link-why",
-            title: "Link the why",
-            desc: "Attach the rationale, not the novel. Give enough context to prevent debates."
-          },
-          {
-            id: "templates",
-            title: "Attach the template",
-            desc: "If a step needs a doc, make it a linked template. Remove blank‑page friction."
-          },
-          {
-            id: "ship-80",
+            id: "ship",
             title: "Ship the 80%",
-            desc: "Don’t wait for perfection. Publish the draft map and refine it in the open."
-          }
-        ]
-      }
-    ]
+            desc: "A working map you can react to beats a perfect map you never finish. Publish the draft. Let the team push back, fill gaps, and correct what's wrong. The map gets better through use, not through editing in isolation.",
+          },
+        ],
+      },
+    ],
   },
   {
-    slug: "maintenance",
-    title: "Maintenance",
-    summary: "Keep the map alive with clear ownership.",
+    slug: "alive",
+    title: "How It Stays Alive",
+    summary:
+      "Light rhythms and automatic signals that prevent decay.",
     intro:
-      "If a process doesn’t get maintained, it’s not a process — it’s a rumor. Maintenance makes the map trustworthy.",
+      "The reason most documentation efforts fail isn't the initial build — it's the first month after. Quaestor builds maintenance into the structure itself: review cadences that are light enough to stick, and automatic signals that surface problems before they become surprises.",
     groups: [
       {
-        items: [
-          {
-            id: "review-rhythm",
-            title: "Own the review rhythm",
-            desc: "Every core process has a review date and a named owner. No exceptions."
-          },
-          {
-            id: "surface-stale",
-            title: "Surface stale steps",
-            desc: "Flag steps tied to systems you changed. Staleness is a signal, not a surprise."
-          },
-          {
-            id: "retire",
-            title: "Retire on purpose",
-            desc: "Archive obsolete workflows so new hires don't follow ghosts."
-          }
-        ]
-      }
-    ]
-  },
-  {
-    slug: "cadence",
-    title: "Cadence",
-    summary: "Light rhythms that prevent decay.",
-    intro: "A light rhythm keeps your map alive without turning it into busywork.",
-    groups: [
-      {
+        title: "The Cadence",
         items: [
           {
             id: "weekly",
             title: "Weekly: unblock",
-            desc: "Open the map, spot friction, assign ownership, and close the loop."
+            desc: "Open the map, spot friction, assign ownership, close the loop. Fifteen minutes. No heroics.",
           },
           {
             id: "monthly",
             title: "Monthly: consolidate",
-            desc: "Combine duplicate workflows, standardize templates, and cut noise."
+            desc: "Combine duplicate workflows, standardize templates, and cut noise. Keep the map lean enough to trust.",
           },
           {
             id: "quarterly",
             title: "Quarterly: audit",
-            desc: "Review the highest‑impact workflows against actual execution data."
-          }
-        ]
-      }
-    ]
+            desc: "Review the highest-impact workflows against how work actually happened. Update what drifted. Retire what's dead.",
+          },
+        ],
+      },
+      {
+        title: "The Safety Net",
+        items: [
+          {
+            id: "stale",
+            title: "Stale steps surface automatically",
+            desc: "When a linked system changes or a review date passes, affected steps get flagged. Nobody has to remember to check — the map tells you what's drifting before it becomes a problem.",
+          },
+          {
+            id: "retire",
+            title: "Retire on purpose",
+            desc: "Archive obsolete workflows cleanly so new hires don't follow ghosts from two reorgs ago. A clean map is a trustworthy map.",
+          },
+        ],
+      },
+    ],
   },
   {
     slug: "signals",
-    title: "Signals",
-    summary: "What to measure to prove it works.",
-    intro: "The right signals tell you whether your map is reducing friction or just adding pages.",
+    title: "How You Know It's Working",
+    summary:
+      "Four metrics that prove the map is reducing friction, not just adding pages.",
+    intro:
+      "Documentation for its own sake is busywork. These are the signals that tell you whether the map is actually making operations run better — and they're the same metrics you'd use to prove the ROI to anyone who asks.",
     groups: [
       {
         items: [
           {
             id: "time-to-answer",
             title: "Time to answer",
-            desc: "How long it takes for a teammate to find an answer without asking."
+            desc: "How long before someone finds what they need without asking the person who 'just knows.' If this number isn't dropping, the map isn't working.",
+          },
+          {
+            id: "interruptions",
+            title: "Interruptions per week",
+            desc: "The number of questions routed to a single person — usually the owner. Track it before, track it after. That delta is the ROI.",
           },
           {
             id: "handoff-delay",
             title: "Handoff delay",
-            desc: "Time between a request and the next owned action."
+            desc: "Time between a request and the next owned action. Every hour of delay is a hour of lost momentum. Shorter is better. Zero is the goal.",
           },
           {
-            id: "stale-rate",
-            title: "Stale rate",
-            desc: "Percent of workflows with steps older than your review window."
+            id: "vacation-test",
+            title: "The vacation test",
+            desc: "Can the owner leave for a week without everything falling apart? If not, the map isn't done yet. This is the only metric that ultimately matters.",
+          },
+        ],
+      },
+      {
+        title: "What We Won't Do",
+        items: [
+          {
+            id: "no-theater",
+            title: "No documentation theater",
+            desc: "We won't help you build long, static docs that look impressive in a deliverable and go stale in a month. Everyone's built those. Never again.",
           },
           {
-            id: "interruptions",
-            title: "Interruptions",
-            desc: "Number of questions routed to a single person per week."
-          }
-        ]
-      }
-    ]
-  }
+            id: "no-duplicates",
+            title: "No duplicate systems of record",
+            desc: "If work happens in a system, the map links to it — it doesn't copy it. One source of truth means one source of truth.",
+          },
+          {
+            id: "no-unowned",
+            title: "No unowned workflows",
+            desc: "If a process doesn't have an owner, it doesn't get published. Period. Ambiguity is not a feature.",
+          },
+        ],
+      },
+    ],
+  },
 ];

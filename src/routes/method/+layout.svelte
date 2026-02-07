@@ -9,44 +9,47 @@
     methodSections.findIndex((section) => pathname === methodPath(section.slug))
   );
   const isOverview = $derived(() => pathname === "/method" || pathname === "/method/");
-  const progress = $derived(() =>
-    activeIndex >= 0 ? (activeIndex + 1) / methodSections.length : 0
-  );
+
+  let mobileNavOpen = $state(false);
+
+  const currentLabel = $derived(() => {
+    if (isOverview) return "Overview";
+    if (activeIndex >= 0) return `${activeIndex + 1}. ${methodSections[activeIndex].title}`;
+    return "Navigate";
+  });
 </script>
 
 <div class="min-h-screen bg-[rgb(var(--bg))] text-[rgb(var(--text))]">
   <div class="relative">
-    <div aria-hidden class="pointer-events-none absolute inset-0 overflow-hidden">
-      <div class="absolute left-1/2 top-[-35%] h-[820px] w-[820px] -translate-x-1/2 rounded-full bg-white/5 blur-3xl"></div>
-      <div class="absolute right-[12%] top-[20%] h-[360px] w-[360px] rounded-full bg-white/5 blur-3xl"></div>
-      <div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-black/60"></div>
-      <div
-        class="absolute inset-0 [background-image:radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:26px_26px] opacity-35"
-      ></div>
+    <!-- Quieter background for method pages -->
+    <div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+      <div class="absolute left-1/2 top-[-35%] h-[820px] w-[820px] -translate-x-1/2 rounded-full bg-white/[0.02] blur-3xl"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/10 to-black/40"></div>
     </div>
 
     <section class="relative py-12 md:py-16">
-      <div class="mx-auto w-full max-w-6xl px-6">
-        <div class="grid gap-10 md:grid-cols-[240px_1fr] md:gap-12">
+      <div class="mx-auto w-full max-w-7xl px-6">
+        <div class="grid gap-10 md:grid-cols-[200px_1fr] md:gap-16">
+          <!-- Desktop sidebar — minimal -->
           <aside class="hidden md:block">
             <div class="md:sticky md:top-24">
-              <div class="text-xs font-semibold uppercase tracking-[0.14em] text-[rgb(var(--muted))]">Contents</div>
-              <ol class="mt-4 space-y-2 text-sm">
+              <ol class="space-y-1 text-sm">
                 <li>
                   <a
-                    class={"block rounded-lg px-2 py-1 " + (isOverview ? "text-white" : "text-[rgb(var(--muted))] hover:text-white")}
+                    class={"block px-3 py-1.5 rounded-lg transition-colors duration-200 " + (isOverview ? "text-white font-medium" : "text-[rgb(var(--muted))] hover:text-white")}
                     href="/method"
                   >
-                    0. Overview
+                    Overview
                   </a>
                 </li>
                 {#each methodSections as item, i}
                   <li>
                     <a
-                      class={"block rounded-lg px-2 py-1 " + (activeIndex === i ? "text-white" : "text-[rgb(var(--muted))] hover:text-white")}
+                      class={"flex items-center gap-2.5 px-3 py-1.5 rounded-lg transition-colors duration-200 " + (activeIndex === i ? "text-white font-medium" : "text-[rgb(var(--muted))] hover:text-white")}
                       href={methodPath(item.slug)}
                     >
-                      {i + 1}. {item.title}
+                      <span class="text-xs text-[rgb(var(--muted))]/60 tabular-nums w-4">{String(i + 1).padStart(2, '0')}</span>
+                      <span>{item.title}</span>
                     </a>
                   </li>
                 {/each}
@@ -54,46 +57,43 @@
             </div>
           </aside>
 
-          <div class="method-page space-y-10 text-base md:text-lg">
+          <div class="method-page space-y-12 text-base md:text-lg max-w-none">
+            <!-- Mobile nav — dropdown -->
             <div class="md:hidden">
-              <div class="text-xs font-semibold uppercase tracking-[0.14em] text-[rgb(var(--muted))]">Contents</div>
-              <ol class="mt-3 space-y-2 text-sm">
-                <li>
-                  <a
-                    class={"block rounded-lg border border-[rgb(var(--border))] px-3 py-2 " + (isOverview ? "text-white" : "text-[rgb(var(--muted))]")}
-                    href="/method"
-                  >
-                    0. Overview
-                  </a>
-                </li>
-                {#each methodSections as item, i}
+              <button
+                class="flex w-full items-center justify-between rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-white"
+                onclick={() => mobileNavOpen = !mobileNavOpen}
+              >
+                <span>{currentLabel}</span>
+                <span class="text-[rgb(var(--muted))] transition-transform duration-200" class:rotate-180={mobileNavOpen}>▾</span>
+              </button>
+
+              {#if mobileNavOpen}
+                <ol class="mt-2 space-y-0.5 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-2">
                   <li>
                     <a
-                      class={"block rounded-lg border border-[rgb(var(--border))] px-3 py-2 " + (activeIndex === i ? "text-white" : "text-[rgb(var(--muted))]")}
-                      href={methodPath(item.slug)}
+                      class={"block rounded-lg px-3 py-2 text-sm transition-colors " + (isOverview ? "text-white font-medium" : "text-[rgb(var(--muted))]")}
+                      href="/method"
+                      onclick={() => mobileNavOpen = false}
                     >
-                      {i + 1}. {item.title}
+                      Overview
                     </a>
                   </li>
-                {/each}
-              </ol>
+                  {#each methodSections as item, i}
+                    <li>
+                      <a
+                        class={"block rounded-lg px-3 py-2 text-sm transition-colors " + (activeIndex === i ? "text-white font-medium" : "text-[rgb(var(--muted))]")}
+                        href={methodPath(item.slug)}
+                        onclick={() => mobileNavOpen = false}
+                      >
+                        <span class="text-[rgb(var(--muted))]/60 tabular-nums mr-2">{String(i + 1).padStart(2, '0')}</span>
+                        {item.title}
+                      </a>
+                    </li>
+                  {/each}
+                </ol>
+              {/if}
             </div>
-
-            {#if !isOverview && activeIndex >= 0}
-              <div class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-5 py-4">
-                <div class="flex items-center justify-between text-xs text-[rgb(var(--muted))]">
-                  <span>Section {activeIndex + 1} of {methodSections.length}</span>
-                  <span>{methodSections[activeIndex].title}</span>
-                </div>
-                <div class="mt-3 h-1.5 w-full rounded-full bg-black/40">
-                  <div
-                    class="h-1.5 rounded-full bg-[rgb(var(--accent))] transition-[width] duration-300"
-                    style={`width:${Math.round(progress * 100)}%`}
-                    aria-hidden="true"
-                  ></div>
-                </div>
-              </div>
-            {/if}
 
             {@render children()}
           </div>

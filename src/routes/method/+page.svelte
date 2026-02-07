@@ -10,29 +10,24 @@
   />
 </svelte:head>
 
-<section class="space-y-10">
-  <div class="text-center">
-    <span
-      class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-    >
-      ✦ Quaestor Method
-    </span>
-    <h1 class="mt-6 text-balance text-4xl font-semibold tracking-tight text-white md:text-6xl leading-[1.05]">
+<section class="space-y-16">
+  <div>
+    <h1 class="text-balance text-4xl font-semibold tracking-tight gradient-text md:text-5xl leading-[1.1]">
       The operational atlas,
       <span class="text-[rgb(var(--accent))]">step by step</span>
     </h1>
-    <p class="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-[rgb(var(--muted))] md:text-lg">
+    <p class="mt-5 max-w-2xl text-pretty text-base leading-relaxed text-[rgb(var(--text-secondary))] md:text-lg">
       Read the method like a playbook. Move through each section while keeping the map in view.
     </p>
-    <div class="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:justify-center">
+    <div class="mt-8 flex flex-col gap-3 sm:flex-row">
       <a
-        class="w-full min-w-[170px] rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-center text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110 sm:w-auto"
+        class="min-w-[170px] rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-center text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition hover:brightness-110"
         href={methodPath(methodSections[0].slug)}
       >
         Start at the top →
       </a>
       <a
-        class="w-full min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-white/90 hover:bg-white/10 sm:w-auto"
+        class="min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-white/90 transition-colors duration-200 hover:bg-white/10"
         href="https://qstr.cursus.tools/demo/process"
       >
         See the product →
@@ -40,20 +35,24 @@
     </div>
   </div>
 
-  <ol class="space-y-3">
+  <ol class="space-y-0">
     {#each methodSections as section, i}
       <li>
         <a
-          class="group flex items-start gap-4 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-5 py-4 transition hover:border-[rgb(var(--border-strong))]"
+          class="group flex items-start gap-5 py-6 transition-colors duration-200 hover:opacity-100"
           href={methodPath(section.slug)}
+          style={i === 0 ? '' : ''}
         >
-          <span class="text-sm font-semibold text-white">{i + 1}.</span>
+          <span class="mt-0.5 text-sm font-medium tabular-nums text-[rgb(var(--muted))]/50 w-6 shrink-0">{String(i + 1).padStart(2, '0')}</span>
           <span class="flex-1">
-            <span class="text-sm font-semibold">{section.title}</span>
+            <span class="text-base font-semibold text-white group-hover:text-white/90 transition-colors duration-200">{section.title}</span>
             <span class="mt-2 block text-sm leading-relaxed text-[rgb(var(--muted))]">{section.summary}</span>
           </span>
-          <span class="text-[rgb(var(--muted))] transition group-hover:text-white">→</span>
+          <span class="mt-1 text-[rgb(var(--muted))]/40 transition-all duration-200 group-hover:text-white group-hover:translate-x-0.5">→</span>
         </a>
+        {#if i < methodSections.length - 1}
+          <div class="border-b border-[rgb(var(--border))]"></div>
+        {/if}
       </li>
     {/each}
   </ol>

@@ -14,6 +14,7 @@ export const load = ({ params }) => {
     section: methodContent[idx],
     idx,
     prev: idx > 0 ? methodSections[idx - 1] : null,
-    next: idx < methodSections.length - 1 ? methodSections[idx + 1] : null
+    next: idx < methodSections.length - 1 ? methodSections[idx + 1] : null,
+    total: methodSections.length
   };
 };

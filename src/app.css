@@ -1,11 +1,12 @@
-@import url("https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap");
 
 :root {
-  --accent: 220 38 38;
+  --accent: 200 50 50;
   --bg: 9 10 12;
   --bg-elev: 16 18 22;
   --bg-elev-2: 22 24 29;
   --text: 240 242 245;
+  --text-secondary: 200 204 212;
   --muted: 150 156 168;
   --border: 255 255 255 / 0.08;
   --border-strong: 255 255 255 / 0.16;
@@ -22,10 +23,6 @@ body {
   color: rgb(var(--text));
 }
 
-h1 {
-  font-family: "Cormorant Garamond", "Times New Roman", serif;
-}
-
 code,
 pre,
 .font-mono {
@@ -33,14 +30,24 @@ pre,
     "Liberation Mono", "Courier New", monospace;
 }
 
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(200,204,212,0.8) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Method page — book-like reading styles */
 .method-page p {
-  color: rgb(var(--muted));
-  line-height: 1.7;
+  color: rgb(var(--text-secondary));
+  line-height: 1.8;
+  font-size: 1.0625rem;
 }
 
 .method-page li {
-  color: rgb(var(--muted));
-  line-height: 1.7;
+  color: rgb(var(--text-secondary));
+  line-height: 1.8;
 }
 
 .method-page h1 {
@@ -53,6 +60,7 @@ pre,
   font-size: 1.5rem;
   line-height: 1.2;
   font-weight: 600;
+  margin-top: 2.5rem;
 }
 
 .method-page h3 {
@@ -62,31 +70,10 @@ pre,
   color: rgb(var(--text));
 }
 
-.method-page .section-title {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  text-decoration: none;
-  color: rgb(var(--text));
-}
-
-.method-page .section-title:hover {
-  color: rgb(var(--text));
-}
-
-.method-page .section-title::after {
-  content: "#";
-  font-size: 0.85em;
-  color: rgb(var(--muted));
-  opacity: 0;
-  transition: opacity 150ms ease;
-}
-
-.method-page .section-title:hover::after {
-  opacity: 1;
-}
-
 @media (min-width: 768px) {
+  .method-page p {
+    font-size: 1.125rem;
+  }
   .method-page h1 {
     font-size: 3rem;
   }
