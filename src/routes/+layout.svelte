@@ -26,12 +26,6 @@
     <div class="flex items-center gap-2">
       <a
         class="hidden rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-white/90 transition-colors duration-200 hover:bg-white/10 sm:inline-flex"
-        href="/#pricing"
-      >
-        Pricing
-      </a>
-      <a
-        class="hidden rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-white/90 transition-colors duration-200 hover:bg-white/10 sm:inline-flex"
         href={site.navCta.href}
         target="_blank"
         rel="noreferrer"

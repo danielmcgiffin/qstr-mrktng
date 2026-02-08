@@ -89,6 +89,13 @@
             >
               {site.hero.secondaryCta.label}
             </a>
+
+            <a
+              class="w-full min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-white/90 hover:bg-white/10 sm:w-auto"
+              href="#pricing"
+            >
+              Pricing
+            </a>
           </div>
         </div>
       </div>
