@@ -210,9 +210,8 @@ export const site = {
         desc: "For small teams getting their ops out of heads and into links.",
         perks: [
           "Up to 10 employees",
-          "Unlimited viewers",
-          "Up to 3 editors",
           "Maintenance alerts",
+          "Email support",
         ],
         cta: { label: "Get started", href: "https://qstr.cursus.tools" },
         featured: false,
@@ -229,7 +228,6 @@ export const site = {
         ],
         cta: { label: "Start Growth", href: "https://qstr.cursus.tools" },
         featured: true,
-        badge: "Most popular",
       },
       {
         name: "Scale",
@@ -241,19 +239,18 @@ export const site = {
           "Advanced alerts",
           "Implementation guidance",
         ],
+        badge: "Most popular",
         cta: { label: "Start Scale", href: "https://qstr.cursus.tools" },
         featured: false,
       },
       {
-        name: "Partner",
+        name: "Enterprise",
         price: "Custom",
-        badge: "For consultants",
-        desc: "For fractional operators and consultants deploying Quaestor across client engagements.",
+        desc: "For larger companies, or teams withing larger companies, reach out and let's find a price that makes sense.",
         perks: [
-          "Multi-client workspace",
-          "White-label outputs",
+          "Custom-configured workspaces",
           "Dedicated onboarding",
-          "Revenue share program",
+          "Priority support",
         ],
         cta: {
           label: "Talk to us",

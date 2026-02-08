@@ -22,12 +22,16 @@
   />
 </svelte:head>
 
-<div class="min-h-screen bg-[rgb(var(--bg))] text-[rgb(var(--text))]">
+<div class="min-h-screen overflow-x-hidden bg-[rgb(var(--bg))] text-[rgb(var(--text))]">
   <div class="relative">
     <!-- Background -->
     <div aria-hidden class="pointer-events-none absolute inset-0 overflow-hidden">
       <div class="absolute left-1/2 top-[-35%] h-[820px] w-[820px] -translate-x-1/2 rounded-full bg-white/5 blur-3xl"></div>
       <div class="absolute right-[8%] top-[28%] h-[360px] w-[360px] rounded-full bg-white/5 blur-3xl"></div>
+      <div class="absolute left-[-8%] top-[18%] h-[480px] w-[480px] rounded-full bg-white/[0.03] blur-3xl"></div>
+      <div class="absolute left-[30%] top-[55%] h-[520px] w-[520px] rounded-full bg-white/[0.025] blur-3xl"></div>
+      <div class="absolute right-[-5%] top-[65%] h-[400px] w-[400px] rounded-full bg-white/[0.03] blur-3xl"></div>
+      <div class="absolute left-[60%] top-[10%] h-[280px] w-[280px] rounded-full bg-white/[0.02] blur-3xl"></div>
       <div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-black/60"></div>
       <div
         class="absolute inset-0 [background-image:radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:26px_26px] opacity-35"
@@ -83,7 +87,7 @@
               class="w-full min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-white/90 hover:bg-white/10 sm:w-auto"
               href={site.hero.secondaryCta.href}
             >
-              {site.hero.secondaryCta.label} →
+              {site.hero.secondaryCta.label}
             </a>
           </div>
         </div>
@@ -211,13 +215,13 @@
                 class="rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
                 href="#pricing"
               >
-                See pricing →
+                See pricing
               </a>
               <a
                 class="rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-white/90 hover:bg-white/10"
                 href="/method"
               >
-                Read the method →
+                Read the method
               </a>
             </div>
           </div>
@@ -264,7 +268,7 @@
           {#each site.pricing.plans as t}
             <div
               class={
-                "relative rounded-2xl border p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] " +
+                "relative flex flex-col rounded-2xl border p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] " +
                 (t.featured
                   ? "border-[rgb(var(--border-strong))] bg-[rgb(var(--bg-elev-2))]"
                   : "border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))]")
@@ -295,7 +299,7 @@
                 {/each}
               </ul>
 
-              <div class="mt-8">
+              <div class="mt-auto pt-8">
                 <a
                   class="block w-full rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-center text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
                   href={t.cta.href}
