@@ -1,6 +1,15 @@
 <script lang="ts">
+  import { env } from "$env/dynamic/public";
   import { trackEvent } from "$lib/analytics";
   import { site } from "$lib/site";
+
+  type IntakeStatus = "idle" | "submitting" | "success" | "error";
+
+  const partnerIntakeEndpoint = env.PUBLIC_PARTNER_INTAKE_ENDPOINT ?? "";
+  const partnerIntakeEmail = env.PUBLIC_PARTNER_INTAKE_EMAIL ?? "danny@cursus.tools";
+
+  let intakeStatus = $state<IntakeStatus>("idle");
+  let intakeMessage = $state("");
 
   const trackBookingClick = (location: string) => {
     trackEvent("booking_click", { location });
@@ -8,6 +17,83 @@
 
   const trackDemoClick = (location: string) => {
     trackEvent("demo_click", { location });
+  };
+
+  const toText = (value: FormDataEntryValue | null): string =>
+    typeof value === "string" ? value.trim() : "";
+
+  const buildMailtoLink = (formData: FormData): string => {
+    const partnerName = toText(formData.get("name"));
+
+    const lines = [
+      "New partner intake",
+      "",
+      `Name: ${partnerName}`,
+      `Email: ${toText(formData.get("email"))}`,
+      `Company: ${toText(formData.get("company"))}`,
+      `Website/LinkedIn: ${toText(formData.get("website"))}`,
+      `Primary role: ${toText(formData.get("role"))}`,
+      `Partnership model: ${toText(formData.get("partnership_model"))}`,
+      `Client count: ${toText(formData.get("client_count"))}`,
+      `Typical client profile: ${toText(formData.get("client_profile"))}`,
+      `Timeline: ${toText(formData.get("timeline"))}`,
+      "",
+      "Notes:",
+      toText(formData.get("notes")),
+    ];
+
+    const subject = encodeURIComponent(`Partner intake${partnerName ? ` — ${partnerName}` : ""}`);
+    const body = encodeURIComponent(lines.join("\n"));
+
+    return `mailto:${partnerIntakeEmail}?subject=${subject}&body=${body}`;
+  };
+
+  const handlePartnerIntakeSubmit = async (event: SubmitEvent) => {
+    event.preventDefault();
+
+    const form = event.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
+
+    if (toText(formData.get("company_website"))) {
+      return;
+    }
+
+    formData.set("submitted_at", new Date().toISOString());
+
+    intakeStatus = "submitting";
+    intakeMessage = "";
+
+    trackEvent("partner_intake_submit", {
+      location: "partners_form",
+      mode: partnerIntakeEndpoint ? "endpoint" : "mailto",
+    });
+
+    try {
+      if (partnerIntakeEndpoint) {
+        const response = await fetch(partnerIntakeEndpoint, {
+          method: "POST",
+          headers: { Accept: "application/json" },
+          body: formData,
+        });
+
+        if (!response.ok) {
+          throw new Error(`Partner intake failed: ${response.status}`);
+        }
+
+        form.reset();
+        intakeStatus = "success";
+        intakeMessage = "Thanks — we got your intake and will follow up shortly.";
+        return;
+      }
+
+      window.location.href = buildMailtoLink(formData);
+      intakeStatus = "success";
+      intakeMessage = "Opened your email client with a prefilled intake draft.";
+    } catch {
+      intakeStatus = "error";
+      intakeMessage = "Couldn’t submit right now. Please book a call and we’ll take your intake live.";
+      trackEvent("partner_intake_error", { location: "partners_form" });
+    }
   };
 </script>
 
@@ -245,6 +331,184 @@
             </div>
           {/each}
         </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ -->
+    <!-- PARTNER INTAKE                          -->
+    <!-- ═══════════════════════════════════════ -->
+    <section id="partner-intake" class="relative py-10 md:py-12">
+      <div class="mx-auto w-full max-w-4xl px-6">
+        <div class="text-center">
+          <span
+            class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
+          >
+            Partner intake
+          </span>
+          <h2 class="mt-5 text-balance text-3xl font-semibold tracking-tight md:text-4xl">
+            Tell us how you work
+          </h2>
+          <p class="mx-auto mt-4 max-w-2xl text-pretty text-[rgb(var(--muted))]">
+            This helps us shape onboarding around your delivery model. It takes about 3–5 minutes.
+          </p>
+        </div>
+
+        <form
+          class="mt-10 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6 md:p-8"
+          onsubmit={handlePartnerIntakeSubmit}
+        >
+          <div class="hidden" aria-hidden="true">
+            <label for="company_website">Company website (leave blank)</label>
+            <input id="company_website" name="company_website" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="grid gap-4 md:grid-cols-2">
+            <label class="space-y-2 text-sm">
+              <span class="text-white">Full name *</span>
+              <input
+                name="name"
+                type="text"
+                required
+                class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+                placeholder="Jane Doe"
+              />
+            </label>
+
+            <label class="space-y-2 text-sm">
+              <span class="text-white">Work email *</span>
+              <input
+                name="email"
+                type="email"
+                required
+                class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+                placeholder="jane@firm.com"
+              />
+            </label>
+
+            <label class="space-y-2 text-sm">
+              <span class="text-white">Company / practice name</span>
+              <input
+                name="company"
+                type="text"
+                class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+                placeholder="Acme Ops Partners"
+              />
+            </label>
+
+            <label class="space-y-2 text-sm">
+              <span class="text-white">Website or LinkedIn</span>
+              <input
+                name="website"
+                type="url"
+                class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+                placeholder="https://"
+              />
+            </label>
+
+            <label class="space-y-2 text-sm">
+              <span class="text-white">Primary role *</span>
+              <select
+                name="role"
+                required
+                class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white"
+              >
+                <option value="">Select one</option>
+                <option value="Fractional COO">Fractional COO</option>
+                <option value="EOS Implementer">EOS Implementer</option>
+                <option value="Process Consultant">Process Consultant</option>
+                <option value="Fractional CFO">Fractional CFO</option>
+                <option value="Other">Other</option>
+              </select>
+            </label>
+
+            <label class="space-y-2 text-sm">
+              <span class="text-white">Preferred partnership model *</span>
+              <select
+                name="partnership_model"
+                required
+                class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white"
+              >
+                <option value="">Select one</option>
+                <option value="Referral">Referral</option>
+                <option value="Implementation">Implementation-led</option>
+                <option value="Both">Both</option>
+              </select>
+            </label>
+          </div>
+
+          <div class="mt-4 grid gap-4 md:grid-cols-2">
+            <label class="space-y-2 text-sm">
+              <span class="text-white">How many active SMB clients do you support?</span>
+              <input
+                name="client_count"
+                type="text"
+                class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+                placeholder="e.g. 8 active clients"
+              />
+            </label>
+
+            <label class="space-y-2 text-sm">
+              <span class="text-white">Timeline to start</span>
+              <input
+                name="timeline"
+                type="text"
+                class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+                placeholder="e.g. this month"
+              />
+            </label>
+          </div>
+
+          <label class="mt-4 block space-y-2 text-sm">
+            <span class="text-white">Typical client profile</span>
+            <textarea
+              name="client_profile"
+              rows="3"
+              class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+              placeholder="Team size, industry, and operational pain patterns"
+            ></textarea>
+          </label>
+
+          <label class="mt-4 block space-y-2 text-sm">
+            <span class="text-white">Anything else we should know?</span>
+            <textarea
+              name="notes"
+              rows="4"
+              class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-2 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+              placeholder="Current tooling, biggest bottlenecks, partner questions"
+            ></textarea>
+          </label>
+
+          <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+            <button
+              type="submit"
+              class="inline-flex min-w-[170px] items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+              disabled={intakeStatus === "submitting"}
+            >
+              {intakeStatus === "submitting" ? "Submitting…" : "Submit intake"}
+            </button>
+
+            <p class="text-xs text-[rgb(var(--muted))]">
+              {#if partnerIntakeEndpoint}
+                Responses are sent directly to our partner intake queue.
+              {:else}
+                No endpoint configured yet — submit opens a prefilled email draft to {partnerIntakeEmail}.
+              {/if}
+            </p>
+          </div>
+
+          {#if intakeMessage}
+            <p
+              class={`mt-4 rounded-xl border px-3 py-2 text-sm ${
+                intakeStatus === "error"
+                  ? "border-red-400/40 bg-red-500/10 text-red-100"
+                  : "border-emerald-400/30 bg-emerald-500/10 text-emerald-100"
+              }`}
+              aria-live="polite"
+            >
+              {intakeMessage}
+            </p>
+          {/if}
+        </form>
       </div>
     </section>
 
