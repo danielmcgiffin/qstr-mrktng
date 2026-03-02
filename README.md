@@ -60,6 +60,19 @@ npm run cf:pages:deploy:prod
 - project name: `qstr-mrktng`
 - output dir: `build`
 
+## GitHub Actions auto-deploy (recommended)
+
+Workflow file:
+- `/srv/dev/qstr/.github/workflows/cloudflare-pages-qstr-mrktng.yml`
+
+Set these GitHub repository secrets:
+- `CLOUDFLARE_API_TOKEN`
+- `CLOUDFLARE_ACCOUNT_ID` (`038f386f26a1a9bef9eb2d50e7f8c218`)
+
+Behavior:
+- push to `master`/`main` with changes under `qstr-mrktng/**` → deploys production to `qstr-mrktng.pages.dev`
+- pull request touching `qstr-mrktng/**` → deploys preview and comments URL on the PR
+
 ## Fastest temporary share link (no Pages setup)
 
 For quick teammate demos, you can expose local dev with a temporary Cloudflare tunnel:

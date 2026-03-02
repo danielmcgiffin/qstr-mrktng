@@ -93,7 +93,6 @@
                     "tribal ops",
                     "\"who does this?\"",
                     "SOP graveyards",
-                    "documentation theater",
                     "bad handoffs"
                   ]}
                 />
