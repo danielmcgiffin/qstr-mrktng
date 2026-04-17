@@ -90,7 +90,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		typeof fileEntry === 'object' &&
 		'arrayBuffer' in fileEntry &&
 		'size' in fileEntry &&
-		(fileEntry as any).size > 0
+		(fileEntry as unknown as { size: number }).size > 0
 			? (fileEntry as unknown as File)
 			: null;
 
