@@ -12,16 +12,14 @@
 
 	let sopText = $state('');
 	let replyEmail = $state('');
-	let fileInfo = $state<{ name: string; size: number } | null>(null);
+	let selectedFile = $state<File | null>(null);
 	let fileInput = $state<HTMLInputElement | null>(null);
 	let submitStatus = $state<SubmitStatus>('idle');
 	let formError = $state('');
 	let submitMessage = $state('');
 
 	const charsUsed = $derived(sopText.trim().length);
-	const hasFile = $derived(fileInfo !== null);
-
-	const getCurrentFile = (): File | null => fileInput?.files?.[0] ?? null;
+	const hasFile = $derived(selectedFile !== null);
 
 	const getSource = (): string => {
 		if (typeof window === 'undefined') {
@@ -64,29 +62,29 @@
 		const file = input.files?.[0] ?? null;
 
 		if (!file) {
-			fileInfo = null;
+			selectedFile = null;
 			return;
 		}
 
 		if (!hasAllowedExtension(file.name)) {
 			formError = 'Supported file types: .docx, .pptx, .md, .txt.';
 			input.value = '';
-			fileInfo = null;
+			selectedFile = null;
 			return;
 		}
 
 		if (file.size > MAX_FILE_BYTES) {
 			formError = 'File is too large. Keep attachments under 10 MB.';
 			input.value = '';
-			fileInfo = null;
+			selectedFile = null;
 			return;
 		}
 
-		fileInfo = { name: file.name, size: file.size };
+		selectedFile = file;
 	};
 
 	const clearFile = () => {
-		fileInfo = null;
+		selectedFile = null;
 		if (fileInput) {
 			fileInput.value = '';
 		}
@@ -104,17 +102,23 @@
 			return;
 		}
 
-		const currentFile = getCurrentFile();
 		const trimmedText = sopText.trim();
 		let validatedText = '';
-		if (trimmedText.length > 0) {
+
+		if (selectedFile) {
+			if (trimmedText.length > MAX_CHARS) {
+				formError = `Keep typed notes under ${MAX_CHARS} characters.`;
+				return;
+			}
+			validatedText = trimmedText;
+		} else if (trimmedText.length > 0) {
 			const validation = validateInput(sopText);
 			if (!validation.valid) {
 				formError = validation.error;
 				return;
 			}
 			validatedText = validation.text;
-		} else if (!currentFile) {
+		} else {
 			formError = 'Paste an SOP section or attach a file so we have something to grade.';
 			return;
 		}
@@ -129,8 +133,8 @@
 			if (validatedText) {
 				body.append('text', validatedText);
 			}
-			if (currentFile) {
-				body.append('file', currentFile, currentFile.name);
+			if (selectedFile) {
+				body.append('file', selectedFile, selectedFile.name);
 			}
 
 			const response = await fetch('/ops-grader/submit', {
@@ -152,7 +156,7 @@
 			trackEvent('ops_grader_submit', {
 				source,
 				mode: 'resend',
-				has_file: currentFile ? 'true' : 'false'
+				has_file: selectedFile ? 'true' : 'false'
 			});
 
 			submitStatus = 'success';
@@ -171,7 +175,7 @@
 	<title>Ops Grader — Quaestor</title>
 	<meta
 		name="description"
-		content="Paste one SOP section and get a free AI-Readiness evaluation."
+		content="Paste or upload an SOP, flow, or process doc and get a free AI-Readiness evaluation."
 	/>
 </svelte:head>
 
@@ -247,9 +251,9 @@
 								onchange={onFileChange}
 								class="block max-w-full text-xs text-[rgb(var(--muted))] file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:text-white hover:file:bg-white/20"
 							/>
-							{#if fileInfo}
+							{#if selectedFile}
 								<span class="text-xs text-white/80">
-									{fileInfo.name} · {formatBytes(fileInfo.size)}
+									{selectedFile.name} · {formatBytes(selectedFile.size)}
 								</span>
 								<button
 									type="button"

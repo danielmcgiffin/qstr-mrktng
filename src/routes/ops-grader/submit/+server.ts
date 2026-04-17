@@ -1,6 +1,6 @@
 import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
-import { validateInput } from '$lib/grader';
+import { MAX_CHARS, validateInput } from '$lib/grader';
 import type { RequestHandler } from './$types';
 
 const RESEND_API_URL = 'https://api.resend.com/emails';
@@ -9,15 +9,6 @@ const DEFAULT_TO_EMAIL = 'danny+grader@cursus.tools';
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
 
 const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt'] as const;
-
-const ALLOWED_MIME_TYPES = new Set([
-	'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-	'application/vnd.openxmlformats-officedocument.presentationml.presentation',
-	'text/markdown',
-	'text/x-markdown',
-	'text/plain',
-	'application/octet-stream'
-]);
 
 const NO_STORE_HEADERS = {
 	'cache-control': 'no-store'
@@ -93,16 +84,30 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const rawText = typeof form.get('text') === 'string' ? (form.get('text') as string) : '';
 	const fileEntry = form.get('file');
-	const file = fileEntry instanceof File && fileEntry.size > 0 ? fileEntry : null;
+	// More robust file detection for different environments
+	const file =
+		fileEntry &&
+		typeof fileEntry === 'object' &&
+		'arrayBuffer' in fileEntry &&
+		'size' in fileEntry &&
+		(fileEntry as any).size > 0
+			? (fileEntry as unknown as File)
+			: null;
 
 	let bodyText = '';
-	if (rawText.trim().length > 0) {
+	const trimmedRawText = rawText.trim();
+	if (file) {
+		if (trimmedRawText.length > MAX_CHARS) {
+			return badRequest(`Keep typed notes under ${MAX_CHARS} characters.`);
+		}
+		bodyText = trimmedRawText;
+	} else if (trimmedRawText.length > 0) {
 		const validation = validateInput(rawText);
 		if (!validation.valid) {
 			return badRequest(validation.error);
 		}
 		bodyText = validation.text;
-	} else if (!file) {
+	} else {
 		return badRequest('Paste an SOP section or attach a file so we have something to grade.');
 	}
 
@@ -117,13 +122,11 @@ export const POST: RequestHandler = async ({ request }) => {
 			return badRequest('Supported file types: .docx, .pptx, .md, .txt.');
 		}
 
-		const mime = (file.type || '').toLowerCase();
-		if (mime && !ALLOWED_MIME_TYPES.has(mime) && !mime.startsWith('text/')) {
-			return badRequest('Supported file types: .docx, .pptx, .md, .txt.');
-		}
-
 		const content = arrayBufferToBase64(await file.arrayBuffer());
-		attachment = { filename, content };
+		attachment = {
+			filename,
+			content
+		};
 	}
 
 	const resendApiKey = getPrivateEnv('RESEND_API_KEY', 'PRIVATE_RESEND_API_KEY');
