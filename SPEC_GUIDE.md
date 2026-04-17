@@ -2,7 +2,7 @@
 
 ## Goal
 
-The tool is a lead-gen applet. Users can upload docs and get a letter grade inline + full diagnostic emailed within 24 hours.
+The tool is a lead-gen applet. Users can upload docs and get a letter grade inline + full diagnostic emailed within 24 hours, including top-level grade for human-readability and AI-readiness.
 
 ## User flow
 
@@ -16,3 +16,51 @@ The tool is a lead-gen applet. Users can upload docs and get a letter grade inli
 - Max paste length: 50k chars
 - Max upload size: 5MB, PDF/docx/txt/md only
 - Privacy copy MUST appear above submit button
+
+# Report Format
+
+## AI Readiness Score
+
+- a score out of 100
+- Verdict: a sentence that passes judgement on their readiness to deploy AI.
+
+## Human Legibility Score
+
+- a score out of 100
+- Verdict: a sentence passing judgement on the state of their written knowledge.
+
+### AI Readiness Breakdown
+
+#### Process trigger defined
+
+#### Step trigger defined
+
+#### Process outcome defined
+
+#### Step outcome defined
+
+#### Step granularity
+
+#### Named doer
+
+#### Connected context source
+
+#### Decision points defined
+
+#### Outputs & state changes named
+
+#### Handoffs explicit
+
+### Human Readiness
+
+#### Readability
+
+#### Scannability
+
+#### Self-contained context
+
+#### References linked
+
+#### Terms consistent
+
+#### Process exhaustive and exclusive

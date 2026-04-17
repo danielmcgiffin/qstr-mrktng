@@ -159,17 +159,17 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	const resendApiKey = getPrivateEnv('RESEND_API_KEY', 'PRIVATE_RESEND_API_KEY');
-	const fromEmail = getPrivateEnv('OPS_GRADER_FROM_EMAIL', 'PRIVATE_FROM_ADMIN_EMAIL');
-	const toEmail = getPrivateEnv('OPS_GRADER_TO_EMAIL', 'PRIVATE_ADMIN_EMAIL') || DEFAULT_TO_EMAIL;
+	const fromEmail = getPrivateEnv('AI_SCORE_FROM_EMAIL', 'PRIVATE_FROM_ADMIN_EMAIL');
+	const toEmail = getPrivateEnv('AI_SCORE_TO_EMAIL', 'PRIVATE_ADMIN_EMAIL') || DEFAULT_TO_EMAIL;
 
 	if (!resendApiKey || !fromEmail) {
-		console.error('Ops Grader Resend config missing', {
+		console.error('AI Score Resend config missing', {
 			hasResendApiKey: Boolean(resendApiKey),
 			hasFromEmail: Boolean(fromEmail),
 			toEmail
 		});
 		return json(
-			{ error: 'Ops Grader email delivery is not configured yet.' },
+			{ error: 'AI Score email delivery is not configured yet.' },
 			{ status: 503, headers: NO_STORE_HEADERS }
 		);
 	}
@@ -177,7 +177,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const source = sanitizeSource(payload.source);
 	const submittedAt = new Date().toISOString();
 	const messageLines = [
-		'New Ops Grader submission',
+		'New AI Score submission',
 		'',
 		`Reply email: ${email}`,
 		`Source: ${source}`,
@@ -197,7 +197,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	const emailPayload: Record<string, unknown> = {
 		from: fromEmail,
 		to: [toEmail],
-		subject: 'Ops Grader submission',
+		subject: 'AI Score submission',
 		text: messageLines.join('\n'),
 		reply_to: email
 	};

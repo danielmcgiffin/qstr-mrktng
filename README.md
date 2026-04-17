@@ -50,8 +50,8 @@ npm run lint
 - `src/routes/method/[slug]/+page.svelte` + `+page.ts` — chapter pages.
 - `src/routes/partners/+page.svelte` — partner page + intake flow.
 - `src/routes/contact/+page.svelte` — contact page.
-- `src/routes/ops-grader/+page.svelte` — ops grader UI.
-- `src/routes/ops-grader/submit/+server.ts` — Resend-backed manual grader intake endpoint.
+- `src/routes/ai-score/+page.svelte` — AI Score UI.
+- `src/routes/ai-score/submit/+server.ts` — Resend-backed manual grader intake endpoint.
 - `src/routes/grade/+server.ts` — Anthropic/Supabase grading endpoint (`POST /grade`, `PATCH /grade`).
 - `src/routes/+layout.svelte` — global header/nav + analytics scripts + favicon/logo proxy handling.
 
@@ -77,8 +77,8 @@ Server runtime vars (secret; never commit values):
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `IP_HASH_SALT` (optional, recommended)
 - `RESEND_API_KEY` (or `PRIVATE_RESEND_API_KEY`)
-- `OPS_GRADER_FROM_EMAIL` (or `PRIVATE_FROM_ADMIN_EMAIL`)
-- `OPS_GRADER_TO_EMAIL` (optional, defaults to `danny+grader@cursus.tools`)
+- `AI_SCORE_FROM_EMAIL` (or `PRIVATE_FROM_ADMIN_EMAIL`)
+- `AI_SCORE_TO_EMAIL` (optional, defaults to `danny+grader@cursus.tools`)
 
 Local deploy vars (secret; never commit values):
 

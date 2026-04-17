@@ -59,7 +59,7 @@
 
 		if (currentHomeHref === '/ops') {
 			return {
-				primary: { label: 'Grade my AI-readiness', href: '/ops-grader' },
+				primary: { label: 'Get my AI-readiness score', href: '/ai-score' },
 				secondary: { label: 'See the Demo', href: demoHref }
 			};
 		}
@@ -107,8 +107,8 @@
 			return;
 		}
 
-		if (href.includes('/ops-grader')) {
-			trackEvent('ops_grader_click', { location });
+		if (href.includes('/ai-score')) {
+			trackEvent('ai_score_click', { location });
 			return;
 		}
 

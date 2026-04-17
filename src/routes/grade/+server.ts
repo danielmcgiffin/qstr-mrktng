@@ -25,7 +25,7 @@ export const prerender = false;
 const badRequest = (error: string) => json({ error }, { status: 400, headers: NO_STORE_HEADERS });
 
 export const GET: RequestHandler = async () => {
-	throw redirect(307, '/ops-grader');
+	throw redirect(307, '/ai-score');
 };
 
 export const POST: RequestHandler = async (event) => {

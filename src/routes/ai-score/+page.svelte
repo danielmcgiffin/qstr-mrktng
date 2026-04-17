@@ -25,7 +25,7 @@
 		if (fileInput) return fileInput;
 		if (typeof document === 'undefined') return null;
 		return document.querySelector<HTMLInputElement>(
-			'input[type="file"][data-role="ops-grader-file"]'
+			'input[type="file"][data-role="ai-score-file"]'
 		);
 	};
 
@@ -166,7 +166,7 @@
 				};
 			}
 
-			const response = await fetch('/ops-grader/submit', {
+			const response = await fetch('/ai-score/submit', {
 				method: 'POST',
 				headers: { 'content-type': 'application/json' },
 				body: JSON.stringify(payload)
@@ -183,7 +183,7 @@
 				return;
 			}
 
-			trackEvent('ops_grader_submit', {
+			trackEvent('ai_score_submit', {
 				source,
 				mode: 'resend',
 				has_file: currentFile ? 'true' : 'false'
@@ -202,7 +202,7 @@
 </script>
 
 <svelte:head>
-	<title>Ops Grader — Quaestor</title>
+	<title>AI Score — Quaestor</title>
 	<meta
 		name="description"
 		content="Paste or upload an SOP, flow, or process doc and get a free AI-Readiness evaluation."
@@ -225,7 +225,7 @@
 					<span
 						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
 					>
-						✦ Ops Grader
+						✦ AI Score
 					</span>
 					<h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
 						Paste one SOP or process. We’ll tell you how ready for AI implementation you are.
@@ -279,7 +279,7 @@
 								type="file"
 								accept={FILE_ACCEPT}
 								onchange={onFileChange}
-								data-role="ops-grader-file"
+								data-role="ai-score-file"
 								class="block max-w-full text-xs text-[rgb(var(--muted))] file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:text-white hover:file:bg-white/20"
 							/>
 							{#if fileMeta}
