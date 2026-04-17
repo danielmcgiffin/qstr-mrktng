@@ -172,12 +172,12 @@
 				body: JSON.stringify(payload)
 			});
 
-			const payload = (await response.json()) as unknown;
+			const responseData = (await response.json()) as unknown;
 
 			if (!response.ok) {
 				submitStatus = 'error';
 				submitMessage = getErrorMessage(
-					payload,
+					responseData,
 					'Could not send your submission right now. Please try again.'
 				);
 				return;
