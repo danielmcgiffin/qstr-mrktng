@@ -1,3 +1,8 @@
 # allow crawling everything by default
 User-agent: *
 Disallow:
+
+Sitemap: https://marketing.dannymcgiffin.com/sitemap.xml
+
+# AI Content Usage Preferences
+Content-Signal: ai-train=no, search=yes, ai-input=no

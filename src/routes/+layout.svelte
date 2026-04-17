@@ -135,6 +135,39 @@
 		trackHeaderCta(tier, href);
 		mobileNavOpen = false;
 	};
+
+	// WebMCP Tool Registration
+	$effect(() => {
+		if (typeof window !== 'undefined' && (window as any).navigator?.modelContext) {
+			try {
+				(window as any).navigator.modelContext.provideContext({
+					tools: [
+						{
+							name: 'get_ai_readiness_score',
+							description: 'Get an AI-readiness evaluation for an SOP or process.',
+							inputSchema: {
+								type: 'object',
+								properties: {
+									text: { type: 'string', description: 'The SOP text to grade.' }
+								},
+								required: ['text']
+							},
+							execute: async ({ text }: { text: string }) => {
+								const response = await fetch('/grade', {
+									method: 'POST',
+									headers: { 'Content-Type': 'application/json' },
+									body: JSON.stringify({ text, source: 'webmcp' })
+								});
+								return await response.json();
+							}
+						}
+					]
+				});
+			} catch (e) {
+				console.error('WebMCP registration failed', e);
+			}
+		}
+	});
 </script>
 
 <svelte:head>
