@@ -90,7 +90,7 @@ const isFilePayload = (value: unknown): value is FilePayload => {
 };
 
 const base64ByteLength = (b64: string): number => {
-	const padding = (b64.endsWith('==') ? 2 : b64.endsWith('=') ? 1 : 0);
+	const padding = b64.endsWith('==') ? 2 : b64.endsWith('=') ? 1 : 0;
 	return Math.floor((b64.length * 3) / 4) - padding;
 };
 
