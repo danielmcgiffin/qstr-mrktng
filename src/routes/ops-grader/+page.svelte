@@ -102,7 +102,7 @@
 	<title>Ops Grader — Quaestor</title>
 	<meta
 		name="description"
-		content="Paste one SOP section and send it for manual Ops Grader review."
+		content="Paste one SOP section and get a free AI-Readiness evaluation."
 	/>
 </svelte:head>
 
@@ -125,11 +125,11 @@
 						✦ Ops Grader
 					</span>
 					<h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
-						Paste one SOP section. We’ll review it manually.
+						Paste one SOP section. We’ll tell you how ready for AI implementation you are.
 					</h1>
 					<p class="mx-auto mt-4 max-w-2xl text-pretty text-[rgb(var(--muted))]">
-						This sends directly to our grader inbox — no mail app required. We’ll reply from
-						<span class="text-white">danny+grader@cursus.tools</span>.
+						We’ll reply from
+						<span class="text-white">grader@cursus.tools</span>.
 					</p>
 				</div>
 
@@ -162,7 +162,7 @@
 
 					<div class="mt-3 flex items-center justify-between text-xs text-[rgb(var(--muted))]">
 						<span>{charsUsed} / {MAX_CHARS}</span>
-						<span>Manual review intake</span>
+						<span>AI Rediness review</span>
 					</div>
 
 					{#if formError}
