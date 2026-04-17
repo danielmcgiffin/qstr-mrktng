@@ -118,11 +118,11 @@
 					<h1
 						class="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight text-balance text-white md:text-6xl"
 					>
-						<span class="grid w-full grid-cols-2 items-baseline">
-							<span class="justify-self-end pr-2 whitespace-nowrap text-white/80"
+						<span class="grid w-full grid-cols-1 items-baseline md:grid-cols-2">
+							<span class="text-center whitespace-nowrap text-white/80 md:pr-2 md:text-right"
 								>{site.hero.headline}&nbsp;</span
 							>
-							<span class="justify-self-start whitespace-nowrap">
+							<span class="mt-2 text-center whitespace-nowrap md:mt-0 md:text-left">
 								<RotatingWords
 									words={[
 										'handoff map',
