@@ -87,7 +87,7 @@
 	});
 
 	$effect(() => {
-		currentPath;
+		void currentPath;
 		mobileNavOpen = false;
 	});
 
