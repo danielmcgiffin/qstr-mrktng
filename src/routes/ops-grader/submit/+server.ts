@@ -101,7 +101,6 @@ export const POST: RequestHandler = async ({ request }) => {
 
 	const rawText = typeof form.get('text') === 'string' ? (form.get('text') as string) : '';
 	const fileEntry = form.get('file');
-	// More robust file detection for different environments
 	const file =
 		fileEntry &&
 		typeof fileEntry === 'object' &&
@@ -125,7 +124,27 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 		bodyText = validation.text;
 	} else {
-		return badRequest('Paste an SOP section or attach a file so we have something to grade.');
+		const diag: Record<string, unknown> = {
+			formKeys: [...form.keys()],
+			fileEntryType: fileEntry === null ? 'null' : typeof fileEntry,
+			fileEntryCtor:
+				fileEntry && typeof fileEntry === 'object'
+					? (fileEntry as object).constructor?.name
+					: undefined,
+			fileEntrySize:
+				fileEntry && typeof fileEntry === 'object' && 'size' in fileEntry
+					? (fileEntry as { size: number }).size
+					: undefined,
+			textLen: rawText.length
+		};
+		console.error('Ops Grader: no file and no text', diag);
+		return json(
+			{
+				error: 'Paste an SOP section or attach a file so we have something to grade.',
+				diag
+			},
+			{ status: 400, headers: NO_STORE_HEADERS }
+		);
 	}
 
 	let attachment: { filename: string; content: string; content_type: string } | null = null;
