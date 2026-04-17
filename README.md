@@ -39,21 +39,31 @@ npm run lint
 
 ### High-signal content files
 
-- `src/lib/site.ts` — main marketing copy, nav, CTA links, pricing, FAQ, section content.
+- `src/lib/site.ts` — marketing copy for the **Partners** homepage (`/`).
+- `src/lib/site-ops.ts` — marketing copy for the **Operators** homepage (`/ops`).
 - `src/lib/method-content.ts` — long-form method chapter content.
 - `src/lib/method.ts` — method index and slug helpers.
 
 ### Routes
 
-- `src/routes/+page.svelte` — homepage.
+- `src/routes/ops/+page.svelte` — **Operators** homepage (the default view for teams).
+- `src/routes/+page.svelte` — **Partners** homepage (view for consultants/fractional ops).
+- `src/routes/ai-score/+page.svelte` — **AI Score** (lead-gen tool; previously "Ops Grader").
 - `src/routes/method/+page.svelte` — method landing page.
 - `src/routes/method/[slug]/+page.svelte` + `+page.ts` — chapter pages.
 - `src/routes/partners/+page.svelte` — partner page + intake flow.
 - `src/routes/contact/+page.svelte` — contact page.
-- `src/routes/ai-score/+page.svelte` — AI Score UI.
-- `src/routes/ai-score/submit/+server.ts` — Resend-backed manual grader intake endpoint.
+- `src/routes/ai-score/submit/+server.ts` — backend for AI Score (JSON + Base64 attachment).
 - `src/routes/grade/+server.ts` — Anthropic/Supabase grading endpoint (`POST /grade`, `PATCH /grade`).
-- `src/routes/+layout.svelte` — global header/nav + analytics scripts + favicon/logo proxy handling.
+- `src/routes/+layout.svelte` — global header/nav with dynamic CTAs based on current home view.
+
+### Site Navigation & CTAs
+
+The site uses a dynamic header that adjusts its Primary CTA based on the user's current context:
+
+- **Operators view (`/ops`)**: Primary CTA is "Get my AI-readiness score" (`/ai-score`).
+- **Partners view (`/partners`)**: Primary CTA is "Become a partner".
+- **Default**: The navigation state is persisted in localStorage to keep the user in their preferred view.
 
 ### Shared utilities
 
