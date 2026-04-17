@@ -143,19 +143,33 @@
 
 		try {
 			const source = getSource();
-			const body = new FormData();
-			body.append('email', normalizedEmail);
-			body.append('source', source);
+			const payload: Record<string, unknown> = {
+				email: normalizedEmail,
+				source
+			};
 			if (validatedText) {
-				body.append('text', validatedText);
+				payload.text = validatedText;
 			}
 			if (currentFile) {
-				body.append('file', currentFile, currentFile.name);
+				const buffer = await currentFile.arrayBuffer();
+				const bytes = new Uint8Array(buffer);
+				let binary = '';
+				const chunkSize = 0x8000;
+				for (let i = 0; i < bytes.length; i += chunkSize) {
+					binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+				}
+				payload.file = {
+					name: currentFile.name,
+					size: currentFile.size,
+					type: currentFile.type || '',
+					content_base64: btoa(binary)
+				};
 			}
 
 			const response = await fetch('/ops-grader/submit', {
 				method: 'POST',
-				body
+				headers: { 'content-type': 'application/json' },
+				body: JSON.stringify(payload)
 			});
 
 			const payload = (await response.json()) as unknown;

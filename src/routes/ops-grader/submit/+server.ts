@@ -71,48 +71,58 @@ const contentTypeFor = (filename: string, fallback: string): string => {
 	return fallback || 'application/octet-stream';
 };
 
-const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
-	const bytes = new Uint8Array(buffer);
-	let binary = '';
-	const chunkSize = 0x8000;
-	for (let i = 0; i < bytes.length; i += chunkSize) {
-		binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
-	}
-	return btoa(binary);
+type FilePayload = {
+	name: string;
+	size: number;
+	type?: string;
+	content_base64: string;
+};
+
+const isFilePayload = (value: unknown): value is FilePayload => {
+	if (!value || typeof value !== 'object') return false;
+	const v = value as Record<string, unknown>;
+	return (
+		typeof v.name === 'string' &&
+		typeof v.size === 'number' &&
+		typeof v.content_base64 === 'string' &&
+		v.content_base64.length > 0
+	);
+};
+
+const base64ByteLength = (b64: string): number => {
+	const padding = (b64.endsWith('==') ? 2 : b64.endsWith('=') ? 1 : 0);
+	return Math.floor((b64.length * 3) / 4) - padding;
 };
 
 export const POST: RequestHandler = async ({ request }) => {
 	const contentType = request.headers.get('content-type') || '';
-	if (!contentType.toLowerCase().includes('multipart/form-data')) {
+	if (!contentType.toLowerCase().includes('application/json')) {
 		return badRequest('Invalid request body.');
 	}
 
-	let form: FormData;
+	let payload: {
+		email?: unknown;
+		text?: unknown;
+		source?: unknown;
+		file?: unknown;
+	};
 	try {
-		form = await request.formData();
+		payload = (await request.json()) as typeof payload;
 	} catch {
 		return badRequest('Invalid request body.');
 	}
 
-	const email = typeof form.get('email') === 'string' ? (form.get('email') as string).trim() : '';
+	const email = typeof payload.email === 'string' ? payload.email.trim() : '';
 	if (!isValidEmail(email)) {
 		return badRequest('Enter a valid email address so we can reply.');
 	}
 
-	const rawText = typeof form.get('text') === 'string' ? (form.get('text') as string) : '';
-	const fileEntry = form.get('file');
-	const file =
-		fileEntry &&
-		typeof fileEntry === 'object' &&
-		'arrayBuffer' in fileEntry &&
-		'size' in fileEntry &&
-		(fileEntry as unknown as { size: number }).size > 0
-			? (fileEntry as unknown as File)
-			: null;
+	const rawText = typeof payload.text === 'string' ? payload.text : '';
+	const filePayload = isFilePayload(payload.file) ? payload.file : null;
 
 	let bodyText = '';
 	const trimmedRawText = rawText.trim();
-	if (file) {
+	if (filePayload) {
 		if (trimmedRawText.length > MAX_CHARS) {
 			return badRequest(`Keep typed notes under ${MAX_CHARS} characters.`);
 		}
@@ -124,45 +134,27 @@ export const POST: RequestHandler = async ({ request }) => {
 		}
 		bodyText = validation.text;
 	} else {
-		const diag: Record<string, unknown> = {
-			formKeys: [...form.keys()],
-			fileEntryType: fileEntry === null ? 'null' : typeof fileEntry,
-			fileEntryCtor:
-				fileEntry && typeof fileEntry === 'object'
-					? (fileEntry as object).constructor?.name
-					: undefined,
-			fileEntrySize:
-				fileEntry && typeof fileEntry === 'object' && 'size' in fileEntry
-					? (fileEntry as { size: number }).size
-					: undefined,
-			textLen: rawText.length
-		};
-		console.error('Ops Grader: no file and no text', diag);
-		return json(
-			{
-				error: 'Paste an SOP section or attach a file so we have something to grade.',
-				diag
-			},
-			{ status: 400, headers: NO_STORE_HEADERS }
-		);
+		return badRequest('Paste an SOP section or attach a file so we have something to grade.');
 	}
 
 	let attachment: { filename: string; content: string; content_type: string } | null = null;
-	if (file) {
-		if (file.size > MAX_FILE_BYTES) {
+	let attachmentSize = 0;
+	if (filePayload) {
+		const decodedSize = base64ByteLength(filePayload.content_base64);
+		attachmentSize = decodedSize;
+		if (decodedSize > MAX_FILE_BYTES) {
 			return badRequest('File is too large. Keep attachments under 10 MB.');
 		}
 
-		const filename = sanitizeFilename(file.name || 'upload');
+		const filename = sanitizeFilename(filePayload.name || 'upload');
 		if (!hasAllowedExtension(filename)) {
 			return badRequest('Supported file types: .docx, .pptx, .md, .txt.');
 		}
 
-		const content = arrayBufferToBase64(await file.arrayBuffer());
 		attachment = {
 			filename,
-			content,
-			content_type: contentTypeFor(filename, (file.type || '').toLowerCase())
+			content: filePayload.content_base64,
+			content_type: contentTypeFor(filename, (filePayload.type || '').toLowerCase())
 		};
 	}
 
@@ -182,7 +174,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 	}
 
-	const source = sanitizeSource(form.get('source'));
+	const source = sanitizeSource(payload.source);
 	const submittedAt = new Date().toISOString();
 	const messageLines = [
 		'New Ops Grader submission',
@@ -193,7 +185,7 @@ export const POST: RequestHandler = async ({ request }) => {
 	];
 
 	if (attachment) {
-		messageLines.push(`Attachment: ${attachment.filename} (${file!.size} bytes)`);
+		messageLines.push(`Attachment: ${attachment.filename} (${attachmentSize} bytes)`);
 	}
 
 	if (bodyText) {
