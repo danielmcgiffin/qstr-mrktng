@@ -60,7 +60,7 @@ jobs:
         run: |
           set -euo pipefail
 
-          DEPLOY_OUTPUT=$(npx -y wrangler pages deploy build \
+          DEPLOY_OUTPUT=$(npx -y wrangler pages deploy .svelte-kit/cloudflare \
             --project-name qstr-mrktng \
             --branch "${{ steps.cf-branch.outputs.name }}" \
             --commit-hash "${GITHUB_SHA}" 2>&1)

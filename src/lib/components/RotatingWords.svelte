@@ -8,6 +8,7 @@
 	let cur = 0;
 	let next = 1;
 	let animating = false;
+	let paused = false;
 
 	let reducedMotion = false;
 	let intervalTimer: number | undefined;
@@ -15,29 +16,76 @@
 
 	const longest = () => words.reduce((a, b) => (a.length > b.length ? a : b), words[0] ?? '');
 
+	function clearIntervalTimer() {
+		if (intervalTimer) {
+			window.clearInterval(intervalTimer);
+			intervalTimer = undefined;
+		}
+	}
+
+	function clearTimeoutTimer() {
+		if (timeoutTimer) {
+			window.clearTimeout(timeoutTimer);
+			timeoutTimer = undefined;
+		}
+	}
+
+	function startInterval() {
+		clearIntervalTimer();
+		if (!reducedMotion && !paused && words.length > 1) {
+			intervalTimer = window.setInterval(tick, intervalMs);
+		}
+	}
+
+	function settleWord() {
+		if (!animating) return;
+		clearTimeoutTimer();
+		next = cur;
+		animating = false;
+	}
+
 	function tick() {
-		if (words.length <= 1 || animating) return;
+		if (words.length <= 1 || animating || paused) return;
 		animating = true;
 		next = (cur + 1) % words.length;
+		clearTimeoutTimer();
 
 		timeoutTimer = window.setTimeout(() => {
 			cur = next;
 			animating = false;
+			timeoutTimer = undefined;
 		}, animMs);
+	}
+
+	function handleMouseEnter() {
+		paused = true;
+		clearIntervalTimer();
+		settleWord();
+	}
+
+	function handleMouseLeave() {
+		paused = false;
+		startInterval();
 	}
 
 	onMount(() => {
 		reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches ?? false;
-		if (!reducedMotion && words.length > 1) intervalTimer = window.setInterval(tick, intervalMs);
+		startInterval();
 	});
 
 	onDestroy(() => {
-		if (intervalTimer) window.clearInterval(intervalTimer);
-		if (timeoutTimer) window.clearTimeout(timeoutTimer);
+		clearIntervalTimer();
+		clearTimeoutTimer();
 	});
 </script>
 
-<span class="rw" style={`--anim:${animMs}ms;`}>
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<span
+	class="rw"
+	style={`--anim:${animMs}ms;`}
+	onmouseenter={handleMouseEnter}
+	onmouseleave={handleMouseLeave}
+>
 	<!-- reserves width so 'No more' never moves -->
 	<span class="rw-reserve">{longest()}</span>
 

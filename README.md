@@ -1,6 +1,6 @@
 # qstr-mrktng
 
-Quaestor marketing site (SvelteKit 5 + Tailwind CSS 4), deployed as a static build to Cloudflare Pages.
+Quaestor marketing site (SvelteKit 5 + Tailwind CSS 4), deployed to Cloudflare Pages with prerendered marketing pages plus edge endpoints.
 
 This repo is set up to be worked on by a human owner plus an AI coding agent.
 
@@ -50,6 +50,9 @@ npm run lint
 - `src/routes/method/[slug]/+page.svelte` + `+page.ts` — chapter pages.
 - `src/routes/partners/+page.svelte` — partner page + intake flow.
 - `src/routes/contact/+page.svelte` — contact page.
+- `src/routes/ops-grader/+page.svelte` — ops grader UI.
+- `src/routes/ops-grader/submit/+server.ts` — Resend-backed manual grader intake endpoint.
+- `src/routes/grade/+server.ts` — Anthropic/Supabase grading endpoint (`POST /grade`, `PATCH /grade`).
 - `src/routes/+layout.svelte` — global header/nav + analytics scripts + favicon/logo proxy handling.
 
 ### Shared utilities
@@ -67,6 +70,16 @@ Public runtime vars (safe for browser exposure):
 - `PUBLIC_PARTNER_INTAKE_ENDPOINT` (optional; if empty, partner intake falls back to `mailto:`)
 - `PUBLIC_PARTNER_INTAKE_EMAIL` (optional fallback email)
 
+Server runtime vars (secret; never commit values):
+
+- `ANTHROPIC_API_KEY`
+- `SUPABASE_URL`
+- `SUPABASE_SERVICE_ROLE_KEY`
+- `IP_HASH_SALT` (optional, recommended)
+- `RESEND_API_KEY` (or `PRIVATE_RESEND_API_KEY`)
+- `OPS_GRADER_FROM_EMAIL` (or `PRIVATE_FROM_ADMIN_EMAIL`)
+- `OPS_GRADER_TO_EMAIL` (optional, defaults to `danny+grader@cursus.tools`)
+
 Local deploy vars (secret; never commit values):
 
 - `CLOUDFLARE_API_TOKEN`
@@ -82,7 +95,7 @@ npm run cf:pages:deploy        # preview branch deploy
 npm run cf:pages:deploy:prod   # production (main branch target)
 ```
 
-`wrangler.toml` is configured for project `qstr-mrktng` with output dir `build`.
+`wrangler.toml` is configured for project `qstr-mrktng` with output dir `.svelte-kit/cloudflare`.
 
 ### GitHub Actions deploy
 

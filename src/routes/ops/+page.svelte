@@ -4,7 +4,7 @@
 	import RotatingWords from '$lib/components/RotatingWords.svelte';
 	import StarfieldBackground from '$lib/components/StarfieldBackground.svelte';
 	import { trackEvent } from '$lib/analytics';
-	import { site } from '$lib/site';
+	import { site } from '$lib/site-ops';
 
 	const year = new Date().getFullYear();
 
@@ -28,29 +28,8 @@
 	});
 
 	const trackHeroPrimaryCta = () => {
-		const href = site.hero.primaryCta.href;
-		const location = 'home_hero_primary';
-
-		trackEvent('hero_cta_click', { location });
-
-		if (href.includes('cal.com')) {
-			trackEvent('booking_click', { location });
-			return;
-		}
-
-		if (href.includes('/partners')) {
-			trackEvent('partner_intake_click', { location });
-			return;
-		}
-
-		if (href.includes('demo/process')) {
-			trackEvent('demo_click', { location });
-			return;
-		}
-
-		if (href.includes('qstr.cursus.tools/login')) {
-			trackEvent('signup_start', { location });
-		}
+		trackEvent('hero_cta_click', { location: 'home_hero_primary' });
+		trackEvent('signup_start', { location: 'home_hero_primary' });
 	};
 
 	const trackBookingClick = (location: string) => {
@@ -67,10 +46,10 @@
 </script>
 
 <svelte:head>
-	<title>Quaestor — Partner-first operational atlas</title>
+	<title>Quaestor — Your Operational Atlas</title>
 	<meta
 		name="description"
-		content="Quaestor helps ops partners deploy living operational atlases that stay useful after the engagement ends."
+		content="Quaestor maps who does what, in which system, as a connected graph — so your team finds answers instead of asking you."
 	/>
 </svelte:head>
 
@@ -125,13 +104,14 @@
 							<span class="justify-self-start whitespace-nowrap">
 								<RotatingWords
 									words={[
-										'handoff map',
-										'onboarding doc',
-										'process library',
-										'SOP folder',
-										'Notion workspace',
-										'Loom library',
-										'40-slide deck'
+										'dead docs',
+										'"ask Sarah"',
+										'dropped balls',
+										'wiki sprawl',
+										'tribal ops',
+										'"who does this?"',
+										'SOP graveyards',
+										'bad handoffs'
 									]}
 								/>
 							</span>
@@ -161,6 +141,13 @@
 						>
 							{site.hero.secondaryCta.label}
 						</a>
+
+						<a
+							class="w-full min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-white/90 hover:bg-white/10 sm:w-auto"
+							href="#pricing"
+						>
+							Pricing
+						</a>
 					</div>
 				</div>
 			</div>
@@ -173,6 +160,14 @@
 					class="rounded-2xl border border-[rgb(var(--border))] bg-gradient-to-b from-white/10 to-white/5 p-2 shadow-2xl"
 				>
 					<div class="overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-black/70">
+						<div class="flex items-center gap-2 border-b border-[rgb(var(--border))] px-4 py-3">
+							<div class="flex gap-1.5">
+								<div class="h-2.5 w-2.5 rounded-full bg-[rgb(var(--accent))]"></div>
+								<div class="h-2.5 w-2.5 rounded-full bg-[rgb(var(--accent))]"></div>
+								<div class="h-2.5 w-2.5 rounded-full bg-[rgb(var(--accent))]"></div>
+							</div>
+							<div class="ml-2 text-xs text-[rgb(var(--muted))]">Demo</div>
+						</div>
 						<img src={demoImageSrc} alt={site.demo.alt} class="block w-full" loading="lazy" />
 					</div>
 				</div>
@@ -531,22 +526,19 @@
 					<div class="grid gap-3 sm:grid-cols-2">
 						<a
 							class="flex flex-col items-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6 text-center transition hover:border-[rgb(var(--border-strong))]"
-							href="/partners#partner-intake"
-							onclick={() => trackEvent('partner_intake_click', { location: 'home_faq_partner' })}
+							href="https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=faq_map_ops"
+							onclick={() => trackSignupStart('home_faq_map_ops')}
+						>
+							<span class="text-sm font-semibold text-white">Map your operations</span>
+							<span class="mt-1 text-xs text-[rgb(var(--muted))]">For founders and teams</span>
+						</a>
+						<a
+							class="flex flex-col items-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6 text-center transition hover:border-[rgb(var(--border-strong))]"
+							href="/partners"
 						>
 							<span class="text-sm font-semibold text-white">Deploy with your clients</span>
 							<span class="mt-1 text-xs text-[rgb(var(--muted))]"
 								>For consultants and fractional ops</span
-							>
-						</a>
-						<a
-							class="flex flex-col items-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6 text-center transition hover:border-[rgb(var(--border-strong))]"
-							href="https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=faq_direct_tm"
-							onclick={() => trackSignupStart('home_faq_direct_team')}
-						>
-							<span class="text-sm font-semibold text-white">Map your own operations</span>
-							<span class="mt-1 text-xs text-[rgb(var(--muted))]"
-								>For founders and operator teams</span
 							>
 						</a>
 					</div>

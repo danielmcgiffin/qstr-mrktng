@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { methodSections, methodPath } from '$lib/method';
 	import { page } from '$app/stores';
+	import StarfieldBackground from '$lib/components/StarfieldBackground.svelte';
 
 	let { children } = $props();
 
@@ -25,6 +26,7 @@
 	<div class="relative">
 		<!-- Quieter background for method pages -->
 		<div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+			<StarfieldBackground variant="soft" />
 			<div
 				class="absolute top-[-35%] left-1/2 h-[820px] w-[820px] -translate-x-1/2 rounded-full bg-white/[0.02] blur-3xl"
 			></div>

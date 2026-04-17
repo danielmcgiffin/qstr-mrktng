@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { env } from '$env/dynamic/public';
 	import { trackEvent } from '$lib/analytics';
+	import StarfieldBackground from '$lib/components/StarfieldBackground.svelte';
 	import { site } from '$lib/site';
 
 	type IntakeStatus = 'idle' | 'submitting' | 'success' | 'error';
@@ -114,6 +115,7 @@
 	<div class="relative">
 		<!-- Background -->
 		<div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
+			<StarfieldBackground />
 			<div
 				class="absolute top-[-35%] left-1/2 h-[820px] w-[820px] -translate-x-1/2 rounded-full bg-white/5 blur-3xl"
 			></div>
