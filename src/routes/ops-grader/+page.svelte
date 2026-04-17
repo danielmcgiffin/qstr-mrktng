@@ -5,13 +5,21 @@
 
 	type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
 
+	const MAX_FILE_BYTES = 10 * 1024 * 1024;
+	const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt'] as const;
+	const FILE_ACCEPT =
+		'.docx,.pptx,.md,.txt,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/markdown,text/plain';
+
 	let sopText = $state('');
 	let replyEmail = $state('');
+	let selectedFile = $state<File | null>(null);
+	let fileInput = $state<HTMLInputElement | null>(null);
 	let submitStatus = $state<SubmitStatus>('idle');
 	let formError = $state('');
 	let submitMessage = $state('');
 
 	const charsUsed = $derived(sopText.trim().length);
+	const hasFile = $derived(selectedFile !== null);
 
 	const getSource = (): string => {
 		if (typeof window === 'undefined') {
@@ -23,6 +31,17 @@
 	};
 
 	const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
+
+	const hasAllowedExtension = (name: string) => {
+		const lower = name.toLowerCase();
+		return ALLOWED_EXTENSIONS.some((ext) => lower.endsWith(ext));
+	};
+
+	const formatBytes = (bytes: number) => {
+		if (bytes < 1024) return `${bytes} B`;
+		if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+		return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
+	};
 
 	const getErrorMessage = (payload: unknown, fallback: string): string => {
 		if (
@@ -37,17 +56,45 @@
 		return fallback;
 	};
 
+	const onFileChange = (event: Event) => {
+		formError = '';
+		const input = event.currentTarget as HTMLInputElement;
+		const file = input.files?.[0] ?? null;
+
+		if (!file) {
+			selectedFile = null;
+			return;
+		}
+
+		if (!hasAllowedExtension(file.name)) {
+			formError = 'Supported file types: .docx, .pptx, .md, .txt.';
+			input.value = '';
+			selectedFile = null;
+			return;
+		}
+
+		if (file.size > MAX_FILE_BYTES) {
+			formError = 'File is too large. Keep attachments under 10 MB.';
+			input.value = '';
+			selectedFile = null;
+			return;
+		}
+
+		selectedFile = file;
+	};
+
+	const clearFile = () => {
+		selectedFile = null;
+		if (fileInput) {
+			fileInput.value = '';
+		}
+	};
+
 	const submitForReview = async (event: SubmitEvent) => {
 		event.preventDefault();
 
 		formError = '';
 		submitMessage = '';
-
-		const validation = validateInput(sopText);
-		if (!validation.valid) {
-			formError = validation.error;
-			return;
-		}
 
 		const normalizedEmail = replyEmail.trim();
 		if (!isValidEmail(normalizedEmail)) {
@@ -55,20 +102,37 @@
 			return;
 		}
 
+		const trimmedText = sopText.trim();
+		let validatedText = '';
+		if (trimmedText.length > 0) {
+			const validation = validateInput(sopText);
+			if (!validation.valid) {
+				formError = validation.error;
+				return;
+			}
+			validatedText = validation.text;
+		} else if (!selectedFile) {
+			formError = 'Paste an SOP section or attach a file so we have something to grade.';
+			return;
+		}
+
 		submitStatus = 'submitting';
 
 		try {
 			const source = getSource();
+			const body = new FormData();
+			body.append('email', normalizedEmail);
+			body.append('source', source);
+			if (validatedText) {
+				body.append('text', validatedText);
+			}
+			if (selectedFile) {
+				body.append('file', selectedFile, selectedFile.name);
+			}
+
 			const response = await fetch('/ops-grader/submit', {
 				method: 'POST',
-				headers: {
-					'content-type': 'application/json'
-				},
-				body: JSON.stringify({
-					email: normalizedEmail,
-					text: validation.text,
-					source
-				})
+				body
 			});
 
 			const payload = (await response.json()) as unknown;
@@ -84,13 +148,15 @@
 
 			trackEvent('ops_grader_submit', {
 				source,
-				mode: 'resend'
+				mode: 'resend',
+				has_file: selectedFile ? 'true' : 'false'
 			});
 
 			submitStatus = 'success';
 			submitMessage = `Thanks — your submission was sent. We'll reply to ${normalizedEmail}.`;
 			sopText = '';
 			replyEmail = '';
+			clearFile();
 		} catch {
 			submitStatus = 'error';
 			submitMessage = 'Network error while sending. Please try again.';
@@ -149,20 +215,51 @@
 					</label>
 
 					<label class="mt-4 block space-y-2 text-sm">
-						<span class="text-white">SOP text (50–2000 chars)</span>
+						<span class="text-white"
+							>SOP text {hasFile ? '(optional — file attached)' : '(50–2000 chars)'}</span
+						>
 						<textarea
 							bind:value={sopText}
-							required
 							rows="10"
 							maxlength={MAX_CHARS}
 							class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-3 text-sm text-white placeholder:text-[rgb(var(--muted))]"
-							placeholder="Upload or paste in your SOP, workflow, or process doc..."
+							placeholder="Paste your SOP, workflow, or process doc — or attach a file below."
 						></textarea>
 					</label>
 
 					<div class="mt-3 flex items-center justify-between text-xs text-[rgb(var(--muted))]">
 						<span>{charsUsed} / {MAX_CHARS}</span>
-						<span>AI Rediness review</span>
+						<span>AI Readiness review</span>
+					</div>
+
+					<div class="mt-5 space-y-2 text-sm">
+						<span class="text-white">Or attach a file</span>
+						<div
+							class="flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-[rgb(var(--border))] bg-black/20 px-3 py-3"
+						>
+							<input
+								bind:this={fileInput}
+								type="file"
+								accept={FILE_ACCEPT}
+								onchange={onFileChange}
+								class="block max-w-full text-xs text-[rgb(var(--muted))] file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:text-white hover:file:bg-white/20"
+							/>
+							{#if selectedFile}
+								<span class="text-xs text-white/80">
+									{selectedFile.name} · {formatBytes(selectedFile.size)}
+								</span>
+								<button
+									type="button"
+									onclick={clearFile}
+									class="text-xs text-[rgb(var(--muted))] underline hover:text-white"
+								>
+									remove
+								</button>
+							{/if}
+						</div>
+						<p class="text-xs text-[rgb(var(--muted))]">
+							.docx, .pptx, .md, or .txt — up to 10 MB.
+						</p>
 					</div>
 
 					{#if formError}

@@ -6,6 +6,19 @@ import type { RequestHandler } from './$types';
 const RESEND_API_URL = 'https://api.resend.com/emails';
 const DEFAULT_TO_EMAIL = 'danny+grader@cursus.tools';
 
+const MAX_FILE_BYTES = 10 * 1024 * 1024;
+
+const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt'] as const;
+
+const ALLOWED_MIME_TYPES = new Set([
+	'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+	'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+	'text/markdown',
+	'text/x-markdown',
+	'text/plain',
+	'application/octet-stream'
+]);
+
 const NO_STORE_HEADERS = {
 	'cache-control': 'no-store'
 };
@@ -40,24 +53,77 @@ const sanitizeSource = (value: unknown): string => {
 	return trimmed.replace(/[^a-z0-9_:/.-]/g, '-').slice(0, 64) || 'organic';
 };
 
-export const POST: RequestHandler = async ({ request }) => {
-	let payload: { email?: unknown; text?: unknown; source?: unknown };
+const sanitizeFilename = (value: string): string => {
+	const cleaned = value.replace(/[\\/]+/g, '_').replace(/[^\w.\-() ]+/g, '_');
+	return cleaned.slice(-120) || 'upload';
+};
 
+const hasAllowedExtension = (name: string): boolean => {
+	const lower = name.toLowerCase();
+	return ALLOWED_EXTENSIONS.some((ext) => lower.endsWith(ext));
+};
+
+const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
+	const bytes = new Uint8Array(buffer);
+	let binary = '';
+	const chunkSize = 0x8000;
+	for (let i = 0; i < bytes.length; i += chunkSize) {
+		binary += String.fromCharCode(...bytes.subarray(i, i + chunkSize));
+	}
+	return btoa(binary);
+};
+
+export const POST: RequestHandler = async ({ request }) => {
+	const contentType = request.headers.get('content-type') || '';
+	if (!contentType.toLowerCase().includes('multipart/form-data')) {
+		return badRequest('Invalid request body.');
+	}
+
+	let form: FormData;
 	try {
-		payload = (await request.json()) as { email?: unknown; text?: unknown; source?: unknown };
+		form = await request.formData();
 	} catch {
 		return badRequest('Invalid request body.');
 	}
 
-	const email = typeof payload.email === 'string' ? payload.email.trim() : '';
+	const email = typeof form.get('email') === 'string' ? (form.get('email') as string).trim() : '';
 	if (!isValidEmail(email)) {
 		return badRequest('Enter a valid email address so we can reply.');
 	}
 
-	const rawText = typeof payload.text === 'string' ? payload.text : '';
-	const validation = validateInput(rawText);
-	if (!validation.valid) {
-		return badRequest(validation.error);
+	const rawText = typeof form.get('text') === 'string' ? (form.get('text') as string) : '';
+	const fileEntry = form.get('file');
+	const file = fileEntry instanceof File && fileEntry.size > 0 ? fileEntry : null;
+
+	let bodyText = '';
+	if (rawText.trim().length > 0) {
+		const validation = validateInput(rawText);
+		if (!validation.valid) {
+			return badRequest(validation.error);
+		}
+		bodyText = validation.text;
+	} else if (!file) {
+		return badRequest('Paste an SOP section or attach a file so we have something to grade.');
+	}
+
+	let attachment: { filename: string; content: string } | null = null;
+	if (file) {
+		if (file.size > MAX_FILE_BYTES) {
+			return badRequest('File is too large. Keep attachments under 10 MB.');
+		}
+
+		const filename = sanitizeFilename(file.name || 'upload');
+		if (!hasAllowedExtension(filename)) {
+			return badRequest('Supported file types: .docx, .pptx, .md, .txt.');
+		}
+
+		const mime = (file.type || '').toLowerCase();
+		if (mime && !ALLOWED_MIME_TYPES.has(mime) && !mime.startsWith('text/')) {
+			return badRequest('Supported file types: .docx, .pptx, .md, .txt.');
+		}
+
+		const content = arrayBufferToBase64(await file.arrayBuffer());
+		attachment = { filename, content };
 	}
 
 	const resendApiKey = getPrivateEnv('RESEND_API_KEY', 'PRIVATE_RESEND_API_KEY');
@@ -76,18 +142,37 @@ export const POST: RequestHandler = async ({ request }) => {
 		);
 	}
 
-	const source = sanitizeSource(payload.source);
+	const source = sanitizeSource(form.get('source'));
 	const submittedAt = new Date().toISOString();
-	const message = [
+	const messageLines = [
 		'New Ops Grader submission',
 		'',
 		`Reply email: ${email}`,
 		`Source: ${source}`,
-		`Submitted at: ${submittedAt}`,
-		'',
-		'SOP text:',
-		validation.text
-	].join('\n');
+		`Submitted at: ${submittedAt}`
+	];
+
+	if (attachment) {
+		messageLines.push(`Attachment: ${attachment.filename} (${file!.size} bytes)`);
+	}
+
+	if (bodyText) {
+		messageLines.push('', 'SOP text:', bodyText);
+	} else {
+		messageLines.push('', '(No pasted text — see attachment.)');
+	}
+
+	const emailPayload: Record<string, unknown> = {
+		from: fromEmail,
+		to: [toEmail],
+		subject: 'Ops Grader submission',
+		text: messageLines.join('\n'),
+		reply_to: email
+	};
+
+	if (attachment) {
+		emailPayload.attachments = [attachment];
+	}
 
 	const response = await fetch(RESEND_API_URL, {
 		method: 'POST',
@@ -95,13 +180,7 @@ export const POST: RequestHandler = async ({ request }) => {
 			Authorization: `Bearer ${resendApiKey}`,
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify({
-			from: fromEmail,
-			to: [toEmail],
-			subject: 'Ops Grader submission',
-			text: message,
-			reply_to: email
-		})
+		body: JSON.stringify(emailPayload)
 	});
 
 	if (!response.ok) {
