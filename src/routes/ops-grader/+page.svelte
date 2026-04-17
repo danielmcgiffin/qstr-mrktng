@@ -13,7 +13,7 @@
 	let sopText = $state('');
 	let replyEmail = $state('');
 	let fileMeta = $state<{ name: string; size: number } | null>(null);
-	let fileInput = $state<HTMLInputElement | null>(null);
+	let fileInput: HTMLInputElement | null = null;
 	let submitStatus = $state<SubmitStatus>('idle');
 	let formError = $state('');
 	let submitMessage = $state('');
@@ -21,8 +21,17 @@
 	const charsUsed = $derived(sopText.trim().length);
 	const hasFile = $derived(fileMeta !== null);
 
+	const getFileInputEl = (): HTMLInputElement | null => {
+		if (fileInput) return fileInput;
+		if (typeof document === 'undefined') return null;
+		return document.querySelector<HTMLInputElement>(
+			'input[type="file"][data-role="ops-grader-file"]'
+		);
+	};
+
 	const getCurrentFile = (): File | null => {
-		const f = fileInput?.files?.[0];
+		const input = getFileInputEl();
+		const f = input?.files?.[0];
 		return f && f.size > 0 ? f : null;
 	};
 
@@ -90,8 +99,9 @@
 
 	const clearFile = () => {
 		fileMeta = null;
-		if (fileInput) {
-			fileInput.value = '';
+		const input = getFileInputEl();
+		if (input) {
+			input.value = '';
 		}
 	};
 
@@ -204,7 +214,7 @@
 						✦ Ops Grader
 					</span>
 					<h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
-						Paste one SOP section. We’ll tell you how ready for AI implementation you are.
+						Paste one SOP or process. We’ll tell you how ready for AI implementation you are.
 					</h1>
 					<p class="mx-auto mt-4 max-w-2xl text-pretty text-[rgb(var(--muted))]">
 						We’ll reply from
@@ -255,6 +265,7 @@
 								type="file"
 								accept={FILE_ACCEPT}
 								onchange={onFileChange}
+								data-role="ops-grader-file"
 								class="block max-w-full text-xs text-[rgb(var(--muted))] file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:text-white hover:file:bg-white/20"
 							/>
 							{#if fileMeta}
