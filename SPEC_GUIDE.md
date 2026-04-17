@@ -1,4 +1,4 @@
-# Process Grader Spec
+# Process Grader Spec.md
 
 ## Goal
 The tool is a lead-gen applet. Users can upload docs and get a letter grade inline + full diagnostic emailed within 24 hours.
