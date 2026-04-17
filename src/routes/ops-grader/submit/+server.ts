@@ -54,6 +54,23 @@ const hasAllowedExtension = (name: string): boolean => {
 	return ALLOWED_EXTENSIONS.some((ext) => lower.endsWith(ext));
 };
 
+const CONTENT_TYPE_BY_EXT: Record<string, string> = {
+	'.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+	'.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
+	'.md': 'text/markdown',
+	'.txt': 'text/plain'
+};
+
+const contentTypeFor = (filename: string, fallback: string): string => {
+	const lower = filename.toLowerCase();
+	for (const ext of ALLOWED_EXTENSIONS) {
+		if (lower.endsWith(ext)) {
+			return CONTENT_TYPE_BY_EXT[ext];
+		}
+	}
+	return fallback || 'application/octet-stream';
+};
+
 const arrayBufferToBase64 = (buffer: ArrayBuffer): string => {
 	const bytes = new Uint8Array(buffer);
 	let binary = '';
@@ -111,7 +128,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		return badRequest('Paste an SOP section or attach a file so we have something to grade.');
 	}
 
-	let attachment: { filename: string; content: string } | null = null;
+	let attachment: { filename: string; content: string; content_type: string } | null = null;
 	if (file) {
 		if (file.size > MAX_FILE_BYTES) {
 			return badRequest('File is too large. Keep attachments under 10 MB.');
@@ -125,7 +142,8 @@ export const POST: RequestHandler = async ({ request }) => {
 		const content = arrayBufferToBase64(await file.arrayBuffer());
 		attachment = {
 			filename,
-			content
+			content,
+			content_type: contentTypeFor(filename, (file.type || '').toLowerCase())
 		};
 	}
 
