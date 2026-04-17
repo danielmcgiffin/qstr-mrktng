@@ -12,14 +12,16 @@
 
 	let sopText = $state('');
 	let replyEmail = $state('');
-	let selectedFile = $state<File | null>(null);
+	let fileInfo = $state<{ name: string; size: number } | null>(null);
 	let fileInput = $state<HTMLInputElement | null>(null);
 	let submitStatus = $state<SubmitStatus>('idle');
 	let formError = $state('');
 	let submitMessage = $state('');
 
 	const charsUsed = $derived(sopText.trim().length);
-	const hasFile = $derived(selectedFile !== null);
+	const hasFile = $derived(fileInfo !== null);
+
+	const getCurrentFile = (): File | null => fileInput?.files?.[0] ?? null;
 
 	const getSource = (): string => {
 		if (typeof window === 'undefined') {
@@ -62,29 +64,29 @@
 		const file = input.files?.[0] ?? null;
 
 		if (!file) {
-			selectedFile = null;
+			fileInfo = null;
 			return;
 		}
 
 		if (!hasAllowedExtension(file.name)) {
 			formError = 'Supported file types: .docx, .pptx, .md, .txt.';
 			input.value = '';
-			selectedFile = null;
+			fileInfo = null;
 			return;
 		}
 
 		if (file.size > MAX_FILE_BYTES) {
 			formError = 'File is too large. Keep attachments under 10 MB.';
 			input.value = '';
-			selectedFile = null;
+			fileInfo = null;
 			return;
 		}
 
-		selectedFile = file;
+		fileInfo = { name: file.name, size: file.size };
 	};
 
 	const clearFile = () => {
-		selectedFile = null;
+		fileInfo = null;
 		if (fileInput) {
 			fileInput.value = '';
 		}
@@ -102,6 +104,7 @@
 			return;
 		}
 
+		const currentFile = getCurrentFile();
 		const trimmedText = sopText.trim();
 		let validatedText = '';
 		if (trimmedText.length > 0) {
@@ -111,7 +114,7 @@
 				return;
 			}
 			validatedText = validation.text;
-		} else if (!selectedFile) {
+		} else if (!currentFile) {
 			formError = 'Paste an SOP section or attach a file so we have something to grade.';
 			return;
 		}
@@ -126,8 +129,8 @@
 			if (validatedText) {
 				body.append('text', validatedText);
 			}
-			if (selectedFile) {
-				body.append('file', selectedFile, selectedFile.name);
+			if (currentFile) {
+				body.append('file', currentFile, currentFile.name);
 			}
 
 			const response = await fetch('/ops-grader/submit', {
@@ -149,7 +152,7 @@
 			trackEvent('ops_grader_submit', {
 				source,
 				mode: 'resend',
-				has_file: selectedFile ? 'true' : 'false'
+				has_file: currentFile ? 'true' : 'false'
 			});
 
 			submitStatus = 'success';
@@ -244,9 +247,9 @@
 								onchange={onFileChange}
 								class="block max-w-full text-xs text-[rgb(var(--muted))] file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:text-white hover:file:bg-white/20"
 							/>
-							{#if selectedFile}
+							{#if fileInfo}
 								<span class="text-xs text-white/80">
-									{selectedFile.name} · {formatBytes(selectedFile.size)}
+									{fileInfo.name} · {formatBytes(fileInfo.size)}
 								</span>
 								<button
 									type="button"
