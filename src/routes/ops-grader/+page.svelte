@@ -156,7 +156,7 @@
 							rows="10"
 							maxlength={MAX_CHARS}
 							class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-3 text-sm text-white placeholder:text-[rgb(var(--muted))]"
-							placeholder="Paste one section from an SOP, workflow, or process doc..."
+							placeholder="Upload or paste in your SOP, workflow, or process doc..."
 						></textarea>
 					</label>
 
