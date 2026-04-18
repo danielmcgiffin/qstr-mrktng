@@ -225,11 +225,14 @@
 					<span
 						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
 					>
-						✦ AI Score
+						✦ Are you ready for AI?
 					</span>
 					<h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
-						Paste one SOP or process. We’ll tell you how ready for AI implementation you are.
+						Paste one SOP or process.
 					</h1>
+					<h2 class="mt-6 text-2xl font-semibold tracking-tight text-balance md:text-3xl">
+						We’ll tell you how ready for AI implementation you are.
+					</h2>
 					<p class="mx-auto mt-4 max-w-2xl text-pretty text-[rgb(var(--muted))]">
 						We’ll reply from
 						<span class="text-white">grader@cursus.tools</span>.
