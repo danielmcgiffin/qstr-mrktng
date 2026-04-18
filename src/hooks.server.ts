@@ -4,7 +4,6 @@ export const handle: Handle = async ({ event, resolve }) => {
 	const response = await resolve(event);
 
 	// Add Link headers for agent discovery (RFC 8288)
-	const domain = 'https://marketing.dannymcgiffin.com';
 	const links = [
 		`</.well-known/api-catalog>; rel="api-catalog"`,
 		`</.well-known/mcp/server-card.json>; rel="mcp-server-card"`,

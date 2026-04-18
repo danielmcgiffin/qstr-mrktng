@@ -9,6 +9,21 @@
 	let { children } = $props();
 
 	type HeaderCta = { label: string; href: string };
+	type ModelContextTool = {
+		name: string;
+		description: string;
+		inputSchema: {
+			type: 'object';
+			properties: Record<string, { type: 'string'; description: string }>;
+			required: string[];
+		};
+		execute: (input: { text: string }) => Promise<unknown>;
+	};
+	type NavigatorWithModelContext = Navigator & {
+		modelContext?: {
+			provideContext: (context: { tools: ModelContextTool[] }) => void;
+		};
+	};
 
 	const plausibleDomain = env.PUBLIC_PLAUSIBLE_DOMAIN || 'cursus.tools';
 	const demoHref = 'https://qstr.cursus.tools/demo/process';
@@ -138,34 +153,37 @@
 
 	// WebMCP Tool Registration
 	$effect(() => {
-		if (typeof window !== 'undefined' && (window as any).navigator?.modelContext) {
-			try {
-				(window as any).navigator.modelContext.provideContext({
-					tools: [
-						{
-							name: 'get_ai_readiness_score',
-							description: 'Get an AI-readiness evaluation for an SOP or process.',
-							inputSchema: {
-								type: 'object',
-								properties: {
-									text: { type: 'string', description: 'The SOP text to grade.' }
-								},
-								required: ['text']
+		if (typeof window === 'undefined') return;
+
+		const navigatorWithModelContext = window.navigator as NavigatorWithModelContext;
+		if (!navigatorWithModelContext.modelContext) return;
+
+		try {
+			navigatorWithModelContext.modelContext.provideContext({
+				tools: [
+					{
+						name: 'get_ai_readiness_score',
+						description: 'Get an AI-readiness evaluation for an SOP or process.',
+						inputSchema: {
+							type: 'object',
+							properties: {
+								text: { type: 'string', description: 'The SOP text to grade.' }
 							},
-							execute: async ({ text }: { text: string }) => {
-								const response = await fetch('/grade', {
-									method: 'POST',
-									headers: { 'Content-Type': 'application/json' },
-									body: JSON.stringify({ text, source: 'webmcp' })
-								});
-								return await response.json();
-							}
+							required: ['text']
+						},
+						execute: async ({ text }: { text: string }) => {
+							const response = await fetch('/grade', {
+								method: 'POST',
+								headers: { 'Content-Type': 'application/json' },
+								body: JSON.stringify({ text, source: 'webmcp' })
+							});
+							return await response.json();
 						}
-					]
-				});
-			} catch (e) {
-				console.error('WebMCP registration failed', e);
-			}
+					}
+				]
+			});
+		} catch (e) {
+			console.error('WebMCP registration failed', e);
 		}
 	});
 </script>
