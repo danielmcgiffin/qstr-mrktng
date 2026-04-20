@@ -33,6 +33,10 @@
 	const trackSignupStart = (location: string) => {
 		trackEvent('signup_start', { location });
 	};
+
+	const trackAiScoreClick = (location: string) => {
+		trackEvent('ai_score_click', { location });
+	};
 </script>
 
 <svelte:head>
@@ -80,6 +84,16 @@
 							onclick={() => trackDemoClick('home_hero_secondary')}
 						>
 							{site.hero.secondaryCta.label}
+						</a>
+					</div>
+
+					<div class="mt-3 flex justify-center">
+						<a
+							class="inline-flex min-w-[190px] items-center justify-center rounded-xl border border-[rgb(var(--border-strong))] bg-[rgb(var(--bg-elev))] px-4 py-2 text-sm font-medium text-[rgb(var(--surface-text-strong))] shadow-sm transition hover:border-[rgb(var(--accent))]/30 hover:bg-[rgb(var(--bg-elev-2))]"
+							href={site.hero.tertiaryCta.href}
+							onclick={() => trackAiScoreClick('home_hero_tertiary')}
+						>
+							{site.hero.tertiaryCta.label}
 						</a>
 					</div>
 				</div>

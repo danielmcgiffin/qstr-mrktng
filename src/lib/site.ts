@@ -9,6 +9,7 @@ export type FaqItem = { q: string; a: string };
 export type DetailItem = { title: string; desc: string };
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
+const graderHref = '/ai-score';
 const signupBaseHref =
 	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch';
 
@@ -35,17 +36,19 @@ export const site = {
 	hero: {
 		headline: "It doesn't have to be this hard.",
 		subhead:
-			'Quaestor is an operational atlas that makes small businesses work. It makes it easy for everyone to know who does what and how it’s done, so you can stop working in the business and get back to working on it.',
+			"For founders who can't delegate because nothing's written down. Quaestor is the atlas that maps who does what, and how, across your whole business.",
 		primaryCta: {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`
 		},
-		secondaryCta: { label: 'Explore the demo', href: demoHref }
+		secondaryCta: { label: 'See a sample org', href: demoHref },
+		tertiaryCta: { label: 'Grade a process doc', href: graderHref }
 	} satisfies {
 		headline: string;
 		subhead: string;
 		primaryCta: CTA;
 		secondaryCta: CTA;
+		tertiaryCta: CTA;
 	},
 
 	// ───────────────────────────────────────────
@@ -117,7 +120,7 @@ export const site = {
 		eyebrow: 'How it works',
 		headline: 'This is how it stops falling apart.',
 		subhead:
-			'Start with the process you keep getting sucked into. That’s the alarm bell telling you the work still lives in people’s heads. Write it out step by step: who does what, what system they use, how decisions get made, and what right looks like. When the handoffs get cleaner and you get roped in less, you know it’s working.',
+			"Start with the process that keeps pulling you back in. That’s the tell the work isn't working yet. Write out what right looks like step by step: who does what, which system they use, and how decisions get made. When the handoffs get cleaner and your Slack gets quieter, you know it’s working.",
 		steps: [
 			{
 				n: '01',
@@ -233,7 +236,7 @@ export const site = {
 				a: 'Use them as source material. Bring them in, clean them up, structure them, and fill the gaps so your existing docs become usable operations instead of another graveyard.'
 			},
 			{
-				q: 'How does it stay current?',
+				q: "Why won't this die like my last solution?",
 				a: 'Flags catch drift. People can mark what’s unclear, thin, or outdated. The point is to keep it alive in the flow of work, not wait for an annual cleanup project.'
 			}
 		]
