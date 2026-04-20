@@ -18,6 +18,10 @@
 				fallback_reason?: string | null;
 		  };
 
+	type MammothBrowser = {
+		extractRawText: (input: { arrayBuffer: ArrayBuffer }) => Promise<{ value?: string }>;
+	};
+
 	const MAX_FILE_BYTES = 10 * 1024 * 1024;
 	const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt', '.html'] as const;
 	const FILE_ACCEPT =
@@ -50,6 +54,14 @@
 	let formError = $state('');
 	let submitMessage = $state('');
 	let gradeResult = $state<GraderResponse | null>(null);
+
+	const textFieldClass = $derived(
+		`w-full rounded-xl bg-white px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--muted))] focus:outline-none focus:border-[rgb(var(--accent))] ${
+			formError
+				? 'border-2 border-[rgb(var(--accent))] focus:ring-4 focus:ring-[rgb(var(--accent))]/15'
+				: 'border border-[rgb(var(--border))] focus:ring-2 focus:ring-[rgb(var(--accent))]/12'
+		}`
+	);
 
 	const charsUsed = $derived(sopText.trim().length);
 	const hasFile = $derived(fileMeta !== null);
@@ -113,6 +125,14 @@
 	const hasAllowedExtension = (name: string) => {
 		const lower = name.toLowerCase();
 		return ALLOWED_EXTENSIONS.some((ext) => lower.endsWith(ext));
+	};
+
+	const isDocxFile = (file: File): boolean => {
+		const lower = file.name.toLowerCase();
+		return (
+			lower.endsWith('.docx') ||
+			(file.type || '').toLowerCase().includes('wordprocessingml.document')
+		);
 	};
 
 	const formatBytes = (bytes: number) => {
@@ -200,6 +220,21 @@
 		}
 	};
 
+	const extractDocxTextInBrowser = async (arrayBuffer: ArrayBuffer): Promise<string> => {
+		const mammothModule = (await import('mammoth/mammoth.browser')) as unknown as
+			| MammothBrowser
+			| { default: MammothBrowser };
+		const mammoth = 'default' in mammothModule ? mammothModule.default : mammothModule;
+		const result = await mammoth.extractRawText({ arrayBuffer });
+		const text = result.value?.trim() || '';
+		if (!text) {
+			throw new Error(
+				"We couldn't read text from this .docx file. Try exporting it as .txt or paste the text instead."
+			);
+		}
+		return text;
+	};
+
 	const submitAiScoreSubmission = async (
 		currentFile: File | null,
 		normalizedEmail: string,
@@ -210,10 +245,6 @@
 			email: normalizedEmail,
 			source
 		};
-
-		if (validatedText) {
-			payload.text = validatedText;
-		}
 
 		if (currentFile) {
 			const buffer = await currentFile.arrayBuffer();
@@ -230,6 +261,24 @@
 				type: currentFile.type || '',
 				content_base64: btoa(binary)
 			};
+
+			if (isDocxFile(currentFile)) {
+				try {
+					const extractedText = await extractDocxTextInBrowser(buffer);
+					payload.extracted_text = validatedText
+						? `Operator note:\n${validatedText}\n\n--- Extracted file text ---\n${extractedText}`
+						: extractedText;
+				} catch (error) {
+					console.warn('Client-side DOCX extraction failed; falling back to inbox review', error);
+					if (validatedText) {
+						payload.text = validatedText;
+					}
+				}
+			} else if (validatedText) {
+				payload.text = validatedText;
+			}
+		} else if (validatedText) {
+			payload.text = validatedText;
 		}
 
 		const response = await fetch('/ai-score/submit', {
@@ -362,7 +411,7 @@
 							<input
 								type="email"
 								bind:value={replyEmail}
-								class="w-full rounded-xl border border-[rgb(var(--border))] bg-white px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--muted))]"
+								class={textFieldClass}
 								placeholder="you@company.com"
 							/>
 						</label>
@@ -374,7 +423,7 @@
 								bind:value={sopText}
 								rows="10"
 								maxlength={MAX_CHARS}
-								class="w-full rounded-xl border border-[rgb(var(--border))] bg-white px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--muted))]"
+								class={textFieldClass}
 								placeholder="Paste your SOP, workflow, or process doc here for an instant read."
 							></textarea>
 						</label>

@@ -1,4 +1,3 @@
-import mammoth from 'mammoth';
 import {
 	createIngestMetadata,
 	describeRejection,
@@ -177,16 +176,20 @@ const ingestDecodedText = (
 		}
 	});
 
-const extractDocxText = async (bytes: Uint8Array): Promise<string | null> => {
+const extractDocxText = async (
+	bytes: Uint8Array
+): Promise<{ ok: true; text: string } | { ok: false; reason: 'unsupported_type' | 'no_text' }> => {
 	try {
-		const result = await mammoth.convertToHtml(
+		const mammothModule = await import('mammoth');
+		const result = await mammothModule.default.convertToHtml(
 			{ arrayBuffer: arrayBufferFromBytes(bytes) },
 			{ ignoreEmptyParagraphs: false }
 		);
 		const text = stripHtmlToText(result.value || '');
-		return text.trim() ? text : null;
-	} catch {
-		return null;
+		return text.trim() ? { ok: true, text } : { ok: false, reason: 'no_text' };
+	} catch (error) {
+		console.warn('DOCX inline extraction unavailable; falling back to inbox review', error);
+		return { ok: false, reason: 'unsupported_type' };
 	}
 };
 
@@ -222,11 +225,11 @@ export const ingestUploadedFile = async (params: UploadedFileInput): Promise<Ing
 	}
 
 	if (fileType === 'docx') {
-		const text = await extractDocxText(bytes);
-		if (!text) {
-			return rejectFile(fileType, 'no_text', params);
+		const extracted = await extractDocxText(bytes);
+		if (!extracted.ok) {
+			return rejectFile(fileType, extracted.reason, params);
 		}
-		return ingestDecodedText(text, fileType, params);
+		return ingestDecodedText(extracted.text, fileType, params);
 	}
 
 	return rejectFile(fileType, 'unsupported_type', params);

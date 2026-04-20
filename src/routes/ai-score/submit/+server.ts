@@ -4,7 +4,7 @@ import { sendAiScoreSubmissionAlert, type SubmissionAlertAttachment } from '$lib
 import { calculateActualCostUsd } from '$lib/server/cost-estimator';
 import { incrementDailyCost, runSubmissionGuards } from '$lib/server/guards';
 import { ingestText } from '$lib/server/ingest';
-import { ingestUploadedFile } from '$lib/server/ingest-file';
+import { detectFileType, ingestUploadedFile } from '$lib/server/ingest-file';
 import {
 	checkRateLimit,
 	createSubmission,
@@ -27,6 +27,20 @@ const DIRECT_INBOX_EMAIL = 'danny+grader@cursus.tools';
 export const prerender = false;
 
 const badRequest = (error: string) => json({ error }, { status: 400, headers: NO_STORE_HEADERS });
+
+const describeInboxDeliveryError = (error: unknown): string => {
+	const message = error instanceof Error ? error.message : '';
+
+	if (message.includes('AI Score email delivery is not configured yet')) {
+		return 'Inbox delivery is not fully configured yet. Check RESEND_API_KEY and AI_SCORE_FROM_EMAIL.';
+	}
+
+	if (message.includes('Email send failed')) {
+		return 'The inbox email was rejected by the provider. Check that AI_SCORE_FROM_EMAIL is a verified Resend sender/domain.';
+	}
+
+	return `We couldn't route this to our inbox right now. Please email ${DIRECT_INBOX_EMAIL} directly.`;
+};
 
 const sanitizeFilename = (value: string): string => {
 	const cleaned = value.replace(/[\\/]+/g, '_').replace(/[^\w.\-() ]+/g, '_');
@@ -100,9 +114,7 @@ const queueManualReview = async (params: {
 	} catch (error) {
 		console.error('AI Score inbox delivery failed', error);
 		return json(
-			{
-				error: `We couldn't route this to our inbox right now. Please email ${DIRECT_INBOX_EMAIL} directly.`
-			},
+			{ error: describeInboxDeliveryError(error) },
 			{ status: 502, headers: NO_STORE_HEADERS }
 		);
 	}
@@ -140,9 +152,7 @@ const deliverFounderInboxAlert = async (params: {
 	} catch (error) {
 		console.error('AI Score inbox delivery failed', error);
 		return json(
-			{
-				error: `We couldn't route this to our inbox right now. Please email ${DIRECT_INBOX_EMAIL} directly.`
-			},
+			{ error: describeInboxDeliveryError(error) },
 			{ status: 502, headers: NO_STORE_HEADERS }
 		);
 	}
@@ -157,6 +167,7 @@ export const POST: RequestHandler = async (event) => {
 	let payload: {
 		email?: unknown;
 		text?: unknown;
+		extracted_text?: unknown;
 		source?: unknown;
 		file?: unknown;
 	};
@@ -172,7 +183,9 @@ export const POST: RequestHandler = async (event) => {
 	}
 
 	const rawText = typeof payload.text === 'string' ? payload.text : '';
+	const rawExtractedText = typeof payload.extracted_text === 'string' ? payload.extracted_text : '';
 	const trimmedNotes = rawText.trim();
+	const trimmedExtractedText = rawExtractedText.trim();
 	const filePayload = isFilePayload(payload.file) ? payload.file : null;
 	const source = sanitizeSource(payload.source);
 	const userAgent = event.request.headers.get('user-agent');
@@ -183,6 +196,12 @@ export const POST: RequestHandler = async (event) => {
 
 	if (trimmedNotes.length > MAX_CHARS) {
 		return badRequest(`Keep typed notes under ${MAX_CHARS} characters.`);
+	}
+
+	if (trimmedExtractedText.length > MAX_CHARS) {
+		return badRequest(
+			`That extracted document is too long to grade safely right now. Keep it under ${MAX_CHARS.toLocaleString()} characters or paste a smaller section.`
+		);
 	}
 
 	let attachment: SubmissionAlertAttachment | null = null;
@@ -213,54 +232,79 @@ export const POST: RequestHandler = async (event) => {
 		null;
 
 	if (filePayload) {
-		const fileIngest = await ingestUploadedFile({
+		fileDetails = {
 			name: filePayload.name,
 			size: filePayload.size,
-			mimeType: filePayload.type || null,
-			contentBase64: filePayload.content_base64,
-			userAgent,
-			source: 'upload'
-		});
-
-		if (!fileIngest.ok) {
-			return await queueManualReview({
-				email,
-				source,
-				bodyText: trimmedNotes,
-				attachment,
-				attachmentSize,
-				fallbackReason: fileIngest.error
-			});
-		}
-
-		const combinedRawText = trimmedNotes
-			? `Operator note:\n${trimmedNotes}\n\n--- Extracted file text ---\n${fileIngest.original_text}`
-			: fileIngest.original_text;
-		const combinedIngest = ingestText({
-			rawText: combinedRawText,
-			originalText: combinedRawText,
-			fileType: fileIngest.metadata.file_type,
-			source: 'upload',
-			userAgent,
-			file: {
-				name: fileIngest.metadata.file_name,
-				size: fileIngest.metadata.file_size,
-				mime: fileIngest.metadata.file_mime
-			}
-		});
-
-		if (!combinedIngest.ok) {
-			return badRequest(combinedIngest.error);
-		}
-
-		normalizedText = combinedIngest.normalized_text;
-		originalText = combinedIngest.original_text;
-		ingestMetadata = combinedIngest.metadata;
-		fileDetails = {
-			name: combinedIngest.metadata.file_name,
-			size: combinedIngest.metadata.file_size,
-			mime: combinedIngest.metadata.file_mime
+			mime: filePayload.type || null
 		};
+
+		if (trimmedExtractedText) {
+			const clientExtractedIngest = ingestText({
+				rawText: trimmedExtractedText,
+				originalText: trimmedExtractedText,
+				fileType: detectFileType(filePayload.name, filePayload.type || null),
+				source: 'upload',
+				userAgent,
+				file: fileDetails
+			});
+
+			if (!clientExtractedIngest.ok) {
+				return badRequest(clientExtractedIngest.error);
+			}
+
+			normalizedText = clientExtractedIngest.normalized_text;
+			originalText = clientExtractedIngest.original_text;
+			ingestMetadata = clientExtractedIngest.metadata;
+		} else {
+			const fileIngest = await ingestUploadedFile({
+				name: filePayload.name,
+				size: filePayload.size,
+				mimeType: filePayload.type || null,
+				contentBase64: filePayload.content_base64,
+				userAgent,
+				source: 'upload'
+			});
+
+			if (!fileIngest.ok) {
+				return await queueManualReview({
+					email,
+					source,
+					bodyText: trimmedNotes,
+					attachment,
+					attachmentSize,
+					fallbackReason: fileIngest.error
+				});
+			}
+
+			const combinedRawText = trimmedNotes
+				? `Operator note:\n${trimmedNotes}\n\n--- Extracted file text ---\n${fileIngest.original_text}`
+				: fileIngest.original_text;
+			const combinedIngest = ingestText({
+				rawText: combinedRawText,
+				originalText: combinedRawText,
+				fileType: fileIngest.metadata.file_type,
+				source: 'upload',
+				userAgent,
+				file: {
+					name: fileIngest.metadata.file_name,
+					size: fileIngest.metadata.file_size,
+					mime: fileIngest.metadata.file_mime
+				}
+			});
+
+			if (!combinedIngest.ok) {
+				return badRequest(combinedIngest.error);
+			}
+
+			normalizedText = combinedIngest.normalized_text;
+			originalText = combinedIngest.original_text;
+			ingestMetadata = combinedIngest.metadata;
+			fileDetails = {
+				name: combinedIngest.metadata.file_name,
+				size: combinedIngest.metadata.file_size,
+				mime: combinedIngest.metadata.file_mime
+			};
+		}
 	} else {
 		const textIngest = ingestText({
 			rawText: trimmedNotes,
@@ -278,7 +322,7 @@ export const POST: RequestHandler = async (event) => {
 		ingestMetadata = textIngest.metadata;
 	}
 
-	const founderBodyText = attachment ? trimmedNotes : originalText;
+	const founderBodyText = trimmedExtractedText || (attachment ? trimmedNotes : originalText);
 	const clientIp = getClientIp(event);
 	const ipHash = await hashIp(clientIp);
 
