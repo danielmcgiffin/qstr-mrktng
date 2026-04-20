@@ -1,5 +1,5 @@
 export const INGEST_MIN_CHARS = 100;
-export const INGEST_MAX_CHARS = 50_000;
+export const INGEST_MAX_CHARS = 150_000;
 
 export type IngestFileType = 'paste' | 'txt' | 'md' | 'docx' | 'pptx' | 'pdf' | 'html' | 'unknown';
 export type IngestSource = 'paste' | 'upload';

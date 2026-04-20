@@ -13,7 +13,9 @@ const COMMON_RULES = `You are an operational document analyzer for Cursus Tools.
 - If any listed disqualifying pattern is clearly present, cap the score at the stated partial credit value, or 0 when the pattern dominates.
 - Reasoning must quote or paraphrase concrete evidence from the submitted text, not give generic advice.
 - Populate disqualifiers_present with the specific patterns observed, drawn from the rubric's disqualifying list. Use an empty array only when none are present.
-- The summary and pathology details MUST be written in multiple short paragraphs for readability (use double newlines \`\\n\\n\` to separate paragraphs).
+- The summary and pathology details MUST be concise, direct, and action-oriented.
+- Focus on the "so what": what is structurally broken and why does it matter operationally? No fluff or wordy essays.
+- Use bullet points (\`- \`) extensively for readability instead of long paragraphs.
 - Use **bold** markdown (\`**text**\`) when referring to specific sections, steps, or quotes from the document in your summaries and pathology details.
 </rules>`;
 

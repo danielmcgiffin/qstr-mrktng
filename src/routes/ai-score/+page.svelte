@@ -1,7 +1,7 @@
 <script lang="ts">
 	import type { GraderResponse } from '$lib/grader';
 	import { trackEvent } from '$lib/analytics';
-	import { MAX_CHARS, validateInput } from '$lib/grader';
+	import { MAX_CHARS, WARNING_CHARS, validateInput } from '$lib/grader';
 
 	type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
 	type SubmitRouteResponse =
@@ -65,6 +65,7 @@
 	);
 
 	const charsUsed = $derived(sopText.trim().length);
+	const showSizeWarning = $derived(charsUsed > WARNING_CHARS);
 	const hasFile = $derived(fileMeta !== null);
 	const submitLabel = $derived(
 		hasFile
@@ -441,7 +442,8 @@
 						</label>
 
 						<label class="mt-4 block space-y-2 text-sm">
-							<span class="text-[rgb(var(--surface-text-strong))]">SOP text (100–50,000 chars)</span
+							<span class="text-[rgb(var(--surface-text-strong))]"
+								>SOP text (100–150,000 chars)</span
 							>
 							<textarea
 								bind:value={sopText}
@@ -453,13 +455,27 @@
 						</label>
 
 						<div class="mt-3 flex items-center justify-between text-xs text-[rgb(var(--muted))]">
-							<span>{charsUsed} / {MAX_CHARS}</span>
+							<span class={showSizeWarning ? 'font-semibold text-amber-600' : ''}
+								>{charsUsed.toLocaleString()} / {MAX_CHARS.toLocaleString()}</span
+							>
 							<span
 								>{hasFile
 									? 'File ingest → inline grade or inbox fallback'
 									: 'Text submit → inbox + instant result'}</span
 							>
 						</div>
+
+						{#if showSizeWarning}
+							<div
+								class="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900"
+							>
+								<p>
+									<strong>Heads up:</strong> This document is larger than most processes. We'll grade
+									it as a whole — but you might get sharper insights by submitting individual processes
+									separately.
+								</p>
+							</div>
+						{/if}
 
 						<div class="mt-5 space-y-2 text-sm">
 							<span class="text-[rgb(var(--surface-text-strong))]"
@@ -568,8 +584,8 @@
 							>
 								<p class="text-sm font-semibold text-[rgb(var(--text))]">Instant path</p>
 								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									Paste 100–50,000 characters and get inline AI and Human readiness scores, summary,
-									and top pathologies while your submission also lands in our inbox.
+									Paste 100–150,000 characters and get inline AI and Human readiness scores,
+									summary, and top pathologies while your submission also lands in our inbox.
 								</p>
 							</div>
 							<div

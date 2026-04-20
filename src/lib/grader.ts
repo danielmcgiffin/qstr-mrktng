@@ -1,6 +1,7 @@
 import type { LetterGrade } from '$lib/grader/rubric';
 
-export const MAX_CHARS = 50_000;
+export const MAX_CHARS = 150_000;
+export const WARNING_CHARS = 75_000;
 export const MIN_CHARS = 100;
 
 export type InputValidationResult =
