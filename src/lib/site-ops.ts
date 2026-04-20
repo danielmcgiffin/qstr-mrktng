@@ -8,6 +8,10 @@ export type StepItem = { n: string; title: string; desc: string };
 export type FaqItem = { q: string; a: string };
 export type DetailItem = { title: string; desc: string };
 
+const demoHref = 'https://qstr.cursus.tools/demo/process';
+const signupHref =
+	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ops_hero';
+
 export const site = {
 	brand: 'Quaestor',
 
@@ -15,32 +19,43 @@ export const site = {
 		{ label: 'Home', href: '/' },
 		{ label: 'Method', href: '/method' },
 		{ label: 'Blog', href: 'https://blog.cursus.tools' },
-		{ label: 'Demo', href: 'https://qstr.cursus.tools/demo/process' },
+		{ label: 'Demo', href: demoHref },
 		{ label: 'Partners', href: '/partners' },
 		{ label: 'Contact', href: '/contact' }
 	] satisfies NavItem[],
 
 	navCta: {
-		label: 'Book a call',
-		href: 'https://cal.com/danny-cursus/15min'
+		label: 'Get my AI-readiness score',
+		href: '/ai-score'
 	} satisfies CTA,
 
 	// ───────────────────────────────────────────
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
-		kicker: 'Your Operational Atlas',
+		kicker: 'Your operational atlas',
 		headline: 'No more',
+		rotatingWords: [
+			'dead docs',
+			'"ask Sarah"',
+			'dropped balls',
+			'wiki sprawl',
+			'tribal ops',
+			'"who does this?"',
+			'SOP graveyards',
+			'bad handoffs'
+		],
 		subhead:
 			'Quaestor maps who does what, in which system, as a connected graph — so your team finds answers instead of asking you.',
 		primaryCta: {
 			label: 'See it in action',
-			href: 'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=hero'
+			href: signupHref
 		},
 		secondaryCta: { label: 'Read the method', href: '/method' }
 	} satisfies {
 		kicker: string;
 		headline: string;
+		rotatingWords: string[];
 		subhead: string;
 		primaryCta: CTA;
 		secondaryCta: CTA;
@@ -56,13 +71,13 @@ export const site = {
 	},
 
 	// ───────────────────────────────────────────
-	// "FOR YOU" — the emotional hook
-	// Dual-ICP: owner reads their own pain,
-	// consultant reads every client they've inherited
+	// PAIN
 	// ───────────────────────────────────────────
 	forYou: {
-		eyebrow: 'You Know the Feeling',
-		headline: 'This is how it breaks',
+		eyebrow: 'You know the feeling',
+		headline: 'This is how it breaks.',
+		intro:
+			'The process exists somewhere. The team still asks the same person. The business keeps falling back onto memory right when you need it to run cleanly.',
 		bullets: [
 			"The process lives in someone's head and three Slack threads from 2022.",
 			"The SOP exists. It's in a folder somewhere. Nobody's opened it since it was written.",
@@ -70,22 +85,23 @@ export const site = {
 			'A key person leaves and three months of context walks out the door with them.'
 		],
 		punchline:
-			"The problem isn't missing documentation — it's that nothing is connected to anything."
+			"The problem isn't missing documentation. It's that nothing is connected to anything."
 	} satisfies {
 		eyebrow: string;
 		headline: string;
+		intro: string;
 		bullets: string[];
 		punchline: string;
 	},
 
 	// ───────────────────────────────────────────
-	// SHADOW OPS
+	// DIAGNOSIS
 	// ───────────────────────────────────────────
 	shadowOps: {
-		eyebrow: 'Shadow Ops',
-		headline: 'The hidden operating system inside your business',
+		eyebrow: 'Shadow ops',
+		headline: 'The hidden operating system inside your business.',
 		subhead:
-			'Shadow Ops is the load-bearing knowledge trapped in founders, long-tenure team members, and old message threads. It works right up until someone is out sick, quits, or gets overloaded.',
+			'Shadow ops is the load-bearing knowledge trapped in founders, long-tenure team members, and old message threads. It works right up until someone is out sick, quits, or gets overloaded.',
 		points: [
 			{
 				title: 'Human API',
@@ -111,9 +127,10 @@ export const site = {
 	// HOW IT WORKS
 	// ───────────────────────────────────────────
 	howItWorks: {
-		eyebrow: 'How It Works',
+		eyebrow: 'How it works',
 		headline: 'Map it once. Keep it alive.',
-		subhead: 'Start with the workflow that hurts the most. Let the structure grow from there.',
+		subhead:
+			'Start with the workflow that hurts the most. Map the roles, steps, systems, decisions, and standards. Then give the team something they can actually use instead of another folder they have to interpret.',
 		steps: [
 			{
 				n: '01',
@@ -123,17 +140,17 @@ export const site = {
 			{
 				n: '02',
 				title: 'Connect everything',
-				desc: 'Link ownership to steps, steps to systems. The shape of operations becomes visible.'
+				desc: 'Link ownership to steps and steps to systems so the shape of operations becomes visible.'
 			},
 			{
 				n: '03',
 				title: 'Ship it to the team',
-				desc: 'Publish the map. Your team searches, finds, and stops asking you. Answers in three clicks.'
+				desc: 'Publish the map so people can search, find, and stop asking you. Answers in three clicks.'
 			},
 			{
 				n: '04',
 				title: 'Keep it honest',
-				desc: "Stale steps get flagged. Owners get nudged. The map stays current because the system won't let it rot."
+				desc: 'Stale steps get flagged. Owners get nudged. The map stays current because the system will not let it rot quietly.'
 			}
 		]
 	} satisfies {
@@ -144,45 +161,10 @@ export const site = {
 	},
 
 	// ───────────────────────────────────────────
-	// SIDE-BY-SIDE CARDS
-	// ───────────────────────────────────────────
-	howItWorksSide: {
-		cards: [
-			{
-				title: 'What you get',
-				items: [
-					{ k: 'Roles', v: 'who owns what' },
-					{ k: 'Processes', v: 'what happens, step by step' },
-					{ k: 'Systems', v: 'where the work lives' },
-					{ k: 'Links', v: 'answers in 3 clicks' }
-				]
-			},
-			{
-				title: 'What it replaces',
-				items: [
-					{ k: 'Wikis', v: 'page sprawl nobody reads' },
-					{ k: 'Folders', v: 'lost context, stale docs' },
-					{ k: 'Slack', v: 'load-bearing threads' },
-					{ k: 'Your head', v: 'the real single point of failure' }
-				]
-			}
-		]
-	},
-
-	// ───────────────────────────────────────────
-	// IMPLEMENTATION CALLOUT
-	// ───────────────────────────────────────────
-	implementationCallout: {
-		headline: 'Is the idea of setting up a new system giving you a headache already?',
-		text: "Most teams get their first bottleneck mapped in a single sitting. If you'd rather have us do it with you, we offer implementation sessions to get your atlas built and your team trained.",
-		cta: { label: 'Book a call', href: 'https://cal.com/danny-cursus/15min' }
-	},
-
-	// ───────────────────────────────────────────
-	// FEATURES
+	// SUPPORTING DETAIL
 	// ───────────────────────────────────────────
 	features: {
-		eyebrow: 'Why Quaestor',
+		eyebrow: 'What people can actually use',
 		headline: 'A map beats a folder. Ownership beats guessing.',
 		subhead: 'Everything connects. Everything has an owner. Everything stays current.',
 		items: [
@@ -197,24 +179,9 @@ export const site = {
 				icon: 'refresh-cw'
 			},
 			{
-				title: 'The vacation test',
-				desc: 'When the map is real, the owner can leave for a week without everything falling apart.',
-				icon: 'palmtree'
-			},
-			{
 				title: 'Stale steps get flagged',
 				desc: 'Ownership is explicit. When a linked system changes, affected steps surface before they hurt.',
 				icon: 'bell-ring'
-			},
-			{
-				title: 'Dynamic outputs',
-				desc: 'Onboarding guides, role charters, process playbooks — assembled from the graph, not written by hand.',
-				icon: 'users'
-			},
-			{
-				title: 'Deploys across engagements',
-				desc: "Same framework, different businesses. The operating model works whether it's one company or ten.",
-				icon: 'trending-up'
 			}
 		]
 	} satisfies {
@@ -229,7 +196,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	proof: {
 		eyebrow: 'Proof in the product',
-		headline: 'What buyers see in the first 15 minutes',
+		headline: 'What buyers see in the first 15 minutes.',
 		subhead:
 			'The demo is built around one bottleneck workflow so prospects can see immediate contrast with static docs.',
 		items: [
@@ -239,11 +206,11 @@ export const site = {
 			},
 			{
 				title: 'Role portal answers real questions',
-				desc: 'Click into Ops Manager and see every connected process and system in one place — no scavenger hunt.'
+				desc: 'Click into a role and see every connected process and system in one place. No scavenger hunt.'
 			},
 			{
 				title: 'Dynamic onboarding output',
-				desc: 'Generate an Operations Manager guide from atomic knowledge in the graph, on demand.'
+				desc: 'Generate a guide from atomic knowledge in the graph, on demand, instead of writing it all by hand.'
 			}
 		]
 	} satisfies {
@@ -259,12 +226,12 @@ export const site = {
 	pricing: pricingContent,
 
 	// ───────────────────────────────────────────
-	// FAQ — dual-ICP, objection-resolving
+	// FAQ
 	// ───────────────────────────────────────────
 	faq: {
-		eyebrow: 'FAQ',
-		headline: 'Answers, without the runaround',
-		subhead: 'Less hunting, less asking, fewer dropped balls.',
+		eyebrow: 'What people ask next',
+		headline: 'What people ask next',
+		subhead: 'Short answers to the last few reasons people hesitate.',
 		items: [
 			{
 				q: 'How is this different from Notion / Confluence / a wiki?',
@@ -281,14 +248,6 @@ export const site = {
 			{
 				q: 'Is this just another tool I have to maintain?',
 				a: "Every workflow has a named owner and a review date. Stale steps get flagged automatically when linked systems change. The maintenance isn't extra work on top of operations — it's built into how the business already runs."
-			},
-			{
-				q: 'Who is this for?',
-				a: "Teams where operational knowledge is stuck in one person's head — and anyone helping those teams get unstuck. Whether you're the founder who can't take a week off or the operator building the systems so they can, the map is the same."
-			},
-			{
-				q: 'Can I use this across multiple clients?',
-				a: 'Yes. The operating model — roles, processes, systems — works the same way regardless of industry or size. If you run ops engagements for multiple businesses, each client gets their own map built on the same framework.'
 			}
 		]
 	} satisfies {
@@ -299,10 +258,23 @@ export const site = {
 	},
 
 	// ───────────────────────────────────────────
-	// FOOTER
+	// FINAL CTA
 	// ───────────────────────────────────────────
+	finalCta: {
+		headline: 'Start with the process that hurts the most.',
+		text: 'Map one workflow, make the handoffs clear, and see how quickly the business stops routing everything back through you.',
+		cta: {
+			label: 'Get my AI-readiness score',
+			href: '/ai-score'
+		}
+	} satisfies {
+		headline: string;
+		text: string;
+		cta: CTA;
+	},
+
 	footer: {
-		tagline: 'Your Operational Atlas',
+		tagline: 'Handle Your Business.',
 		copyrightName: 'Quaestor'
 	} as const
 } as const;

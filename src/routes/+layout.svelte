@@ -5,6 +5,7 @@
 	import { page } from '$app/stores';
 	import { trackEvent } from '$lib/analytics';
 	import { site } from '$lib/site';
+	import { site as partnerSite } from '$lib/site-partners';
 
 	let { children } = $props();
 
@@ -26,8 +27,11 @@
 	};
 
 	const plausibleDomain = env.PUBLIC_PLAUSIBLE_DOMAIN || 'cursus.tools';
+	const siteOrigin = 'https://marketing.dannymcgiffin.com';
 	const demoHref = 'https://qstr.cursus.tools/demo/process';
 	const bookingHref = 'https://cal.com/danny-cursus/15min';
+	const signupHref =
+		'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=header';
 
 	const normalizePath = (pathname: string): string => {
 		const stripped = pathname.replace(/^\/proxy\/\d+(?=\/|$)/, '') || '/';
@@ -42,7 +46,6 @@
 		rel: isBookingLink(href) ? 'noreferrer' : undefined
 	});
 
-	let activeHomeHref = $state<'/' | '/ops'>('/ops');
 	let mobileNavOpen = $state(false);
 
 	const currentPath = $derived.by(() => normalizePath($page.url.pathname));
@@ -52,23 +55,27 @@
 	});
 	const logoSrc = $derived(`${proxyPrefix}/quaestor-logo.png`);
 	const faviconHref = $derived(`${proxyPrefix}/favicon.png`);
-	const currentHomeHref = $derived(
-		currentPath === '/' || currentPath === '/ops' ? currentPath : activeHomeHref
-	);
-	const homeSwitcher = $derived(
-		currentHomeHref === '/ops'
-			? { label: 'Partners', href: '/' }
-			: { label: 'Operators', href: '/ops' }
-	);
+	const ogImageHref = `${siteOrigin}/demo-screenshot.png`;
+	const canonicalHref = $derived(`${siteOrigin}${currentPath}`);
+	const currentHomeHref = $derived(currentPath === '/ops' ? '/ops' : '/');
 	const headerNavItems = $derived([
-		homeSwitcher,
-		...site.nav.filter((item) => !['Home', 'Partners', 'Demo'].includes(item.label))
+		{ label: 'Home', href: '/' },
+		{ label: 'Operators', href: '/ops' },
+		...site.nav.filter((item) => !['Home', 'Partners', 'Demo'].includes(item.label)),
+		{ label: 'Partners', href: '/partners' }
 	]);
 	const headerCtas = $derived.by((): { primary: HeaderCta; secondary: HeaderCta } => {
 		if (currentPath === '/partners') {
+			if (partnerSite.partnerApply.live) {
+				return {
+					primary: { label: partnerSite.partnerApply.label, href: partnerSite.partnerApply.href },
+					secondary: { label: 'Book a partner call', href: bookingHref }
+				};
+			}
+
 			return {
-				primary: { label: 'Become a partner', href: '#partner-intake' },
-				secondary: { label: 'Book a quick call', href: bookingHref }
+				primary: { label: 'Book a partner call', href: bookingHref },
+				secondary: { label: 'See the Demo', href: demoHref }
 			};
 		}
 
@@ -80,26 +87,12 @@
 		}
 
 		return {
-			primary: { label: 'View Partner Program', href: '/partners' },
-			secondary: { label: 'See the Demo', href: demoHref }
+			primary: { label: 'Start free', href: signupHref },
+			secondary: { label: 'Explore the demo', href: demoHref }
 		};
 	});
 	const primaryHeaderCtaAttrs = $derived(getHeaderCtaAttrs(headerCtas.primary.href));
 	const secondaryHeaderCtaAttrs = $derived(getHeaderCtaAttrs(headerCtas.secondary.href));
-
-	$effect(() => {
-		const stored = window.localStorage.getItem('qstr:last-home-href');
-		if (stored === '/' || stored === '/ops') {
-			activeHomeHref = stored;
-		}
-	});
-
-	$effect(() => {
-		if (currentPath === '/' || currentPath === '/ops') {
-			activeHomeHref = currentPath;
-			window.localStorage.setItem('qstr:last-home-href', currentPath);
-		}
-	});
 
 	$effect(() => {
 		void currentPath;
@@ -107,7 +100,7 @@
 	});
 
 	const trackLinkClick = (href: string, location: string) => {
-		if (href === '#partner-intake' || href.includes('/partners')) {
+		if (href === '#partner-intake' || href.includes('/partners') || href.includes('tally.so')) {
 			trackEvent('partner_intake_click', { location });
 			return;
 		}
@@ -153,6 +146,13 @@
 
 	// WebMCP Tool Registration
 	$effect(() => {
+		if (typeof document === 'undefined') return;
+
+		document.body.classList.add('paper-theme');
+		return () => document.body.classList.remove('paper-theme');
+	});
+
+	$effect(() => {
 		if (typeof window === 'undefined') return;
 
 		const navigatorWithModelContext = window.navigator as NavigatorWithModelContext;
@@ -190,6 +190,14 @@
 
 <svelte:head>
 	<link rel="icon" type="image/png" href={faviconHref} />
+	<link rel="canonical" href={canonicalHref} />
+	<meta property="og:site_name" content="Quaestor" />
+	<meta property="og:type" content={currentPath.startsWith('/method/') ? 'article' : 'website'} />
+	<meta property="og:url" content={canonicalHref} />
+	<meta property="og:image" content={ogImageHref} />
+	<meta property="og:image:alt" content="Quaestor operational atlas interface preview." />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content={ogImageHref} />
 	<script
 		defer
 		data-domain={plausibleDomain}
@@ -198,18 +206,18 @@
 </svelte:head>
 
 <header
-	class="sticky top-0 z-50 border-b border-transparent bg-black/70 backdrop-blur-xl supports-[backdrop-filter]:bg-black/50"
-	style="border-image: linear-gradient(to right, transparent, rgba(255,255,255,0.08), transparent) 1;"
+	class="sticky top-0 z-50 border-b border-transparent bg-[rgb(var(--bg-elev))]/90 shadow-[0_18px_48px_rgb(103_80_54_/_0.08)] backdrop-blur-xl"
+	style="border-image: linear-gradient(to right, transparent, rgba(118,94,67,0.18), transparent) 1;"
 >
 	<div class="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6">
-		<a href={currentHomeHref} class="flex items-center gap-3">
+		<a href="/" class="flex items-center gap-3">
 			<img src={logoSrc} alt={`${site.brand} logo`} class="h-8 w-auto" loading="eager" />
 		</a>
 
-		<nav class="hidden items-center gap-6 md:flex">
+		<nav class="hidden items-center gap-10 md:flex lg:gap-12">
 			{#each headerNavItems as item}
 				<a
-					class="text-sm text-[rgb(var(--muted))] transition-colors duration-200 hover:text-white"
+					class="text-sm text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:text-[rgb(var(--accent))]"
 					href={item.href}
 					onclick={() => trackNavClick(item.label, item.href)}
 				>
@@ -218,9 +226,9 @@
 			{/each}
 		</nav>
 
-		<div class="hidden items-center gap-2 md:flex">
+		<div class="hidden items-center gap-3 md:flex">
 			<a
-				class="rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-white/90 transition-colors duration-200 hover:bg-white/10"
+				class="rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-white/10 hover:text-[rgb(var(--text))]"
 				href={headerCtas.secondary.href}
 				target={secondaryHeaderCtaAttrs.target}
 				rel={secondaryHeaderCtaAttrs.rel}
@@ -229,7 +237,7 @@
 				{headerCtas.secondary.label}
 			</a>
 			<a
-				class="inline-flex items-center gap-2 rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition hover:brightness-110"
+				class="inline-flex items-center gap-2 rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-semibold text-[rgb(var(--bg-elev))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition hover:brightness-110"
 				href={headerCtas.primary.href}
 				target={primaryHeaderCtaAttrs.target}
 				rel={primaryHeaderCtaAttrs.rel}
@@ -240,15 +248,14 @@
 		</div>
 
 		<button
-			class="inline-flex items-center gap-2 rounded-xl border border-[rgb(var(--border))] bg-white/5 px-3 py-2 text-sm font-medium text-white/90 transition-colors duration-200 hover:bg-white/10 md:hidden"
+			class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-white/5 text-lg font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-white/10 hover:text-[rgb(var(--text))] md:hidden"
 			type="button"
 			aria-expanded={mobileNavOpen}
 			aria-controls="mobile-nav-menu"
 			aria-label={mobileNavOpen ? 'Close navigation menu' : 'Open navigation menu'}
 			onclick={() => (mobileNavOpen = !mobileNavOpen)}
 		>
-			<span>{mobileNavOpen ? 'Close' : 'Menu'}</span>
-			<span class="text-base leading-none">{mobileNavOpen ? '✕' : '☰'}</span>
+			<span class="leading-none">{mobileNavOpen ? '✕' : '☰'}</span>
 		</button>
 	</div>
 
@@ -258,7 +265,7 @@
 				<div class="space-y-2">
 					{#each headerNavItems as item}
 						<a
-							class="block rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-white/90 transition-colors duration-200 hover:bg-white/8"
+							class="block rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-white/8 hover:text-[rgb(var(--accent))]"
 							href={item.href}
 							onclick={() => handleMobileNavClick(item.label, item.href)}
 						>
@@ -269,7 +276,7 @@
 
 				<div class="mt-4 grid gap-2">
 					<a
-						class="block rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-3 text-center text-sm font-medium text-white/90 transition-colors duration-200 hover:bg-white/10"
+						class="block rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-3 text-center text-sm font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-white/10 hover:text-[rgb(var(--text))]"
 						href={headerCtas.secondary.href}
 						target={secondaryHeaderCtaAttrs.target}
 						rel={secondaryHeaderCtaAttrs.rel}
@@ -278,7 +285,7 @@
 						{headerCtas.secondary.label}
 					</a>
 					<a
-						class="block rounded-xl bg-[rgb(var(--accent))] px-4 py-3 text-center text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition hover:brightness-110"
+						class="block rounded-xl bg-[rgb(var(--accent))] px-4 py-3 text-center text-sm font-semibold text-[rgb(var(--bg-elev))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition hover:brightness-110"
 						href={headerCtas.primary.href}
 						target={primaryHeaderCtaAttrs.target}
 						rel={primaryHeaderCtaAttrs.rel}

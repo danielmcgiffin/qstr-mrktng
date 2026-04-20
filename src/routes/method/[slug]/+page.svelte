@@ -66,7 +66,7 @@
 				<a class="group flex flex-col gap-1 text-left" href={methodPath(data.prev.slug)}>
 					<span class="text-xs text-[rgb(var(--muted))]/60">← Previous</span>
 					<span
-						class="text-sm font-medium text-[rgb(var(--muted))] transition-colors duration-200 group-hover:text-white"
+						class="text-sm font-medium text-[rgb(var(--muted))] transition-colors duration-200 group-hover:text-[rgb(var(--surface-text-strong))]"
 						>{data.prev.title}</span
 					>
 				</a>
@@ -78,7 +78,7 @@
 				<a class="group flex flex-col items-end gap-1 text-right" href={methodPath(data.next.slug)}>
 					<span class="text-xs text-[rgb(var(--muted))]/60">Next →</span>
 					<span
-						class="text-sm font-medium text-[rgb(var(--muted))] transition-colors duration-200 group-hover:text-white"
+						class="text-sm font-medium text-[rgb(var(--muted))] transition-colors duration-200 group-hover:text-[rgb(var(--surface-text-strong))]"
 						>{data.next.title}</span
 					>
 				</a>
@@ -86,7 +86,7 @@
 				<a class="group flex flex-col items-end gap-1 text-right" href="/contact">
 					<span class="text-xs text-[rgb(var(--muted))]/60">Done →</span>
 					<span
-						class="text-sm font-medium text-[rgb(var(--muted))] transition-colors duration-200 group-hover:text-white"
+						class="text-sm font-medium text-[rgb(var(--muted))] transition-colors duration-200 group-hover:text-[rgb(var(--surface-text-strong))]"
 						>Talk to us</span
 					>
 				</a>

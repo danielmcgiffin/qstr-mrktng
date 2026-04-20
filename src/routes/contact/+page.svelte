@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { trackEvent } from '$lib/analytics';
-	import StarfieldBackground from '$lib/components/StarfieldBackground.svelte';
 </script>
 
 <svelte:head>
@@ -13,19 +12,11 @@
 
 <div class="min-h-screen overflow-x-hidden bg-[rgb(var(--bg))] text-[rgb(var(--text))]">
 	<div class="relative">
-		<div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-			<StarfieldBackground variant="soft" />
-			<div
-				class="absolute top-[-28%] left-1/2 h-[720px] w-[720px] -translate-x-1/2 rounded-full bg-white/[0.04] blur-3xl"
-			></div>
-			<div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/16 to-black/45"></div>
-		</div>
-
 		<section class="relative py-20 md:py-24">
 			<div class="mx-auto w-full max-w-5xl px-6">
 				<div class="mx-auto max-w-3xl text-center">
 					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
+						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--accent))]/20 bg-[rgb(var(--accent))]/5 px-3 py-1 text-xs text-[rgb(var(--accent))]"
 					>
 						Contact
 					</span>
@@ -55,7 +46,7 @@
 						</a>
 						<div class="mt-3">
 							<a
-								class="inline-flex text-sm text-[rgb(var(--muted))] hover:text-white"
+								class="inline-flex text-sm text-[rgb(var(--muted))] hover:text-[rgb(var(--surface-text-strong))]"
 								href="https://cal.com/danny-cursus/15min"
 								target="_blank"
 								rel="noreferrer"
@@ -73,7 +64,7 @@
 							bottleneck workflow and scope rollout support.
 						</p>
 						<a
-							class="mt-6 inline-flex rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-white/90 hover:bg-white/10"
+							class="mt-6 inline-flex rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-[rgb(var(--surface-text-body))] hover:bg-white/10"
 							href="https://cal.com/danny-cursus/15min"
 							target="_blank"
 							rel="noreferrer"

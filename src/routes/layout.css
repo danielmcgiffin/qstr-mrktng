@@ -1,3 +1,101 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+:global(body.paper-theme [class~='text-white']),
+:global(body.paper-theme .text-white),
+:global(body.paper-theme .hover\:text-white:hover),
+:global(body.paper-theme .group:hover .group-hover\:text-white) {
+	color: rgb(var(--surface-text-strong)) !important;
+}
+
+:global(body.paper-theme [class~='text-white/90']),
+:global(body.paper-theme .text-white\/90),
+:global(body.paper-theme .hover\:text-white\/90:hover),
+:global(body.paper-theme .group:hover .group-hover\:text-white\/90) {
+	color: rgb(var(--surface-text-body)) !important;
+}
+
+:global(body.paper-theme [class~='text-white/80']),
+:global(body.paper-theme .text-white\/80) {
+	color: rgb(var(--surface-text-body)) !important;
+}
+
+:global(body.paper-theme [class~='text-white/70']),
+:global(body.paper-theme [class~='text-white/60']),
+:global(body.paper-theme [class~='text-white/50']),
+:global(body.paper-theme .text-white\/70),
+:global(body.paper-theme .text-white\/60),
+:global(body.paper-theme .text-white\/50) {
+	color: rgb(var(--surface-text-muted)) !important;
+}
+
+:global(body.paper-theme input:not([type='checkbox']):not([type='radio'])),
+:global(body.paper-theme textarea),
+:global(body.paper-theme select) {
+	color: rgb(var(--surface-text-strong)) !important;
+}
+
+:global(body.paper-theme input::placeholder),
+:global(body.paper-theme textarea::placeholder) {
+	color: rgb(var(--surface-text-muted)) !important;
+}
+
+:global(body.paper-theme input::file-selector-button) {
+	color: rgb(var(--surface-text-strong)) !important;
+}
+
+:global(body.paper-theme a[class*='rounded-xl'][class*='text-sm']),
+:global(body.paper-theme button[class*='rounded-xl'][class*='text-sm']),
+:global(body.paper-theme label[class*='rounded-xl'][class*='text-sm']) {
+	line-height: 1.1;
+}
+
+:global(body.paper-theme span[class*='rounded-full'][class*='text-xs']),
+:global(body.paper-theme a[class*='rounded-full'][class*='text-xs']),
+:global(body.paper-theme div[class*='rounded-full'][class*='text-xs']),
+:global(body.paper-theme span[class*='text-[11px]']),
+:global(body.paper-theme div[class*='text-[11px]']) {
+	line-height: 1;
+}
+
+:global(body.paper-theme .bg-black\/70) {
+	background-color: rgb(var(--bg-elev-2) / 0.7) !important;
+}
+
+:global(body.paper-theme .bg-black\/30) {
+	background-color: rgb(var(--bg-elev-2) / 0.58) !important;
+}
+
+:global(body.paper-theme .bg-black\/20) {
+	background-color: rgb(var(--bg-elev-2) / 0.44) !important;
+}
+
+:global(body.paper-theme .bg-white\/5) {
+	background-color: rgb(255 255 255 / 0.62) !important;
+}
+
+:global(body.paper-theme .bg-white\/8) {
+	background-color: rgb(255 255 255 / 0.72) !important;
+}
+
+:global(body.paper-theme .bg-white\/10) {
+	background-color: rgb(255 255 255 / 0.82) !important;
+}
+
+:global(body.paper-theme .border-white\/8) {
+	border-color: rgb(var(--border)) !important;
+}
+
+:global(body.paper-theme .hover\:bg-white\/10:hover) {
+	background-color: rgb(255 255 255 / 0.92) !important;
+}
+
+:global(body.paper-theme .hover\:bg-white\/8:hover) {
+	background-color: rgb(255 255 255 / 0.88) !important;
+}
+
+:global(body.paper-theme [class*='bg-[rgb(var(--accent))]']),
+:global(body.paper-theme [class*='bg-[rgb(var(--accent))]'] *) {
+	color: rgb(var(--surface-text-inverse)) !important;
+}

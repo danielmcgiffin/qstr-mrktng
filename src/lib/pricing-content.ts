@@ -18,56 +18,43 @@ export type PricingContent = {
 	headline: string;
 	subhead: string;
 	plans: PricingPlan[];
+	freeLink?: PricingCta;
 };
+
+const signupBaseHref =
+	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch';
 
 export const pricingContent: PricingContent = {
 	eyebrow: 'Pricing',
-	headline: 'Simple pricing that scales with you',
-	subhead: 'Monthly plans from Stripe. Annual billing options are available at checkout.',
+	headline: 'Ready to get started.',
+	subhead:
+		'Two plans, depending on the size of your team. If you want help getting it mapped, we can connect you with an implementer.',
 	plans: [
 		{
-			name: 'Starter',
-			price: '$49',
-			desc: 'For small teams just getting started, invite up to 11 people to share your workspace.',
-			perks: ['Up to 11 people', 'Shared workspace', 'Monthly billing'],
-			cta: {
-				label: 'Subscribe',
-				href: 'https://checkout.stripe.com/c/pay/prctbl_1TFbsbPXv0uLqE40qDYif6Bq/prctblitm_UE40W3wl1qFxHz#fidkdWxOYHwnPyd1blppbHNgWjA0VlEzdklVXXM1cEl0QDE1T3xDU09cT1xrMWBtM1BzfVVhXWZUYU9mN1YzM0xOcV9KNVc2ZDNCaTZgS3BvTUtrR0g3TDVDZHI1Rmo0MXZWNFNdR0FNVHMyNTV8YUpxYVV%2FVCcpJ3ZwZ3Zmd2x1cWxqa1BrbHRwYGtgdnZAa2RnaWBhJz9jZGl2YHgl'
-			},
-			featured: false
-		},
-		{
 			name: 'Growth',
-			price: '$99',
-			desc: 'For growing teams, invite up to 49 people to your team as you start to formalize and scale operations.',
-			perks: ['Up to 49 people', 'Team workspace', 'Monthly billing'],
+			price: '$149',
+			desc: 'For teams under 25 that need the work to stop routing back through one person.',
+			perks: ['Under 25 people', 'Shared operational atlas', 'Flags and team feedback'],
 			cta: {
-				label: 'Subscribe',
-				href: 'https://checkout.stripe.com/c/pay/prctbl_1TFbsbPXv0uLqE40qDYif6Bq/prctblitm_UE40AXIzHWrB7j#fidkdWxOYHwnPyd1blppbHNgWjA0VlEzdklVXXM1cEl0QDE1T3xDU09cT1xrMWBtM1BzfVVhXWZUYU9mN1YzM0xOcV9KNVc2ZDNCaTZgS3BvTUtrR0g3TDVDZHI1Rmo0MXZWNFNdR0FNVHMyNTV8YUpxYVV%2FVCcpJ3ZwZ3Zmd2x1cWxqa1BrbHRwYGtgdnZAa2RnaWBhJz9jZGl2YHgl'
+				label: 'Start with Growth',
+				href: `${signupBaseHref}&utm_content=pricing_growth`
 			},
-			featured: false
+			featured: true
 		},
 		{
 			name: 'Scale',
 			price: '$299',
-			desc: 'For teams growing quickly, invite up to 200 people to make sure your operations grow with your business.',
-			perks: ['Up to 200 people', 'Team workspace', 'Monthly billing'],
+			desc: 'For teams over 25 that need cleaner handoffs across the business.',
+			perks: ['Over 25 people', 'Shared operational atlas', 'Flags and team feedback'],
 			cta: {
-				label: 'Subscribe',
-				href: 'https://checkout.stripe.com/c/pay/prctbl_1TFbsbPXv0uLqE40qDYif6Bq/prctblitm_UE40MsThQoifvq#fidkdWxOYHwnPyd1blppbHNgWjA0VlEzdklVXXM1cEl0QDE1T3xDU09cT1xrMWBtM1BzfVVhXWZUYU9mN1YzM0xOcV9KNVc2ZDNCaTZgS3BvTUtrR0g3TDVDZHI1Rmo0MXZWNFNdR0FNVHMyNTV8YUpxYVV%2FVCcpJ3ZwZ3Zmd2x1cWxqa1BrbHRwYGtgdnZAa2RnaWBhJz9jZGl2YHgl'
-			},
-			featured: false
-		},
-		{
-			name: 'Free',
-			price: '$0',
-			desc: "Try Quaestor for free! Make unlimited processes, roles, and systems. Only pay when you're ready to invite others.",
-			perks: ['Unlimited processes', 'Unlimited roles', 'Unlimited systems'],
-			cta: {
-				label: 'Start free',
-				href: 'https://checkout.stripe.com/c/pay/prctbl_1TFbsbPXv0uLqE40qDYif6Bq/prctblitm_UE40ZT1pn3oIPm#fidkdWxOYHwnPyd1blppbHNgWjA0VlEzdklVXXM1cEl0QDE1T3xDU09cT1xrMWBtM1BzfVVhXWZUYU9mN1YzM0xOcV9KNVc2ZDNCaTZgS3BvTUtrR0g3TDVDZHI1Rmo0MXZWNFNdR0FNVHMyNTV8YUpxYVV%2FVCcpJ3ZwZ3Zmd2x1cWxqa1BrbHRwYGtgdnZAa2RnaWBhJz9jZGl2YHgl'
+				label: 'Start with Scale',
+				href: `${signupBaseHref}&utm_content=pricing_scale`
 			},
 			featured: false
 		}
-	]
+	],
+	freeLink: {
+		label: 'Or start free →',
+		href: `${signupBaseHref}&utm_content=pricing_free_link`
+	}
 };

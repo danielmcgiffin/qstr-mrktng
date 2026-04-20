@@ -8,6 +8,10 @@ export type StepItem = { n: string; title: string; desc: string };
 export type FaqItem = { q: string; a: string };
 export type DetailItem = { title: string; desc: string };
 
+const demoHref = 'https://qstr.cursus.tools/demo/process';
+const signupBaseHref =
+	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch';
+
 export const site = {
 	brand: 'Quaestor',
 
@@ -15,31 +19,29 @@ export const site = {
 		{ label: 'Home', href: '/' },
 		{ label: 'Partners', href: '/partners' },
 		{ label: 'Method', href: '/method' },
-		{ label: 'Demo', href: 'https://qstr.cursus.tools/demo/process' },
+		{ label: 'Demo', href: demoHref },
 		{ label: 'Blog', href: 'https://blog.cursus.tools' },
 		{ label: 'Contact', href: '/contact' }
 	] satisfies NavItem[],
 
 	navCta: {
-		label: 'Book partner call',
-		href: 'https://cal.com/danny-cursus/15min'
+		label: 'Start free',
+		href: `${signupBaseHref}&utm_content=nav`
 	} satisfies CTA,
 
 	// ───────────────────────────────────────────
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
-		kicker: 'The operational atlas',
-		headline: 'You built the',
+		headline: "It doesn't have to be this hard.",
 		subhead:
-			'You mapped their processes, wrote the SOPs, and trained the team. Six months later, it drifts. Quaestor keeps your work alive after you roll off.',
+			'Quaestor is an operational atlas that makes small businesses work. It makes it easy for everyone to know who does what and how it’s done, so you can stop working in the business and get back to working on it.',
 		primaryCta: {
-			label: 'Book a call',
-			href: 'https://cal.com/danny-cursus/15min'
+			label: 'Start free',
+			href: `${signupBaseHref}&utm_content=hero`
 		},
-		secondaryCta: { label: 'View partner program', href: '/partners' }
+		secondaryCta: { label: 'Explore the demo', href: demoHref }
 	} satisfies {
-		kicker: string;
 		headline: string;
 		subhead: string;
 		primaryCta: CTA;
@@ -52,49 +54,53 @@ export const site = {
 	demo: {
 		gifSrc: '/demo-screenshot.png',
 		posterSrc: '/demo-screenshot.png',
-		alt: 'Quaestor showing connected roles, processes, and systems in one operational map.'
+		alt: 'Quaestor showing a connected operational atlas with roles, processes, and systems.'
 	},
 
 	// ───────────────────────────────────────────
-	// "FOR YOU" — partner-first emotional hook
+	// PAIN
 	// ───────────────────────────────────────────
 	forYou: {
-		eyebrow: 'You know this pattern',
-		headline: 'Great engagement. Dead deliverable.',
+		eyebrow: 'The pattern',
+		headline: 'Everyone knows this story.',
+		intro:
+			'There’s the way you say your business works, and then there’s what actually happens when everything’s exploding. That gap is costing you time, money, and sanity.',
 		bullets: [
-			'You run a strong engagement: process map, SOPs, handoff guidance, team training.',
-			'Once you leave, updates stall and ownership gets fuzzy.',
-			'The founder becomes the help desk again because nobody trusts where answers live.',
-			'By next quarter, your playbook is stale and the same operational fires are back.'
+			'Your people wait on you for every answer.',
+			'If you leave, things stop.',
+			'If your people leave, the work falls back on you.',
+			'The business runs on memory right up until memory fails.'
 		],
-		punchline: "It isn't your method failing. It's the underlying tool model."
+		punchline:
+			'If it only works when you’re around, you don’t have a business. You have a job, and you’re stuck at it.'
 	} satisfies {
 		eyebrow: string;
 		headline: string;
+		intro: string;
 		bullets: string[];
 		punchline: string;
 	},
 
 	// ───────────────────────────────────────────
-	// SHADOW OPS
+	// WHY THIS HAPPENS
 	// ───────────────────────────────────────────
 	shadowOps: {
-		eyebrow: 'Why this keeps happening',
-		headline: "Static docs can't carry live operations",
+		eyebrow: 'Why it keeps breaking',
+		headline: 'The story and the reality keep drifting apart.',
 		subhead:
-			'Document libraries are snapshots. Engagement outcomes need living relationships between people, steps, and systems.',
+			'Static docs capture what someone meant to write down. The work keeps moving. The people doing it keep improvising. Ownership, systems, and standards drift apart until the business routes back through whoever still remembers how it actually works.',
 		points: [
 			{
-				title: 'No connected ownership',
-				desc: 'If ownership is trapped in prose, accountability blurs. Quaestor makes ownership explicit at each action.'
+				title: 'The answer lives in a person',
+				desc: 'If everyone still needs one person to decode the work, the process is not really in the business yet.'
 			},
 			{
-				title: 'No change propagation',
-				desc: "When one role or system changes, static SOPs don't update themselves. The graph does."
+				title: 'The handoff keeps collapsing',
+				desc: 'When handoffs are fuzzy, people stop, wait, and improvise. The owner gets pulled back in.'
 			},
 			{
-				title: 'No retrieval path',
-				desc: 'Teams need answers in context, not folders. Links make the path to truth obvious in a few clicks.'
+				title: 'The doc goes stale quietly',
+				desc: 'What was useful at handoff turns into a graveyard when nothing catches drift.'
 			}
 		]
 	} satisfies {
@@ -108,30 +114,30 @@ export const site = {
 	// HOW IT WORKS
 	// ───────────────────────────────────────────
 	howItWorks: {
-		eyebrow: 'Partner-first workflow',
-		headline: 'Deploy once. Reuse everywhere.',
+		eyebrow: 'How it works',
+		headline: 'This is how it stops falling apart.',
 		subhead:
-			'Use one role-process-system model across clients so your delivery gets faster and your outcomes last longer.',
+			'Start with the process you keep getting sucked into. That’s the alarm bell telling you the work still lives in people’s heads. Write it out step by step: who does what, what system they use, how decisions get made, and what right looks like. When the handoffs get cleaner and you get roped in less, you know it’s working.',
 		steps: [
 			{
 				n: '01',
-				title: 'Scope one bottleneck',
-				desc: 'Start each client with the workflow causing the most interruptions and handoff friction.'
+				title: 'Start where it pulls you back in',
+				desc: 'Begin with the process that keeps routing back through you.'
 			},
 			{
 				n: '02',
-				title: 'Map role → process → system links',
-				desc: 'Capture ownership and execution context directly in the graph during implementation sessions.'
+				title: 'Map the real work',
+				desc: 'Write it out step by step: who does what, which system they use, how they decide, and what right looks like.'
 			},
 			{
 				n: '03',
-				title: 'Publish operational atlas',
-				desc: 'Clients get one place to retrieve answers without routing everything back through leadership.'
+				title: 'Clean up the handoffs',
+				desc: 'When people can move work forward without stopping at your desk, the structure is getting real.'
 			},
 			{
 				n: '04',
-				title: 'Keep it alive after handoff',
-				desc: 'Staleness alerts and explicit owners keep your work current after you roll off.'
+				title: 'Keep it alive',
+				desc: 'Quaestor uses flags so nothing quietly drifts out of date the way static docs do.'
 			}
 		]
 	} satisfies {
@@ -142,78 +148,27 @@ export const site = {
 	},
 
 	// ───────────────────────────────────────────
-	// SIDE-BY-SIDE CARDS
-	// ───────────────────────────────────────────
-	howItWorksSide: {
-		cards: [
-			{
-				title: 'What your clients gain',
-				items: [
-					{ k: 'Clarity', v: 'who owns each action' },
-					{ k: 'Retrieval', v: 'answers in 3 clicks' },
-					{ k: 'Resilience', v: 'less founder dependency' },
-					{ k: 'Continuity', v: 'your work stays live' }
-				]
-			},
-			{
-				title: 'What you stop rebuilding',
-				items: [
-					{ k: 'Bespoke docs', v: 'new stack every client' },
-					{ k: 'Wiki sprawl', v: 'dead pages and drift' },
-					{ k: 'Handoff debt', v: 'unclear ownership edges' },
-					{ k: 'Follow-up cleanup', v: 'post-engagement rework' }
-				]
-			}
-		]
-	},
-
-	// ───────────────────────────────────────────
-	// IMPLEMENTATION CALLOUT
-	// ───────────────────────────────────────────
-	implementationCallout: {
-		headline: 'Need support on your first rollout?',
-		text: 'We can co-pilot your first client deployment, then hand off a repeatable motion your team can run independently.',
-		cta: { label: 'Book a partner call', href: 'https://cal.com/danny-cursus/15min' }
-	},
-
-	// ───────────────────────────────────────────
-	// FEATURES
+	// SUPPORTING DETAIL
 	// ───────────────────────────────────────────
 	features: {
-		eyebrow: 'Why partners choose Quaestor',
-		headline: 'Your outcomes persist after the engagement',
-		subhead:
-			'Quaestor turns your delivery into client infrastructure, not a one-time documentation artifact.',
+		eyebrow: 'What people can actually use',
+		headline: 'The work is visible to the people doing it.',
+		subhead: 'Roles, process steps, and flags give people something they can actually work from.',
 		items: [
 			{
-				title: 'Reusable delivery model',
-				desc: 'One ontology across industries means less reinvention and faster client onboarding.',
-				icon: 'rocket'
-			},
-			{
-				title: 'Explicit handoffs',
-				desc: 'Ownership and transitions are visible at action level, reducing dropped work between teams.',
-				icon: 'refresh-cw'
-			},
-			{
-				title: 'Post-engagement durability',
-				desc: 'Clients keep working from the map after you roll off, preserving your implementation value.',
-				icon: 'palmtree'
-			},
-			{
-				title: 'Automated staleness signals',
-				desc: 'Outdated steps surface automatically so drift is caught before it becomes fire-fighting.',
-				icon: 'bell-ring'
-			},
-			{
-				title: 'Dynamic client outputs',
-				desc: 'Generate role guides and process views from the graph instead of rewriting deliverables by hand.',
+				title: 'Role manual',
+				desc: 'See what a role owns, what processes it touches, and where the work lives.',
 				icon: 'users'
 			},
 			{
-				title: 'Portfolio leverage',
-				desc: 'Manage multiple client environments with a common operating model and consistent implementation quality.',
-				icon: 'trending-up'
+				title: 'Process steps',
+				desc: 'See the steps, the systems, the decisions, and what right looks like.',
+				icon: 'refresh-cw'
+			},
+			{
+				title: 'Flags',
+				desc: 'See what is drifting before the work quietly falls apart again.',
+				icon: 'bell-ring'
 			}
 		]
 	} satisfies {
@@ -228,21 +183,21 @@ export const site = {
 	// ───────────────────────────────────────────
 	proof: {
 		eyebrow: 'Proof',
-		headline: 'What partners can show in week one',
+		headline: 'You could hand this to someone.',
 		subhead:
-			'You can demonstrate concrete operational progress quickly, without waiting for a massive documentation project.',
+			'Open the atlas and click through the work. You can see what a role owns, how a process actually runs, and what needs attention before it breaks. This isn’t another folder full of pages. It’s something another person can actually use.',
 		items: [
 			{
-				title: 'Ownership gaps surface immediately',
-				desc: 'Missing owners and broken handoffs become visible as soon as roles, actions, and systems are linked.'
+				title: 'Role manual',
+				desc: 'Open a role and see what that person owns, what processes they touch, and where the work lives.'
 			},
 			{
-				title: 'Role-level retrieval works on day one',
-				desc: 'Client operators can answer execution questions from role portals instead of Slack archaeology.'
+				title: 'Process steps',
+				desc: 'See the steps, the systems, the decisions, and what right looks like.'
 			},
 			{
-				title: 'Deliverables stay maintainable',
-				desc: 'Generated outputs reflect current graph state, so your implementation doesn’t decay into static artifacts.'
+				title: 'Flags',
+				desc: 'When something drifts, Quaestor surfaces it before the work quietly falls apart again.'
 			}
 		]
 	} satisfies {
@@ -258,36 +213,28 @@ export const site = {
 	pricing: pricingContent,
 
 	// ───────────────────────────────────────────
-	// FAQ — partner-first with direct-team fallback
+	// OBJECTIONS / FAQ
 	// ───────────────────────────────────────────
 	faq: {
-		eyebrow: 'FAQ',
-		headline: 'Partner-first answers',
-		subhead: 'Clear fit, clear motion, clear outcomes.',
+		eyebrow: 'What people ask next',
+		headline: 'What people ask next',
+		subhead: 'Short answers to the last few reasons people hesitate.',
 		items: [
 			{
-				q: 'How is this different from Notion / Confluence / a wiki?',
-				a: 'Wikis store documents. Quaestor stores relationships: who owns each action, in which process, in which system. That structure is why partner deliverables stay useful after rollout instead of drifting into dead pages.'
+				q: 'Is this just another documentation tool?',
+				a: 'No. Legacy documentation tools are built around the writer and the organizer. Quaestor is built around the person doing the work. It treats roles, processes, and systems as first-class, instead of burying the business inside page after page of text.'
 			},
 			{
-				q: 'How quickly can I deploy this in a client engagement?',
-				a: 'Most partners can map one meaningful bottleneck workflow in the first implementation session and show value immediately. You expand from a working map instead of waiting for a complete documentation project.'
+				q: 'How long until it’s useful?',
+				a: 'Start with the process that keeps you chained to your phone. As soon as what’s in your head is in the system, you have something people can use.'
 			},
 			{
-				q: 'What if the client already has SOPs and docs?',
-				a: 'Great — use them as source material. Quaestor links existing documentation to owned actions and systems so retrieval is contextual and maintenance is explicit.'
+				q: 'What if we already have SOPs and docs?',
+				a: 'Use them as source material. Bring them in, clean them up, structure them, and fill the gaps so your existing docs become usable operations instead of another graveyard.'
 			},
 			{
-				q: 'What happens after I roll off with my client?',
-				a: 'The client keeps a living atlas with named owners and staleness signals. Your implementation doesn’t die in a static handoff folder.'
-			},
-			{
-				q: 'Who is the best fit for the partnership program?',
-				a: 'Fractional COOs, ops consultants, integrators, and implementation teams that repeatedly map and stabilize operational workflows for SMB clients.'
-			},
-			{
-				q: 'Can direct operator teams use Quaestor without a partner?',
-				a: 'Yes. Partner-first is our go-to-market motion, but direct teams can still deploy Quaestor and map their first bottleneck workflow with optional implementation support.'
+				q: 'How does it stay current?',
+				a: 'Flags catch drift. People can mark what’s unclear, thin, or outdated. The point is to keep it alive in the flow of work, not wait for an annual cleanup project.'
 			}
 		]
 	} satisfies {
@@ -298,10 +245,26 @@ export const site = {
 	},
 
 	// ───────────────────────────────────────────
+	// FINAL CTA
+	// ───────────────────────────────────────────
+	finalCta: {
+		headline: 'Start with one process.',
+		text: 'Pick the process that keeps pulling you back in. Map it, hand it off, and see what changes.',
+		cta: {
+			label: 'Start free',
+			href: `${signupBaseHref}&utm_content=final_cta`
+		}
+	} satisfies {
+		headline: string;
+		text: string;
+		cta: CTA;
+	},
+
+	// ───────────────────────────────────────────
 	// FOOTER
 	// ───────────────────────────────────────────
 	footer: {
-		tagline: 'The operational atlas',
+		tagline: 'Handle Your Business.',
 		copyrightName: 'Quaestor'
 	} as const
 } as const;

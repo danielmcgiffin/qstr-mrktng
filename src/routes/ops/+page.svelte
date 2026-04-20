@@ -1,21 +1,10 @@
 <script lang="ts">
-	import { BellRing, Palmtree, RefreshCw, Rocket, TrendingUp, Users } from 'lucide-svelte';
 	import { page } from '$app/stores';
 	import RotatingWords from '$lib/components/RotatingWords.svelte';
-	import StarfieldBackground from '$lib/components/StarfieldBackground.svelte';
 	import { trackEvent } from '$lib/analytics';
 	import { site } from '$lib/site-ops';
 
 	const year = new Date().getFullYear();
-
-	const iconMap: Record<string, typeof Rocket> = {
-		rocket: Rocket,
-		'refresh-cw': RefreshCw,
-		palmtree: Palmtree,
-		'bell-ring': BellRing,
-		users: Users,
-		'trending-up': TrendingUp
-	};
 
 	const demoImageSrc = $derived.by(() => {
 		const source = site.demo.gifSrc;
@@ -28,12 +17,8 @@
 	});
 
 	const trackHeroPrimaryCta = () => {
-		trackEvent('hero_cta_click', { location: 'home_hero_primary' });
-		trackEvent('signup_start', { location: 'home_hero_primary' });
-	};
-
-	const trackBookingClick = (location: string) => {
-		trackEvent('booking_click', { location });
+		trackEvent('hero_cta_click', { location: 'ops_hero_primary' });
+		trackEvent('signup_start', { location: 'ops_hero_primary' });
 	};
 
 	const trackDemoClick = (location: string) => {
@@ -42,6 +27,10 @@
 
 	const trackSignupStart = (location: string) => {
 		trackEvent('signup_start', { location });
+	};
+
+	const trackAiScoreClick = (location: string) => {
+		trackEvent('ai_score_click', { location });
 	};
 </script>
 
@@ -55,77 +44,36 @@
 
 <div class="min-h-screen overflow-x-hidden bg-[rgb(var(--bg))] text-[rgb(var(--text))]">
 	<div class="relative">
-		<!-- Background -->
-		<div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-			<StarfieldBackground />
-			<div
-				class="absolute top-[-35%] left-1/2 h-[820px] w-[820px] -translate-x-1/2 rounded-full bg-white/5 blur-3xl"
-			></div>
-			<div
-				class="absolute top-[28%] right-[8%] h-[360px] w-[360px] rounded-full bg-white/5 blur-3xl"
-			></div>
-			<div
-				class="absolute top-[18%] left-[-8%] h-[480px] w-[480px] rounded-full bg-white/[0.03] blur-3xl"
-			></div>
-			<div
-				class="absolute top-[55%] left-[30%] h-[520px] w-[520px] rounded-full bg-white/[0.025] blur-3xl"
-			></div>
-			<div
-				class="absolute top-[65%] right-[-5%] h-[400px] w-[400px] rounded-full bg-white/[0.03] blur-3xl"
-			></div>
-			<div
-				class="absolute top-[10%] left-[60%] h-[280px] w-[280px] rounded-full bg-white/[0.02] blur-3xl"
-			></div>
-			<div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/20 to-black/60"></div>
-			<div
-				class="absolute inset-0 [background-image:radial-gradient(rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:26px_26px] opacity-35"
-			></div>
-		</div>
-
 		<!-- ═══════════════════════════════════════ -->
 		<!-- HERO                                    -->
 		<!-- ═══════════════════════════════════════ -->
-		<section class="relative pt-20 md:pt-28">
-			<div class="mx-auto w-full max-w-6xl px-6">
-				<div class="mx-auto max-w-3xl text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-					>
-						✦ {site.hero.kicker}
-					</span>
+		<section class="relative py-14 md:py-20">
+			<div class="mx-auto w-full max-w-5xl px-6">
+				<div class="mx-auto max-w-4xl text-center">
+					<span class="label-cap">{site.hero.kicker}</span>
 
 					<h1
-						class="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight text-balance text-white md:text-6xl"
+						class="mt-6 text-4xl leading-[1.05] font-semibold tracking-tight text-balance text-[rgb(var(--text))] md:text-6xl"
 					>
-						<span class="grid w-full grid-cols-2 items-baseline">
-							<span class="justify-self-end pr-2 whitespace-nowrap text-white/80"
+						<span class="grid w-full grid-cols-1 items-baseline md:grid-cols-2">
+							<span
+								class="text-center whitespace-nowrap text-[rgb(var(--text-muted))] md:pr-2 md:text-right"
 								>{site.hero.headline}&nbsp;</span
 							>
-							<span class="justify-self-start whitespace-nowrap">
-								<RotatingWords
-									words={[
-										'dead docs',
-										'"ask Sarah"',
-										'dropped balls',
-										'wiki sprawl',
-										'tribal ops',
-										'"who does this?"',
-										'SOP graveyards',
-										'bad handoffs'
-									]}
-								/>
+							<span class="mt-2 text-center whitespace-nowrap md:mt-0 md:text-left">
+								<RotatingWords words={site.hero.rotatingWords} />
 							</span>
 						</span>
 					</h1>
 
 					<p
-						class="mx-auto mt-5 max-w-2xl text-base leading-relaxed text-pretty text-[rgb(var(--muted))] md:text-lg"
+						class="mx-auto mt-6 max-w-3xl text-base leading-relaxed text-pretty text-[rgb(var(--muted))] md:text-lg"
 					>
 						{site.hero.subhead}
 					</p>
 
 					<div
-						class="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row sm:justify-center"
+						class="mt-8 flex w-full flex-col items-center justify-center gap-3 sm:w-auto sm:flex-row"
 					>
 						<a
 							class="w-full min-w-[170px] rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-center text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110 sm:w-auto"
@@ -136,94 +84,58 @@
 						</a>
 
 						<a
-							class="w-full min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-white/90 hover:bg-white/10 sm:w-auto"
+							class="w-full min-w-[170px] rounded-xl border border-[rgb(var(--border-strong))] bg-[rgb(var(--bg-elev))] px-4 py-2 text-center text-sm font-medium text-[rgb(var(--surface-text-strong))] shadow-sm transition hover:border-[rgb(var(--accent))]/30 hover:bg-[rgb(var(--bg-elev-2))] sm:w-auto"
 							href={site.hero.secondaryCta.href}
 						>
 							{site.hero.secondaryCta.label}
-						</a>
-
-						<a
-							class="w-full min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-white/90 hover:bg-white/10 sm:w-auto"
-							href="#pricing"
-						>
-							Pricing
 						</a>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<!-- Demo -->
-		<div class="mt-14">
-			<div class="relative mx-auto max-w-3xl">
-				<div
-					class="rounded-2xl border border-[rgb(var(--border))] bg-gradient-to-b from-white/10 to-white/5 p-2 shadow-2xl"
-				>
-					<div class="overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-black/70">
-						<div class="flex items-center gap-2 border-b border-[rgb(var(--border))] px-4 py-3">
-							<div class="flex gap-1.5">
-								<div class="h-2.5 w-2.5 rounded-full bg-[rgb(var(--accent))]"></div>
-								<div class="h-2.5 w-2.5 rounded-full bg-[rgb(var(--accent))]"></div>
-								<div class="h-2.5 w-2.5 rounded-full bg-[rgb(var(--accent))]"></div>
-							</div>
-							<div class="ml-2 text-xs text-[rgb(var(--muted))]">Demo</div>
-						</div>
-						<img src={demoImageSrc} alt={site.demo.alt} class="block w-full" loading="lazy" />
-					</div>
-				</div>
-				<div
-					class="pointer-events-none absolute -inset-x-8 -inset-y-10 -z-10 bg-gradient-to-r from-white/0 via-white/10 to-white/0 blur-3xl"
-				></div>
-			</div>
-		</div>
-
 		<!-- ═══════════════════════════════════════ -->
-		<!-- FOR YOU — the emotional hook             -->
+		<!-- PAIN                                    -->
 		<!-- ═══════════════════════════════════════ -->
-		<section id="problem" class="relative py-20 md:py-28">
+		<section id="problem" class="relative py-16 md:py-24">
 			<div class="mx-auto w-full max-w-6xl px-6">
-				<div class="mx-auto max-w-2xl text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-					>
-						{site.forYou.eyebrow}
-					</span>
-					<h2 class="mt-5 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
+				<div class="mx-auto max-w-3xl text-center">
+					<h2 class="text-3xl font-semibold tracking-tight text-balance md:text-4xl">
 						{site.forYou.headline}
 					</h2>
+					<p class="mx-auto mt-4 max-w-3xl text-pretty text-[rgb(var(--muted))] md:text-lg">
+						{site.forYou.intro}
+					</p>
 				</div>
 
-				<div class="mx-auto mt-10 max-w-2xl space-y-4">
+				<div class="mx-auto mt-10 grid max-w-5xl gap-4 md:grid-cols-2">
 					{#each site.forYou.bullets as bullet}
 						<div
-							class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-6 py-4"
+							class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-6 py-5"
 						>
-							<p class="text-sm leading-relaxed text-[rgb(var(--muted))]">{bullet}</p>
+							<p class="text-sm leading-relaxed text-[rgb(var(--muted))] md:text-base">{bullet}</p>
 						</div>
 					{/each}
 				</div>
 
-				<p class="mx-auto mt-8 max-w-2xl text-center text-base font-medium text-white md:text-lg">
+				<p
+					class="mx-auto mt-8 max-w-3xl text-center text-lg leading-relaxed font-medium text-[rgb(var(--surface-text-strong))]"
+				>
 					{site.forYou.punchline}
 				</p>
 			</div>
 		</section>
 
 		<!-- ═══════════════════════════════════════ -->
-		<!-- SHADOW OPS                              -->
+		<!-- DIAGNOSIS                               -->
 		<!-- ═══════════════════════════════════════ -->
-		<section id="shadow-ops" class="relative py-20 md:py-28">
+		<section id="shadow-ops" class="relative py-16 md:py-24">
 			<div class="mx-auto w-full max-w-6xl px-6">
 				<div class="mx-auto max-w-3xl text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-					>
-						{site.shadowOps.eyebrow}
-					</span>
-					<h2 class="mt-5 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
+					<h2 class="text-3xl font-semibold tracking-tight text-balance md:text-4xl">
 						{site.shadowOps.headline}
 					</h2>
-					<p class="mx-auto mt-4 max-w-3xl text-pretty text-[rgb(var(--muted))]">
+					<p class="mx-auto mt-4 max-w-3xl text-pretty text-[rgb(var(--muted))] md:text-lg">
 						{site.shadowOps.subhead}
 					</p>
 				</div>
@@ -233,7 +145,9 @@
 						<div
 							class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6"
 						>
-							<h3 class="text-base font-semibold text-white">{point.title}</h3>
+							<h3 class="text-base font-semibold text-[rgb(var(--surface-text-strong))]">
+								{point.title}
+							</h3>
 							<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--muted))]">{point.desc}</p>
 						</div>
 					{/each}
@@ -242,35 +156,41 @@
 		</section>
 
 		<!-- ═══════════════════════════════════════ -->
-		<!-- FEATURES                                -->
+		<!-- MECHANISM                               -->
 		<!-- ═══════════════════════════════════════ -->
-		<section id="features" class="relative py-20 md:py-28">
+		<section id="workflow" class="relative py-16 md:py-24">
 			<div class="mx-auto w-full max-w-6xl px-6">
-				<div class="mx-auto max-w-2xl text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-					>
-						{site.features.eyebrow}
-					</span>
-					<h2 class="mt-5 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
-						{site.features.headline}
+				<div class="mx-auto max-w-3xl text-center">
+					<h2 class="text-3xl font-semibold tracking-tight text-balance md:text-4xl">
+						{site.howItWorks.headline}
 					</h2>
-					<p class="mt-4 text-pretty text-[rgb(var(--muted))]">{site.features.subhead}</p>
+					<p class="mt-4 text-pretty text-[rgb(var(--muted))] md:text-lg">
+						{site.howItWorks.subhead}
+					</p>
 				</div>
 
-				<div class="mt-10 grid gap-4 md:grid-cols-3">
-					{#each site.features.items as f}
-						{@const Icon = iconMap[f.icon]}
+				<div class="mx-auto mt-10 max-w-4xl space-y-3">
+					{#each site.howItWorks.steps as step}
 						<div
-							class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6"
+							class="flex gap-4 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-5"
 						>
-							<div
-								class="mb-3 flex h-9 w-9 items-center justify-center rounded-lg border border-[rgb(var(--border))] bg-white/5"
-							>
-								<Icon size={18} class="text-[rgb(var(--muted))]" />
+							<div class="shrink-0">
+								<div
+									class="inline-flex items-center rounded-full border border-[rgb(var(--accent))] bg-[rgb(var(--bg-panel))] px-2.5 py-1 font-mono text-[11px] text-[rgb(var(--accent))]"
+								>
+									{step.n}
+								</div>
 							</div>
-							<div class="text-base font-semibold">{f.title}</div>
-							<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--muted))]">{f.desc}</p>
+							<div>
+								<h3
+									class="text-sm font-semibold text-[rgb(var(--surface-text-strong))] md:text-base"
+								>
+									{step.title}
+								</h3>
+								<p class="mt-1 text-sm leading-relaxed text-[rgb(var(--muted))] md:text-base">
+									{step.desc}
+								</p>
+							</div>
 						</div>
 					{/each}
 				</div>
@@ -278,123 +198,25 @@
 		</section>
 
 		<!-- ═══════════════════════════════════════ -->
-		<!-- HOW IT WORKS                            -->
-		<!-- ═══════════════════════════════════════ -->
-		<section id="workflow" class="relative py-20 md:py-28">
-			<div class="mx-auto w-full max-w-6xl px-6">
-				<div class="mx-auto max-w-3xl text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-					>
-						{site.howItWorks.eyebrow}
-					</span>
-					<h2 class="mt-5 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
-						{site.howItWorks.headline}
-					</h2>
-					<p class="mt-4 text-pretty text-[rgb(var(--muted))]">{site.howItWorks.subhead}</p>
-				</div>
-
-				<div class="mt-10 grid items-stretch gap-10 md:grid-cols-2 md:gap-12">
-					<div class="flex flex-col">
-						<div class="space-y-3">
-							{#each site.howItWorks.steps as s}
-								<div
-									class="flex gap-4 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
-								>
-									<div class="shrink-0">
-										<div
-											class="inline-flex items-center rounded-full border border-[rgb(var(--border))] bg-black/30 px-2.5 py-1 font-mono text-[11px] text-white/70"
-										>
-											{s.n}
-										</div>
-									</div>
-									<div>
-										<div class="text-sm font-semibold text-white">{s.title}</div>
-										<div class="mt-1 text-sm text-[rgb(var(--muted))]">{s.desc}</div>
-									</div>
-								</div>
-							{/each}
-						</div>
-
-						<div class="mt-8 flex justify-center gap-3">
-							<a
-								class="rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
-								href="#pricing"
-							>
-								See pricing
-							</a>
-							<a
-								class="rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-white/90 hover:bg-white/10"
-								href="/method"
-							>
-								Read the method
-							</a>
-						</div>
-					</div>
-
-					<div class="space-y-4">
-						{#each site.howItWorksSide.cards as c}
-							<div
-								class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6"
-							>
-								<div class="text-sm font-semibold">{c.title}</div>
-
-								{#if c.items}
-									<div class="mt-3 grid gap-3 text-sm text-[rgb(var(--muted))]">
-										{#each c.items as r}
-											<div
-												class="flex items-center justify-between rounded-xl border border-[rgb(var(--border))] bg-black/30 px-4 py-3"
-											>
-												<span>{r.k}</span><span class="font-mono text-xs text-white/60">{r.v}</span>
-											</div>
-										{/each}
-									</div>
-								{/if}
-							</div>
-						{/each}
-					</div>
-				</div>
-			</div>
-		</section>
-
-		<!-- Implementation callout banner -->
-		<div class="relative border-y border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))]">
-			<div
-				class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 py-5 sm:flex-row"
-			>
-				<div class="text-center sm:text-left">
-					<p class="text-sm font-semibold text-white">{site.implementationCallout.headline}</p>
-					<p class="mt-1 text-sm leading-relaxed text-[rgb(var(--muted))]">
-						{site.implementationCallout.text}
-					</p>
-				</div>
-				<a
-					class="shrink-0 rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-white/90 hover:bg-white/10"
-					href={site.implementationCallout.cta.href}
-					target="_blank"
-					rel="noreferrer"
-					onclick={() => trackBookingClick('home_implementation_callout')}
-				>
-					{site.implementationCallout.cta.label} →
-				</a>
-			</div>
-		</div>
-
-		<!-- ═══════════════════════════════════════ -->
 		<!-- PROOF                                   -->
 		<!-- ═══════════════════════════════════════ -->
-		<section id="proof" class="relative py-20 md:py-24">
+		<section id="proof" class="relative py-16 md:py-24">
 			<div class="mx-auto w-full max-w-6xl px-6">
 				<div class="mx-auto max-w-3xl text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-					>
-						{site.proof.eyebrow}
-					</span>
-					<h2 class="mt-5 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
+					<h2 class="text-3xl font-semibold tracking-tight text-balance md:text-4xl">
 						{site.proof.headline}
 					</h2>
-					<p class="mt-4 text-pretty text-[rgb(var(--muted))]">{site.proof.subhead}</p>
+					<p class="mt-4 text-pretty text-[rgb(var(--muted))] md:text-lg">{site.proof.subhead}</p>
+				</div>
+
+				<div class="mx-auto mt-10 max-w-4xl">
+					<div
+						class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-2 shadow-md"
+					>
+						<div class="overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-black/70">
+							<img src={demoImageSrc} alt={site.demo.alt} class="block w-full" loading="lazy" />
+						</div>
+					</div>
 				</div>
 
 				<div class="mt-10 grid gap-4 md:grid-cols-3">
@@ -402,20 +224,46 @@
 						<div
 							class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6"
 						>
-							<h3 class="text-base font-semibold text-white">{item.title}</h3>
+							<h3 class="text-base font-semibold text-[rgb(var(--surface-text-strong))]">
+								{item.title}
+							</h3>
 							<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--muted))]">{item.desc}</p>
 						</div>
 					{/each}
 				</div>
 
-				<div class="mt-8 text-center">
-					<a
-						class="inline-flex min-w-[170px] items-center justify-center rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-white/90 hover:bg-white/10"
-						href="https://qstr.cursus.tools/demo/process"
-						onclick={() => trackDemoClick('home_proof_demo')}
-					>
-						Watch the demo flow →
-					</a>
+				<div class="mx-auto mt-12 max-w-3xl">
+					<h3 class="text-center text-xl font-semibold tracking-tight text-balance md:text-2xl">
+						{site.faq.headline}
+					</h3>
+					<div class="mt-6 space-y-3">
+						{#each site.faq.items as item}
+							<details
+								class="group rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-5"
+							>
+								<summary class="flex cursor-pointer list-none items-center justify-between gap-4">
+									<span class="text-sm font-semibold md:text-base">{item.q}</span>
+									<span
+										class="text-[rgb(var(--surface-text-muted))] transition group-open:rotate-90"
+										>›</span
+									>
+								</summary>
+								<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--muted))] md:text-base">
+									{item.a}
+								</p>
+							</details>
+						{/each}
+					</div>
+
+					<div class="mt-8 text-center">
+						<a
+							class="inline-flex min-w-[170px] items-center justify-center rounded-xl border border-[rgb(var(--border-strong))] bg-[rgb(var(--bg-elev))] px-4 py-2 text-sm font-medium text-[rgb(var(--surface-text-strong))] transition hover:border-[rgb(var(--accent))]/30 hover:bg-[rgb(var(--bg-elev-2))]"
+							href="https://qstr.cursus.tools/demo/process"
+							onclick={() => trackDemoClick('ops_proof_demo')}
+						>
+							See the demo
+						</a>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -423,51 +271,36 @@
 		<!-- ═══════════════════════════════════════ -->
 		<!-- PRICING                                 -->
 		<!-- ═══════════════════════════════════════ -->
-		<section id="pricing" class="relative py-20 md:py-28">
+		<section id="pricing" class="relative py-16 md:py-24">
 			<div class="mx-auto w-full max-w-6xl px-6">
-				<div class="mx-auto max-w-2xl text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-					>
-						{site.pricing.eyebrow}
-					</span>
-					<h2 class="mt-5 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
+				<div class="mx-auto max-w-3xl text-center">
+					<h2 class="text-3xl font-semibold tracking-tight text-balance md:text-4xl">
 						{site.pricing.headline}
 					</h2>
-					<p class="mt-4 text-pretty text-[rgb(var(--muted))]">{site.pricing.subhead}</p>
+					<p class="mt-4 text-pretty text-[rgb(var(--muted))] md:text-lg">{site.pricing.subhead}</p>
 				</div>
 
-				<div class="mt-10 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-					{#each site.pricing.plans as t}
+				<div class="mx-auto mt-10 grid max-w-4xl gap-4 md:grid-cols-2">
+					{#each site.pricing.plans as plan}
 						<div
-							class={'relative flex flex-col rounded-2xl border p-6 shadow-[0_0_0_1px_rgba(255,255,255,0.02)] ' +
-								(t.featured
+							class={'relative flex flex-col rounded-2xl border p-6 shadow-sm ' +
+								(plan.featured
 									? 'border-[rgb(var(--border-strong))] bg-[rgb(var(--bg-elev-2))]'
 									: 'border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))]')}
 						>
-							{#if t.badge}
-								<div class="absolute -top-3 left-1/2 -translate-x-1/2">
-									<span
-										class="inline-flex items-center rounded-full border border-[rgb(var(--border-strong))] bg-white/10 px-3 py-1 text-xs whitespace-nowrap text-white/80"
-									>
-										{t.badge}
-									</span>
-								</div>
-							{/if}
-
-							<div class="flex items-baseline justify-between">
-								<div class="text-lg font-semibold">{t.name}</div>
-								{#if t.price !== 'Custom'}
-									<div class="text-sm text-[rgb(var(--muted))]">/mo</div>
-								{/if}
+							<div class="flex items-baseline justify-between gap-4">
+								<div class="text-lg font-semibold">{plan.name}</div>
+								<div class="text-sm text-[rgb(var(--muted))]">/mo</div>
 							</div>
-							<div class="mt-3 text-3xl font-semibold">{t.price}</div>
-							<div class="mt-2 text-sm text-[rgb(var(--muted))]">{t.desc}</div>
+							<div class="mt-3 text-3xl font-semibold">{plan.price}</div>
+							<div class="mt-2 text-sm text-[rgb(var(--muted))]">{plan.desc}</div>
 
 							<ul class="mt-6 space-y-2 text-sm text-[rgb(var(--muted))]">
-								{#each t.perks as p}
+								{#each plan.perks as perk}
 									<li class="flex items-start gap-2">
-										<span class="mt-0.5 text-white/70">✓</span><span>{p}</span>
+										<span class="mt-0.5 text-[rgb(var(--surface-text-muted))]">✓</span><span
+											>{perk}</span
+										>
 									</li>
 								{/each}
 							</ul>
@@ -475,71 +308,51 @@
 							<div class="mt-auto pt-8">
 								<a
 									class="block w-full rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-center text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
-									href={t.cta.href}
-									onclick={() =>
-										t.cta.href.includes('cal.com')
-											? trackBookingClick(`home_pricing_${t.name.toLowerCase()}`)
-											: trackSignupStart(`home_pricing_${t.name.toLowerCase()}`)}
+									href={plan.cta.href}
+									onclick={() => trackSignupStart(`ops_pricing_${plan.name.toLowerCase()}`)}
 								>
-									{t.cta.label}
+									{plan.cta.label}
 								</a>
 							</div>
 						</div>
 					{/each}
 				</div>
+
+				{#if site.pricing.freeLink}
+					<div class="mt-6 text-center">
+						<a
+							class="inline-flex items-center text-sm font-medium text-[rgb(var(--accent))] hover:text-[rgb(var(--accent-deep))]"
+							href={site.pricing.freeLink.href}
+							onclick={() => trackSignupStart('ops_pricing_free_link')}
+						>
+							{site.pricing.freeLink.label}
+						</a>
+					</div>
+				{/if}
 			</div>
 		</section>
 
 		<!-- ═══════════════════════════════════════ -->
-		<!-- FAQ                                     -->
+		<!-- FINAL CTA                               -->
 		<!-- ═══════════════════════════════════════ -->
-		<section id="faq" class="relative py-20 md:py-28">
-			<div class="mx-auto w-full max-w-6xl px-6">
-				<div class="mx-auto max-w-2xl text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white/5 px-3 py-1 text-xs text-white/80"
-					>
-						{site.faq.eyebrow}
-					</span>
-					<h2 class="mt-5 text-3xl font-semibold tracking-tight text-balance md:text-4xl">
-						{site.faq.headline}
+		<section class="relative py-16 md:py-24">
+			<div class="mx-auto w-full max-w-4xl px-6">
+				<div
+					class="rounded-2xl border border-[rgb(var(--border-strong))] bg-[rgb(var(--bg-elev-2))] px-8 py-10 text-center md:px-12"
+				>
+					<h2 class="text-3xl font-semibold tracking-tight text-balance md:text-4xl">
+						{site.finalCta.headline}
 					</h2>
-					<p class="mt-4 text-pretty text-[rgb(var(--muted))]">{site.faq.subhead}</p>
-				</div>
-
-				<div class="mx-auto mt-10 max-w-3xl space-y-3">
-					{#each site.faq.items as it}
-						<details
-							class="group rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-5"
-						>
-							<summary class="flex cursor-pointer list-none items-center justify-between gap-4">
-								<span class="text-sm font-semibold">{it.q}</span>
-								<span class="text-white/50 transition group-open:rotate-90">›</span>
-							</summary>
-							<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--muted))]">{it.a}</p>
-						</details>
-					{/each}
-				</div>
-
-				<!-- Dual CTA -->
-				<div class="mx-auto mt-12 max-w-lg">
-					<div class="grid gap-3 sm:grid-cols-2">
+					<p class="mx-auto mt-4 max-w-2xl text-pretty text-[rgb(var(--muted))] md:text-lg">
+						{site.finalCta.text}
+					</p>
+					<div class="mt-6">
 						<a
-							class="flex flex-col items-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6 text-center transition hover:border-[rgb(var(--border-strong))]"
-							href="https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=faq_map_ops"
-							onclick={() => trackSignupStart('home_faq_map_ops')}
+							class="inline-flex min-w-[170px] items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
+							href={site.finalCta.cta.href}
+							onclick={() => trackAiScoreClick('ops_final_cta')}
 						>
-							<span class="text-sm font-semibold text-white">Map your operations</span>
-							<span class="mt-1 text-xs text-[rgb(var(--muted))]">For founders and teams</span>
-						</a>
-						<a
-							class="flex flex-col items-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6 text-center transition hover:border-[rgb(var(--border-strong))]"
-							href="/partners"
-						>
-							<span class="text-sm font-semibold text-white">Deploy with your clients</span>
-							<span class="mt-1 text-xs text-[rgb(var(--muted))]"
-								>For consultants and fractional ops</span
-							>
+							{site.finalCta.cta.label} →
 						</a>
 					</div>
 				</div>
@@ -562,11 +375,11 @@
 					</div>
 
 					<div class="flex flex-wrap gap-4 text-sm text-[rgb(var(--muted))]">
-						<a class="hover:text-white" href="#features">Features</a>
-						<a class="hover:text-white" href="/method">Method</a>
-						<a class="hover:text-white" href="#pricing">Pricing</a>
-						<a class="hover:text-white" href="#faq">FAQ</a>
-						<a class="hover:text-white" href="/partners">Partners</a>
+						<a class="hover:text-[rgb(var(--surface-text-strong))]" href="#problem">Problem</a>
+						<a class="hover:text-[rgb(var(--surface-text-strong))]" href="#proof">Proof</a>
+						<a class="hover:text-[rgb(var(--surface-text-strong))]" href="#pricing">Pricing</a>
+						<a class="hover:text-[rgb(var(--surface-text-strong))]" href="/method">Method</a>
+						<a class="hover:text-[rgb(var(--surface-text-strong))]" href="/partners">Partners</a>
 					</div>
 				</div>
 			</div>

@@ -13,10 +13,11 @@ Maintain and improve the Quaestor marketing site while preserving:
 ## Read this first (in order)
 
 1. `README.md`
-2. `src/lib/site.ts`
-3. `src/lib/method-content.ts`
-4. `src/routes/+layout.svelte`
-5. `src/lib/analytics.ts`
+2. `BRAND_BIBLE.md`
+3. `src/lib/site.ts`
+4. `src/lib/method-content.ts`
+5. `src/routes/+layout.svelte`
+6. `src/lib/analytics.ts`
 
 ## Architecture quick map
 
@@ -25,17 +26,18 @@ Maintain and improve the Quaestor marketing site while preserving:
   - `src/lib/method-content.ts` = method chapters.
 - **Rendering:** SvelteKit routes in `src/routes/**`.
 - **Build mode:** static prerender (`src/routes/+layout.ts` exports `prerender = true`).
-- **Styling:** global styles in `src/app.css` and route/layout CSS.
+- **Styling:** global styles in `src/app.css`, design tokens in `src/tokens.css`, and route/layout CSS.
 - **Assets:** `static/`.
 - **Analytics:** event helper in `src/lib/analytics.ts` (Plausible/gtag/dataLayer compatible).
 
 ## Hard constraints
 
 1. Keep the site static-compatible (no server-only runtime features unless explicitly requested).
-2. Do not commit secrets, tokens, or real `.env` values.
-3. Prefer editing content in source-of-truth files (`site.ts`, `method-content.ts`) rather than hardcoding copy in page components.
-4. Preserve existing analytics event names unless asked to change them.
-5. Keep changes scoped to requested outcome; avoid opportunistic refactors.
+2. Follow `BRAND_BIBLE.md` for voice, palette, typography, motif, and component rules.
+3. Do not commit secrets, tokens, or real `.env` values.
+4. Prefer editing content in source-of-truth files (`site.ts`, `method-content.ts`) rather than hardcoding copy in page components.
+5. Preserve existing analytics event names unless asked to change them.
+6. Keep changes scoped to requested outcome; avoid opportunistic refactors.
 
 ## Allowed workflow
 

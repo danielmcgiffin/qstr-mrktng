@@ -1,77 +1,78 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import './tokens.css';
 
 :root {
-	--accent: 163 31 33;
-	--bg: 9 10 12;
-	--bg-elev: 16 18 22;
-	--bg-elev-2: 22 24 29;
-	--text: 240 242 245;
-	--text-secondary: 200 204 212;
-	--muted: 150 156 168;
-	--border: 255 255 255 / 0.08;
-	--border-strong: 255 255 255 / 0.16;
+	/* Compatibility aliases for existing Tailwind arbitrary-value usage */
+	--bg-elev: var(--bg-panel);
+	--bg-elev-2: var(--bg-subtle);
+	--text-secondary: var(--text-muted);
+	--muted: var(--text-muted);
+	--paper-shadow: var(--border-strong);
+	--map-line: var(--border-strong);
+	--surface-text-strong: var(--text);
+	--surface-text-body: var(--text-muted);
+	--surface-text-muted: var(--text-muted);
+	--surface-text-inverse: var(--text-inverse);
 }
 
 html {
-	color-scheme: dark;
+	scroll-behavior: smooth;
 }
 
-body {
-	margin: 0;
-	font-family:
-		'Inter',
-		ui-sans-serif,
-		system-ui,
-		-apple-system,
-		'Segoe UI',
-		sans-serif;
+body.paper-theme {
 	background: rgb(var(--bg));
+}
+
+body,
+button,
+input,
+textarea,
+select {
+	font: inherit;
+}
+
+.h1,
+.h2,
+.h3,
+.display-font {
+	font-family: var(--font-display);
+	letter-spacing: var(--ls-display);
+}
+
+.gradient-text {
+	background: none !important;
+	-webkit-background-clip: initial;
+	-webkit-text-fill-color: currentColor;
+	background-clip: initial;
 	color: rgb(var(--text));
 }
 
-code,
-pre,
-.font-mono {
-	font-family:
-		'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, 'Liberation Mono',
-		'Courier New', monospace;
-}
-
-/* Gradient text utility */
-.gradient-text {
-	background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(200, 204, 212, 0.8) 100%);
-	-webkit-background-clip: text;
-	-webkit-text-fill-color: transparent;
-	background-clip: text;
-}
-
-/* Method page — book-like reading styles */
 .method-page p {
-	color: rgb(var(--text-secondary));
-	line-height: 1.8;
-	font-size: 1.0625rem;
+	color: rgb(var(--text-muted));
+	line-height: 1.75;
+	font-size: 1rem;
 }
 
 .method-page li {
-	color: rgb(var(--text-secondary));
-	line-height: 1.8;
+	color: rgb(var(--text-muted));
+	line-height: 1.75;
 }
 
 .method-page h1 {
-	font-size: 2.25rem;
+	font-size: var(--fs-h1);
 	line-height: 1.1;
-	font-weight: 600;
+	font-weight: 700;
 }
 
 .method-page h2 {
-	font-size: 1.5rem;
+	font-size: var(--fs-h2);
 	line-height: 1.2;
 	font-weight: 600;
 	margin-top: 2.5rem;
 }
 
 .method-page h3 {
-	font-size: 1.125rem;
+	font-family: var(--font-body);
+	font-size: var(--fs-h3);
 	line-height: 1.35;
 	font-weight: 600;
 	color: rgb(var(--text));
@@ -79,15 +80,6 @@ pre,
 
 @media (min-width: 768px) {
 	.method-page p {
-		font-size: 1.125rem;
-	}
-	.method-page h1 {
-		font-size: 3rem;
-	}
-	.method-page h2 {
-		font-size: 2rem;
-	}
-	.method-page h3 {
-		font-size: 1.25rem;
+		font-size: 1.0625rem;
 	}
 }

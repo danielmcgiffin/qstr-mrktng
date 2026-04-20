@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { methodSections, methodPath } from '$lib/method';
 	import { page } from '$app/stores';
-	import StarfieldBackground from '$lib/components/StarfieldBackground.svelte';
 
 	let { children } = $props();
 
@@ -24,15 +23,6 @@
 
 <div class="min-h-screen bg-[rgb(var(--bg))] text-[rgb(var(--text))]">
 	<div class="relative">
-		<!-- Quieter background for method pages -->
-		<div aria-hidden="true" class="pointer-events-none absolute inset-0 overflow-hidden">
-			<StarfieldBackground variant="soft" />
-			<div
-				class="absolute top-[-35%] left-1/2 h-[820px] w-[820px] -translate-x-1/2 rounded-full bg-white/[0.02] blur-3xl"
-			></div>
-			<div class="absolute inset-0 bg-gradient-to-b from-black/0 via-black/10 to-black/40"></div>
-		</div>
-
 		<section class="relative py-12 md:py-16">
 			<div class="mx-auto w-full max-w-7xl px-6">
 				<div class="grid gap-10 md:grid-cols-[200px_1fr] md:gap-16">
@@ -75,7 +65,7 @@
 						<!-- Mobile nav — dropdown -->
 						<div class="md:hidden">
 							<button
-								class="flex w-full items-center justify-between rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-white"
+								class="flex w-full items-center justify-between rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-[rgb(var(--surface-text-strong))]"
 								onclick={() => (mobileNavOpen = !mobileNavOpen)}
 							>
 								<span>{currentLabel}</span>

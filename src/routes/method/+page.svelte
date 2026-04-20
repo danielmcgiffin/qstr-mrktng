@@ -31,7 +31,7 @@
 				Start at the top →
 			</a>
 			<a
-				class="min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-white/90 transition-colors duration-200 hover:bg-white/10"
+				class="min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-[rgb(var(--surface-text-body))] transition-colors duration-200 hover:bg-white/10"
 				href="https://qstr.cursus.tools/demo/process"
 			>
 				See the product →
@@ -53,7 +53,7 @@
 					>
 					<span class="flex-1">
 						<span
-							class="text-base font-semibold text-white transition-colors duration-200 group-hover:text-white/90"
+							class="text-base font-semibold text-[rgb(var(--surface-text-strong))] transition-colors duration-200 group-hover:text-[rgb(var(--surface-text-body))]"
 							>{section.title}</span
 						>
 						<span class="mt-2 block text-sm leading-relaxed text-[rgb(var(--muted))]"
@@ -61,7 +61,7 @@
 						>
 					</span>
 					<span
-						class="mt-1 text-[rgb(var(--muted))]/40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-white"
+						class="mt-1 text-[rgb(var(--muted))]/40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-[rgb(var(--surface-text-strong))]"
 						>→</span
 					>
 				</a>
