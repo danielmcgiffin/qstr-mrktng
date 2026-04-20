@@ -178,15 +178,45 @@
 	const renderMarkdown = (text: string, firstMargin: string = 'mt-4') => {
 		if (!text) return '';
 		let safeText = escapeHtml(text);
+
+		// Handle bold markdown
 		safeText = safeText.replace(
 			/\*\*(.*?)\*\*/g,
 			'<strong class="font-semibold text-[rgb(var(--text))]">$1</strong>'
 		);
-		const lines = safeText
+
+		// Break into blocks (paragraphs or lists)
+		const blocks = safeText
 			.split(/\n+/)
 			.map((p) => p.trim())
 			.filter((p) => p.length > 0);
-		return lines.map((p, i) => `<p class="${i === 0 ? firstMargin : 'mt-4'}">${p}</p>`).join('');
+
+		let html = '';
+		let inList = false;
+
+		blocks.forEach((block, i) => {
+			const isListItem = block.startsWith('- ');
+
+			if (isListItem) {
+				if (!inList) {
+					html += `<ul class="${i === 0 ? firstMargin : 'mt-4'} list-disc pl-5 space-y-2">`;
+					inList = true;
+				}
+				html += `<li>${block.substring(2)}</li>`;
+			} else {
+				if (inList) {
+					html += '</ul>';
+					inList = false;
+				}
+				html += `<p class="${i === 0 ? firstMargin : 'mt-4'}">${block}</p>`;
+			}
+		});
+
+		if (inList) {
+			html += '</ul>';
+		}
+
+		return html;
 	};
 
 	const trackResultCta = () => {

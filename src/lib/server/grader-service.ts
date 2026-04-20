@@ -952,7 +952,7 @@ const buildCombinedSummary = (
 	humanGrade: OverallGrade,
 	humanSummary: string
 ): string =>
-	`AI readiness is ${aiGrade} (${aiScore}/100). ${aiSummary} Human readiness is ${humanGrade} (${humanScore}/100). ${humanSummary}`;
+	`**AI readiness is ${aiGrade} (${aiScore}/100)**\n\n${aiSummary}\n\n**Human readiness is ${humanGrade} (${humanScore}/100)**\n\n${humanSummary}`;
 
 const buildSuccessResponse = (
 	aiAreas: AiReadinessAreas,

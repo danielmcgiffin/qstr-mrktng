@@ -9,7 +9,7 @@ const dimSchema = (maxScore: number): JsonSchema => ({
 		reasoning: {
 			type: 'string',
 			description:
-				'Concrete evidence from the submitted text. Quote or paraphrase specific fragments. Avoid generic advice.'
+				'Concise, bulleted evidence from the text using Markdown (`- `). Quote or paraphrase specific fragments. Use **bold** for quotes. Avoid generic advice.'
 		},
 		disqualifiers_present: {
 			type: 'array',
@@ -84,7 +84,7 @@ export const AI_GRADE_TOOL = {
 			summary: {
 				type: 'string',
 				description:
-					'2-3 sentences describing what would block or help AI execution. Reference specific parts of the document. No generic advice.'
+					'Concise, bulleted summary using Markdown (`- `) of what would block or help AI execution. Focus on the "so what". Reference specific parts.'
 			}
 		},
 		required: ['areas', 'summary'],
@@ -121,7 +121,7 @@ export const HUMAN_GRADE_TOOL = {
 			summary: {
 				type: 'string',
 				description:
-					'2-3 sentences describing how a new hire would experience this document. Reference specific parts.'
+					'Concise, bulleted summary using Markdown (`- `) of how a new hire would experience this document. Focus on the "so what". Reference specific parts.'
 			}
 		},
 		required: ['areas', 'summary'],
