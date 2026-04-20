@@ -2,6 +2,7 @@ import { env } from '$env/dynamic/private';
 import type { GraderResponse } from '$lib/grader';
 
 const RESEND_API_URL = 'https://api.resend.com/emails';
+const DEFAULT_TO_EMAIL = 'danny+grader@cursus.tools';
 
 const getPrivateEnv = (...keys: string[]): string => {
 	for (const key of keys) {
@@ -64,12 +65,10 @@ export const sendGraderAlert = async (params: {
 	reviewUrl?: string | null;
 }): Promise<void> => {
 	const fromEmail = getPrivateEnv('AI_SCORE_FROM_EMAIL', 'PRIVATE_FROM_ADMIN_EMAIL');
-	const toEmail = getPrivateEnv(
-		'GRADER_ALERT_TO_EMAIL',
-		'AI_SCORE_TO_EMAIL',
-		'PRIVATE_ADMIN_EMAIL'
-	);
-	if (!fromEmail || !toEmail) return;
+	const toEmail =
+		getPrivateEnv('GRADER_ALERT_TO_EMAIL', 'AI_SCORE_TO_EMAIL', 'PRIVATE_ADMIN_EMAIL') ||
+		DEFAULT_TO_EMAIL;
+	if (!fromEmail) return;
 
 	const varianceFlag = params.variance > 5 ? 'VARIANCE' : 'normal';
 	const lines = [
@@ -114,12 +113,10 @@ export const sendAiScoreSubmissionAlert = async (params: {
 	result?: GraderResponse | null;
 }): Promise<void> => {
 	const fromEmail = getPrivateEnv('AI_SCORE_FROM_EMAIL', 'PRIVATE_FROM_ADMIN_EMAIL');
-	const toEmail = getPrivateEnv(
-		'AI_SCORE_TO_EMAIL',
-		'GRADER_ALERT_TO_EMAIL',
-		'PRIVATE_ADMIN_EMAIL'
-	);
-	if (!fromEmail || !toEmail) {
+	const toEmail =
+		getPrivateEnv('AI_SCORE_TO_EMAIL', 'GRADER_ALERT_TO_EMAIL', 'PRIVATE_ADMIN_EMAIL') ||
+		DEFAULT_TO_EMAIL;
+	if (!fromEmail) {
 		throw new Error('AI Score email delivery is not configured yet.');
 	}
 
@@ -182,12 +179,37 @@ export const sendAiScoreSubmissionAlert = async (params: {
 				? 'AI Score submission · manual follow-up'
 				: 'AI Score submission';
 
-	await sendEmail({
-		to: toEmail,
-		from: fromEmail,
-		subject,
-		text: lines.join('\n'),
-		replyTo: params.email,
-		attachments: params.attachment ? [params.attachment] : undefined
-	});
+	const messageText = lines.join('\n');
+
+	try {
+		await sendEmail({
+			to: toEmail,
+			from: fromEmail,
+			subject,
+			text: messageText,
+			replyTo: params.email,
+			attachments: params.attachment ? [params.attachment] : undefined
+		});
+	} catch (error) {
+		if (!params.attachment) {
+			throw error;
+		}
+
+		const fallbackText = [
+			messageText,
+			'',
+			'Attachment delivery failed, so this alert was resent without the file attached.',
+			`Attachment filename: ${params.attachment.filename}`,
+			`Attachment size: ${params.attachmentSize ?? 'unknown'} bytes`,
+			`Attachment content type: ${params.attachment.content_type}`
+		].join('\n');
+
+		await sendEmail({
+			to: toEmail,
+			from: fromEmail,
+			subject: `${subject} (attachment omitted)`,
+			text: fallbackText,
+			replyTo: params.email
+		});
+	}
 };

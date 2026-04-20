@@ -362,7 +362,7 @@
 							<input
 								type="email"
 								bind:value={replyEmail}
-								class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-3 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+								class="w-full rounded-xl border border-[rgb(var(--border))] bg-white px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--muted))]"
 								placeholder="you@company.com"
 							/>
 						</label>
@@ -374,7 +374,7 @@
 								bind:value={sopText}
 								rows="10"
 								maxlength={MAX_CHARS}
-								class="w-full rounded-xl border border-[rgb(var(--border))] bg-black/30 px-3 py-3 text-sm text-white placeholder:text-[rgb(var(--muted))]"
+								class="w-full rounded-xl border border-[rgb(var(--border))] bg-white px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--muted))]"
 								placeholder="Paste your SOP, workflow, or process doc here for an instant read."
 							></textarea>
 						</label>
@@ -393,7 +393,7 @@
 								>Or attach a file for inline grading</span
 							>
 							<div
-								class="flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-[rgb(var(--border))] bg-black/20 px-3 py-3"
+								class="flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-[rgb(var(--border))] bg-white px-3 py-3"
 							>
 								<input
 									bind:this={fileInput}
@@ -401,7 +401,7 @@
 									accept={FILE_ACCEPT}
 									onchange={onFileChange}
 									data-role="ai-score-file"
-									class="block max-w-full text-xs text-[rgb(var(--muted))] file:mr-3 file:cursor-pointer file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:text-white hover:file:bg-white/20"
+									class="block max-w-full text-xs text-[rgb(var(--text-secondary))] file:mr-3 file:cursor-pointer file:rounded-lg file:border file:border-[rgb(var(--border))] file:bg-[rgb(var(--bg-subtle))] file:px-3 file:py-1.5 file:text-xs file:text-[rgb(var(--accent))] hover:file:bg-[rgb(var(--accent-tint))]"
 								/>
 								{#if fileMeta}
 									<span class="text-xs text-[rgb(var(--surface-text-body))]">
@@ -420,7 +420,9 @@
 								.docx, .md, .txt, or .html score inline. .pptx is accepted and routed to inbox
 								review. Up to 10 MB.
 							</p>
-							<div class="mt-4 rounded-2xl border border-[rgb(var(--border))] bg-white/70 p-4">
+							<div
+								class="mt-4 flex flex-col rounded-2xl border border-[rgb(var(--border))] bg-white p-4"
+							>
 								<p class="text-sm font-semibold text-[rgb(var(--text))]">
 									Don't have docs to upload?
 								</p>
@@ -430,7 +432,7 @@
 									documentation.
 								</p>
 								<a
-									class="mt-3 inline-flex items-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-semibold text-[rgb(var(--bg-elev))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
+									class="mt-4 inline-flex items-center self-end rounded-xl border border-[rgb(var(--accent))] px-4 py-2 text-sm font-semibold text-[rgb(var(--accent))] transition hover:bg-[rgb(var(--accent))]/5"
 									href="/partners"
 								>
 									Connect me with a partner →
@@ -440,7 +442,7 @@
 
 						{#if formError}
 							<p
-								class="mt-4 rounded-xl border border-red-400/40 bg-red-500/10 px-3 py-2 text-sm text-red-100"
+								class="mt-4 rounded-xl border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900"
 							>
 								{formError}
 							</p>
@@ -450,8 +452,8 @@
 							<p
 								class={`mt-4 rounded-xl border px-3 py-2 text-sm ${
 									submitStatus === 'error'
-										? 'border-red-400/40 bg-red-500/10 text-red-100'
-										: 'border-emerald-400/30 bg-emerald-500/10 text-emerald-100'
+										? 'border-red-300 bg-red-50 text-red-900'
+										: 'border-emerald-300 bg-emerald-50 text-emerald-900'
 								}`}
 							>
 								{submitMessage}

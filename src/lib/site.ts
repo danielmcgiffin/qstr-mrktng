@@ -9,7 +9,6 @@ export type FaqItem = { q: string; a: string };
 export type DetailItem = { title: string; desc: string };
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
-const graderHref = '/ai-score';
 const signupBaseHref =
 	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch';
 
@@ -41,14 +40,12 @@ export const site = {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`
 		},
-		secondaryCta: { label: 'See a sample org', href: demoHref },
-		tertiaryCta: { label: 'Grade a process doc', href: graderHref }
+		secondaryCta: { label: 'See a sample org', href: demoHref }
 	} satisfies {
 		headline: string;
 		subhead: string;
 		primaryCta: CTA;
 		secondaryCta: CTA;
-		tertiaryCta: CTA;
 	},
 
 	// ───────────────────────────────────────────

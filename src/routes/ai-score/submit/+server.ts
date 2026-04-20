@@ -22,6 +22,7 @@ const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt', '.html'] as const;
 const NO_STORE_HEADERS = {
 	'cache-control': 'no-store'
 };
+const DIRECT_INBOX_EMAIL = 'danny+grader@cursus.tools';
 
 export const prerender = false;
 
@@ -99,7 +100,9 @@ const queueManualReview = async (params: {
 	} catch (error) {
 		console.error('AI Score inbox delivery failed', error);
 		return json(
-			{ error: 'Could not send your submission right now. Please try again.' },
+			{
+				error: `We couldn't route this to our inbox right now. Please email ${DIRECT_INBOX_EMAIL} directly.`
+			},
 			{ status: 502, headers: NO_STORE_HEADERS }
 		);
 	}
@@ -137,7 +140,9 @@ const deliverFounderInboxAlert = async (params: {
 	} catch (error) {
 		console.error('AI Score inbox delivery failed', error);
 		return json(
-			{ error: 'Could not send your submission right now. Please try again.' },
+			{
+				error: `We couldn't route this to our inbox right now. Please email ${DIRECT_INBOX_EMAIL} directly.`
+			},
 			{ status: 502, headers: NO_STORE_HEADERS }
 		);
 	}

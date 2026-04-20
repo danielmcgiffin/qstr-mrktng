@@ -87,7 +87,7 @@
 
 		return {
 			primary: { label: 'Start free', href: signupHref },
-			secondary: { label: 'Explore the demo', href: demoHref }
+			secondary: { label: 'Get your ops AI-ready', href: '/ai-score' }
 		};
 	});
 	const primaryHeaderCtaAttrs = $derived(getHeaderCtaAttrs(headerCtas.primary.href));
