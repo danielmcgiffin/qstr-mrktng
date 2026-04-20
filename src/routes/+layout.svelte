@@ -59,10 +59,9 @@
 	const canonicalHref = $derived(`${siteOrigin}${currentPath}`);
 	const currentHomeHref = $derived(currentPath === '/ops' ? '/ops' : '/');
 	const headerNavItems = $derived([
-		{ label: 'Home', href: '/' },
 		{ label: 'Operators', href: '/ops' },
-		...site.nav.filter((item) => !['Home', 'Partners', 'Demo'].includes(item.label)),
-		{ label: 'Partners', href: '/partners' }
+		{ label: 'Partners', href: '/partners' },
+		...site.nav.filter((item) => !['Home', 'Partners', 'Demo'].includes(item.label))
 	]);
 	const headerCtas = $derived.by((): { primary: HeaderCta; secondary: HeaderCta } => {
 		if (currentPath === '/partners') {
