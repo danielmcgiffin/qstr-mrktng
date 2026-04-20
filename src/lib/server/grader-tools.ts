@@ -84,7 +84,7 @@ export const AI_GRADE_TOOL = {
 			summary: {
 				type: 'string',
 				description:
-					'Concise, bulleted summary using Markdown (`- `) of what would block or help AI execution. Focus on the "so what". Reference specific parts.'
+					'Markdown summary of what blocks/helps AI execution. MUST use ### Strengths, ### Weaknesses, and ### Operational Impact headers with bulleted lists under each.'
 			}
 		},
 		required: ['areas', 'summary'],
@@ -121,7 +121,7 @@ export const HUMAN_GRADE_TOOL = {
 			summary: {
 				type: 'string',
 				description:
-					'Concise, bulleted summary using Markdown (`- `) of how a new hire would experience this document. Focus on the "so what". Reference specific parts.'
+					'Markdown summary of how a new hire experiences this document. MUST use ### Strengths, ### Weaknesses, and ### Operational Impact headers with bulleted lists under each.'
 			}
 		},
 		required: ['areas', 'summary'],
