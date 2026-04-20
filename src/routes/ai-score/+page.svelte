@@ -27,23 +27,24 @@
 	const FILE_ACCEPT =
 		'.docx,.pptx,.md,.txt,.html,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/markdown,text/plain,text/html';
 	const aiAreaItems = [
-		{ key: 'named_doer', label: 'Named doer' },
-		{ key: 'context_source_named', label: 'Context source named' },
-		{ key: 'boundaries_defined', label: 'Boundaries defined' },
-		{ key: 'step_structure', label: 'Step structure' },
-		{ key: 'decision_points_defined', label: 'Decision points' },
+		{ key: 'named_doer', label: 'Named doer', max: 15 },
+		{ key: 'context_source_named', label: 'Context source named', max: 20 },
+		{ key: 'boundaries_defined', label: 'Boundaries defined', max: 15 },
+		{ key: 'step_structure', label: 'Step structure', max: 15 },
+		{ key: 'decision_points_defined', label: 'Decision points', max: 15 },
 		{
 			key: 'outputs_handoffs_and_completeness',
-			label: 'Outputs, handoffs, completeness'
+			label: 'Outputs, handoffs, completeness',
+			max: 20
 		}
 	] as const;
 	const humanAreaItems = [
-		{ key: 'readability', label: 'Readability' },
-		{ key: 'scannability', label: 'Scannability' },
-		{ key: 'self_contained_context', label: 'Self-contained context' },
-		{ key: 'references_linked', label: 'References linked' },
-		{ key: 'terms_consistent', label: 'Terms consistent' },
-		{ key: 'internal_consistency', label: 'Internal consistency' }
+		{ key: 'readability', label: 'Readability', max: 20 },
+		{ key: 'scannability', label: 'Scannability', max: 15 },
+		{ key: 'self_contained_context', label: 'Self-contained context', max: 20 },
+		{ key: 'references_linked', label: 'References linked', max: 15 },
+		{ key: 'terms_consistent', label: 'Terms consistent', max: 15 },
+		{ key: 'internal_consistency', label: 'Internal consistency', max: 15 }
 	] as const;
 
 	let sopText = $state('');
@@ -162,6 +163,29 @@
 			(candidate.mode === 'graded' || candidate.mode === 'queued') &&
 			typeof candidate.message === 'string'
 		);
+	};
+
+	const escapeHtml = (unsafe: string) => {
+		return unsafe
+			.replace(/&/g, '&amp;')
+			.replace(/</g, '&lt;')
+			.replace(/>/g, '&gt;')
+			.replace(/"/g, '&quot;')
+			.replace(/'/g, '&#039;');
+	};
+
+	const renderMarkdown = (text: string, firstMargin: string = 'mt-4') => {
+		if (!text) return '';
+		let safeText = escapeHtml(text);
+		safeText = safeText.replace(
+			/\*\*(.*?)\*\*/g,
+			'<strong class="font-semibold text-[rgb(var(--text))]">$1</strong>'
+		);
+		const lines = safeText
+			.split(/\n+/)
+			.map((p) => p.trim())
+			.filter((p) => p.length > 0);
+		return lines.map((p, i) => `<p class="${i === 0 ? firstMargin : 'mt-4'}">${p}</p>`).join('');
 	};
 
 	const trackResultCta = () => {
@@ -577,20 +601,20 @@
 					>
 						{#if gradeResult.valid}
 							<div class="grid gap-6 xl:grid-cols-[280px_1fr] xl:items-start">
-								<div class="space-y-4">
+								<div class="flex flex-col gap-4">
 									<div
-										class="rounded-[1.6rem] border border-[rgb(var(--border))] bg-white/70 p-6 text-center"
+										class="flex h-full flex-col items-center justify-center rounded-[1.6rem] border border-[rgb(var(--border))] bg-white/70 p-6 text-center"
 									>
 										<p
 											class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
 										>
 											AI readiness
 										</p>
-										<div class="mt-4 text-6xl leading-none font-semibold text-[rgb(var(--accent))]">
-											{gradeResult.ai_readiness.score}
+										<div class="mt-4 text-7xl leading-none font-bold text-[rgb(var(--accent))]">
+											{gradeResult.ai_readiness.grade}
 										</div>
-										<p class="mt-2 text-sm font-semibold text-[rgb(var(--text))]">
-											Grade {gradeResult.ai_readiness.grade}
+										<p class="mt-2 text-base font-semibold text-[rgb(var(--text-secondary))]">
+											{gradeResult.ai_readiness.score} / 100
 										</p>
 										<p class="mt-4 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
 											{gradeCaption}
@@ -598,18 +622,18 @@
 									</div>
 
 									<div
-										class="rounded-[1.6rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-5"
+										class="flex h-full flex-col items-center justify-center rounded-[1.6rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-5 text-center"
 									>
 										<p
 											class="text-[11px] font-semibold tracking-[0.22em] text-[rgb(var(--muted))] uppercase"
 										>
 											Human readiness
 										</p>
-										<div class="mt-3 text-4xl leading-none font-semibold text-[rgb(var(--text))]">
-											{gradeResult.human_readiness.score}
+										<div class="mt-4 text-7xl leading-none font-bold text-[rgb(var(--text))]">
+											{gradeResult.human_readiness.grade}
 										</div>
-										<p class="mt-2 text-sm font-semibold text-[rgb(var(--text-secondary))]">
-											Grade {gradeResult.human_readiness.grade}
+										<p class="mt-2 text-base font-semibold text-[rgb(var(--text-secondary))]">
+											{gradeResult.human_readiness.score} / 100
 										</p>
 									</div>
 								</div>
@@ -618,11 +642,12 @@
 									<h3 class="text-3xl font-semibold text-[rgb(var(--text))]">
 										What the rubric sees
 									</h3>
-									<p
-										class="mt-4 max-w-3xl text-base leading-relaxed text-[rgb(var(--text-secondary))]"
+									<div
+										class="max-w-3xl text-base leading-relaxed text-[rgb(var(--text-secondary))]"
 									>
-										{gradeResult.summary}
-									</p>
+										<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+										{@html renderMarkdown(gradeResult.summary, 'mt-4')}
+									</div>
 
 									<div class="mt-6 grid gap-4 lg:grid-cols-2">
 										<div
@@ -636,13 +661,16 @@
 											<div class="mt-4 grid gap-3 sm:grid-cols-2">
 												{#each aiAreaItems as item}
 													<div
-														class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
+														class="flex h-full min-h-[100px] flex-col items-center justify-between rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4 text-center"
 													>
-														<p class="text-xs font-semibold text-[rgb(var(--text))]">
+														<p class="mb-4 text-xs font-semibold text-[rgb(var(--text))]">
 															{item.label}
 														</p>
-														<p class="mt-2 text-2xl font-semibold text-[rgb(var(--accent))]">
+														<p class="mt-auto text-2xl font-semibold text-[rgb(var(--accent))]">
 															{gradeResult.ai_readiness.areas[item.key].score}
+															<span class="text-sm font-medium text-[rgb(var(--muted))]"
+																>/ {item.max}</span
+															>
 														</p>
 													</div>
 												{/each}
@@ -660,13 +688,16 @@
 											<div class="mt-4 grid gap-3 sm:grid-cols-2">
 												{#each humanAreaItems as item}
 													<div
-														class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
+														class="flex h-full min-h-[100px] flex-col items-center justify-between rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4 text-center"
 													>
-														<p class="text-xs font-semibold text-[rgb(var(--text))]">
+														<p class="mb-4 text-xs font-semibold text-[rgb(var(--text))]">
 															{item.label}
 														</p>
-														<p class="mt-2 text-2xl font-semibold text-[rgb(var(--text))]">
+														<p class="mt-auto text-2xl font-semibold text-[rgb(var(--text))]">
 															{gradeResult.human_readiness.areas[item.key].score}
+															<span class="text-sm font-medium text-[rgb(var(--muted))]"
+																>/ {item.max}</span
+															>
 														</p>
 													</div>
 												{/each}
@@ -699,7 +730,10 @@
 													class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
 												>
 													<p class="font-semibold text-[rgb(var(--text))]">{pathology.title}</p>
-													<p class="mt-2">{pathology.detail}</p>
+													<div class="text-[rgb(var(--text-secondary))]">
+														<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+														{@html renderMarkdown(pathology.detail, 'mt-2')}
+													</div>
 												</li>
 											{/each}
 										</ul>
