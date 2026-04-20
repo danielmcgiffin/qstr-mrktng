@@ -1,5 +1,7 @@
-export const MAX_CHARS = 2000;
-export const MIN_CHARS = 50;
+import type { LetterGrade } from '$lib/grader/rubric';
+
+export const MAX_CHARS = 50_000;
+export const MIN_CHARS = 100;
 
 export type InputValidationResult =
 	| {
@@ -17,45 +19,88 @@ export const validateInput = (text: string): InputValidationResult => {
 	if (trimmed.length < MIN_CHARS) {
 		return {
 			valid: false,
-			error: 'Paste at least a paragraph (50+ characters) from a process doc or SOP.'
+			error: 'Paste at least 100 characters from an actual process, SOP, or workflow.'
 		};
 	}
 
 	if (trimmed.length > MAX_CHARS) {
 		return {
 			valid: false,
-			error: `Keep it to one section — ${MAX_CHARS} characters max. We grade depth, not volume.`
+			error: `That submission is too long. Paste a single process, not the whole manual (${MAX_CHARS.toLocaleString()} characters max).`
 		};
 	}
 
 	return { valid: true, text: trimmed };
 };
 
-export type OverallGrade = 'A' | 'B' | 'C' | 'D' | 'F';
+export type OverallGrade = LetterGrade;
 
-export type GraderScores = {
-	structure: number;
-	ownership: number;
-	systems: number;
-	decision_criteria: number;
-	freshness: number;
-	total: number;
+export type GraderDimensionResult = {
+	score: number;
+	reasoning: string;
+	disqualifiers_present: string[];
 };
 
-export type GraderExtracted = {
-	roles: string[];
-	actions: string[];
-	systems: string[];
+export type CompositeGraderAreaResult<SubdimKey extends string> = GraderDimensionResult & {
+	subdims: Record<SubdimKey, GraderDimensionResult>;
 };
+
+export type AiAreaKey =
+	| 'named_doer'
+	| 'context_source_named'
+	| 'boundaries_defined'
+	| 'step_structure'
+	| 'decision_points_defined'
+	| 'outputs_handoffs_and_completeness';
+
+export type HumanAreaKey =
+	| 'readability'
+	| 'scannability'
+	| 'self_contained_context'
+	| 'references_linked'
+	| 'terms_consistent'
+	| 'internal_consistency';
+
+export type AiReadinessAreas = {
+	named_doer: GraderDimensionResult;
+	context_source_named: GraderDimensionResult;
+	boundaries_defined: CompositeGraderAreaResult<'process_trigger' | 'process_outcome'>;
+	step_structure: CompositeGraderAreaResult<'step_granularity' | 'step_triggers' | 'step_outcomes'>;
+	decision_points_defined: CompositeGraderAreaResult<'judgment_flagged' | 'criteria_provided'>;
+	outputs_handoffs_and_completeness: CompositeGraderAreaResult<
+		'outputs_and_state_changes_named' | 'handoffs_explicit' | 'process_completeness'
+	>;
+};
+
+export type HumanReadinessAreas = Record<HumanAreaKey, GraderDimensionResult>;
+
+export type GraderReadinessBlock<Areas> = {
+	score: number;
+	grade: LetterGrade;
+	areas: Areas;
+	summary: string;
+};
+
+export type AiReadinessResult = GraderReadinessBlock<AiReadinessAreas>;
+export type HumanReadinessResult = GraderReadinessBlock<HumanReadinessAreas>;
+
+export type GraderPathology = {
+	title: string;
+	detail: string;
+	source: 'ai' | 'human';
+	area: string;
+};
+
+export type FollowUpCta = 'book_demo' | 'try_quaestor_free';
 
 export type GraderSuccessResponse = {
 	valid: true;
-	scores: GraderScores;
-	overall_grade: OverallGrade;
-	agent_ready: boolean;
-	extracted: GraderExtracted;
-	gaps: string[];
+	spec_version: string;
+	ai_readiness: AiReadinessResult;
+	human_readiness: HumanReadinessResult;
+	pathologies: GraderPathology[];
 	summary: string;
+	follow_up_cta: FollowUpCta;
 };
 
 export type GraderRejectionResponse = {

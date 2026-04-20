@@ -1,14 +1,23 @@
-import { env } from '$env/dynamic/private';
 import { json } from '@sveltejs/kit';
-import { MAX_CHARS, validateInput } from '$lib/grader';
+import { MAX_CHARS, type GraderResponse } from '$lib/grader';
+import { sendAiScoreSubmissionAlert, type SubmissionAlertAttachment } from '$lib/server/alerts';
+import { calculateActualCostUsd } from '$lib/server/cost-estimator';
+import { incrementDailyCost, runSubmissionGuards } from '$lib/server/guards';
+import { ingestText } from '$lib/server/ingest';
+import { ingestUploadedFile } from '$lib/server/ingest-file';
+import {
+	checkRateLimit,
+	createSubmission,
+	getClientIp,
+	gradeSopTextDetailed,
+	hashIp,
+	isValidEmail,
+	sanitizeSource
+} from '$lib/server/grader-service';
 import type { RequestHandler } from './$types';
 
-const RESEND_API_URL = 'https://api.resend.com/emails';
-const DEFAULT_TO_EMAIL = 'danny+grader@cursus.tools';
-
 const MAX_FILE_BYTES = 10 * 1024 * 1024;
-
-const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt'] as const;
+const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt', '.html'] as const;
 
 const NO_STORE_HEADERS = {
 	'cache-control': 'no-store'
@@ -17,32 +26,6 @@ const NO_STORE_HEADERS = {
 export const prerender = false;
 
 const badRequest = (error: string) => json({ error }, { status: 400, headers: NO_STORE_HEADERS });
-
-const getPrivateEnv = (...keys: string[]): string => {
-	for (const key of keys) {
-		const value = env[key]?.trim();
-		if (value) {
-			return value;
-		}
-	}
-
-	return '';
-};
-
-const isValidEmail = (value: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
-
-const sanitizeSource = (value: unknown): string => {
-	if (typeof value !== 'string') {
-		return 'organic';
-	}
-
-	const trimmed = value.trim().toLowerCase();
-	if (!trimmed) {
-		return 'organic';
-	}
-
-	return trimmed.replace(/[^a-z0-9_:/.-]/g, '-').slice(0, 64) || 'organic';
-};
 
 const sanitizeFilename = (value: string): string => {
 	const cleaned = value.replace(/[\\/]+/g, '_').replace(/[^\w.\-() ]+/g, '_');
@@ -58,7 +41,8 @@ const CONTENT_TYPE_BY_EXT: Record<string, string> = {
 	'.docx': 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 	'.pptx': 'application/vnd.openxmlformats-officedocument.presentationml.presentation',
 	'.md': 'text/markdown',
-	'.txt': 'text/plain'
+	'.txt': 'text/plain',
+	'.html': 'text/html'
 };
 
 const contentTypeFor = (filename: string, fallback: string): string => {
@@ -94,8 +78,73 @@ const base64ByteLength = (b64: string): number => {
 	return Math.floor((b64.length * 3) / 4) - padding;
 };
 
-export const POST: RequestHandler = async ({ request }) => {
-	const contentType = request.headers.get('content-type') || '';
+const queueManualReview = async (params: {
+	email: string;
+	source: string;
+	bodyText: string;
+	attachment: SubmissionAlertAttachment | null;
+	attachmentSize: number;
+	fallbackReason?: string;
+}) => {
+	try {
+		await sendAiScoreSubmissionAlert({
+			email: params.email,
+			source: params.source,
+			mode: 'queued',
+			bodyText: params.bodyText,
+			attachment: params.attachment,
+			attachmentSize: params.attachmentSize,
+			fallbackReason: params.fallbackReason
+		});
+	} catch (error) {
+		console.error('AI Score inbox delivery failed', error);
+		return json(
+			{ error: 'Could not send your submission right now. Please try again.' },
+			{ status: 502, headers: NO_STORE_HEADERS }
+		);
+	}
+
+	return json(
+		{
+			ok: true,
+			mode: 'queued',
+			message: `We couldn't score this file instantly, but we sent it to our inbox and we'll follow up at ${params.email}.`,
+			fallback_reason: params.fallbackReason ?? null
+		},
+		{ headers: NO_STORE_HEADERS }
+	);
+};
+
+const deliverFounderInboxAlert = async (params: {
+	email: string;
+	source: string;
+	bodyText: string;
+	attachment: SubmissionAlertAttachment | null;
+	attachmentSize: number;
+	result: GraderResponse;
+}) => {
+	try {
+		await sendAiScoreSubmissionAlert({
+			email: params.email,
+			source: params.source,
+			mode: 'graded',
+			bodyText: params.bodyText,
+			attachment: params.attachment,
+			attachmentSize: params.attachmentSize,
+			result: params.result
+		});
+		return null;
+	} catch (error) {
+		console.error('AI Score inbox delivery failed', error);
+		return json(
+			{ error: 'Could not send your submission right now. Please try again.' },
+			{ status: 502, headers: NO_STORE_HEADERS }
+		);
+	}
+};
+
+export const POST: RequestHandler = async (event) => {
+	const contentType = event.request.headers.get('content-type') || '';
 	if (!contentType.toLowerCase().includes('application/json')) {
 		return badRequest('Invalid request body.');
 	}
@@ -107,7 +156,7 @@ export const POST: RequestHandler = async ({ request }) => {
 		file?: unknown;
 	};
 	try {
-		payload = (await request.json()) as typeof payload;
+		payload = (await event.request.json()) as typeof payload;
 	} catch {
 		return badRequest('Invalid request body.');
 	}
@@ -118,26 +167,20 @@ export const POST: RequestHandler = async ({ request }) => {
 	}
 
 	const rawText = typeof payload.text === 'string' ? payload.text : '';
+	const trimmedNotes = rawText.trim();
 	const filePayload = isFilePayload(payload.file) ? payload.file : null;
+	const source = sanitizeSource(payload.source);
+	const userAgent = event.request.headers.get('user-agent');
 
-	let bodyText = '';
-	const trimmedRawText = rawText.trim();
-	if (filePayload) {
-		if (trimmedRawText.length > MAX_CHARS) {
-			return badRequest(`Keep typed notes under ${MAX_CHARS} characters.`);
-		}
-		bodyText = trimmedRawText;
-	} else if (trimmedRawText.length > 0) {
-		const validation = validateInput(rawText);
-		if (!validation.valid) {
-			return badRequest(validation.error);
-		}
-		bodyText = validation.text;
-	} else {
+	if (!filePayload && !trimmedNotes) {
 		return badRequest('Paste an SOP section or attach a file so we have something to grade.');
 	}
 
-	let attachment: { filename: string; content: string; content_type: string } | null = null;
+	if (trimmedNotes.length > MAX_CHARS) {
+		return badRequest(`Keep typed notes under ${MAX_CHARS} characters.`);
+	}
+
+	let attachment: SubmissionAlertAttachment | null = null;
 	let attachmentSize = 0;
 	if (filePayload) {
 		const decodedSize = base64ByteLength(filePayload.content_base64);
@@ -148,7 +191,7 @@ export const POST: RequestHandler = async ({ request }) => {
 
 		const filename = sanitizeFilename(filePayload.name || 'upload');
 		if (!hasAllowedExtension(filename)) {
-			return badRequest('Supported file types: .docx, .pptx, .md, .txt.');
+			return badRequest('Supported file types: .docx, .pptx, .md, .txt, .html.');
 		}
 
 		attachment = {
@@ -158,74 +201,220 @@ export const POST: RequestHandler = async ({ request }) => {
 		};
 	}
 
-	const resendApiKey = getPrivateEnv('RESEND_API_KEY', 'PRIVATE_RESEND_API_KEY');
-	const fromEmail = getPrivateEnv('AI_SCORE_FROM_EMAIL', 'PRIVATE_FROM_ADMIN_EMAIL');
-	const toEmail = getPrivateEnv('AI_SCORE_TO_EMAIL', 'PRIVATE_ADMIN_EMAIL') || DEFAULT_TO_EMAIL;
+	let normalizedText = '';
+	let originalText = '';
+	let ingestMetadata: unknown = null;
+	let fileDetails: { name?: string | null; size?: number | null; mime?: string | null } | null =
+		null;
 
-	if (!resendApiKey || !fromEmail) {
-		console.error('AI Score Resend config missing', {
-			hasResendApiKey: Boolean(resendApiKey),
-			hasFromEmail: Boolean(fromEmail),
-			toEmail
+	if (filePayload) {
+		const fileIngest = await ingestUploadedFile({
+			name: filePayload.name,
+			size: filePayload.size,
+			mimeType: filePayload.type || null,
+			contentBase64: filePayload.content_base64,
+			userAgent,
+			source: 'upload'
 		});
-		return json(
-			{ error: 'AI Score email delivery is not configured yet.' },
-			{ status: 503, headers: NO_STORE_HEADERS }
-		);
-	}
 
-	const source = sanitizeSource(payload.source);
-	const submittedAt = new Date().toISOString();
-	const messageLines = [
-		'New AI Score submission',
-		'',
-		`Reply email: ${email}`,
-		`Source: ${source}`,
-		`Submitted at: ${submittedAt}`
-	];
+		if (!fileIngest.ok) {
+			return await queueManualReview({
+				email,
+				source,
+				bodyText: trimmedNotes,
+				attachment,
+				attachmentSize,
+				fallbackReason: fileIngest.error
+			});
+		}
 
-	if (attachment) {
-		messageLines.push(`Attachment: ${attachment.filename} (${attachmentSize} bytes)`);
-	}
+		const combinedRawText = trimmedNotes
+			? `Operator note:\n${trimmedNotes}\n\n--- Extracted file text ---\n${fileIngest.original_text}`
+			: fileIngest.original_text;
+		const combinedIngest = ingestText({
+			rawText: combinedRawText,
+			originalText: combinedRawText,
+			fileType: fileIngest.metadata.file_type,
+			source: 'upload',
+			userAgent,
+			file: {
+				name: fileIngest.metadata.file_name,
+				size: fileIngest.metadata.file_size,
+				mime: fileIngest.metadata.file_mime
+			}
+		});
 
-	if (bodyText) {
-		messageLines.push('', 'SOP text:', bodyText);
+		if (!combinedIngest.ok) {
+			return badRequest(combinedIngest.error);
+		}
+
+		normalizedText = combinedIngest.normalized_text;
+		originalText = combinedIngest.original_text;
+		ingestMetadata = combinedIngest.metadata;
+		fileDetails = {
+			name: combinedIngest.metadata.file_name,
+			size: combinedIngest.metadata.file_size,
+			mime: combinedIngest.metadata.file_mime
+		};
 	} else {
-		messageLines.push('', '(No pasted text — see attachment.)');
-	}
-
-	const emailPayload: Record<string, unknown> = {
-		from: fromEmail,
-		to: [toEmail],
-		subject: 'AI Score submission',
-		text: messageLines.join('\n'),
-		reply_to: email
-	};
-
-	if (attachment) {
-		emailPayload.attachments = [attachment];
-	}
-
-	const response = await fetch(RESEND_API_URL, {
-		method: 'POST',
-		headers: {
-			Authorization: `Bearer ${resendApiKey}`,
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(emailPayload)
-	});
-
-	if (!response.ok) {
-		const body = await response.text();
-		console.error('Resend email send failed', {
-			status: response.status,
-			body
+		const textIngest = ingestText({
+			rawText: trimmedNotes,
+			fileType: 'paste',
+			source: 'paste',
+			userAgent
 		});
+
+		if (!textIngest.ok) {
+			return badRequest(textIngest.error);
+		}
+
+		normalizedText = textIngest.normalized_text;
+		originalText = textIngest.original_text;
+		ingestMetadata = textIngest.metadata;
+	}
+
+	const founderBodyText = attachment ? trimmedNotes : originalText;
+	const clientIp = getClientIp(event);
+	const ipHash = await hashIp(clientIp);
+
+	try {
+		const rateLimit = await checkRateLimit(ipHash);
+		if (!rateLimit.allowed) {
+			return json(
+				{ error: 'Rate limit reached. Try again in about an hour.' },
+				{
+					status: 429,
+					headers: {
+						...NO_STORE_HEADERS,
+						'retry-after': String(rateLimit.retryAfterSeconds)
+					}
+				}
+			);
+		}
+	} catch (error) {
+		console.warn('Rate limit check unavailable; continuing without persisted rate limiting', error);
+	}
+
+	try {
+		let guard = null;
+		try {
+			guard = await runSubmissionGuards({
+				text: normalizedText,
+				ipHash,
+				email
+			});
+		} catch (error) {
+			console.warn('Extended grader guards unavailable; continuing without them', error);
+		}
+
+		if (guard?.blocked) {
+			return json(
+				{ error: guard.error ?? 'Submission blocked by guard rails.' },
+				{
+					status: guard.status ?? 400,
+					headers: {
+						...NO_STORE_HEADERS,
+						...(guard.retryAfterSeconds ? { 'retry-after': String(guard.retryAfterSeconds) } : {})
+					}
+				}
+			);
+		}
+
+		if (guard?.dedupResult) {
+			const alertFailure = await deliverFounderInboxAlert({
+				email,
+				source,
+				bodyText: founderBodyText,
+				attachment,
+				attachmentSize,
+				result: guard.dedupResult
+			});
+			if (alertFailure) {
+				return alertFailure;
+			}
+
+			return json(
+				{
+					ok: true,
+					mode: 'graded',
+					message: `We already graded an identical document recently. Reusing that result and we'll follow up at ${email}.`,
+					result: guard.dedupResult
+				},
+				{ headers: NO_STORE_HEADERS }
+			);
+		}
+
+		const detailed = await gradeSopTextDetailed(guard?.guardedText ?? normalizedText);
+		const result = detailed.result;
+
+		if (result.valid) {
+			const actualCost = calculateActualCostUsd(detailed.artifacts.raw_llm_responses);
+			const reviewStatus =
+				(guard?.reviewStatus ?? 'unreviewed') === 'reviewing' || result.ai_readiness.score > 95
+					? 'reviewing'
+					: 'unreviewed';
+			try {
+				await createSubmission(result, ipHash, source, {
+					email,
+					sopText: originalText,
+					normalizedText,
+					originalDoc: originalText,
+					file: fileDetails,
+					promptVersion: detailed.artifacts.prompt_version,
+					rawLlmResponses: detailed.artifacts.raw_llm_responses,
+					varianceReport: detailed.artifacts.variance_report,
+					ingestMetadata,
+					reviewStatus,
+					docHash: guard?.docHash ?? null,
+					emailHash: guard?.emailHash ?? null
+				});
+				await incrementDailyCost(actualCost.total_usd);
+			} catch (error) {
+				console.warn(
+					'Grade submission persistence unavailable; returning inline result only',
+					error
+				);
+			}
+		}
+
+		const alertFailure = await deliverFounderInboxAlert({
+			email,
+			source,
+			bodyText: founderBodyText,
+			attachment,
+			attachmentSize,
+			result
+		});
+		if (alertFailure) {
+			return alertFailure;
+		}
+
 		return json(
-			{ error: 'Could not send your submission right now. Please try again.' },
+			{
+				ok: true,
+				mode: 'graded',
+				message: `Instant score ready below. We sent your submission to our inbox and we'll follow up at ${email}.`,
+				result
+			},
+			{ headers: NO_STORE_HEADERS }
+		);
+	} catch (error) {
+		console.error('AI score file submission inline grading failed', error);
+
+		if (filePayload) {
+			return await queueManualReview({
+				email,
+				source,
+				bodyText: trimmedNotes || originalText,
+				attachment,
+				attachmentSize,
+				fallbackReason: 'Inline grading failed; queued for manual review instead.'
+			});
+		}
+
+		return json(
+			{ error: 'Unable to grade this SOP right now. Please try again in a moment.' },
 			{ status: 502, headers: NO_STORE_HEADERS }
 		);
 	}
-
-	return json({ ok: true }, { headers: NO_STORE_HEADERS });
 };
