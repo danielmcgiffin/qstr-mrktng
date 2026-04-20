@@ -20,6 +20,7 @@
 
 	type MammothBrowser = {
 		extractRawText: (input: { arrayBuffer: ArrayBuffer }) => Promise<{ value?: string }>;
+		convertToHtml: (input: { arrayBuffer: ArrayBuffer }) => Promise<{ value?: string }>;
 	};
 
 	const MAX_FILE_BYTES = 10 * 1024 * 1024;
@@ -70,10 +71,10 @@
 	const submitLabel = $derived(
 		hasFile
 			? submitStatus === 'submitting'
-				? 'Scoring file…'
+				? 'Scoring file...'
 				: 'Upload and score'
 			: submitStatus === 'submitting'
-				? 'Scoring…'
+				? 'Scoring...'
 				: 'Get score'
 	);
 	const gradeCaption = $derived.by(() => {
@@ -196,6 +197,7 @@
 
 		blocks.forEach((block, i) => {
 			const isListItem = block.startsWith('- ');
+			const isHeader = block.startsWith('### ');
 
 			if (isListItem) {
 				if (!inList) {
@@ -208,7 +210,11 @@
 					html += '</ul>';
 					inList = false;
 				}
-				html += `<p class="${i === 0 ? firstMargin : 'mt-4'}">${block}</p>`;
+				if (isHeader) {
+					html += `<h4 class="${i === 0 ? firstMargin : 'mt-6'} text-sm font-bold tracking-wide uppercase text-[rgb(var(--text))]">${block.substring(4)}</h4>`;
+				} else {
+					html += `<p class="${i === 0 ? firstMargin : 'mt-4'}">${block}</p>`;
+				}
 			}
 		});
 
@@ -280,8 +286,35 @@
 			| MammothBrowser
 			| { default: MammothBrowser };
 		const mammoth = 'default' in mammothModule ? mammothModule.default : mammothModule;
-		const result = await mammoth.extractRawText({ arrayBuffer });
-		const text = result.value?.trim() || '';
+		const result = await mammoth.convertToHtml({ arrayBuffer });
+
+		let html = result.value || '';
+		html = html
+			.replace(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi, (match, url, text) => {
+				return `${text.trim()} (${url.trim()})`;
+			})
+			.replace(/<\/(p|div|li|h[1-6])>/gi, '\n')
+			.replace(/<br\s*\/?>/gi, '\n')
+			.replace(/<(li)\b[^>]*>/gi, '\n- ')
+			.replace(/<[^>]+>/g, '')
+			.replace(/&(nbsp|amp|lt|gt|quot);/gi, (entity) => {
+				switch (entity.toLowerCase()) {
+					case '&nbsp;':
+						return ' ';
+					case '&amp;':
+						return '&';
+					case '&lt;':
+						return '<';
+					case '&gt;':
+						return '>';
+					case '&quot;':
+						return '"';
+					default:
+						return entity;
+				}
+			});
+
+		const text = html.trim();
 		if (!text) {
 			throw new Error(
 				"We couldn't read text from this .docx file. Try exporting it as .txt or paste the text instead."
@@ -427,7 +460,7 @@
 </script>
 
 <svelte:head>
-	<title>AI Score — Quaestor</title>
+	<title>AI Score - Quaestor</title>
 	<meta
 		name="description"
 		content="Paste or upload an SOP, flow, or process doc and get a free AI-Readiness evaluation."
@@ -473,7 +506,7 @@
 
 						<label class="mt-4 block space-y-2 text-sm">
 							<span class="text-[rgb(var(--surface-text-strong))]"
-								>SOP text (100–150,000 chars)</span
+								>SOP text (100-150,000 chars)</span
 							>
 							<textarea
 								bind:value={sopText}
@@ -501,7 +534,7 @@
 							>
 								<p>
 									<strong>Heads up:</strong> This document is larger than most processes. We'll grade
-									it as a whole — but you might get sharper insights by submitting individual processes
+									it as a whole - but you might get sharper insights by submitting individual processes
 									separately.
 								</p>
 							</div>
@@ -614,7 +647,7 @@
 							>
 								<p class="text-sm font-semibold text-[rgb(var(--text))]">Instant path</p>
 								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									Paste 100–150,000 characters and get inline AI and Human readiness scores,
+									Paste 100-150,000 characters and get inline AI and Human readiness scores,
 									summary, and top pathologies while your submission also lands in our inbox.
 								</p>
 							</div>
@@ -681,18 +714,22 @@
 										<p class="mt-2 text-base font-semibold text-[rgb(var(--text-secondary))]">
 											{gradeResult.human_readiness.score} / 100
 										</p>
+										<div
+											class="mt-4 w-full border-t border-[rgb(var(--border))] pt-4 text-left text-sm leading-relaxed text-[rgb(var(--text-secondary))]"
+										>
+											<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+											{@html renderMarkdown(gradeResult.human_readiness.summary, 'mt-0')}
+										</div>
 									</div>
 								</div>
 
 								<div>
-									<h3 class="text-3xl font-semibold text-[rgb(var(--text))]">
-										What the rubric sees
-									</h3>
+									<h3 class="text-3xl font-semibold text-[rgb(var(--text))]">Feedback</h3>
 									<div
 										class="max-w-3xl text-base leading-relaxed text-[rgb(var(--text-secondary))]"
 									>
 										<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-										{@html renderMarkdown(gradeResult.summary, 'mt-4')}
+										{@html renderMarkdown(gradeResult.ai_readiness.summary, 'mt-4')}
 									</div>
 
 									<div class="mt-6 grid gap-4 lg:grid-cols-2">
@@ -794,7 +831,7 @@
 									Result
 								</p>
 								<h3 class="mt-3 text-3xl font-semibold text-[rgb(var(--text))]">
-									This doesn’t look like operational content yet.
+									This doesn't look like operational content yet.
 								</h3>
 								<p
 									class="mt-4 max-w-3xl text-base leading-relaxed text-[rgb(var(--text-secondary))]"

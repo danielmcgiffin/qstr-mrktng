@@ -131,6 +131,10 @@ export const stripHtmlToText = (html: string): string =>
 		.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi, '')
 		.replace(/<style\b[^>]*>[\s\S]*?<\/style>/gi, '')
 		.replace(/<!--([\s\S]*?)-->/g, '')
+		// Preserve link text and URLs: <a href="url">text</a> -> text (url)
+		.replace(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi, (match, url, text) => {
+			return `${text.trim()} (${url.trim()})`;
+		})
 		.replace(/<br\s*\/?>/gi, '\n')
 		.replace(/<(li)\b[^>]*>/gi, '\n- ')
 		.replace(BLOCK_TAGS, '\n')
