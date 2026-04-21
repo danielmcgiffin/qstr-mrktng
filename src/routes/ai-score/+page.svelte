@@ -77,17 +77,32 @@
 				? 'Scoring...'
 				: 'Get score'
 	);
-	const gradeCaption = $derived.by(() => {
+	const aiGradeCaption = $derived.by(() => {
 		if (!gradeResult?.valid) return '';
-		if (gradeResult.follow_up_cta === 'try_quaestor_free') {
-			return 'Strong enough for direct product trial on both the AI and human axes.';
+		if (gradeResult.ai_readiness.grade === 'A') {
+			return 'Highly executable by an agent. Clean boundaries, named doers, and explicit context.';
 		}
-
-		if (gradeResult.ai_readiness.grade === 'F' || gradeResult.human_readiness.grade === 'F') {
-			return 'The process is still carrying structural gaps that would create chaos for both agents and new hires.';
+		if (gradeResult.ai_readiness.grade === 'B') {
+			return 'Strong foundation for an agent, but has minor gaps or implied context that need tightening.';
 		}
+		if (gradeResult.ai_readiness.grade === 'C') {
+			return 'An agent would struggle here. Relies too much on human intuition or undefined handoffs.';
+		}
+		return 'Not ready for agents. Structural gaps and implicit decisions would cause immediate failure.';
+	});
 
-		return 'There is usable structure here, but it still needs human guardrails and cleanup before it scales cleanly.';
+	const humanGradeCaption = $derived.by(() => {
+		if (!gradeResult?.valid) return '';
+		if (gradeResult.human_readiness.grade === 'A') {
+			return 'Clear, scannable, and self-contained. A new hire could execute this immediately.';
+		}
+		if (gradeResult.human_readiness.grade === 'B') {
+			return 'Generally readable, but might require a new hire to ask a few questions or hunt for links.';
+		}
+		if (gradeResult.human_readiness.grade === 'C') {
+			return 'Has usable steps but assumes too much tribal knowledge or uses dense formatting.';
+		}
+		return 'Extremely difficult for a new hire to follow. Missing context or contradictory steps.';
 	});
 	const followUpHref = $derived.by(() => {
 		if (!gradeResult?.valid) return '';
@@ -696,7 +711,7 @@
 											{gradeResult.ai_readiness.score} / 100
 										</p>
 										<p class="mt-4 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-											{gradeCaption}
+											{aiGradeCaption}
 										</p>
 									</div>
 
@@ -714,12 +729,9 @@
 										<p class="mt-2 text-base font-semibold text-[rgb(var(--text-secondary))]">
 											{gradeResult.human_readiness.score} / 100
 										</p>
-										<div
-											class="mt-4 w-full border-t border-[rgb(var(--border))] pt-4 text-left text-sm leading-relaxed text-[rgb(var(--text-secondary))]"
-										>
-											<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-											{@html renderMarkdown(gradeResult.human_readiness.summary, 'mt-0')}
-										</div>
+										<p class="mt-4 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
+											{humanGradeCaption}
+										</p>
 									</div>
 								</div>
 
@@ -729,7 +741,7 @@
 										class="max-w-3xl text-base leading-relaxed text-[rgb(var(--text-secondary))]"
 									>
 										<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-										{@html renderMarkdown(gradeResult.ai_readiness.summary, 'mt-4')}
+										{@html renderMarkdown(gradeResult.summary, 'mt-4')}
 									</div>
 
 									<div class="mt-6 grid gap-4 lg:grid-cols-2">
