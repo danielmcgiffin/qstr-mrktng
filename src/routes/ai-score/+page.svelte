@@ -212,7 +212,7 @@
 
 		blocks.forEach((block, i) => {
 			const isListItem = block.startsWith('- ');
-			const isHeader = block.startsWith('### ');
+			const headerMatch = block.match(/^#{1,6}\s*(.*)$/);
 
 			if (isListItem) {
 				if (!inList) {
@@ -225,8 +225,9 @@
 					html += '</ul>';
 					inList = false;
 				}
-				if (isHeader) {
-					html += `<h4 class="${i === 0 ? firstMargin : 'mt-6'} text-sm font-bold tracking-wide uppercase text-[rgb(var(--text))]">${block.substring(4)}</h4>`;
+				if (headerMatch) {
+					const cleanHeader = headerMatch[1].replace(/<\/?[^>]+(>|$)/g, '');
+					html += `<h4 class="${i === 0 ? firstMargin : 'mt-6'} text-sm font-bold tracking-wide uppercase text-[rgb(var(--text))]">${cleanHeader}</h4>`;
 				} else {
 					html += `<p class="${i === 0 ? firstMargin : 'mt-4'}">${block}</p>`;
 				}

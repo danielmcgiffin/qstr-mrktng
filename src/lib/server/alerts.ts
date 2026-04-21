@@ -148,6 +148,14 @@ export const sendAiScoreSubmissionAlert = async (params: {
 				`Human readiness: ${params.result.human_readiness.grade} (${params.result.human_readiness.score}/100)`,
 				`Follow-up CTA: ${params.result.follow_up_cta}`,
 				'',
+				'AI Breakdown:',
+				...Object.entries(params.result.ai_readiness.areas).map(([k, v]) => `  - ${k}: ${v.score}`),
+				'',
+				'Human Breakdown:',
+				...Object.entries(params.result.human_readiness.areas).map(
+					([k, v]) => `  - ${k}: ${v.score}`
+				),
+				'',
 				'Summary:',
 				params.result.summary
 			);
@@ -157,7 +165,7 @@ export const sendAiScoreSubmissionAlert = async (params: {
 					'',
 					'Top pathologies:',
 					...params.result.pathologies.map(
-						(pathology) => `- ${pathology.title}: ${pathology.detail}`
+						(pathology) => `- ${pathology.title}:\n  ${pathology.detail}`
 					)
 				);
 			}
