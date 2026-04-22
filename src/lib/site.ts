@@ -33,7 +33,7 @@ export const site = {
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
-		headline: "It doesn't have to be this hard.",
+		headline: 'It doesn’t have to be this hard.',
 		subhead:
 			"For founders who can't delegate because nothing's written down. Quaestor is the atlas that maps who does what, and how, across your whole business.",
 		primaryCta: {
@@ -220,7 +220,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	faq: {
 		eyebrow: 'What people ask next',
-		headline: 'What people ask next',
+		headline: 'What people ask next:',
 		subhead: 'Short answers to the last few reasons people hesitate.',
 		items: [
 			{
@@ -228,7 +228,7 @@ export const site = {
 				a: 'No. Legacy documentation tools are built around the writer and the organizer. Quaestor is built around the person doing the work. It treats roles, processes, and systems as first-class, instead of burying the business inside page after page of text.'
 			},
 			{
-				q: 'How long until it’s useful?',
+				q: 'How do I get up and running fast?',
 				a: 'Start with the process that keeps you chained to your phone. As soon as what’s in your head is in the system, you have something people can use.'
 			},
 			{

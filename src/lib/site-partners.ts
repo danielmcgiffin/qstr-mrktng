@@ -246,7 +246,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	faq: {
 		eyebrow: 'What partners ask next',
-		headline: 'What partners ask next',
+		headline: 'What partners ask next:',
 		subhead: 'Short answers to the questions that come up once the model clicks.',
 		items: [
 			{

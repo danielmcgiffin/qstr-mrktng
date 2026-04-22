@@ -233,7 +233,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	faq: {
 		eyebrow: 'What people ask next',
-		headline: 'What people ask next',
+		headline: 'What people ask next:',
 		subhead: 'Short answers to the last few reasons people hesitate.',
 		items: [
 			{
