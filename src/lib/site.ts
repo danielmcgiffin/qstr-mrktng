@@ -6,7 +6,7 @@ export type CTA = { label: string; href: string };
 export type FeatureItem = { title: string; desc: string; icon: string };
 export type StepItem = { n: string; title: string; desc: string };
 export type FaqItem = { q: string; a: string };
-export type DetailItem = { title: string; desc: string };
+export type DetailItem = { title: string; desc: string; gifSrc?: string };
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const signupBaseHref =
@@ -189,15 +189,18 @@ export const site = {
 		items: [
 			{
 				title: 'Role manual',
-				desc: 'Open a role and see what that person owns, what processes they touch, and where the work lives.'
+				desc: 'Open a role and see what that person owns, what processes they touch, and where the work lives.',
+				gifSrc: '/role-details.gif'
 			},
 			{
 				title: 'Process steps',
-				desc: 'See the steps, the systems, the decisions, and what right looks like.'
+				desc: 'See the steps, the systems, the decisions, and what right looks like.',
+				gifSrc: '/process-steps.gif'
 			},
 			{
 				title: 'Flags',
-				desc: 'When something drifts, Quaestor surfaces it before the work quietly falls apart again.'
+				desc: 'When something drifts, Quaestor surfaces it before the work quietly falls apart again.',
+				gifSrc: '/flags.gif'
 			}
 		]
 	} satisfies {

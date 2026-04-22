@@ -6,7 +6,7 @@ export type CTA = { label: string; href: string };
 export type FeatureItem = { title: string; desc: string; icon: string };
 export type StepItem = { n: string; title: string; desc: string };
 export type FaqItem = { q: string; a: string };
-export type DetailItem = { title: string; desc: string };
+export type DetailItem = { title: string; desc: string; gifSrc?: string };
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const signupHref =
@@ -202,15 +202,18 @@ export const site = {
 		items: [
 			{
 				title: 'Gaps and contradictions surface fast',
-				desc: 'When roles, actions, and systems are linked, missing ownership and broken handoffs show up immediately.'
+				desc: 'When roles, actions, and systems are linked, missing ownership and broken handoffs show up immediately.',
+				gifSrc: '/flags.gif'
 			},
 			{
 				title: 'Role portal answers real questions',
-				desc: 'Click into a role and see every connected process and system in one place. No scavenger hunt.'
+				desc: 'Click into a role and see every connected process and system in one place. No scavenger hunt.',
+				gifSrc: '/role-details.gif'
 			},
 			{
 				title: 'Dynamic onboarding output',
-				desc: 'Generate a guide from atomic knowledge in the graph, on demand, instead of writing it all by hand.'
+				desc: 'Generate a guide from atomic knowledge in the graph, on demand, instead of writing it all by hand.',
+				gifSrc: '/process-steps.gif'
 			}
 		]
 	} satisfies {

@@ -1,20 +1,9 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import RotatingWords from '$lib/components/RotatingWords.svelte';
 	import { trackEvent } from '$lib/analytics';
 	import { site } from '$lib/site-partners';
 
 	const year = new Date().getFullYear();
-
-	const demoImageSrc = $derived.by(() => {
-		const source = site.demo.gifSrc;
-		if (!source.startsWith('/')) {
-			return source;
-		}
-
-		const match = $page.url.pathname.match(/^\/proxy\/\d+/);
-		return match ? `${match[0]}${source}` : source;
-	});
 
 	const showPartnerApply = $derived(site.partnerApply.live);
 
@@ -58,7 +47,7 @@
 					>
 						<span class="grid w-full grid-cols-1 items-baseline md:grid-cols-2">
 							<span
-								class="text-center whitespace-nowrap text-[rgb(var(--text-muted))] md:pr-2 md:text-right"
+								class="text-center whitespace-nowrap text-[rgb(var(--text))] md:pr-2 md:text-right"
 								>{site.hero.headline}&nbsp;</span
 							>
 							<span class="mt-2 text-center whitespace-nowrap md:mt-0 md:text-left">
@@ -93,6 +82,17 @@
 						>
 							{site.hero.secondaryCta.label}
 						</a>
+					</div>
+
+					<div class="mx-auto mt-12 max-w-4xl">
+						<div
+							class="overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-black/70 shadow-2xl"
+						>
+							<video autoplay loop muted playsinline class="block w-full">
+								<source src="/qstr-demo.webm" type="video/webm" />
+								<source src="/qstr-demo.mp4" type="video/mp4" />
+							</video>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -213,21 +213,18 @@
 					<p class="mt-4 text-pretty text-[rgb(var(--muted))] md:text-lg">{site.proof.subhead}</p>
 				</div>
 
-				<div class="mx-auto mt-10 max-w-4xl">
-					<div
-						class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-2 shadow-md"
-					>
-						<div class="overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-black/70">
-							<img src={demoImageSrc} alt={site.demo.alt} class="block w-full" loading="lazy" />
-						</div>
-					</div>
-				</div>
-
 				<div class="mt-10 grid gap-4 md:grid-cols-3">
 					{#each site.proof.items as item}
 						<div
 							class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6"
 						>
+							{#if item.gifSrc}
+								<div
+									class="mb-6 overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]"
+								>
+									<img src={item.gifSrc} alt={item.title} class="block w-full" loading="lazy" />
+								</div>
+							{/if}
 							<h3 class="text-base font-semibold text-[rgb(var(--surface-text-strong))]">
 								{item.title}
 							</h3>

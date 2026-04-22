@@ -13,9 +13,14 @@ const COMMON_RULES = `You are an operational document analyzer for Cursus Tools.
 - If any listed disqualifying pattern is clearly present, cap the score at the stated partial credit value, or 0 when the pattern dominates.
 - Reasoning must quote or paraphrase concrete evidence from the submitted text, not give generic advice.
 - Populate disqualifiers_present with the specific patterns observed, drawn from the rubric's disqualifying list. Use an empty array only when none are present.
-- The summary and pathology details MUST be concise, direct, and action-oriented.
-- Focus on the "so what": what is structurally broken and why does it matter operationally? No fluff or wordy essays.
-- Use bullet points (\`- \`) extensively for readability instead of long paragraphs.
+- The summary MUST use the following exact structure with markdown headers and bulleted lists:
+  ### Strengths
+  - [bullet point]
+  ### Weaknesses
+  - [bullet point]
+  ### Operational Impact
+  - [bullet point]
+- Keep each bullet point extremely concise and direct. Focus on the "so what". No wordy essays or preamble.
 - Use **bold** markdown (\`**text**\`) when referring to specific sections, steps, or quotes from the document in your summaries and pathology details.
 </rules>`;
 
@@ -116,7 +121,7 @@ You are scoring the Human Readiness rubric from SPEC_GUIDE v${RUBRIC_SPEC_VERSIO
 1. readability (20 points)
 Question: Could a plainspoken person read this without a dictionary?
 Full credit requires: average sentence length under roughly 25 words; specialist terms defined or obvious; minimal preamble; active voice; plain language.
-Disqualify full credit if: more than three undefined acronyms; corporate-wellness preamble before procedure; dense passive voice; unsupported jargon; paragraph-length nested sentences; abstract opening claims that do not help execution.
+Disqualify full credit if: more than three undefined acronyms specifically (not general specialist vocabulary appropriate to the domain).; corporate-wellness preamble before procedure; dense passive voice; unsupported jargon; paragraph-length nested sentences; abstract opening claims that do not help execution.
 Partial credit: 10. None: 0.
 
 2. scannability (15 points)

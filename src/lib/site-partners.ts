@@ -6,7 +6,7 @@ export type CTA = { label: string; href: string };
 export type FeatureItem = { title: string; desc: string; icon: string };
 export type StepItem = { n: string; title: string; desc: string };
 export type FaqItem = { q: string; a: string };
-export type DetailItem = { title: string; desc: string };
+export type DetailItem = { title: string; desc: string; gifSrc?: string };
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const bookingHref = 'https://cal.com/danny-cursus/15min';
@@ -215,15 +215,18 @@ export const site = {
 		items: [
 			{
 				title: 'Role manual',
-				desc: 'A client operator can open a role and see exactly what that person owns and where the work lives.'
+				desc: 'A client operator can open a role and see exactly what that person owns and where the work lives.',
+				gifSrc: '/role-details.gif'
 			},
 			{
 				title: 'Process steps',
-				desc: 'The client can see the steps, systems, decisions, and standards without digging through a folder.'
+				desc: 'The client can see the steps, systems, decisions, and standards without digging through a folder.',
+				gifSrc: '/process-steps.gif'
 			},
 			{
 				title: 'Flags',
-				desc: 'When the work drifts, the client sees it before your deliverable quietly dies.'
+				desc: 'When the work drifts, the client sees it before your deliverable quietly dies.',
+				gifSrc: '/flags.gif'
 			}
 		]
 	} satisfies {
