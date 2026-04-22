@@ -1,9 +1,13 @@
 <script lang="ts">
+	import ImageModal from '$lib/components/ImageModal.svelte';
 	import RotatingWords from '$lib/components/RotatingWords.svelte';
 	import { trackEvent } from '$lib/analytics';
 	import { site } from '$lib/site-ops';
 
 	const year = new Date().getFullYear();
+
+	let activeModalImage = $state<string | null>(null);
+	let activeModalAlt = $state('');
 
 	const trackHeroPrimaryCta = () => {
 		trackEvent('hero_cta_click', { location: 'ops_hero_primary' });
@@ -86,7 +90,6 @@
 						>
 							<video autoplay loop muted playsinline class="block w-full">
 								<source src="/qstr-demo.webm" type="video/webm" />
-								<source src="/qstr-demo.mp4" type="video/mp4" />
 							</video>
 						</div>
 					</div>
@@ -215,11 +218,16 @@
 							class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6"
 						>
 							{#if item.gifSrc}
-								<div
-									class="mb-6 overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]"
+								<button
+									type="button"
+									class="mb-6 block w-full cursor-zoom-in overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))] transition hover:border-[rgb(var(--accent))]/50 focus:ring-2 focus:ring-[rgb(var(--accent))]/50 focus:outline-none"
+									onclick={() => {
+										activeModalImage = item.gifSrc ?? null;
+										activeModalAlt = item.title;
+									}}
 								>
 									<img src={item.gifSrc} alt={item.title} class="block w-full" loading="lazy" />
-								</div>
+								</button>
 							{/if}
 							<h3 class="text-base font-semibold text-[rgb(var(--surface-text-strong))]">
 								{item.title}
@@ -383,3 +391,5 @@
 		</footer>
 	</div>
 </div>
+
+<ImageModal src={activeModalImage} alt={activeModalAlt} onClose={() => (activeModalImage = null)} />
