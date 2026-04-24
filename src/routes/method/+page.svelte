@@ -24,17 +24,11 @@
 			Read the method like a playbook. Move through each section while keeping the map in view.
 		</p>
 		<div class="mt-8 flex flex-col gap-3 sm:flex-row">
-			<a
-				class="min-w-[170px] rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-center text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition hover:brightness-110"
-				href={methodPath(methodSections[0].slug)}
-			>
-				Start at the top →
+			<a class="btn btn-primary" href={methodPath(methodSections[0].slug)}>
+				Start at the top <span aria-hidden="true">&rarr;</span>
 			</a>
-			<a
-				class="min-w-[170px] rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-center text-sm font-medium text-[rgb(var(--surface-text-body))] transition-colors duration-200 hover:bg-white/10"
-				href="https://qstr.cursus.tools/demo/process"
-			>
-				See the product →
+			<a class="btn btn-secondary" href="https://qstr.cursus.tools/demo/process">
+				See the product <span aria-hidden="true">&rarr;</span>
 			</a>
 		</div>
 	</div>

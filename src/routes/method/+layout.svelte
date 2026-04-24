@@ -34,8 +34,8 @@
 									<a
 										class={'block rounded-lg px-3 py-1.5 transition-colors duration-200 ' +
 											(isOverview
-												? 'font-medium text-white'
-												: 'text-[rgb(var(--muted))] hover:text-white')}
+												? 'font-medium text-[rgb(var(--surface-text-strong))]'
+												: 'text-[rgb(var(--muted))] hover:text-[rgb(var(--surface-text-strong))]')}
 										href="/method"
 									>
 										Overview
@@ -46,8 +46,8 @@
 										<a
 											class={'flex items-center gap-2.5 rounded-lg px-3 py-1.5 transition-colors duration-200 ' +
 												(activeIndex === i
-													? 'font-medium text-white'
-													: 'text-[rgb(var(--muted))] hover:text-white')}
+													? 'font-medium text-[rgb(var(--surface-text-strong))]'
+													: 'text-[rgb(var(--muted))] hover:text-[rgb(var(--surface-text-strong))]')}
 											href={methodPath(item.slug)}
 										>
 											<span class="w-4 text-xs text-[rgb(var(--muted))]/60 tabular-nums"
@@ -82,7 +82,9 @@
 									<li>
 										<a
 											class={'block rounded-lg px-3 py-2 text-sm transition-colors ' +
-												(isOverview ? 'font-medium text-white' : 'text-[rgb(var(--muted))]')}
+												(isOverview
+													? 'font-medium text-[rgb(var(--surface-text-strong))]'
+													: 'text-[rgb(var(--muted))]')}
 											href="/method"
 											onclick={() => (mobileNavOpen = false)}
 										>
@@ -94,7 +96,7 @@
 											<a
 												class={'block rounded-lg px-3 py-2 text-sm transition-colors ' +
 													(activeIndex === i
-														? 'font-medium text-white'
+														? 'font-medium text-[rgb(var(--surface-text-strong))]'
 														: 'text-[rgb(var(--muted))]')}
 												href={methodPath(item.slug)}
 												onclick={() => (mobileNavOpen = false)}

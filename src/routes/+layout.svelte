@@ -27,7 +27,10 @@
 	};
 
 	const plausibleDomain = env.PUBLIC_PLAUSIBLE_DOMAIN || 'cursus.tools';
-	const siteOrigin = 'https://marketing.dannymcgiffin.com';
+	const siteOrigin = (env.PUBLIC_SITE_ORIGIN || 'https://marketing.dannymcgiffin.com').replace(
+		/\/+$/,
+		''
+	);
 	const demoHref = 'https://qstr.cursus.tools/demo/process';
 	const bookingHref = 'https://cal.com/danny-cursus/15min';
 	const signupHref =
@@ -227,7 +230,7 @@
 
 		<div class="hidden items-center gap-3 md:flex">
 			<a
-				class="rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-white/10 hover:text-[rgb(var(--text))]"
+				class="btn btn-secondary"
 				href={headerCtas.secondary.href}
 				target={secondaryHeaderCtaAttrs.target}
 				rel={secondaryHeaderCtaAttrs.rel}
@@ -236,18 +239,18 @@
 				{headerCtas.secondary.label}
 			</a>
 			<a
-				class="inline-flex items-center gap-2 rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-semibold text-[rgb(var(--bg-elev))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition hover:brightness-110"
+				class="btn btn-primary"
 				href={headerCtas.primary.href}
 				target={primaryHeaderCtaAttrs.target}
 				rel={primaryHeaderCtaAttrs.rel}
 				onclick={() => trackHeaderCta('primary', headerCtas.primary.href)}
 			>
-				{headerCtas.primary.label} →
+				{headerCtas.primary.label} <span aria-hidden="true">&rarr;</span>
 			</a>
 		</div>
 
 		<button
-			class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-white/5 text-lg font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-white/10 hover:text-[rgb(var(--text))] md:hidden"
+			class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] text-lg font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-[rgb(var(--bg-elev-2))] hover:text-[rgb(var(--text))] md:hidden"
 			type="button"
 			aria-expanded={mobileNavOpen}
 			aria-controls="mobile-nav-menu"
@@ -259,12 +262,12 @@
 	</div>
 
 	{#if mobileNavOpen}
-		<div id="mobile-nav-menu" class="border-t border-white/8 md:hidden">
+		<div id="mobile-nav-menu" class="border-t border-[rgb(var(--border))] md:hidden">
 			<div class="mx-auto w-full max-w-7xl px-6 py-4">
 				<div class="space-y-2">
 					{#each headerNavItems as item}
 						<a
-							class="block rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-white/8 hover:text-[rgb(var(--accent))]"
+							class="block rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-[rgb(var(--bg-elev-2))] hover:text-[rgb(var(--accent))]"
 							href={item.href}
 							onclick={() => handleMobileNavClick(item.label, item.href)}
 						>
@@ -275,7 +278,7 @@
 
 				<div class="mt-4 grid gap-2">
 					<a
-						class="block rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-3 text-center text-sm font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-white/10 hover:text-[rgb(var(--text))]"
+						class="btn btn-secondary w-full"
 						href={headerCtas.secondary.href}
 						target={secondaryHeaderCtaAttrs.target}
 						rel={secondaryHeaderCtaAttrs.rel}
@@ -284,13 +287,13 @@
 						{headerCtas.secondary.label}
 					</a>
 					<a
-						class="block rounded-xl bg-[rgb(var(--accent))] px-4 py-3 text-center text-sm font-semibold text-[rgb(var(--bg-elev))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] transition hover:brightness-110"
+						class="btn btn-primary w-full"
 						href={headerCtas.primary.href}
 						target={primaryHeaderCtaAttrs.target}
 						rel={primaryHeaderCtaAttrs.rel}
 						onclick={() => handleMobileCtaClick('primary', headerCtas.primary.href)}
 					>
-						{headerCtas.primary.label} →
+						{headerCtas.primary.label} <span aria-hidden="true">&rarr;</span>
 					</a>
 				</div>
 			</div>
