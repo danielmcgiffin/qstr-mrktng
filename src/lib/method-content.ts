@@ -21,31 +21,31 @@ export const methodContent: MethodContentSection[] = [
 	{
 		slug: 'diagnosis',
 		title: 'Why Most Ops Documentation Fails',
-		summary: 'The patterns that kill documentation efforts — and why yours probably already died.',
+		summary: 'The patterns that kill documentation efforts... and why yours probably already died.',
 		intro:
-			"You've seen this before. Maybe you built it yourself, maybe you inherited it. Either way, the result is the same: documentation that looked great on day one and became a liability (or got forgotten) by month three. We've found there are four primary failure modes. We've designed Quaestor to eliminate all of them.",
+			"You've seen this before. Maybe you built it yourself, maybe you inherited it. Either way, the result is the same: documentation that looked great on day one and became a liability (or got forgotten) by month three. We've done this for a lot of businesses, and have found four primary failure modes. We've designed Quaestor to eliminate all of them.",
 		groups: [
 			{
 				items: [
 					{
 						id: 'theater',
 						title: 'Documentation theater',
-						desc: "Long SOPs that look professional in the binder and are abandoned within a month. Everyone's built these. Nobody uses them. The effort goes into the writing, screenshots, and layout — not maintaining the system. The business leaves the docs behind before the ink is dry."
+						desc: "Long SOPs that look professional in the binder and are abandoned within a month. Everyone's built these. Nobody uses them. This is 80% of the consultant deliverables and 90% of the templates online, designed to look 'complete' instead of 'getting out of the way so we can do our jobs'. The effort goes into the writing, screenshots, and layout... but it's hard to find info and harder to maintain. The business leaves the docs behind almost before the ink is dry."
 					},
 					{
 						id: 'duplicates',
 						title: 'Duplicate systems of record',
-						desc: 'Copies of copies of copies. The same process described in a Google Doc, a wiki page, and an email thread — and none of them are current. Multiple versions of SOPs are the same as having no SOP at all. Instead of streamlining work, teams slow down to debate what "right" is.'
+						desc: 'Copies of copies of copies. The same process described in a Google Doc, a wiki page, and an email thread... and none of them are current. Multiple versions of SOPs are the same as having no SOP at all. Instead of streamlining work, teams slow down to debate what "right" is, and it makes finding the right document in the shared drive a tedious nightmare.'
 					},
 					{
 						id: 'unowned',
 						title: 'Unowned actions, systems, or roles',
-						desc: 'When writing SOPs, people often use passive voice ("this will be done") without assigning ownership to a person or role. Steps that exist on paper but have no owner become operational drag. When something breaks, everyone points elsewhere. When something changes, no one updates the map. Accountability is load-bearing.'
+						desc: 'When writing SOPs, people often use passive voice ("this will be done") without assigning ownership to a person or role. So "steps" that exist on paper have no owner (or no clear system, or lacking additional context) cause confusion and create operational drag. When something breaks, everyone’s pointing the finger at someone else. When something changes, no one’s updating the map. But having a role on every action keeps things moving well... accountability is load-bearing.'
 					},
 					{
 						id: 'graveyard',
 						title: 'The documentation graveyard',
-						desc: 'Wikis nobody reads. SOPs layered on SOPs from reorgs in ages past. A SharePoint full of answers to questions no one is asking. The saddest part: someone spent real time and money building all of it. Usage fails for many reasons, often in combination, but the result is the same — investment without return.'
+						desc: 'Wikis nobody reads. SOPs layered on SOPs from reorgs in ages past. A SharePoint full of answers to questions no one is asking. The saddest part: someone spent real time and money building all of it. Usage fails for many reasons, often in combination, but the result is the same: investment without return.'
 					}
 				]
 			}
@@ -56,24 +56,24 @@ export const methodContent: MethodContentSection[] = [
 		title: 'The Operating Model',
 		summary: 'Three primitives. Infinite connections. One source of truth.',
 		intro:
-			'Every business operation — no matter the industry, no matter the size — reduces to three elements and the relationships between them. Quaestor maps these relationships into a living graph so the picture of how work works is always current, always connected, and always queryable in the simplest, most frictionless way possible.',
+			'Every business operation — no matter the industry, no matter the size — reduces to three essential elements and the relationships between them. Quaestor maps these relationships into a living graph so the picture of how work works is always current, always connected, and always queryable in the simplest, most frictionless way possible.',
 		groups: [
 			{
 				items: [
 					{
 						id: 'primitives',
 						title: 'Three primitives: Roles, Processes, Systems',
-						desc: "Who does what, where. Every action in your business has one accountable role who does it, they have the standard to which the action needs doing, and they have the system (or place) where they do that action. This isn't an over-simplification or abstraction. It's the atomic structure of operations. A person does an action in a place, everything else is detail."
+						desc: "Who does what, where. Every action in your business has one accountable role who does it, they have the standard to which the action needs doing, and they have the system (or place) where they do that action. This isn't an over-simplification or abstraction. It's the atomic structure of operations. A person does an action in a place (or system, or app...), everything else is detail."
 					},
 					{
 						id: 'connections',
 						title: 'Everything connected, nothing duplicated',
-						desc: "Each element links to every other element it touches. Change a role's responsibilities and every affected process updates. Change a system, and the system is updated across your whole org's process documentation. Realign a role, refine a process, change an activity or a resource, and never worry about what other documents you have to update because you made that one. One change, one place, zero drift."
+						desc: "Each element links to every other element it touches. Change a role's responsibilities and every affected process updates. Change a system, and the system is updated across your whole org's process documentation. Realign a role, refine a process, change an activity or a resource, and never worry about what other documents you have to update because you made that update. One change, one place, zero drift."
 					},
 					{
 						id: 'source-of-truth',
 						title: 'The map is the source of truth',
-						desc: "Quaestor organizes operations so leadership can see the big picture and teams can retrieve what they need at the point of need. It's not another copy of your docs. It's a live graph connecting systems of record, people, and work. Quaestor doesn't replace your tools — it connects them so work can run the way it actually runs."
+						desc: "Quaestor organizes operations so leadership can see the big picture and teams can retrieve what they need at the point of need. It's not another copy of your docs. It's a live graph connecting systems of record, people, and work. Quaestor doesn't replace your tools, it connects them so your work can run the way it actually runs."
 					},
 					{
 						id: 'outputs',
@@ -87,16 +87,16 @@ export const methodContent: MethodContentSection[] = [
 	{
 		slug: 'method',
 		title: 'How to Map Your Operations',
-		summary: "Four steps. Start where it hurts. Ship before it's perfect.",
+		summary: 'Four steps. Start where it hurts. Ship the MVP.',
 		intro:
-			"This isn't a six-month implementation. Start with the workflow that costs the most time, map it in a sitting, and let the structure grow from there. The method works whether you're mapping your own business or deploying it across multiple client engagements.",
+			"This doesn't need a six-month implementation. Start with the workflow that costs the most time, map it in a sitting, and let the structure grow from there. The method works whether you're mapping your own business or deploying it across multiple client engagements.",
 		groups: [
 			{
 				items: [
 					{
 						id: 'bottleneck',
 						title: 'Start with the bottleneck',
-						desc: 'Find the workflow that generates the most interruptions — the process where the owner gets pulled in every time. Map that first. It proves immediate value, sets the pattern for everything else, and builds the momentum to keep going.'
+						desc: 'Find the workflow that generates the most interruptions, causes the most heartburn, or pulls leadership into it every time. Map those processes first. It proves immediate value, sets the pattern for everything else, and builds the momentum to keep going.'
 					},
 					{
 						id: 'interfaces',
@@ -104,58 +104,19 @@ export const methodContent: MethodContentSection[] = [
 						desc: 'Where work passes between people is where operations break down. Make those edges explicit: who hands off to whom, what triggers the handoff, and who owns the next step. Handoffs without owners are just hopes.'
 					},
 					{
+						id: 'step',
+						title: 'Steps are everything',
+						desc: "Think of each step as everything that happens before the work gets handed off. Using a factory analogy, each step has a thing that arrives, gets changed, and is handed-off. If the work moves to a new system or a new role, then it's a new step."
+					},
+					{
 						id: 'commands',
 						title: 'Write steps as commands',
-						desc: "Verbs, not paragraphs. Each step should be executable without a meeting and linked to the system where the work actually happens. If a step requires interpretation, it's not a step — it's a suggestion."
+						desc: "Verbs, not paragraphs. Each step should be executable without a meeting and linked to the system where the work actually happens. If a step requires interpretation, it's just a suggestion."
 					},
 					{
 						id: 'ship',
 						title: 'Ship the 80%',
-						desc: "A working map you can react to beats a perfect map you never finish. Publish the draft. Let the team push back, fill gaps, and correct what's wrong. The map gets better through use, not through editing in isolation."
-					}
-				]
-			}
-		]
-	},
-	{
-		slug: 'alive',
-		title: 'How It Stays Alive',
-		summary: 'Light rhythms and automatic signals that prevent decay.',
-		intro:
-			"The reason most documentation efforts fail isn't the initial build — it's the first month after. Quaestor builds maintenance into the structure itself: review cadences that are light enough to stick, and automatic signals that surface problems before they become surprises.",
-		groups: [
-			{
-				title: 'The Cadence',
-				items: [
-					{
-						id: 'weekly',
-						title: 'Weekly: unblock',
-						desc: 'Open the map, spot friction, assign ownership, close the loop. Fifteen minutes. No heroics.'
-					},
-					{
-						id: 'monthly',
-						title: 'Monthly: consolidate',
-						desc: 'Combine duplicate workflows, standardize templates, and cut noise. Keep the map lean enough to trust.'
-					},
-					{
-						id: 'quarterly',
-						title: 'Quarterly: audit',
-						desc: "Review the highest-impact workflows against how work actually happened. Update what drifted. Retire what's dead."
-					}
-				]
-			},
-			{
-				title: 'The Safety Net',
-				items: [
-					{
-						id: 'stale',
-						title: 'Stale steps surface automatically',
-						desc: "When a linked system changes or a review date passes, affected steps get flagged. Nobody has to remember to check — the map tells you what's drifting before it becomes a problem."
-					},
-					{
-						id: 'retire',
-						title: 'Retire on purpose',
-						desc: "Archive obsolete workflows cleanly so new hires don't follow ghosts from two reorgs ago. A clean map is a trustworthy map."
+						desc: "A working map you can react to beats a perfect map you never finish. Publish the draft. Let the team push back, fill gaps, and correct what's wrong. The map gets better through use, not through tweaking endlessly in isolation."
 					}
 				]
 			}
@@ -164,9 +125,9 @@ export const methodContent: MethodContentSection[] = [
 	{
 		slug: 'signals',
 		title: "How You Know It's Working",
-		summary: 'Four metrics that prove the map is reducing friction, not just adding pages.',
+		summary: 'Three metrics that prove the map is reducing friction, not just adding pages.',
 		intro:
-			"Documentation for its own sake is busywork. These are the signals that tell you whether the map is actually making operations run better — and they're the same metrics you'd use to prove the ROI to anyone who asks.",
+			"Documentation for its own sake is busywork. These are the signals that tell you whether the map is actually making operations run better... and they're the same metrics you'd use to prove the ROI to anyone who asks.",
 		groups: [
 			{
 				items: [
@@ -178,12 +139,7 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'interruptions',
 						title: 'Interruptions per week',
-						desc: 'The number of questions routed to a single person — usually the owner. Track it before, track it after. That delta is the ROI.'
-					},
-					{
-						id: 'handoff-delay',
-						title: 'Handoff delay',
-						desc: 'Time between a request and the next owned action. Every hour of delay is an hour of lost momentum. Shorter is better. Zero is the goal.'
+						desc: 'The number of questions routed to a single person... usually the owner or similarly long-tenured expert. Track it before, track it after. That delta is the ROI.'
 					},
 					{
 						id: 'vacation-test',
@@ -198,12 +154,12 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'no-theater',
 						title: 'No documentation theater',
-						desc: "We won't help you build long, static docs that look impressive in a deliverable and go stale in a month. Everyone's built those. Never again."
+						desc: "We won't help you build long, static docs that look impressive in a deliverable and go stale in a month. We've all been there. Never again."
 					},
 					{
 						id: 'no-duplicates',
 						title: 'No duplicate systems of record',
-						desc: "If work happens in a system, the map links to it — it doesn't copy it. One source of truth means one source of truth."
+						desc: "If work happens in a system, the map links to it, it doesn't copy it. One source of truth means one source of truth."
 					},
 					{
 						id: 'no-unowned',

@@ -37,7 +37,7 @@
 							your first rollout.
 						</p>
 						<a
-							class="mt-6 inline-flex rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
+							class="btn btn-primary mt-6"
 							href="/partners"
 							onclick={() =>
 								trackEvent('partner_intake_click', { location: 'contact_partner_card' })}
@@ -64,7 +64,7 @@
 							bottleneck workflow and scope rollout support.
 						</p>
 						<a
-							class="mt-6 inline-flex rounded-xl border border-[rgb(var(--border))] bg-white/5 px-4 py-2 text-sm font-medium text-[rgb(var(--surface-text-body))] hover:bg-white/10"
+							class="btn btn-secondary mt-6"
 							href="https://cal.com/danny-cursus/15min"
 							target="_blank"
 							rel="noreferrer"

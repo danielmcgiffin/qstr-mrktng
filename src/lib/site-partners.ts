@@ -59,7 +59,7 @@ export const site = {
 			'40-slide deck'
 		],
 		subhead:
-			'You mapped the work, wrote the SOPs, and trained the team. Then the engagement ended. Quaestor turns that work into a living operational atlas your client can keep using.',
+			'You mapped the work, wrote the SOPs, and trained the team. Then the engagement ended, and no one looked at them anymore. Quaestor turns that work into a living operational atlas your client can keep using.',
 		primaryCta: {
 			label: 'Book a partner call',
 			href: bookingHref
@@ -90,14 +90,15 @@ export const site = {
 		eyebrow: 'You know this pattern',
 		headline: 'Great engagement. Dead deliverable.',
 		intro:
-			'Strong delivery. Clean handoff. Six months later the founder is the help desk again and your work is sitting in a folder nobody trusts.',
+			'Strong delivery. Clean handoff. Six months later the founder is back to being his team’s help desk again and your work is sitting in a folder nobody trusts.',
 		bullets: [
 			'You map the work, train the team, and leave a clean handoff.',
-			'Updates stall as soon as the engagement ends.',
+			'Updates stop as soon as the engagement ends.',
 			'Ownership gets fuzzy and questions route back through leadership again.',
-			'By next quarter the playbook is stale and the same fires are back.'
+			'By next quarter the playbook is forgotten and the same fires are back.'
 		],
-		punchline: 'The problem isn’t your method. It’s the tool model underneath it.'
+		punchline:
+			'The problem isn’t your method. It’s a design failure of docs & wikis. They were never meant for modern operations.'
 	} satisfies {
 		eyebrow: string;
 		headline: string;
@@ -113,7 +114,7 @@ export const site = {
 		eyebrow: 'Why it dies after handoff',
 		headline: 'Static docs can’t carry live operations.',
 		subhead:
-			'Document libraries are snapshots. Client operations need living relationships between people, steps, systems, and standards so the work stays usable after you roll off.',
+			'Document libraries are snapshots. Your client operations need living relationships between people, steps, systems, and standards so the work stays usable after you roll off.',
 		points: [
 			{
 				title: 'Ownership blurs in prose',
@@ -277,7 +278,7 @@ export const site = {
 	// FINAL CTA
 	// ───────────────────────────────────────────
 	finalCta: {
-		headline: 'Bring the process you keep rebuilding.',
+		headline: 'Start with the processes you keep rebuilding.',
 		text: 'Bring the client bottleneck that keeps falling back to the founder. We’ll show you how to turn it into a live atlas that survives the handoff.',
 		primaryCta: {
 			label: 'Book a partner call',

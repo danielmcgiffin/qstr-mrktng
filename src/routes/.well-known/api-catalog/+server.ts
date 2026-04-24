@@ -1,25 +1,25 @@
-export const prerender = true;
+import { SITE_ORIGIN } from '$lib/agent-discovery';
+
+export const prerender = false;
 
 export async function GET() {
-	const domain = 'https://marketing.dannymcgiffin.com';
-
 	const catalog = {
 		linkset: [
 			{
-				anchor: `${domain}/api-catalog`,
+				anchor: `${SITE_ORIGIN}/.well-known/api-catalog`,
 				'service-desc': [
 					{
-						href: `${domain}/docs/api`,
+						href: `${SITE_ORIGIN}/ai-score`,
 						type: 'text/html'
 					}
 				]
 			},
 			{
-				anchor: `${domain}/grade`,
+				anchor: `${SITE_ORIGIN}/grade`,
 				rel: 'service',
 				'service-doc': [
 					{
-						href: `${domain}/ai-score`,
+						href: `${SITE_ORIGIN}/ai-score`,
 						type: 'text/html'
 					}
 				],
@@ -27,11 +27,11 @@ export async function GET() {
 				'accept-post': ['application/json']
 			},
 			{
-				anchor: `${domain}/ai-score/submit`,
+				anchor: `${SITE_ORIGIN}/ai-score/submit`,
 				rel: 'service',
 				'service-doc': [
 					{
-						href: `${domain}/ai-score`,
+						href: `${SITE_ORIGIN}/ai-score`,
 						type: 'text/html'
 					}
 				],
@@ -43,7 +43,7 @@ export async function GET() {
 
 	return new Response(JSON.stringify(catalog), {
 		headers: {
-			'Content-Type': 'application/linkset+json',
+			'Content-Type': 'application/linkset+json; charset=utf-8',
 			'Cache-Control': 'max-age=0, s-maxage=3600'
 		}
 	});

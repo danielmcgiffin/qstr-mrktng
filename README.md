@@ -5,6 +5,7 @@ Quaestor marketing site (SvelteKit 5 + Tailwind CSS 4), deployed to Cloudflare P
 This repo is set up to be worked on by a human owner plus an AI coding agent.
 
 See also: [`CLAUDE.md`](./CLAUDE.md)
+For content-only edits, start with [`CONTENT_GUIDE.md`](./CONTENT_GUIDE.md).
 
 ## 1) Quick start
 
@@ -39,19 +40,22 @@ npm run lint
 
 ### High-signal content files
 
-- `src/lib/site.ts` — marketing copy for the **Partners** homepage (`/`).
+- `src/lib/site.ts` — marketing copy for the default homepage (`/`).
 - `src/lib/site-ops.ts` — marketing copy for the **Operators** homepage (`/ops`).
+- `src/lib/site-partners.ts` — marketing copy for the **Partners** page (`/partners`).
+- `src/lib/pricing-content.ts` — shared pricing copy used by the marketing pages.
 - `src/lib/method-content.ts` — long-form method chapter content.
 - `src/lib/method.ts` — method index and slug helpers.
+- `src/lib/components/marketing/` — shared section components used by the marketing pages.
 
 ### Routes
 
-- `src/routes/ops/+page.svelte` — **Operators** homepage (the default view for teams).
-- `src/routes/+page.svelte` — **Partners** homepage (view for consultants/fractional ops).
+- `src/routes/+page.svelte` — default homepage.
+- `src/routes/ops/+page.svelte` — **Operators** homepage.
 - `src/routes/ai-score/+page.svelte` — **AI Score** (lead-gen tool; previously "Ops Grader").
 - `src/routes/method/+page.svelte` — method landing page.
 - `src/routes/method/[slug]/+page.svelte` + `+page.ts` — chapter pages.
-- `src/routes/partners/+page.svelte` — partner page + intake flow.
+- `src/routes/partners/+page.svelte` — **Partners** page.
 - `src/routes/contact/+page.svelte` — contact page.
 - `src/routes/ai-score/submit/+server.ts` — backend for AI Score (JSON + Base64 attachment).
 - `src/routes/grade/+server.ts` — Anthropic/Supabase grading endpoint (`POST /grade`, `PATCH /grade`).
@@ -62,8 +66,8 @@ npm run lint
 The site uses a dynamic header that adjusts its Primary CTA based on the user's current context:
 
 - **Operators view (`/ops`)**: Primary CTA is "Get my AI-readiness score" (`/ai-score`).
-- **Partners view (`/partners`)**: Primary CTA is "Become a partner".
-- **Default**: The navigation state is persisted in localStorage to keep the user in their preferred view.
+- **Partners view (`/partners`)**: Primary CTA is the partner call/apply path from `src/lib/site-partners.ts`.
+- **Default**: Primary CTA is the signup path from `src/lib/site.ts`.
 
 ### Shared utilities
 
@@ -76,6 +80,7 @@ Copy from `.env.example` and fill only what you need.
 
 Public runtime vars (safe for browser exposure):
 
+- `PUBLIC_SITE_ORIGIN` (optional, defaults to `https://marketing.dannymcgiffin.com`)
 - `PUBLIC_PLAUSIBLE_DOMAIN` (optional, defaults to `cursus.tools`)
 - `PUBLIC_PARTNER_INTAKE_ENDPOINT` (optional; if empty, partner intake falls back to `mailto:`)
 - `PUBLIC_PARTNER_INTAKE_EMAIL` (optional fallback email)
