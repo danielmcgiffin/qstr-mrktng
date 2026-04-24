@@ -1,4 +1,6 @@
 <script lang="ts">
+	import BrandText from '$lib/components/BrandText.svelte';
+
 	type DetailItem = {
 		title: string;
 		desc: string;
@@ -41,8 +43,8 @@
 <section {id} class="marketing-section">
 	<div class="marketing-container">
 		<div class="section-header">
-			<h2 class="section-title">{headline}</h2>
-			<p class="section-copy section-copy-large">{subhead}</p>
+			<h2 class="section-title"><BrandText text={headline} /></h2>
+			<p class="section-copy section-copy-large"><BrandText text={subhead} /></p>
 		</div>
 
 		<div class="proof-grid">
@@ -57,22 +59,22 @@
 							<img src={item.gifSrc} alt={item.title} loading="lazy" />
 						</button>
 					{/if}
-					<h3 class="card-title">{item.title}</h3>
-					<p class="card-copy">{item.desc}</p>
+					<h3 class="card-title"><BrandText text={item.title} /></h3>
+					<p class="card-copy"><BrandText text={item.desc} /></p>
 				</div>
 			{/each}
 		</div>
 
 		<div class="faq-wrap">
-			<h3 class="faq-heading">{faqHeadline}</h3>
+			<h3 class="faq-heading"><BrandText text={faqHeadline} /></h3>
 			<div class="faq-list">
 				{#each faqItems as item}
 					<details class="faq-item">
 						<summary>
-							<span>{item.q}</span>
+							<span><BrandText text={item.q} /></span>
 							<span class="faq-indicator" aria-hidden="true">&rsaquo;</span>
 						</summary>
-						<p class="card-copy">{item.a}</p>
+						<p class="card-copy"><BrandText text={item.a} /></p>
 					</details>
 				{/each}
 			</div>

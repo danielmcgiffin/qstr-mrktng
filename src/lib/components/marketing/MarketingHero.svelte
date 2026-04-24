@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BrandText from '$lib/components/BrandText.svelte';
 	import RotatingWords from '$lib/components/RotatingWords.svelte';
 
 	type CTA = {
@@ -41,17 +42,17 @@
 			<h1 class:hero-title-with-kicker={Boolean(kicker)} class="hero-title">
 				{#if rotatingWords.length}
 					<span class="hero-title-grid">
-						<span class="hero-title-lead">{headline}&nbsp;</span>
+						<span class="hero-title-lead"><BrandText text={headline} />&nbsp;</span>
 						<span class="hero-title-rotating">
 							<RotatingWords words={rotatingWords} />
 						</span>
 					</span>
 				{:else}
-					{headline}
+					<BrandText text={headline} />
 				{/if}
 			</h1>
 
-			<p class="hero-subhead">{subhead}</p>
+			<p class="hero-subhead"><BrandText text={subhead} /></p>
 
 			<div class="button-row">
 				<a

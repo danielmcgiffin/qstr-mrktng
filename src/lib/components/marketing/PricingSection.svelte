@@ -1,4 +1,6 @@
 <script lang="ts">
+	import BrandText from '$lib/components/BrandText.svelte';
+
 	type PricingCta = {
 		label: string;
 		href: string;
@@ -35,25 +37,25 @@
 <section {id} class="marketing-section">
 	<div class="marketing-container">
 		<div class="section-header">
-			<h2 class="section-title">{headline}</h2>
-			<p class="section-copy section-copy-large">{subhead}</p>
+			<h2 class="section-title"><BrandText text={headline} /></h2>
+			<p class="section-copy section-copy-large"><BrandText text={subhead} /></p>
 		</div>
 
 		<div class="pricing-grid">
 			{#each plans as plan}
 				<div class={'pricing-card ' + (plan.featured ? 'pricing-card-featured' : '')}>
 					<div class="pricing-card-header">
-						<h3 class="pricing-name">{plan.name}</h3>
+						<h3 class="pricing-name"><BrandText text={plan.name} /></h3>
 						<div class="pricing-period">/mo</div>
 					</div>
 					<div class="pricing-price">{plan.price}</div>
-					<p class="pricing-desc">{plan.desc}</p>
+					<p class="pricing-desc"><BrandText text={plan.desc} /></p>
 
 					<ul class="check-list">
 						{#each plan.perks as perk}
 							<li>
 								<span class="check-mark" aria-hidden="true">&#10003;</span>
-								<span>{perk}</span>
+								<span><BrandText text={perk} /></span>
 							</li>
 						{/each}
 					</ul>

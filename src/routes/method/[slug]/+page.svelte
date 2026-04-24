@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BrandText from '$lib/components/BrandText.svelte';
 	import { methodPath } from '$lib/method';
 	import type { MethodSection } from '$lib/method';
 	import type { MethodContentSection } from '$lib/method-content';
@@ -23,10 +24,10 @@
 			{String(data.idx + 1).padStart(2, '0')} / {String(data.total).padStart(2, '0')}
 		</span>
 		<h1 class="gradient-text mt-3 text-3xl font-semibold tracking-tight md:text-4xl">
-			{data.section.title}
+			<BrandText text={data.section.title} />
 		</h1>
 		<p class="mt-4 leading-relaxed text-pretty text-[rgb(var(--text-secondary))]">
-			{data.section.intro}
+			<BrandText text={data.section.intro} />
 		</p>
 	</header>
 
@@ -35,15 +36,15 @@
 			{#each data.section.groups as group, gi}
 				<div>
 					{#if group.title}
-						<h2 class="text-lg font-semibold md:text-xl">{group.title}</h2>
+						<h2 class="text-lg font-semibold md:text-xl"><BrandText text={group.title} /></h2>
 					{/if}
 					<div class="mt-6 space-y-8">
 						{#each group.items as item}
 							<section id={item.id} class="scroll-mt-24">
-								<h3>{item.title}</h3>
+								<h3><BrandText text={item.title} /></h3>
 								<div class="mt-2 space-y-3">
 									{#each itemParagraphs(item.desc) as paragraph}
-										<p>{paragraph}</p>
+										<p><BrandText text={paragraph} /></p>
 									{/each}
 								</div>
 							</section>
@@ -59,10 +60,10 @@
 		<div class="space-y-8">
 			{#each data.section.groups[0].items as item}
 				<section id={item.id} class="scroll-mt-24">
-					<h3>{item.title}</h3>
+					<h3><BrandText text={item.title} /></h3>
 					<div class="mt-2 space-y-3">
 						{#each itemParagraphs(item.desc) as paragraph}
-							<p>{paragraph}</p>
+							<p><BrandText text={paragraph} /></p>
 						{/each}
 					</div>
 				</section>
@@ -78,7 +79,7 @@
 					<span class="text-xs text-[rgb(var(--muted))]/60">← Previous</span>
 					<span
 						class="text-sm font-medium text-[rgb(var(--muted))] transition-colors duration-200 group-hover:text-[rgb(var(--surface-text-strong))]"
-						>{data.prev.title}</span
+						><BrandText text={data.prev.title} /></span
 					>
 				</a>
 			{:else}
@@ -90,7 +91,7 @@
 					<span class="text-xs text-[rgb(var(--muted))]/60">Next →</span>
 					<span
 						class="text-sm font-medium text-[rgb(var(--muted))] transition-colors duration-200 group-hover:text-[rgb(var(--surface-text-strong))]"
-						>{data.next.title}</span
+						><BrandText text={data.next.title} /></span
 					>
 				</a>
 			{:else}

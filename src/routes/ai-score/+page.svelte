@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BrandText from '$lib/components/BrandText.svelte';
 	import type { GraderResponse } from '$lib/grader';
 	import { trackEvent } from '$lib/analytics';
 	import { MAX_CHARS, WARNING_CHARS, validateInput } from '$lib/grader';
@@ -815,7 +816,7 @@
 												href={followUpHref}
 												onclick={trackResultCta}
 											>
-												{followUpLabel} →
+												<BrandText text={followUpLabel} /> →
 											</a>
 										</div>
 										<ul

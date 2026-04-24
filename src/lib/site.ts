@@ -35,7 +35,7 @@ export const site = {
 	hero: {
 		headline: 'It doesn’t have to be this hard.',
 		subhead:
-			'For founders who can’t delegate because nothing’s written down. Quaestor is the atlas that maps who does what, and how, across your whole business.',
+			'For founders who can’t delegate because nothing’s written down.\nQuaestor is the atlas that maps who does what, and how, across your whole business.',
 		primaryCta: {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`

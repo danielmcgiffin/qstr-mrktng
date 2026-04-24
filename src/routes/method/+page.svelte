@@ -1,4 +1,5 @@
 <script lang="ts">
+	import BrandText from '$lib/components/BrandText.svelte';
 	import { methodSections, methodPath } from '$lib/method';
 </script>
 
@@ -55,10 +56,10 @@
 					<span class="flex-1">
 						<span
 							class="text-base font-semibold text-[rgb(var(--surface-text-strong))] transition-colors duration-200 group-hover:text-[rgb(var(--surface-text-body))]"
-							>{section.title}</span
+							><BrandText text={section.title} /></span
 						>
 						<span class="mt-2 block text-sm leading-relaxed text-[rgb(var(--muted))]"
-							>{section.summary}</span
+							><BrandText text={section.summary} /></span
 						>
 					</span>
 					<span

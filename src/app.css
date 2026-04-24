@@ -248,6 +248,11 @@ select {
 	color: rgb(var(--accent-deep));
 }
 
+.brand-word {
+	color: rgb(var(--accent));
+	font-weight: 700;
+}
+
 .media-frame {
 	position: relative;
 	max-width: 56rem;

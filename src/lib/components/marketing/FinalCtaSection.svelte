@@ -1,4 +1,6 @@
 <script lang="ts">
+	import BrandText from '$lib/components/BrandText.svelte';
+
 	type CTA = {
 		label: string;
 		href: string;
@@ -22,8 +24,8 @@
 <section class="marketing-section">
 	<div class="marketing-container-tight">
 		<div class="final-cta">
-			<h2 class="final-cta-title">{headline}</h2>
-			<p class="final-cta-copy">{text}</p>
+			<h2 class="final-cta-title"><BrandText text={headline} /></h2>
+			<p class="final-cta-copy"><BrandText {text} /></p>
 
 			<div class="button-row">
 				{#each ctas as cta}
