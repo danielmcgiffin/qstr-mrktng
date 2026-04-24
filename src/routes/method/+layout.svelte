@@ -34,7 +34,7 @@
 									<a
 										class={'block rounded-lg px-3 py-1.5 transition-colors duration-200 ' +
 											(isOverview
-												? 'font-medium text-[rgb(var(--surface-text-strong))]'
+												? 'font-medium text-[rgb(var(--accent))]'
 												: 'text-[rgb(var(--muted))] hover:text-[rgb(var(--surface-text-strong))]')}
 										href="/method"
 									>
@@ -46,11 +46,11 @@
 										<a
 											class={'flex items-center gap-2.5 rounded-lg px-3 py-1.5 transition-colors duration-200 ' +
 												(activeIndex === i
-													? 'font-medium text-[rgb(var(--surface-text-strong))]'
+													? 'font-medium text-[rgb(var(--accent))]'
 													: 'text-[rgb(var(--muted))] hover:text-[rgb(var(--surface-text-strong))]')}
 											href={methodPath(item.slug)}
 										>
-											<span class="w-4 text-xs text-[rgb(var(--muted))]/60 tabular-nums"
+											<span class="w-4 text-xs text-current/60 tabular-nums"
 												>{String(i + 1).padStart(2, '0')}</span
 											>
 											<span>{item.title}</span>
@@ -65,7 +65,7 @@
 						<!-- Mobile nav — dropdown -->
 						<div class="md:hidden">
 							<button
-								class="flex w-full items-center justify-between rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-[rgb(var(--surface-text-strong))]"
+								class="flex w-full items-center justify-between rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] px-4 py-3 text-sm text-[rgb(var(--accent))]"
 								onclick={() => (mobileNavOpen = !mobileNavOpen)}
 							>
 								<span>{currentLabel}</span>
@@ -83,7 +83,7 @@
 										<a
 											class={'block rounded-lg px-3 py-2 text-sm transition-colors ' +
 												(isOverview
-													? 'font-medium text-[rgb(var(--surface-text-strong))]'
+													? 'font-medium text-[rgb(var(--accent))]'
 													: 'text-[rgb(var(--muted))]')}
 											href="/method"
 											onclick={() => (mobileNavOpen = false)}
@@ -96,12 +96,12 @@
 											<a
 												class={'block rounded-lg px-3 py-2 text-sm transition-colors ' +
 													(activeIndex === i
-														? 'font-medium text-[rgb(var(--surface-text-strong))]'
+														? 'font-medium text-[rgb(var(--accent))]'
 														: 'text-[rgb(var(--muted))]')}
 												href={methodPath(item.slug)}
 												onclick={() => (mobileNavOpen = false)}
 											>
-												<span class="mr-2 text-[rgb(var(--muted))]/60 tabular-nums"
+												<span class="mr-2 text-current/60 tabular-nums"
 													>{String(i + 1).padStart(2, '0')}</span
 												>
 												{item.title}
