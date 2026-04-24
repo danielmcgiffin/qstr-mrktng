@@ -10,6 +10,9 @@
 		next: MethodSection | null;
 		total: number;
 	};
+
+	const itemParagraphs = (desc: string | string[]): string[] =>
+		Array.isArray(desc) ? desc : [desc];
 </script>
 
 <article class="space-y-8">
@@ -38,7 +41,11 @@
 						{#each group.items as item}
 							<section id={item.id} class="scroll-mt-24">
 								<h3>{item.title}</h3>
-								<p class="mt-2">{item.desc}</p>
+								<div class="mt-2 space-y-3">
+									{#each itemParagraphs(item.desc) as paragraph}
+										<p>{paragraph}</p>
+									{/each}
+								</div>
 							</section>
 						{/each}
 					</div>
@@ -53,7 +60,11 @@
 			{#each data.section.groups[0].items as item}
 				<section id={item.id} class="scroll-mt-24">
 					<h3>{item.title}</h3>
-					<p class="mt-2">{item.desc}</p>
+					<div class="mt-2 space-y-3">
+						{#each itemParagraphs(item.desc) as paragraph}
+							<p>{paragraph}</p>
+						{/each}
+					</div>
 				</section>
 			{/each}
 		</div>

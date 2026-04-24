@@ -171,7 +171,9 @@ const renderMethodIndexMarkdown = (): string => `# The Quaestor Method
 
 The operational atlas, step by step.
 
-Read the method like a playbook. Move through each section while keeping the map in view.
+If your business can’t work without you, you don’t have a business. You have a job, and it comes with chains. This method is how you get out.
+
+Four parts. Why most ops docs die. The model that doesn’t. How to map what’s in your head without losing a weekend. The signals that tell you the map is doing real work.
 
 ## Sections
 ${methodContent.map((section, index) => `${index + 1}. [${section.title}](${absoluteUrl(methodPath(section.slug))}) — ${section.summary}`).join('\n')}
@@ -179,6 +181,9 @@ ${methodContent.map((section, index) => `${index + 1}. [${section.title}](${abso
 ## Start here
 - [Start at the top](${absoluteUrl(methodPath(methodContent[0].slug))})
 - [See the product](https://qstr.cursus.tools/demo/process)`;
+
+const renderMethodItemDescription = (desc: string | string[]): string =>
+	Array.isArray(desc) ? desc.join('\n\n') : desc;
 
 const renderMethodSectionMarkdown = (slug: string): string | null => {
 	const index = methodContent.findIndex((section) => section.slug === slug);
@@ -197,7 +202,9 @@ ${section.intro}
 ${section.groups
 	.map((group) => {
 		const heading = group.title ? `## ${group.title}\n\n` : '';
-		const items = group.items.map((item) => `### ${item.title}\n${item.desc}`).join('\n\n');
+		const items = group.items
+			.map((item) => `### ${item.title}\n${renderMethodItemDescription(item.desc)}`)
+			.join('\n\n');
 		return `${heading}${items}`;
 	})
 	.join('\n\n')}

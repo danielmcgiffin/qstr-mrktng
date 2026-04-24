@@ -21,7 +21,14 @@
 		<p
 			class="mt-5 max-w-2xl text-base leading-relaxed text-pretty text-[rgb(var(--text-secondary))] md:text-lg"
 		>
-			Read the method like a playbook. Move through each section while keeping the map in view.
+			If your business can’t work without you, you don’t have a business. You have a job, and it
+			comes with chains. This method is how you get out.
+		</p>
+		<p
+			class="mt-4 max-w-2xl text-base leading-relaxed text-pretty text-[rgb(var(--text-secondary))] md:text-lg"
+		>
+			Four parts. Why most ops docs die. The model that doesn’t. How to map what’s in your head
+			without losing a weekend. The signals that tell you the map is doing real work.
 		</p>
 		<div class="mt-8 flex flex-col gap-3 sm:flex-row">
 			<a class="btn btn-primary" href={methodPath(methodSections[0].slug)}>
