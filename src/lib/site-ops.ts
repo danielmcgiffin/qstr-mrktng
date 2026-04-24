@@ -46,7 +46,7 @@ export const site = {
 			'bad handoffs'
 		],
 		subhead:
-			'Quaestor maps who does what, in which system, as a connected graph — so your team finds answers instead of asking you.',
+			'Quaestor maps who does what, in which system, as an operation atlas... so your team finds answers instead of asking you.',
 		primaryCta: {
 			label: 'See it in action',
 			href: signupHref
@@ -77,15 +77,14 @@ export const site = {
 		eyebrow: 'You know the feeling',
 		headline: 'This is how it breaks.',
 		intro:
-			'The process exists somewhere. The team still asks the same person. The business keeps falling back onto memory right when you need it to run cleanly.',
+			'If you have to schedule business around employee PTO plans... you aren’t ready to scale. The business keeps falling back into your inbox when you most need it to run without your hand on the wheel.',
 		bullets: [
-			"The process lives in someone's head and three Slack threads from 2022.",
-			"The SOP exists. It's in a folder somewhere. Nobody's opened it since it was written.",
-			"Every question routes to the same person because they're the only one who knows how it actually works.",
-			'A key person leaves and three months of context walks out the door with them.'
+			'The process lives in someone’s head and three Slack threads from 2022.',
+			'The SOP exists. It’s in a folder somewhere. Nobody’s opened it since it was written.',
+			'Every question routes to the same person because they’re the only one who knows how it actually works.',
+			'A key person leaves and years of context and judgement walk out the door with them.'
 		],
-		punchline:
-			"The problem isn't missing documentation. It's that nothing is connected to anything."
+		punchline: 'You need to get the business out of your head, and into your team’s hands.'
 	} satisfies {
 		eyebrow: string;
 		headline: string;
@@ -99,13 +98,13 @@ export const site = {
 	// ───────────────────────────────────────────
 	shadowOps: {
 		eyebrow: 'Shadow ops',
-		headline: 'The hidden operating system inside your business.',
+		headline: 'Shadow Ops: the hidden operating system inside your business.',
 		subhead:
-			'Shadow ops is the load-bearing knowledge trapped in founders, long-tenure team members, and old message threads. It works right up until someone is out sick, quits, or gets overloaded.',
+			'Shadow ops is the load-bearing knowledge trapped in founders, long-time team members, and old communications. It works enough... right up until someone is out sick, quits, or gets overwhelmed.',
 		points: [
 			{
 				title: 'Human API',
-				desc: "If one person has to answer every edge-case question, they are the API. That's not scale. That's operational debt."
+				desc: 'If one person has to answer every edge-case question, they are the API. That’s operational debt waiting to come due.'
 			},
 			{
 				title: 'Coordination tax',
@@ -113,7 +112,7 @@ export const site = {
 			},
 			{
 				title: 'Documentation graveyards',
-				desc: 'Dead SOPs are a symptom. The root cause is missing relationships between roles, processes, and systems.'
+				desc: 'Dead SOPs are a symptom. The root cause is ease of access, competent search, and the missing relationships between roles, processes, and systems.'
 			}
 		]
 	} satisfies {
@@ -128,7 +127,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	howItWorks: {
 		eyebrow: 'How it works',
-		headline: 'Map it once. Keep it alive.',
+		headline: 'Map it once, and it can keep itself alive.',
 		subhead:
 			'Start with the workflow that hurts the most. Map the roles, steps, systems, decisions, and standards. Then give the team something they can actually use instead of another folder they have to interpret.',
 		steps: [
@@ -238,19 +237,19 @@ export const site = {
 		items: [
 			{
 				q: 'How is this different from Notion / Confluence / a wiki?',
-				a: "Wikis store pages. Quaestor stores relationships — roles, processes, and systems linked into a single graph. Change a role's responsibilities and every connected process updates. That's not something a wiki can do, because a wiki doesn't know what's connected to what."
+				a: 'Wikis store pages. Quaestor stores relationships: roles, processes, and systems linked into a single graph. Change a role’s responsibilities and every connected process updates. That’s not something a wiki can do, because a wiki doesn’t automatically know what’s connected to what.'
 			},
 			{
 				q: 'How long does setup take?',
-				a: "Most teams map their first bottleneck workflow in a single sitting. From there, the map grows organically — each new workflow connects to what's already there. You're not building a documentation library from scratch; you're growing a network one link at a time."
+				a: 'Most teams map their first bottleneck workflow in a single sitting. From there, the map grows organically; each new workflow connects to what’s already there. There’s no building a documentation library from scratch; you’re building a network one link at a time.'
 			},
 			{
 				q: 'What if I already have SOPs and docs?',
-				a: "Good — that's raw material, not wasted effort. Import the roles, steps, and systems from what you've already built. The docs become references linked from the map, not duplicated inside it. The map replaces the scavenger hunt, not the documents."
+				a: 'Good! That’s raw material, not wasted effort. Import the roles, steps, and systems from what you’ve already built. The docs become references linked from the map, not duplicated inside it. The map makes it easy for the team to use the docs.'
 			},
 			{
 				q: 'Is this just another tool I have to maintain?',
-				a: "Every workflow has a named owner and a review date. Stale steps get flagged automatically when linked systems change. The maintenance isn't extra work on top of operations — it's built into how the business already runs."
+				a: 'Because of our flags system, every team member plays a role in keeping the documentation fresh on a rolling basis, so there’s no annual guilt-trip lift. The maintenance is built into how the tool already works.'
 			}
 		]
 	} satisfies {
@@ -267,8 +266,8 @@ export const site = {
 		headline: 'Start with the process that hurts the most.',
 		text: 'Map one workflow, make the handoffs clear, and see how quickly the business stops routing everything back through you.',
 		cta: {
-			label: 'Get my AI-readiness score',
-			href: '/ai-score'
+			label: 'Start free',
+			href: `${signupHref}&utm_content=final_cta`
 		}
 	} satisfies {
 		headline: string;

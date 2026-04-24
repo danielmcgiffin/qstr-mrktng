@@ -3,6 +3,7 @@
 
 	export let words: string[] = [];
 	export let intervalMs = 2400;
+	export let initialDelayMs = 900;
 	export let animMs = 380;
 
 	let cur = 0;
@@ -11,8 +12,11 @@
 	let paused = false;
 
 	let reducedMotion = false;
+	let initialTimer: number | undefined;
 	let intervalTimer: number | undefined;
 	let timeoutTimer: number | undefined;
+
+	const canRotate = () => !reducedMotion && !paused && words.length > 1;
 
 	const longest = () => words.reduce((a, b) => (a.length > b.length ? a : b), words[0] ?? '');
 
@@ -20,6 +24,13 @@
 		if (intervalTimer) {
 			window.clearInterval(intervalTimer);
 			intervalTimer = undefined;
+		}
+	}
+
+	function clearInitialTimer() {
+		if (initialTimer) {
+			window.clearTimeout(initialTimer);
+			initialTimer = undefined;
 		}
 	}
 
@@ -31,9 +42,21 @@
 	}
 
 	function startInterval() {
+		clearInitialTimer();
 		clearIntervalTimer();
-		if (!reducedMotion && !paused && words.length > 1) {
+		if (!canRotate()) return;
+
+		const startRotation = () => {
+			initialTimer = undefined;
+			if (!canRotate()) return;
+			tick();
 			intervalTimer = window.setInterval(tick, intervalMs);
+		};
+
+		if (initialDelayMs <= 0) {
+			startRotation();
+		} else {
+			initialTimer = window.setTimeout(startRotation, initialDelayMs);
 		}
 	}
 
@@ -59,6 +82,7 @@
 
 	function handleMouseEnter() {
 		paused = true;
+		clearInitialTimer();
 		clearIntervalTimer();
 		settleWord();
 	}
@@ -74,6 +98,7 @@
 	});
 
 	onDestroy(() => {
+		clearInitialTimer();
 		clearIntervalTimer();
 		clearTimeoutTimer();
 	});

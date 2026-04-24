@@ -35,7 +35,7 @@ export const site = {
 	hero: {
 		headline: 'It doesn’t have to be this hard.',
 		subhead:
-			"For founders who can't delegate because nothing's written down. Quaestor is the atlas that maps who does what, and how, across your whole business.",
+			'For founders who can’t delegate because nothing’s written down. Quaestor is the atlas that maps who does what, and how, across your whole business.',
 		primaryCta: {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`
@@ -72,7 +72,7 @@ export const site = {
 			'The business runs on memory right up until memory fails.'
 		],
 		punchline:
-			'If it only works when you’re around, you don’t have a business. You have a job, and you’re stuck at it.'
+			'If it only works when you’re around, you don’t have a business.\nYou have a job, and you’re stuck at it.'
 	} satisfies {
 		eyebrow: string;
 		headline: string;
@@ -117,7 +117,7 @@ export const site = {
 		eyebrow: 'How it works',
 		headline: 'This is how it stops falling apart.',
 		subhead:
-			"Start with the process that keeps pulling you back in. That’s the tell the work isn't working yet. Write out what right looks like step by step: who does what, which system they use, and how decisions get made. When the handoffs get cleaner and your Slack gets quieter, you know it’s working.",
+			'Start with the process that keeps pulling you back in. That’s the tell the work isn’t working yet. Write out what right looks like step by step: who does what, which system they use, and how decisions get made. When the handoffs get cleaner and your Slack gets quieter, you know it’s working.',
 		steps: [
 			{
 				n: '01',
@@ -183,7 +183,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	proof: {
 		eyebrow: 'Proof',
-		headline: 'You could hand this to someone.',
+		headline: 'You could just hand this to someone.',
 		subhead:
 			'Open the atlas and click through the work. You can see what a role owns, how a process actually runs, and what needs attention before it breaks. This isn’t another folder full of pages. It’s something another person can actually use.',
 		items: [
@@ -225,19 +225,19 @@ export const site = {
 		items: [
 			{
 				q: 'Is this just another documentation tool?',
-				a: 'No. Legacy documentation tools are built around the writer and the organizer. Quaestor is built around the person doing the work. It treats roles, processes, and systems as first-class, instead of burying the business inside page after page of text.'
+				a: 'No. Legacy documentation tools are built around the writer and the organizer. Quaestor is built around the person doing the work. It treats roles, processes, and systems as first-class, instead of burying the business inside pages and pages of text.'
 			},
 			{
 				q: 'How do I get up and running fast?',
-				a: 'Start with the process that keeps you chained to your phone. As soon as what’s in your head is in the system, you have something people can use.'
+				a: 'Start with the process that keeps you chained to your phone. Once you’ve gotten what’s in your head into the system, you have something people can use.'
 			},
 			{
 				q: 'What if we already have SOPs and docs?',
-				a: 'Use them as source material. Bring them in, clean them up, structure them, and fill the gaps so your existing docs become usable operations instead of another graveyard.'
+				a: 'Use them as source material. Bring them in, clean them up, structure them, and fill the gaps so your existing docs become operations multipliers instead of wasted storage space.'
 			},
 			{
-				q: "Why won't this die like my last solution?",
-				a: 'Flags catch drift. People can mark what’s unclear, thin, or outdated. The point is to keep it alive in the flow of work, not wait for an annual cleanup project.'
+				q: 'Why won’t this die like my last solution?',
+				a: 'Flags! Our flag system helps your doers catch when the docs drift. People can mark what’s unclear, thin, or outdated. The point is to keep it alive in the flow of work, not wait for an annual cleanup project.'
 			}
 		]
 	} satisfies {
