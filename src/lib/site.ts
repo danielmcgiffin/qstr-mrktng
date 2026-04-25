@@ -71,8 +71,7 @@ export const site = {
 			'If your people leave, the work falls back on you.',
 			'The business runs on memory right up until memory fails.'
 		],
-		punchline:
-			'If it only works when you’re around, you don’t have a business.\nYou have a job, and you’re stuck at it.'
+		punchline: 'If it only works when you’re around, you don’t have a business.'
 	} satisfies {
 		eyebrow: string;
 		headline: string;
