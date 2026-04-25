@@ -33,9 +33,9 @@ export const site = {
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
-		headline: 'It doesn’t have to be this hard.',
+		headline: "If it only works when you're there, you don't have a business.",
 		subhead:
-			'For founders who can’t delegate because nothing’s written down.\nQuaestor is the atlas that maps who does what, and how, across your whole business.',
+			"You have a job... and you're stuck at it. Quaestor is the operating system that gets the business out of your head and into something your team can actually run with.",
 		primaryCta: {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`
