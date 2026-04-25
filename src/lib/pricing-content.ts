@@ -52,9 +52,5 @@ export const pricingContent: PricingContent = {
 			},
 			featured: false
 		}
-	],
-	freeLink: {
-		label: 'Or start free →',
-		href: `${signupBaseHref}&utm_content=pricing_free_link`
-	}
+	]
 };
