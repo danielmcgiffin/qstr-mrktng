@@ -68,7 +68,7 @@ export const POST: RequestHandler = async (event) => {
 		if (!rateLimit.allowed) {
 			logEvent(requestId, 'rate_limited', rateLimit);
 			return json(
-				{ error: 'Rate limit reached. Try again in about an hour.' },
+				{ error: 'Too many submissions for now. Try again in about an hour.' },
 				{
 					status: 429,
 					headers: {
@@ -202,7 +202,7 @@ export const POST: RequestHandler = async (event) => {
 	} catch (error) {
 		console.error('SOP grading failed', error);
 		return json(
-			{ error: 'Unable to grade this SOP right now. Please try again in a moment.' },
+			{ error: 'The grader is unavailable. Try again in a moment.' },
 			{ status: 502, headers: { ...NO_STORE_HEADERS, 'x-request-id': requestId } }
 		);
 	}
@@ -223,7 +223,7 @@ export const PATCH: RequestHandler = async (event) => {
 
 	const email = typeof payload.email === 'string' ? payload.email.trim() : '';
 	if (!isValidEmail(email)) {
-		return badRequest('Enter a valid email address.');
+		return badRequest('Enter a work email so we can send the score.');
 	}
 
 	const rawText = typeof payload.text === 'string' ? payload.text : '';

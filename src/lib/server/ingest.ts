@@ -106,8 +106,8 @@ const englishHeuristic = (text: string): boolean => {
 
 const REJECTION_MESSAGES: Record<IngestRejectionReason, string> = {
 	no_text: "We couldn't find any readable text in that file. Paste the text directly instead.",
-	too_long: `That document is too long. Paste a single process, not the whole manual (max ${INGEST_MAX_CHARS.toLocaleString()} characters).`,
-	too_short: `That submission is too short. Paste at least ${INGEST_MIN_CHARS} characters of an actual process.`,
+	too_long: `This is too long for one score. Paste one process, not the whole manual (max ${INGEST_MAX_CHARS.toLocaleString()} characters).`,
+	too_short: `Paste at least ${INGEST_MIN_CHARS} characters from a real process.`,
 	non_english: 'English only for now. Paste the English version of the process.',
 	unsupported_type:
 		'Unsupported file type. Supported types: .txt, .md, .docx, .html. Paste text for anything else.',

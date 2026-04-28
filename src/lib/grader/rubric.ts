@@ -1,6 +1,6 @@
-export const RUBRIC_SPEC_VERSION = '0.3' as const;
+export const RUBRIC_SPEC_VERSION = '0.4' as const;
 
-export type LetterGrade = 'A' | 'B' | 'C' | 'F';
+export type LetterGrade = 'A' | 'B' | 'C' | 'D' | 'F';
 
 type RubricItem = {
 	label: string;
@@ -456,23 +456,26 @@ export const HUMAN_READINESS_RUBRIC = {
 } as const;
 
 export const AI_GRADE_BANDS = {
-	A: [90, 100],
-	B: [80, 89],
-	C: [60, 79],
-	F: [0, 59]
+	A: [85, 100],
+	B: [75, 84],
+	C: [65, 74],
+	D: [50, 64],
+	F: [0, 49]
 } as const;
 
 export const HUMAN_GRADE_BANDS = {
-	A: [90, 100],
-	B: [80, 89],
-	C: [60, 79],
-	F: [0, 59]
+	A: [85, 100],
+	B: [75, 84],
+	C: [65, 74],
+	D: [50, 64],
+	F: [0, 49]
 } as const;
 
 export const gradeForScore = (score: number): LetterGrade => {
-	if (score >= 90) return 'A';
-	if (score >= 80) return 'B';
-	if (score >= 60) return 'C';
+	if (score >= 85) return 'A';
+	if (score >= 75) return 'B';
+	if (score >= 65) return 'C';
+	if (score >= 50) return 'D';
 	return 'F';
 };
 

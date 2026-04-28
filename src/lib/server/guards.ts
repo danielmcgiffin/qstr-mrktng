@@ -290,8 +290,7 @@ export const runSubmissionGuards = async (params: {
 		return {
 			blocked: true,
 			status: 422,
-			error:
-				'That submission is too large to grade safely right now. Paste a single process instead.',
+			error: 'This is too large to grade safely right now. Paste a single process instead.',
 			docHash,
 			emailHash,
 			projectedCost,

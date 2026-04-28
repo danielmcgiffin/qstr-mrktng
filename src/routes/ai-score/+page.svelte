@@ -1,8 +1,9 @@
 <script lang="ts">
 	import BrandText from '$lib/components/BrandText.svelte';
-	import type { GraderResponse } from '$lib/grader';
 	import { trackEvent } from '$lib/analytics';
+	import type { GraderResponse } from '$lib/grader';
 	import { MAX_CHARS, WARNING_CHARS, validateInput } from '$lib/grader';
+	import { onMount } from 'svelte';
 
 	type SubmitStatus = 'idle' | 'submitting' | 'success' | 'error';
 	type SubmitRouteResponse =
@@ -28,25 +29,29 @@
 	const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt', '.html'] as const;
 	const FILE_ACCEPT =
 		'.docx,.pptx,.md,.txt,.html,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/markdown,text/plain,text/html';
+	const selfServeSignupHref =
+		'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_result';
+	const implementationIntakeHref =
+		'https://cal.com/danny-cursus/15min?utm_source=cursus.tools&utm_medium=website&utm_campaign=ai_score&utm_content=implementation_intake';
 	const aiAreaItems = [
-		{ key: 'named_doer', label: 'Named doer', max: 15 },
-		{ key: 'context_source_named', label: 'Context source named', max: 20 },
-		{ key: 'boundaries_defined', label: 'Boundaries defined', max: 15 },
-		{ key: 'step_structure', label: 'Step structure', max: 15 },
-		{ key: 'decision_points_defined', label: 'Decision points', max: 15 },
+		{ key: 'named_doer', label: 'Named owner', max: 15 },
+		{ key: 'context_source_named', label: 'Source named', max: 20 },
+		{ key: 'boundaries_defined', label: 'Start and finish', max: 15 },
+		{ key: 'step_structure', label: 'Step shape', max: 15 },
+		{ key: 'decision_points_defined', label: 'Decision rules', max: 15 },
 		{
 			key: 'outputs_handoffs_and_completeness',
-			label: 'Outputs, handoffs, completeness',
+			label: 'Outputs and handoffs',
 			max: 20
 		}
 	] as const;
 	const humanAreaItems = [
-		{ key: 'readability', label: 'Readability', max: 20 },
-		{ key: 'scannability', label: 'Scannability', max: 15 },
-		{ key: 'self_contained_context', label: 'Self-contained context', max: 20 },
-		{ key: 'references_linked', label: 'References linked', max: 15 },
-		{ key: 'terms_consistent', label: 'Terms consistent', max: 15 },
-		{ key: 'internal_consistency', label: 'Internal consistency', max: 15 }
+		{ key: 'readability', label: 'Plain language', max: 20 },
+		{ key: 'scannability', label: 'Easy scan', max: 15 },
+		{ key: 'self_contained_context', label: 'Self-contained', max: 20 },
+		{ key: 'references_linked', label: 'Links and sources', max: 15 },
+		{ key: 'terms_consistent', label: 'Same words', max: 15 },
+		{ key: 'internal_consistency', label: 'No contradictions', max: 15 }
 	] as const;
 
 	let sopText = $state('');
@@ -57,6 +62,12 @@
 	let formError = $state('');
 	let submitMessage = $state('');
 	let gradeResult = $state<GraderResponse | null>(null);
+	let isHydrated = $state(false);
+	let hasTrackedFormStart = false;
+
+	onMount(() => {
+		isHydrated = true;
+	});
 
 	const textFieldClass = $derived(
 		`w-full rounded-xl bg-white px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--muted))] focus:outline-none focus:border-[rgb(var(--accent))] ${
@@ -70,50 +81,67 @@
 	const showSizeWarning = $derived(charsUsed > WARNING_CHARS);
 	const hasFile = $derived(fileMeta !== null);
 	const submitLabel = $derived(
-		hasFile
-			? submitStatus === 'submitting'
-				? 'Scoring file...'
-				: 'Upload and score'
-			: submitStatus === 'submitting'
-				? 'Scoring...'
-				: 'Get score'
+		!isHydrated
+			? 'Loading form'
+			: hasFile
+				? submitStatus === 'submitting'
+					? 'Scoring file'
+					: 'Score uploaded file'
+				: submitStatus === 'submitting'
+					? 'Scoring'
+					: 'Score my SOP'
 	);
+	const submitDisabled = $derived(!isHydrated || submitStatus === 'submitting');
 	const aiGradeCaption = $derived.by(() => {
 		if (!gradeResult?.valid) return '';
 		if (gradeResult.ai_readiness.grade === 'A') {
-			return 'Highly executable by an agent. Clean boundaries, named doers, and explicit context.';
+			return 'An agent can follow this. Owners, boundaries, and context are clear.';
 		}
 		if (gradeResult.ai_readiness.grade === 'B') {
-			return 'Strong foundation for an agent, but has minor gaps or implied context that need tightening.';
+			return 'Close. A few gaps still depend on human memory.';
 		}
 		if (gradeResult.ai_readiness.grade === 'C') {
-			return 'An agent would struggle here. Relies too much on human intuition or undefined handoffs.';
+			return 'An agent will stall. Handoffs and decisions need more structure.';
 		}
-		return 'Not ready for agents. Structural gaps and implicit decisions would cause immediate failure.';
+		if (gradeResult.ai_readiness.grade === 'D') {
+			return 'Not ready yet. The missing rules will break the run.';
+		}
+		return 'Not ready yet. Rewrite the process before an agent touches it.';
 	});
 
 	const humanGradeCaption = $derived.by(() => {
 		if (!gradeResult?.valid) return '';
 		if (gradeResult.human_readiness.grade === 'A') {
-			return 'Clear, scannable, and self-contained. A new hire could execute this immediately.';
+			return 'Clear enough for a new hire to run.';
 		}
 		if (gradeResult.human_readiness.grade === 'B') {
-			return 'Generally readable, but might require a new hire to ask a few questions or hunt for links.';
+			return 'Readable, but a new hire will still ask questions.';
 		}
 		if (gradeResult.human_readiness.grade === 'C') {
-			return 'Has usable steps but assumes too much tribal knowledge or uses dense formatting.';
+			return 'Usable, but too much context lives outside the doc.';
 		}
-		return 'Extremely difficult for a new hire to follow. Missing context or contradictory steps.';
+		if (gradeResult.human_readiness.grade === 'D') {
+			return 'Hard to follow. Missing context and contradictions will slow the work.';
+		}
+		return 'A new hire cannot run this from the doc yet.';
 	});
 	const followUpHref = $derived.by(() => {
 		if (!gradeResult?.valid) return '';
 		return gradeResult.follow_up_cta === 'try_quaestor_free'
-			? 'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_result'
-			: 'https://cal.com/danny-cursus/15min';
+			? selfServeSignupHref
+			: implementationIntakeHref;
 	});
 	const followUpLabel = $derived.by(() => {
 		if (!gradeResult?.valid) return '';
-		return gradeResult.follow_up_cta === 'try_quaestor_free' ? 'Try Quaestor free' : 'Book a demo';
+		return gradeResult.follow_up_cta === 'try_quaestor_free'
+			? 'Load this into Quaestor'
+			: 'Fix this with us';
+	});
+	const followUpHelper = $derived.by(() => {
+		if (!gradeResult?.valid) return '';
+		return gradeResult.follow_up_cta === 'try_quaestor_free'
+			? 'This process is close enough to load into the atlas and keep alive.'
+			: 'Start with the lowest section. Rewrite that process before you automate it.';
 	});
 
 	const getFileInputEl = (): HTMLInputElement | null => {
@@ -137,6 +165,12 @@
 
 		const value = new URLSearchParams(window.location.search).get('utm_source')?.trim();
 		return value || 'organic';
+	};
+
+	const trackFormStart = (field: 'text' | 'email' | 'file') => {
+		if (hasTrackedFormStart) return;
+		hasTrackedFormStart = true;
+		trackEvent('ai_score_form_start', { source: getSource(), field });
 	};
 
 	const isValidEmail = (value: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value.trim());
@@ -244,11 +278,20 @@
 
 	const trackResultCta = () => {
 		if (!gradeResult?.valid) return;
+		const props = {
+			location: 'ai_score_result_cta',
+			ai_score: gradeResult.ai_readiness.score,
+			ai_grade: gradeResult.ai_readiness.grade,
+			human_score: gradeResult.human_readiness.score,
+			human_grade: gradeResult.human_readiness.grade,
+			cta: gradeResult.follow_up_cta
+		};
+		trackEvent('ai_score_result_cta_click', props);
 		if (gradeResult.follow_up_cta === 'try_quaestor_free') {
-			trackEvent('signup_start', { location: 'ai_score_result_cta' });
+			trackEvent('signup_start', props);
 			return;
 		}
-		trackEvent('booking_click', { location: 'ai_score_result_cta' });
+		trackEvent('booking_click', props);
 	};
 
 	const revealResult = () => {
@@ -264,6 +307,7 @@
 	const onFileChange = (event: Event) => {
 		formError = '';
 		submitMessage = '';
+		trackFormStart('file');
 		const input = event.currentTarget as HTMLInputElement;
 		const file = input.files?.[0] ?? null;
 
@@ -273,20 +317,26 @@
 		}
 
 		if (!hasAllowedExtension(file.name)) {
-			formError = 'Supported file types: .docx, .pptx, .md, .txt, .html.';
+			formError = 'Use .docx, .pptx, .md, .txt, or .html.';
+			trackEvent('ai_score_validation_error', { source: getSource(), field: 'file_type' });
 			input.value = '';
 			fileMeta = null;
 			return;
 		}
 
 		if (file.size > MAX_FILE_BYTES) {
-			formError = 'File is too large. Keep attachments under 10 MB.';
+			formError = 'Keep files under 10 MB.';
+			trackEvent('ai_score_validation_error', { source: getSource(), field: 'file_size' });
 			input.value = '';
 			fileMeta = null;
 			return;
 		}
 
 		fileMeta = { name: file.name, size: file.size };
+		trackEvent('ai_score_file_selected', {
+			source: getSource(),
+			extension: file.name.split('.').pop() ?? ''
+		});
 		gradeResult = null;
 	};
 
@@ -333,9 +383,7 @@
 
 		const text = html.trim();
 		if (!text) {
-			throw new Error(
-				"We couldn't read text from this .docx file. Try exporting it as .txt or paste the text instead."
-			);
+			throw new Error('We could not read this .docx. Export as .txt or paste the text.');
 		}
 		return text;
 	};
@@ -395,12 +443,12 @@
 		const responseData = (await response.json()) as unknown;
 		if (!response.ok) {
 			throw new Error(
-				getErrorMessage(responseData, 'Could not send your submission right now. Please try again.')
+				getErrorMessage(responseData, 'We could not send this. Try again in a minute.')
 			);
 		}
 
 		if (!isSubmitRouteResponse(responseData)) {
-			throw new Error('Unexpected response from AI Score submission.');
+			throw new Error('Something changed on our side. Try again.');
 		}
 
 		trackEvent('ai_score_submit', {
@@ -421,6 +469,15 @@
 
 		if (responseData.mode === 'graded') {
 			gradeResult = responseData.result;
+			if (responseData.result.valid) {
+				trackEvent('ai_score_result_view', {
+					source,
+					ai_score: responseData.result.ai_readiness.score,
+					ai_grade: responseData.result.ai_readiness.grade,
+					human_score: responseData.result.human_readiness.score,
+					human_grade: responseData.result.human_readiness.grade
+				});
+			}
 			revealResult();
 		} else {
 			gradeResult = null;
@@ -443,15 +500,15 @@
 		const source = getSource();
 		let validatedText = '';
 
-		if (!isValidEmail(normalizedEmail)) {
-			formError =
-				'Enter a valid email address so we can send your submission to our inbox and reply.';
-			return;
-		}
+		trackEvent('ai_score_form_submit_attempt', {
+			source,
+			has_file: currentFile ? 'true' : 'false'
+		});
 
 		if (currentFile) {
 			if (trimmedText.length > MAX_CHARS) {
-				formError = `Keep typed notes under ${MAX_CHARS} characters.`;
+				formError = `Keep typed notes under ${MAX_CHARS.toLocaleString()} characters.`;
+				trackEvent('ai_score_validation_error', { source, field: 'notes_length' });
 				return;
 			}
 
@@ -460,9 +517,16 @@
 			const validation = validateInput(sopText);
 			if (!validation.valid) {
 				formError = validation.error;
+				trackEvent('ai_score_validation_error', { source, field: 'sop_text' });
 				return;
 			}
 			validatedText = validation.text;
+		}
+
+		if (!isValidEmail(normalizedEmail)) {
+			formError = 'Enter a work email so we can send the score.';
+			trackEvent('ai_score_validation_error', { source, field: 'email' });
+			return;
 		}
 
 		submitStatus = 'submitting';
@@ -471,16 +535,17 @@
 			await submitAiScoreSubmission(currentFile, normalizedEmail, validatedText, source);
 		} catch (error) {
 			submitStatus = 'error';
-			submitMessage = error instanceof Error ? error.message : 'Network error while grading.';
+			submitMessage =
+				error instanceof Error ? error.message : 'The grader did not respond. Try again.';
 		}
 	};
 </script>
 
 <svelte:head>
-	<title>AI Score - Quaestor</title>
+	<title>AI Score for SOPs | Quaestor</title>
 	<meta
 		name="description"
-		content="Paste or upload an SOP, flow, or process doc and get a free AI-Readiness evaluation."
+		content="Paste an SOP and get AI-readiness, Human-readiness, and the handoffs likely to break."
 	/>
 </svelte:head>
 
@@ -492,56 +557,49 @@
 					<span
 						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--accent))]/20 bg-[rgb(var(--accent))]/5 px-3 py-1 text-xs text-[rgb(var(--accent))]"
 					>
-						✦ AI Score
+						SOP score
 					</span>
 					<h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
-						Paste one SOP or process.
+						Paste an SOP.
 					</h1>
 					<h2 class="mt-4 text-2xl font-semibold tracking-tight text-balance md:text-3xl">
-						Get an instant AI-readiness score.
+						Get two scores. See what breaks.
 					</h2>
 					<p class="mx-auto mt-4 max-w-2xl text-pretty text-[rgb(var(--muted))]">
-						Enter your email, paste text for an immediate result, or upload a file. Every submission
-						also goes to our inbox so we can follow up personally.
+						Paste the process first. Add your email so we can send the score and follow up if the
+						file needs review.
 					</p>
 				</div>
 
 				<div class="mt-10 grid gap-6 lg:grid-cols-[minmax(0,1.2fr)_minmax(320px,0.8fr)]">
 					<form
 						class="rounded-[1.9rem] border border-[rgb(var(--border-strong))] bg-[rgb(var(--bg-elev))] p-6 shadow-[0_24px_60px_rgb(103_80_54_/_0.12)] md:p-8"
+						novalidate
 						onsubmit={submitForReview}
 					>
 						<label class="space-y-2 text-sm">
-							<span class="text-[rgb(var(--surface-text-strong))]">Email (required)</span>
-							<input
-								type="email"
-								bind:value={replyEmail}
-								class={textFieldClass}
-								placeholder="you@company.com"
-							/>
-						</label>
-
-						<label class="mt-4 block space-y-2 text-sm">
-							<span class="text-[rgb(var(--surface-text-strong))]"
-								>SOP text (100-150,000 chars)</span
-							>
+							<span class="text-[rgb(var(--surface-text-strong))]">SOP or process text</span>
 							<textarea
 								bind:value={sopText}
+								disabled={!isHydrated}
+								oninput={() => trackFormStart('text')}
 								rows="10"
 								maxlength={MAX_CHARS}
 								class={textFieldClass}
-								placeholder="Paste your SOP, workflow, or process doc here for an instant read."
+								placeholder="Paste the process your team actually uses. Steps, owners, tools, handoffs."
 							></textarea>
 						</label>
 
-						<div class="mt-3 flex items-center justify-between text-xs text-[rgb(var(--muted))]">
+						<div
+							class="mt-3 flex items-center justify-between gap-3 text-xs text-[rgb(var(--muted))]"
+						>
 							<span class={showSizeWarning ? 'font-semibold text-amber-600' : ''}
 								>{charsUsed.toLocaleString()} / {MAX_CHARS.toLocaleString()}</span
 							>
 							<span
 								>{hasFile
-									? 'File ingest → inline grade or inbox fallback'
-									: 'Text submit → inbox + instant result'}</span
+									? 'File may score inline or route to review'
+									: 'Text gets an instant score'}</span
 							>
 						</div>
 
@@ -550,67 +608,77 @@
 								class="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-900"
 							>
 								<p>
-									<strong>Heads up:</strong> This document is larger than most processes. We'll grade
-									it as a whole - but you might get sharper insights by submitting individual processes
-									separately.
+									<strong>Long document.</strong> You can submit it, but one process at a time usually
+									gets a sharper score.
 								</p>
 							</div>
 						{/if}
 
-						<div class="mt-5 space-y-2 text-sm">
-							<span class="text-[rgb(var(--surface-text-strong))]"
-								>Or attach a file for inline grading</span
-							>
-							<div
-								class="flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-[rgb(var(--border))] bg-white px-3 py-3"
-							>
-								<input
-									bind:this={fileInput}
-									type="file"
-									accept={FILE_ACCEPT}
-									onchange={onFileChange}
-									data-role="ai-score-file"
-									class="block max-w-full text-xs text-[rgb(var(--text-secondary))] file:mr-3 file:cursor-pointer file:rounded-lg file:border file:border-[rgb(var(--border))] file:bg-[rgb(var(--bg-subtle))] file:px-3 file:py-1.5 file:text-xs file:text-[rgb(var(--accent))] hover:file:bg-[rgb(var(--accent-tint))]"
-								/>
-								{#if fileMeta}
-									<span class="text-xs text-[rgb(var(--surface-text-body))]">
-										{fileMeta.name} · {formatBytes(fileMeta.size)}
-									</span>
-									<button
-										type="button"
-										onclick={clearFile}
-										class="text-xs text-[rgb(var(--muted))] underline hover:text-[rgb(var(--surface-text-strong))]"
-									>
-										remove
-									</button>
-								{/if}
-							</div>
-							<p class="text-xs text-[rgb(var(--muted))]">
-								.docx, .md, .txt, or .html score inline. .pptx is accepted and routed to inbox
-								review. Up to 10 MB.
-							</p>
-							<div
-								class="mt-4 flex flex-col rounded-2xl border border-[rgb(var(--border))] bg-white p-4"
-							>
-								<p class="text-sm font-semibold text-[rgb(var(--text))]">
-									Don't have docs to upload?
-								</p>
-								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									That makes it harder to use agents in your business. If you'd like help changing
-									that, we can connect you with our network of partners to help build your
-									documentation.
-								</p>
-								<a
-									class="mt-4 inline-flex items-center self-end rounded-xl border border-[rgb(var(--accent))] px-4 py-2 text-sm font-semibold text-[rgb(var(--accent))] transition hover:bg-[rgb(var(--accent))]/5"
-									href="/partners"
+						<details
+							class="mt-5 rounded-2xl border border-[rgb(var(--border))] bg-white p-4 text-sm"
+						>
+							<summary class="cursor-pointer font-semibold text-[rgb(var(--surface-text-strong))]">
+								Upload instead
+							</summary>
+							<div class="mt-3 space-y-2">
+								<div
+									class="flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-[rgb(var(--border))] bg-white px-3 py-3"
 								>
-									Connect me with a partner →
-								</a>
+									<input
+										bind:this={fileInput}
+										type="file"
+										disabled={!isHydrated}
+										accept={FILE_ACCEPT}
+										onchange={onFileChange}
+										data-role="ai-score-file"
+										class="block max-w-full text-xs text-[rgb(var(--text-secondary))] file:mr-3 file:cursor-pointer file:rounded-lg file:border file:border-[rgb(var(--border))] file:bg-[rgb(var(--bg-subtle))] file:px-3 file:py-1.5 file:text-xs file:text-[rgb(var(--accent))] hover:file:bg-[rgb(var(--accent-tint))]"
+									/>
+									{#if fileMeta}
+										<span class="text-xs text-[rgb(var(--surface-text-body))]">
+											{fileMeta.name} · {formatBytes(fileMeta.size)}
+										</span>
+										<button
+											type="button"
+											onclick={clearFile}
+											class="text-xs text-[rgb(var(--muted))] underline hover:text-[rgb(var(--surface-text-strong))]"
+										>
+											Remove file
+										</button>
+									{/if}
+								</div>
+								<p class="text-xs text-[rgb(var(--muted))]">
+									.docx, .md, .txt, and .html can score inline. .pptx goes to review. 10 MB max.
+								</p>
+								<p class="text-xs text-[rgb(var(--muted))]">
+									Upload only what you are comfortable sharing. Remove customer secrets first.
+								</p>
 							</div>
-						</div>
+						</details>
+
+						<label class="mt-5 block space-y-2 text-sm">
+							<span class="text-[rgb(var(--surface-text-strong))]">Work email</span>
+							<input
+								type="email"
+								autocomplete="email"
+								inputmode="email"
+								autocapitalize="off"
+								required
+								bind:value={replyEmail}
+								disabled={!isHydrated}
+								oninput={() => trackFormStart('email')}
+								class={textFieldClass}
+								placeholder="you@company.com"
+							/>
+						</label>
+						<p class="mt-2 text-xs text-[rgb(var(--muted))]">
+							We use this to send the score and follow up if a file needs review. We do not publish
+							your SOP.
+						</p>
 
 						{#if formError}
 							<p
+								role="alert"
+								aria-live="polite"
 								class="mt-4 rounded-xl border border-red-300 bg-red-50 px-3 py-2 text-sm text-red-900"
 							>
 								{formError}
@@ -619,6 +687,8 @@
 
 						{#if submitMessage}
 							<p
+								role={submitStatus === 'error' ? 'alert' : 'status'}
+								aria-live="polite"
 								class={`mt-4 rounded-xl border px-3 py-2 text-sm ${
 									submitStatus === 'error'
 										? 'border-red-300 bg-red-50 text-red-900'
@@ -632,7 +702,7 @@
 						<div class="mt-6 flex justify-end">
 							<button
 								type="submit"
-								disabled={submitStatus === 'submitting'}
+								disabled={submitDisabled}
 								class="inline-flex min-w-[190px] items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
 							>
 								{submitLabel}
@@ -646,44 +716,41 @@
 						<p
 							class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
 						>
-							How this works
+							What you get
 						</p>
 						<h3 class="mt-3 text-2xl font-semibold text-[rgb(var(--text))]">
-							Paste for instant scoring.
+							Two scores and the failure points.
 						</h3>
 						<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-							The page submits through <span class="font-mono text-xs">/ai-score/submit</span> so every
-							lead includes a reply email. Text submissions are graded inline. File uploads try inline
-							extraction first, then fall back to inbox review when the file type or content blocks instant
-							grading.
+							The grader checks whether an agent can execute the process and whether a new hire can
+							follow it. If a file cannot be read inline, it routes to review.
 						</p>
 
 						<div class="mt-6 grid gap-3">
 							<div
 								class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
 							>
-								<p class="text-sm font-semibold text-[rgb(var(--text))]">Instant path</p>
+								<p class="text-sm font-semibold text-[rgb(var(--text))]">Sample result</p>
 								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									Paste 100-150,000 characters and get inline AI and Human readiness scores,
-									summary, and top pathologies while your submission also lands in our inbox.
+									AI-readiness 62. Human-readiness 71. Top failure point: decisions need rules.
 								</p>
 							</div>
 							<div
 								class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
 							>
-								<p class="text-sm font-semibold text-[rgb(var(--text))]">Manual file path</p>
+								<p class="text-sm font-semibold text-[rgb(var(--text))]">Why this is free</p>
 								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									Attach a .docx, .md, .txt, or .html file for inline extraction and scoring.
-									Unsupported or non-extractable files fall back to the grader inbox.
+									Bad SOPs are the blocker. The score shows where the map needs work before agents
+									touch it.
 								</p>
 							</div>
 							<div
 								class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
 							>
-								<p class="text-sm font-semibold text-[rgb(var(--text))]">Required reply email</p>
+								<p class="text-sm font-semibold text-[rgb(var(--text))]">Privacy note</p>
 								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									Every submission is emailed to our inbox so we can reply directly after the score
-									or manual review.
+									Use a real process. Remove secrets first. We use your email to send the score and
+									follow up if review is needed.
 								</p>
 							</div>
 						</div>
@@ -704,7 +771,7 @@
 										<p
 											class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
 										>
-											AI readiness
+											AI-readiness
 										</p>
 										<div class="mt-4 text-7xl leading-none font-bold text-[rgb(var(--accent))]">
 											{gradeResult.ai_readiness.grade}
@@ -723,7 +790,7 @@
 										<p
 											class="text-[11px] font-semibold tracking-[0.22em] text-[rgb(var(--muted))] uppercase"
 										>
-											Human readiness
+											Human-readiness
 										</p>
 										<div class="mt-4 text-7xl leading-none font-bold text-[rgb(var(--text))]">
 											{gradeResult.human_readiness.grade}
@@ -738,12 +805,38 @@
 								</div>
 
 								<div>
-									<h3 class="text-3xl font-semibold text-[rgb(var(--text))]">Feedback</h3>
+									<h3 class="text-3xl font-semibold text-[rgb(var(--text))]">What broke</h3>
 									<div
 										class="max-w-3xl text-base leading-relaxed text-[rgb(var(--text-secondary))]"
 									>
 										<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 										{@html renderMarkdown(gradeResult.summary, 'mt-4')}
+									</div>
+
+									<div
+										class="mt-6 rounded-[1.6rem] border border-[rgb(var(--border))] bg-[rgb(var(--accent-tint))] p-5"
+									>
+										<p
+											class="text-[11px] font-semibold tracking-[0.22em] text-[rgb(var(--accent))] uppercase"
+										>
+											Next step
+										</p>
+										<div
+											class="mt-3 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between"
+										>
+											<p class="max-w-xl text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
+												{followUpHelper}
+											</p>
+											<a
+												class="inline-flex shrink-0 items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
+												href={followUpHref}
+												target={followUpHref.includes('cal.com') ? '_blank' : undefined}
+												rel={followUpHref.includes('cal.com') ? 'noreferrer' : undefined}
+												onclick={trackResultCta}
+											>
+												<BrandText text={followUpLabel} /> →
+											</a>
+										</div>
 									</div>
 
 									<div class="mt-6 grid gap-4 lg:grid-cols-2">
@@ -753,7 +846,7 @@
 											<p
 												class="text-[11px] font-semibold tracking-[0.22em] text-[rgb(var(--muted))] uppercase"
 											>
-												AI area breakdown
+												AI-readiness breakdown
 											</p>
 											<div class="mt-4 grid gap-3 sm:grid-cols-2">
 												{#each aiAreaItems as item}
@@ -780,7 +873,7 @@
 											<p
 												class="text-[11px] font-semibold tracking-[0.22em] text-[rgb(var(--muted))] uppercase"
 											>
-												Human area breakdown
+												Human-readiness breakdown
 											</p>
 											<div class="mt-4 grid gap-3 sm:grid-cols-2">
 												{#each humanAreaItems as item}
@@ -809,15 +902,8 @@
 											<p
 												class="text-[11px] font-semibold tracking-[0.22em] text-[rgb(var(--muted))] uppercase"
 											>
-												Top pathologies
+												Top failure points
 											</p>
-											<a
-												class="inline-flex items-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
-												href={followUpHref}
-												onclick={trackResultCta}
-											>
-												<BrandText text={followUpLabel} /> →
-											</a>
 										</div>
 										<ul
 											class="mt-4 space-y-4 text-sm leading-relaxed text-[rgb(var(--text-secondary))]"
@@ -845,7 +931,7 @@
 									Result
 								</p>
 								<h3 class="mt-3 text-3xl font-semibold text-[rgb(var(--text))]">
-									This doesn't look like operational content yet.
+									This is not an SOP yet.
 								</h3>
 								<p
 									class="mt-4 max-w-3xl text-base leading-relaxed text-[rgb(var(--text-secondary))]"

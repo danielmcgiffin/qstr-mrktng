@@ -180,21 +180,21 @@ const AI_COMPOSITE_SUBDIMS = {
 } as const;
 
 const AI_PATHOLOGY_MAP: Record<keyof typeof AI_AREA_POINTS, string> = {
-	named_doer: 'Heroic Operations detected',
-	context_source_named: 'Ask-Sarah dependency detected',
-	boundaries_defined: 'Open-loop boundary detected',
-	step_structure: 'Fat-step compression detected',
-	decision_points_defined: 'Judgment trap detected',
-	outputs_handoffs_and_completeness: 'Broken handoff chain detected'
+	named_doer: 'The process depends on one hero',
+	context_source_named: 'The source is a person, not a system',
+	boundaries_defined: 'The start or finish is unclear',
+	step_structure: 'One step is doing too much',
+	decision_points_defined: 'Decisions need rules',
+	outputs_handoffs_and_completeness: 'The handoff can break'
 };
 
 const HUMAN_PATHOLOGY_MAP: Record<keyof typeof HUMAN_AREA_POINTS, string> = {
-	readability: 'Consultant-speak friction detected',
-	scannability: 'Wall-of-text pattern detected',
-	self_contained_context: 'Tribal knowledge dependency detected',
-	references_linked: 'Missing retrieval path detected',
-	terms_consistent: 'Terminology drift detected',
-	internal_consistency: 'Contradictory SOP pattern detected'
+	readability: 'The language slows people down',
+	scannability: 'The page is hard to scan',
+	self_contained_context: 'The missing context lives in someone’s head',
+	references_linked: 'The reference is not findable',
+	terms_consistent: 'The same thing has too many names',
+	internal_consistency: 'The steps contradict each other'
 };
 
 const requireEnv = (key: keyof typeof env): string => {
@@ -907,7 +907,7 @@ const rejectionFromReason = (reason: string): GraderRejectionResponse => ({
 	rejection_reason: 'not_operational_content',
 	message: reason?.trim().length
 		? reason.trim()
-		: 'This tool analyzes operational documents like SOPs, process guides, and workflow descriptions. Paste a paragraph from one of those to get your agent-readiness score.'
+		: 'This tool scores operational documents like SOPs, process guides, and workflow descriptions. Paste a paragraph from one of those to get an AI-readiness score.'
 });
 
 const buildPathologies = (

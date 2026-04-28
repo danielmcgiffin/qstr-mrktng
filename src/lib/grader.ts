@@ -20,14 +20,14 @@ export const validateInput = (text: string): InputValidationResult => {
 	if (trimmed.length < MIN_CHARS) {
 		return {
 			valid: false,
-			error: 'Paste at least 100 characters from an actual process, SOP, or workflow.'
+			error: 'Paste at least 100 characters from a real process.'
 		};
 	}
 
 	if (trimmed.length > MAX_CHARS) {
 		return {
 			valid: false,
-			error: `That submission is too long. Paste a single process, not the whole manual (${MAX_CHARS.toLocaleString()} characters max).`
+			error: `This is too long for one score. Paste one process, not the whole manual (${MAX_CHARS.toLocaleString()} characters max).`
 		};
 	}
 

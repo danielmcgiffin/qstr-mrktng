@@ -123,7 +123,7 @@ const queueManualReview = async (params: {
 		{
 			ok: true,
 			mode: 'queued',
-			message: `We couldn't score this file instantly, but we sent it to our inbox and we'll follow up at ${params.email}.`,
+			message: `We could not score this file instantly. It reached review, and we will follow up at ${params.email}.`,
 			fallback_reason: params.fallbackReason ?? null
 		},
 		{ headers: NO_STORE_HEADERS }
@@ -179,7 +179,7 @@ export const POST: RequestHandler = async (event) => {
 
 	const email = typeof payload.email === 'string' ? payload.email.trim() : '';
 	if (!isValidEmail(email)) {
-		return badRequest('Enter a valid email address so we can reply.');
+		return badRequest('Enter a work email so we can send the score.');
 	}
 
 	const rawText = typeof payload.text === 'string' ? payload.text : '';
@@ -191,7 +191,7 @@ export const POST: RequestHandler = async (event) => {
 	const userAgent = event.request.headers.get('user-agent');
 
 	if (!filePayload && !trimmedNotes) {
-		return badRequest('Paste an SOP section or attach a file so we have something to grade.');
+		return badRequest('Paste an SOP section or attach a file first.');
 	}
 
 	if (trimmedNotes.length > MAX_CHARS) {
@@ -210,12 +210,12 @@ export const POST: RequestHandler = async (event) => {
 		const decodedSize = base64ByteLength(filePayload.content_base64);
 		attachmentSize = decodedSize;
 		if (decodedSize > MAX_FILE_BYTES) {
-			return badRequest('File is too large. Keep attachments under 10 MB.');
+			return badRequest('Keep files under 10 MB.');
 		}
 
 		const filename = sanitizeFilename(filePayload.name || 'upload');
 		if (!hasAllowedExtension(filename)) {
-			return badRequest('Supported file types: .docx, .pptx, .md, .txt, .html.');
+			return badRequest('Use .docx, .pptx, .md, .txt, or .html.');
 		}
 
 		attachment = {
@@ -330,7 +330,7 @@ export const POST: RequestHandler = async (event) => {
 		const rateLimit = await checkRateLimit(ipHash);
 		if (!rateLimit.allowed) {
 			return json(
-				{ error: 'Rate limit reached. Try again in about an hour.' },
+				{ error: 'Too many submissions for now. Try again in about an hour.' },
 				{
 					status: 429,
 					headers: {
@@ -386,7 +386,7 @@ export const POST: RequestHandler = async (event) => {
 				{
 					ok: true,
 					mode: 'graded',
-					message: `We already graded an identical document recently. Reusing that result and we'll follow up at ${email}.`,
+					message: `We already scored this document. We reused the result and will follow up at ${email}.`,
 					result: guard.dedupResult
 				},
 				{ headers: NO_STORE_HEADERS }
@@ -442,7 +442,7 @@ export const POST: RequestHandler = async (event) => {
 			{
 				ok: true,
 				mode: 'graded',
-				message: `Instant score ready below. We sent your submission to our inbox and we'll follow up at ${email}.`,
+				message: `Score ready below. We saved a copy and will follow up at ${email}.`,
 				result
 			},
 			{ headers: NO_STORE_HEADERS }
@@ -462,7 +462,7 @@ export const POST: RequestHandler = async (event) => {
 		}
 
 		return json(
-			{ error: 'Unable to grade this SOP right now. Please try again in a moment.' },
+			{ error: 'The grader is unavailable. Try again in a moment.' },
 			{ status: 502, headers: NO_STORE_HEADERS }
 		);
 	}

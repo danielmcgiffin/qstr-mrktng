@@ -244,7 +244,7 @@ If you are an operator team working without a partner, Quaestor can still help y
 
 const renderAiScoreMarkdown = (): string => `# AI Score
 
-Paste or upload an SOP, flow, or process doc and get a free AI-readiness evaluation.
+Paste an SOP, flow, or process doc and get AI-readiness, Human-readiness, and the handoffs likely to break.
 
 ## Instant grading
 - Paste SOP text between 100 and 150,000 characters for an immediate response
@@ -256,11 +256,11 @@ Paste or upload an SOP, flow, or process doc and get a free AI-readiness evaluat
 - Optional file upload: .docx, .pptx, .md, .txt, or .html
 - File size limit: 10 MB
 - POST [${absoluteUrl('/ai-score/submit')}](${absoluteUrl('/ai-score/submit')}) for file-based review
-- Reply email recommended for manual review follow-up
+- Reply email required for score delivery and manual review follow-up
 
 ## What happens next
-- Text submissions receive an inline AI-readiness result immediately
-- File submissions are sent to the grader inbox for follow-up
+- Text submissions receive inline AI-readiness and Human-readiness scores immediately
+- Files that cannot score inline route to review for follow-up
 
 ## Links
 - [Contact](${absoluteUrl('/contact')})

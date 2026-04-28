@@ -29,11 +29,11 @@ export const AI_GRADER_SYSTEM_PROMPT = `${COMMON_RULES}
 You are scoring the AI Readiness rubric from SPEC_GUIDE v${RUBRIC_SPEC_VERSION}.
 
 <grade_bands>
-- A = 90-100
-- B = 80-89
-- C = 60-79
-- F = 0-59
-- No D grade exists.
+- A = 85-100
+- B = 75-84
+- C = 65-74
+- D = 50-64
+- F = 0-49
 </grade_bands>
 
 <ai_readiness_rubric>
@@ -110,11 +110,11 @@ export const HUMAN_GRADER_SYSTEM_PROMPT = `${COMMON_RULES}
 You are scoring the Human Readiness rubric from SPEC_GUIDE v${RUBRIC_SPEC_VERSION}.
 
 <grade_bands>
-- A = 90-100
-- B = 80-89
-- C = 60-79
-- F = 0-59
-- No D grade exists.
+- A = 85-100
+- B = 75-84
+- C = 65-74
+- D = 50-64
+- F = 0-49
 </grade_bands>
 
 <human_readiness_rubric>

@@ -88,6 +88,13 @@
 			};
 		}
 
+		if (currentPath === '/ai-score') {
+			return {
+				primary: { label: 'Start free', href: signupHref },
+				secondary: { label: 'See the Demo', href: demoHref }
+			};
+		}
+
 		return {
 			primary: { label: 'Start free', href: signupHref },
 			secondary: { label: 'Get your ops AI-ready', href: '/ai-score' }
