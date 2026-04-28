@@ -6,6 +6,7 @@ export type PricingCta = {
 export type PricingPlan = {
 	name: string;
 	price: string;
+	period: string;
 	desc: string;
 	perks: string[];
 	cta: PricingCta;
@@ -28,26 +29,32 @@ export const pricingContent: PricingContent = {
 	eyebrow: 'Pricing',
 	headline: 'Ready to get started.',
 	subhead:
-		'Same atlas. More people. Growth is for smaller teams. Scale is the same operational atlas for larger teams with more handoffs. If you want help getting it mapped, we can connect you with an implementer.',
+		"One price for your business. A workspace contains everything you need to map your entire business or, if you're larger or more complex, a whole business function (or client space or delivery type... etc).",
 	plans: [
 		{
-			name: 'Growth',
-			price: '$149',
-			desc: 'The same operational atlas, sized for teams under 25 that need the work to stop routing back through one person.',
-			perks: ['Up to 25 people', 'The full operational atlas', 'Flags and team feedback'],
+			name: 'Quaestor Workspace',
+			price: '$3,000',
+			period: 'annual',
+			desc: 'One price for your business. You can purchase additional workspaces as needed for the same rate.',
+			perks: [
+				'Unlimited viewers & editors',
+				'Unlimited processes, roles, and systems',
+				'Unlimited flags and team feedback'
+			],
 			cta: {
-				label: 'Start with Growth',
+				label: 'Start today',
 				href: `${signupBaseHref}&utm_content=pricing_growth`
 			},
 			featured: true
 		},
 		{
-			name: 'Scale',
-			price: '$299',
-			desc: 'The same operational atlas, sized for teams over 25 that need cleaner handoffs across more people.',
-			perks: ['25+ people', 'The full operational atlas', 'Flags and team feedback'],
+			name: 'Atlas Implementation',
+			price: '$5,000',
+			period: 'one time',
+			desc: 'We work with you to build out your 20 core business processes in Quaestor to get you up and running quickly.',
+			perks: ['Done-For-You Setup', 'Three short calls', '<6 weeks, end to end'],
 			cta: {
-				label: 'Start with Scale',
+				label: 'Easy Button',
 				href: `${signupBaseHref}&utm_content=pricing_scale`
 			},
 			featured: false

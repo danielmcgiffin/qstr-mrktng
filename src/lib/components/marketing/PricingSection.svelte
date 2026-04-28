@@ -9,6 +9,7 @@
 	type PricingPlan = {
 		name: string;
 		price: string;
+		period: string;
 		desc: string;
 		perks: readonly string[];
 		cta: PricingCta;
@@ -46,7 +47,7 @@
 				<div class={'pricing-card ' + (plan.featured ? 'pricing-card-featured' : '')}>
 					<div class="pricing-card-header">
 						<h3 class="pricing-name"><BrandText text={plan.name} /></h3>
-						<div class="pricing-period">/mo</div>
+						<div class="pricing-period">{plan.period}</div>
 					</div>
 					<div class="pricing-price">{plan.price}</div>
 					<p class="pricing-desc"><BrandText text={plan.desc} /></p>

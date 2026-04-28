@@ -31,7 +31,7 @@
 		<img
 			{src}
 			{alt}
-			class="mx-auto block max-h-[85vh] w-auto max-w-full rounded-2xl border border-[rgb(var(--border-strong))] shadow-[0_24px_60px_rgb(103_80_54_/_0.2)]"
+			class="mx-auto block max-h-[92vh] w-[min(96vw,1800px)] rounded-2xl border border-[rgb(var(--border-strong))] object-contain shadow-[0_24px_60px_rgb(103_80_54_/_0.2)]"
 			transition:scale={{ duration: 200, start: 0.95 }}
 		/>
 	</button>
