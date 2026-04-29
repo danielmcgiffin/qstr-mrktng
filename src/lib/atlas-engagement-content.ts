@@ -52,7 +52,7 @@ export const atlasEngagementContent: AtlasEngagementContent = {
 	subheadline: 'Without your business running through your phone.',
 	heroParagraphs: [
 		"Right now, your business runs on memory. Yours. Your ops person's. The one employee who knows where the weird client exception lives. The person everyone Slacks because the 'process' is buried in a Google Doc from 2021, a Notion nobody trusts, or a Trainual video that teaches the wrong thing slowly.",
-		"That isn't an operating system. That's a hostage situation.",
+		"There's a name for that: hostage situation.",
 		"The Atlas Engagement turns the operational knowledge scattered across your business into a working map your team can actually use. In 4 weeks, you'll have a connected operating model of your back office: every covered role, every core process, every system, all linked, all owned, all searchable.",
 		'Not another documentation graveyard. A map.'
 	],
@@ -107,8 +107,7 @@ export const atlasEngagementContent: AtlasEngagementContent = {
 	priceHeading: 'Price',
 	price: '$7,500 one-time',
 	priceSubtext: 'Includes the 4-week engagement and 12 months of platform access.',
-	priceAfterYearOne:
-		'After year 1, platform access is $3,000/yr. No retainer. No surprise invoices.',
+	priceAfterYearOne: 'After year 1, platform access is $3,000/yr, flat.',
 	guaranteeHeading: 'Our guarantee',
 	guaranteeParagraphs: [
 		"Atlas delivered in 4 weeks. Or you don't pay for the engagement.",

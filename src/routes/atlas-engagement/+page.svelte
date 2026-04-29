@@ -106,6 +106,7 @@
 			</div>
 		</section>
 
+		<!--
 		<section class="marketing-section atlas-section-tight">
 			<div class="marketing-container-narrow">
 				<div class="final-cta atlas-guarantee">
@@ -118,6 +119,7 @@
 				</div>
 			</div>
 		</section>
+		-->
 
 		<section class="marketing-section atlas-section-tight">
 			<div class="marketing-container-narrow">
@@ -330,6 +332,7 @@
 		margin-top: 0.2rem;
 	}
 
+	/*
 	.atlas-guarantee {
 		text-align: left;
 		padding: 1.75rem;
@@ -343,6 +346,7 @@
 		font-size: 0.96rem;
 		line-height: 1.62;
 	}
+	*/
 
 	.atlas-availability-copy {
 		margin-bottom: 1rem;
@@ -375,8 +379,7 @@
 		.atlas-qualification-card,
 		.atlas-list-card,
 		.atlas-upsell-card,
-		.atlas-hero,
-		.atlas-guarantee {
+		.atlas-hero {
 			padding: 1.5rem;
 		}
 	}
