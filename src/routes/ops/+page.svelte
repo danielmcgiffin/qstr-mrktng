@@ -25,7 +25,7 @@
 
 	const trackHeroPrimaryCta = () => {
 		trackEvent('hero_cta_click', { location: 'ops_hero_primary' });
-		trackEvent('signup_start', { location: 'ops_hero_primary' });
+		trackDemoClick('ops_hero_primary');
 	};
 
 	const trackDemoClick = (location: string) => {
@@ -38,6 +38,15 @@
 
 	const trackAiScoreClick = (location: string) => {
 		trackEvent('ai_score_click', { location });
+	};
+
+	const trackPricingPlanClick = (planName: string, href: string) => {
+		const location = `ops_pricing_${planName.toLowerCase().replace(/\s+/g, '_')}`;
+		trackEvent('pricing_plan_click', { location, plan_name: planName, href });
+
+		if (href.includes('qstr.cursus.tools/login')) {
+			trackSignupStart(location);
+		}
 	};
 </script>
 
@@ -61,6 +70,7 @@
 			subhead={site.hero.subhead}
 			primaryCta={site.hero.primaryCta}
 			secondaryCta={site.hero.secondaryCta}
+			primaryExternal
 			onPrimaryClick={trackHeroPrimaryCta}
 		/>
 
@@ -107,7 +117,7 @@
 			subhead={site.pricing.subhead}
 			plans={site.pricing.plans}
 			freeLink={site.pricing.freeLink}
-			onPlanClick={(planName) => trackSignupStart(`ops_pricing_${planName.toLowerCase()}`)}
+			onPlanClick={trackPricingPlanClick}
 			onFreeLinkClick={() => trackSignupStart('ops_pricing_free_link')}
 		/>
 

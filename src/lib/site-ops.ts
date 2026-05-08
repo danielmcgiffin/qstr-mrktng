@@ -10,8 +10,8 @@ import type {
 } from './marketing-content';
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
-const signupHref =
-	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ops_hero';
+const signupBaseHref =
+	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch';
 
 export const site = {
 	brand: 'Quaestor',
@@ -60,7 +60,7 @@ export const site = {
 			'Quaestor maps who does what, in which system, as an operational atlas... so your team finds answers instead of asking you.',
 		primaryCta: {
 			label: 'See it in action',
-			href: signupHref
+			href: demoHref
 		},
 		secondaryCta: { label: 'Read the method', href: '/method' }
 	} satisfies {
@@ -278,7 +278,7 @@ export const site = {
 		text: 'Map one workflow, make the handoffs clear, and see how quickly the business stops routing everything back through you.',
 		cta: {
 			label: 'Start free',
-			href: `${signupHref}&utm_content=final_cta`
+			href: `${signupBaseHref}&utm_content=ops_final_cta`
 		}
 	} satisfies {
 		headline: string;

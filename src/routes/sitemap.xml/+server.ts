@@ -5,7 +5,7 @@ export const prerender = true;
 
 export async function GET() {
 	const domain = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
-	const pages = ['', '/ops', '/partners', '/method', '/contact', '/ai-score'];
+	const pages = ['', '/ops', '/partners', '/method', '/atlas-engagement', '/contact', '/ai-score'];
 
 	const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

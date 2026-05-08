@@ -41,6 +41,15 @@
 	const trackSignupStart = (location: string) => {
 		trackEvent('signup_start', { location });
 	};
+
+	const trackPricingPlanClick = (planName: string, href: string) => {
+		const location = `home_pricing_${planName.toLowerCase().replace(/\s+/g, '_')}`;
+		trackEvent('pricing_plan_click', { location, plan_name: planName, href });
+
+		if (href.includes('qstr.cursus.tools/login')) {
+			trackSignupStart(location);
+		}
+	};
 </script>
 
 <svelte:head>
@@ -108,7 +117,7 @@
 			subhead={site.pricing.subhead}
 			plans={site.pricing.plans}
 			freeLink={site.pricing.freeLink}
-			onPlanClick={(planName) => trackSignupStart(`home_pricing_${planName.toLowerCase()}`)}
+			onPlanClick={trackPricingPlanClick}
 			onFreeLinkClick={() => trackSignupStart('home_pricing_free_link')}
 		/>
 

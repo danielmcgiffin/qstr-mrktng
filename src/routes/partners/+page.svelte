@@ -50,6 +50,15 @@
 		trackEvent('signup_start', { location });
 	};
 
+	const trackPricingPlanClick = (planName: string, href: string) => {
+		const location = `partners_pricing_${planName.toLowerCase().replace(/\s+/g, '_')}`;
+		trackEvent('pricing_plan_click', { location, plan_name: planName, href });
+
+		if (href.includes('qstr.cursus.tools/login')) {
+			trackSignupStart(location);
+		}
+	};
+
 	const finalCtas = $derived.by((): FinalCta[] => {
 		const ctas: FinalCta[] = [
 			{
@@ -143,7 +152,7 @@
 			subhead={site.pricing.subhead}
 			plans={site.pricing.plans}
 			freeLink={site.pricing.freeLink}
-			onPlanClick={(planName) => trackSignupStart(`partners_pricing_${planName.toLowerCase()}`)}
+			onPlanClick={trackPricingPlanClick}
 			onFreeLinkClick={() => trackSignupStart('partners_pricing_free_link')}
 		/>
 

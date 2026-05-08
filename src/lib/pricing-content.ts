@@ -48,14 +48,18 @@ export const pricingContent: PricingContent = {
 			featured: true
 		},
 		{
-			name: 'Atlas Implementation',
-			price: '$5,000',
+			name: 'Atlas Engagement',
+			price: '$7,500',
 			period: 'one time',
-			desc: 'We work with you to build out your 20 core business processes in Quaestor to get you up and running quickly.',
-			perks: ['Done-For-You Setup', 'Three short calls', '<6 weeks, end to end'],
+			desc: 'A 4-week implementation that turns your 20 most important processes into a working atlas, with 12 months of platform access included.',
+			perks: [
+				'Done-for-you operating atlas',
+				'Rollout and handoff support',
+				'12 months of platform access included'
+			],
 			cta: {
-				label: 'Easy Button',
-				href: `${signupBaseHref}&utm_content=pricing_scale`
+				label: 'See the engagement',
+				href: '/atlas-engagement'
 			},
 			featured: false
 		}
