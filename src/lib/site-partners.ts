@@ -1,18 +1,29 @@
 import { pricingContent } from './pricing-content';
-
-export type NavItem = { label: string; href: string };
-export type CTA = { label: string; href: string };
-
-export type FeatureItem = { title: string; desc: string; icon: string };
-export type StepItem = { n: string; title: string; desc: string };
-export type FaqItem = { q: string; a: string };
-export type DetailItem = { title: string; desc: string; gifSrc?: string };
+import type {
+	CTA,
+	DetailItem,
+	FaqItem,
+	FeatureItem,
+	NavItem,
+	SeoContent,
+	StepItem
+} from './marketing-content';
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const bookingHref = 'https://cal.com/danny-cursus/15min';
 
 export const site = {
 	brand: 'Quaestor',
+
+	seo: {
+		title: 'Quaestor - Partner-first operational atlas',
+		description:
+			'Quaestor gives ops partners a living operational atlas their clients can keep using after the engagement ends.',
+		ogTitle: 'Turn client handoffs into a living operational atlas.',
+		ogDescription:
+			'Map the work, hand over something navigable, and keep client operations from drifting back into static docs.',
+		imageAlt: 'Quaestor operational atlas interface preview for partners.'
+	} satisfies SeoContent,
 
 	nav: [
 		{ label: 'Home', href: '/' },
@@ -87,7 +98,7 @@ export const site = {
 	// PAIN
 	// ───────────────────────────────────────────
 	forYou: {
-		eyebrow: 'You know this pattern',
+		eyebrow: 'The delivery gap',
 		headline: 'Great engagement. Dead deliverable.',
 		intro:
 			'Strong delivery. Clean handoff. Six months later the founder is back to being his team’s help desk again and your work is sitting in a folder nobody trusts.',
@@ -217,17 +228,17 @@ export const site = {
 			{
 				title: 'Role manual',
 				desc: 'A client operator can open a role and see exactly what that person owns and where the work lives.',
-				gifSrc: '/role-details.gif'
+				gifSrc: '/role-details.webm'
 			},
 			{
 				title: 'Process steps',
 				desc: 'The client can see the steps, systems, decisions, and standards without digging through a folder.',
-				gifSrc: '/process-steps.gif'
+				gifSrc: '/process-steps.webm'
 			},
 			{
 				title: 'Flags',
 				desc: 'When the work drifts, the client sees it before your deliverable quietly dies.',
-				gifSrc: '/flags.gif'
+				gifSrc: '/flags.webm'
 			}
 		]
 	} satisfies {
@@ -246,8 +257,8 @@ export const site = {
 	// FAQ
 	// ───────────────────────────────────────────
 	faq: {
-		eyebrow: 'What partners ask next',
-		headline: 'What partners ask next:',
+		eyebrow: 'Common questions',
+		headline: '',
 		subhead: 'Short answers to the questions that come up once the model clicks.',
 		items: [
 			{

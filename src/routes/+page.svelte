@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ImageModal from '$lib/components/ImageModal.svelte';
 	import BulletSection from '$lib/components/marketing/BulletSection.svelte';
+	import CardGridSection from '$lib/components/marketing/CardGridSection.svelte';
 	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
@@ -43,11 +44,14 @@
 </script>
 
 <svelte:head>
-	<title>Quaestor — It doesn’t have to be this hard.</title>
-	<meta
-		name="description"
-		content="Quaestor is an operational atlas that makes small businesses work, so the business stops routing every question back through you."
-	/>
+	<title>{site.seo.title}</title>
+	<meta name="description" content={site.seo.description} />
+	<meta property="og:title" content={site.seo.ogTitle ?? site.seo.title} />
+	<meta property="og:description" content={site.seo.ogDescription ?? site.seo.description} />
+	<meta property="og:image:alt" content={site.seo.imageAlt} />
+	<meta name="twitter:title" content={site.seo.ogTitle ?? site.seo.title} />
+	<meta name="twitter:description" content={site.seo.ogDescription ?? site.seo.description} />
+	<meta name="twitter:image:alt" content={site.seo.imageAlt} />
 </svelte:head>
 
 <div class="marketing-page">
@@ -89,6 +93,13 @@
 				activeModalImage = src;
 				activeModalAlt = alt;
 			}}
+		/>
+
+		<CardGridSection
+			id="trust"
+			headline={site.trust.headline}
+			subhead={site.trust.subhead}
+			items={site.trust.items}
 		/>
 
 		<PricingSection

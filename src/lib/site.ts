@@ -1,12 +1,13 @@
 import { pricingContent } from './pricing-content';
-
-export type NavItem = { label: string; href: string };
-export type CTA = { label: string; href: string };
-
-export type FeatureItem = { title: string; desc: string; icon: string };
-export type StepItem = { n: string; title: string; desc: string };
-export type FaqItem = { q: string; a: string };
-export type DetailItem = { title: string; desc: string; gifSrc?: string };
+import type {
+	CTA,
+	DetailItem,
+	FaqItem,
+	FeatureItem,
+	NavItem,
+	SeoContent,
+	StepItem
+} from './marketing-content';
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const signupBaseHref =
@@ -14,6 +15,16 @@ const signupBaseHref =
 
 export const site = {
 	brand: 'Quaestor',
+
+	seo: {
+		title: "Quaestor - It doesn't have to be this hard.",
+		description:
+			'Quaestor is an operational atlas that makes small businesses work, so the business stops routing every question back through you.',
+		ogTitle: 'Quaestor - How your business actually works.',
+		ogDescription:
+			'Map roles, processes, and systems into an operational atlas your team can actually use.',
+		imageAlt: 'Quaestor operational atlas interface preview.'
+	} satisfies SeoContent,
 
 	nav: [
 		{ label: 'Home', href: '/' },
@@ -25,7 +36,7 @@ export const site = {
 	] satisfies NavItem[],
 
 	navCta: {
-		label: 'Start free',
+		label: 'Start your atlas for free',
 		href: `${signupBaseHref}&utm_content=nav`
 	} satisfies CTA,
 
@@ -33,11 +44,11 @@ export const site = {
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
-		headline: "If it only works when you're there, you don't have a business.",
+		headline: "If the business only works when you're there, it's not a business.",
 		subhead:
 			"You have a job... and you're stuck at it. Quaestor is the operating system that gets the business out of your head and into something your team can actually run with.",
 		primaryCta: {
-			label: 'Start free',
+			label: 'Start your atlas for free',
 			href: `${signupBaseHref}&utm_content=hero`
 		},
 		secondaryCta: { label: 'See a sample org', href: demoHref }
@@ -61,8 +72,7 @@ export const site = {
 	// PAIN
 	// ───────────────────────────────────────────
 	forYou: {
-		eyebrow: 'The pattern',
-		headline: 'Everyone knows this story.',
+		headline: "The Founder's Bottleneck",
 		intro:
 			'There’s the way you say your business works, and then there’s what actually happens when everything’s exploding. That gap is costing you time, money, and sanity.',
 		bullets: [
@@ -73,7 +83,6 @@ export const site = {
 		],
 		punchline: 'If it only works when you’re around, you don’t have a business.'
 	} satisfies {
-		eyebrow: string;
 		headline: string;
 		intro: string;
 		bullets: string[];
@@ -84,7 +93,6 @@ export const site = {
 	// WHY THIS HAPPENS
 	// ───────────────────────────────────────────
 	shadowOps: {
-		eyebrow: 'Why it keeps breaking',
 		headline: 'The story and the reality keep drifting apart.',
 		subhead:
 			'Static docs capture what someone meant to write down. The work keeps moving. The people doing it keep improvising. Ownership, systems, and standards drift apart until the business routes back through whoever still remembers how it actually works.',
@@ -103,7 +111,6 @@ export const site = {
 			}
 		]
 	} satisfies {
-		eyebrow: string;
 		headline: string;
 		subhead: string;
 		points: DetailItem[];
@@ -113,7 +120,6 @@ export const site = {
 	// HOW IT WORKS
 	// ───────────────────────────────────────────
 	howItWorks: {
-		eyebrow: 'How it works',
 		headline: 'This is how it stops falling apart.',
 		subhead:
 			'Start with the process that keeps pulling you back in. That’s the tell the work isn’t working yet. Write out what right looks like step by step: who does what, which system they use, and how decisions get made. When the handoffs get cleaner and your Slack gets quieter, you know it’s working.',
@@ -140,7 +146,6 @@ export const site = {
 			}
 		]
 	} satisfies {
-		eyebrow: string;
 		headline: string;
 		subhead: string;
 		steps: StepItem[];
@@ -181,7 +186,6 @@ export const site = {
 	// PROOF
 	// ───────────────────────────────────────────
 	proof: {
-		eyebrow: 'Proof',
 		headline: 'You could just hand this to someone.',
 		subhead:
 			'Open the atlas and click through the work. You can see what a role owns, how a process actually runs, and what needs attention before it breaks. This isn’t another folder full of pages. It’s something another person can actually use.',
@@ -189,21 +193,44 @@ export const site = {
 			{
 				title: 'Role manual',
 				desc: 'Open a role and see what that person owns, what processes they touch, and where the work lives.',
-				gifSrc: '/role-details.gif'
+				gifSrc: '/role-details.webm'
 			},
 			{
 				title: 'Process steps',
 				desc: 'See the steps, the systems, the decisions, and what right looks like.',
-				gifSrc: '/process-steps.gif'
+				gifSrc: '/process-steps.webm'
 			},
 			{
 				title: 'Flags',
 				desc: 'When something drifts, Quaestor surfaces it before the work quietly falls apart again.',
-				gifSrc: '/flags.gif'
+				gifSrc: '/flags.webm'
 			}
 		]
 	} satisfies {
-		eyebrow: string;
+		headline: string;
+		subhead: string;
+		items: DetailItem[];
+	},
+
+	trust: {
+		headline: 'A calmer business is the proof.',
+		subhead:
+			'The first win is not a prettier wiki. It is fewer repeat questions, cleaner handoffs, and work that keeps moving when the usual answer-person is not there.',
+		items: [
+			{
+				title: 'The vacation test',
+				desc: 'Can the team run a normal week without routing every edge case through the founder?'
+			},
+			{
+				title: 'The handoff test',
+				desc: 'Can a person see what they own, where the work happens, and what right looks like?'
+			},
+			{
+				title: 'The new-hire test',
+				desc: 'Can someone useful get oriented from the map before they start asking around?'
+			}
+		]
+	} satisfies {
 		headline: string;
 		subhead: string;
 		items: DetailItem[];
@@ -218,8 +245,8 @@ export const site = {
 	// OBJECTIONS / FAQ
 	// ───────────────────────────────────────────
 	faq: {
-		eyebrow: 'What people ask next',
-		headline: 'What people ask next:',
+		eyebrow: 'Common questions',
+		headline: '',
 		subhead: 'Short answers to the last few reasons people hesitate.',
 		items: [
 			{
@@ -236,7 +263,7 @@ export const site = {
 			},
 			{
 				q: 'Why won’t this die like my last solution?',
-				a: 'Flags! Our flag system helps your doers catch when the docs drift. People can mark what’s unclear, thin, or outdated. The point is to keep it alive in the flow of work, not wait for an annual cleanup project.'
+				a: 'Flags! Your doers can catch when the docs drift. People can mark what’s unclear, thin, or outdated. The point is to keep it alive in the flow of work, not wait for an annual cleanup project.'
 			}
 		]
 	} satisfies {
@@ -253,7 +280,7 @@ export const site = {
 		headline: 'Start with one process.',
 		text: 'Pick the process that keeps pulling you back in. Map it, hand it off, and see what changes.',
 		cta: {
-			label: 'Start free',
+			label: 'Start your atlas for free',
 			href: `${signupBaseHref}&utm_content=final_cta`
 		}
 	} satisfies {

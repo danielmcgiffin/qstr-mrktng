@@ -50,7 +50,7 @@
 													: 'text-[rgb(var(--muted))] hover:text-[rgb(var(--surface-text-strong))]')}
 											href={methodPath(item.slug)}
 										>
-											<span class="w-4 text-xs text-current/60 tabular-nums"
+											<span class="w-4 text-xs text-current/80 tabular-nums"
 												>{String(i + 1).padStart(2, '0')}</span
 											>
 											<span>{item.title}</span>
@@ -101,7 +101,7 @@
 												href={methodPath(item.slug)}
 												onclick={() => (mobileNavOpen = false)}
 											>
-												<span class="mr-2 text-current/60 tabular-nums"
+												<span class="mr-2 text-current/80 tabular-nums"
 													>{String(i + 1).padStart(2, '0')}</span
 												>
 												{item.title}

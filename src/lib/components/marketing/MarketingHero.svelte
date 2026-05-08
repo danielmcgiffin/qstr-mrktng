@@ -1,5 +1,6 @@
 <script lang="ts">
 	import BrandText from '$lib/components/BrandText.svelte';
+	import AtlasHeroVisual from '$lib/components/marketing/AtlasHeroVisual.svelte';
 	import RotatingWords from '$lib/components/RotatingWords.svelte';
 
 	type CTA = {
@@ -33,7 +34,7 @@
 </script>
 
 <section class="marketing-section marketing-section-hero">
-	<div class="marketing-container-narrow">
+	<div class="marketing-container-narrow hero-grid">
 		<div class="hero-content">
 			{#if kicker}
 				<span class="label-cap">{kicker}</span>
@@ -75,12 +76,24 @@
 					{secondaryCta.label}
 				</a>
 			</div>
-
-			<div class="media-frame">
-				<video autoplay loop muted playsinline>
-					<source src="/qstr-demo.webm" type="video/webm" />
-				</video>
-			</div>
+		</div>
+		<div class="hero-visual">
+			<AtlasHeroVisual />
 		</div>
 	</div>
 </section>
+
+<style>
+	.hero-grid {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 4rem;
+		align-items: center;
+	}
+
+	@media (max-width: 768px) {
+		.hero-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

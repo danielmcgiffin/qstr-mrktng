@@ -16,6 +16,17 @@
 		Array.isArray(desc) ? desc : [desc];
 </script>
 
+<svelte:head>
+	<title>{data.section.title} - Quaestor Method</title>
+	<meta name="description" content={data.section.intro} />
+	<meta property="og:title" content={`${data.section.title} - Quaestor Method`} />
+	<meta property="og:description" content={data.section.intro} />
+	<meta property="og:image:alt" content="Quaestor method article preview." />
+	<meta name="twitter:title" content={`${data.section.title} - Quaestor Method`} />
+	<meta name="twitter:description" content={data.section.intro} />
+	<meta name="twitter:image:alt" content="Quaestor method article preview." />
+</svelte:head>
+
 <article class="space-y-8">
 	<header>
 		<span

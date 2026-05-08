@@ -2,7 +2,7 @@ import { error } from '@sveltejs/kit';
 import { methodContent } from '$lib/method-content';
 import { methodSections } from '$lib/method';
 
-export const prerender = false;
+export const prerender = true;
 
 export const entries = () => methodContent.map((section) => ({ slug: section.slug }));
 

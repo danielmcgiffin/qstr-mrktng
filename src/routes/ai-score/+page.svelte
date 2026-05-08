@@ -33,6 +33,14 @@
 		'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_result';
 	const implementationIntakeHref =
 		'https://cal.com/danny-cursus/15min?utm_source=cursus.tools&utm_medium=website&utm_campaign=ai_score&utm_content=implementation_intake';
+	const seo = {
+		title: 'AI Score for SOPs | Quaestor',
+		description:
+			'Paste an SOP and get AI-readiness, Human-readiness, and the handoffs likely to break.',
+		ogTitle: 'Paste an SOP. Get two scores. See what breaks.',
+		ogDescription:
+			'Score a process for AI readiness and human readiness before you automate or hand it off.'
+	};
 	const aiAreaItems = [
 		{ key: 'named_doer', label: 'Named owner', max: 15 },
 		{ key: 'context_source_named', label: 'Source named', max: 20 },
@@ -70,7 +78,7 @@
 	});
 
 	const textFieldClass = $derived(
-		`w-full rounded-xl bg-white px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--muted))] focus:outline-none focus:border-[rgb(var(--accent))] ${
+		`w-full rounded-xl bg-[rgb(var(--bg-panel))] px-3 py-3 text-sm text-[rgb(var(--text))] placeholder:text-[rgb(var(--muted))] focus:outline-none focus:border-[rgb(var(--accent))] ${
 			formError
 				? 'border-2 border-[rgb(var(--accent))] focus:ring-4 focus:ring-[rgb(var(--accent))]/15'
 				: 'border border-[rgb(var(--border))] focus:ring-2 focus:ring-[rgb(var(--accent))]/12'
@@ -542,11 +550,14 @@
 </script>
 
 <svelte:head>
-	<title>AI Score for SOPs | Quaestor</title>
-	<meta
-		name="description"
-		content="Paste an SOP and get AI-readiness, Human-readiness, and the handoffs likely to break."
-	/>
+	<title>{seo.title}</title>
+	<meta name="description" content={seo.description} />
+	<meta property="og:title" content={seo.ogTitle} />
+	<meta property="og:description" content={seo.ogDescription} />
+	<meta property="og:image:alt" content="Quaestor AI Score interface preview." />
+	<meta name="twitter:title" content={seo.ogTitle} />
+	<meta name="twitter:description" content={seo.ogDescription} />
+	<meta name="twitter:image:alt" content="Quaestor AI Score interface preview." />
 </svelte:head>
 
 <div class="min-h-screen overflow-x-hidden bg-[rgb(var(--bg))] text-[rgb(var(--text))]">
@@ -614,15 +625,15 @@
 							</div>
 						{/if}
 
-						<details
-							class="mt-5 rounded-2xl border border-[rgb(var(--border))] bg-white p-4 text-sm"
-						>
-							<summary class="cursor-pointer font-semibold text-[rgb(var(--surface-text-strong))]">
+						<details class="mt-5 border-t border-[rgb(var(--border))] pt-5 text-sm">
+							<summary
+								class="min-h-11 cursor-pointer font-semibold text-[rgb(var(--surface-text-strong))]"
+							>
 								Upload instead
 							</summary>
 							<div class="mt-3 space-y-2">
 								<div
-									class="flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-[rgb(var(--border))] bg-white px-3 py-3"
+									class="flex flex-wrap items-center gap-3 rounded-xl border border-dashed border-[rgb(var(--border))] bg-[rgb(var(--bg-subtle))]/50 px-3 py-3"
 								>
 									<input
 										bind:this={fileInput}
@@ -703,7 +714,7 @@
 							<button
 								type="submit"
 								disabled={submitDisabled}
-								class="inline-flex min-w-[190px] items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+								class="inline-flex min-h-11 min-w-[190px] items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-[rgb(var(--text-inverse))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
 							>
 								{submitLabel}
 							</button>
@@ -711,7 +722,7 @@
 					</form>
 
 					<aside
-						class="rounded-[1.9rem] border border-[rgb(var(--border))] bg-white/70 p-6 shadow-[0_18px_44px_rgb(103_80_54_/_0.08)] md:p-7"
+						class="rounded-[1.9rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-6 shadow-[0_18px_44px_rgb(103_80_54_/_0.08)] md:p-7"
 					>
 						<p
 							class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
@@ -726,27 +737,21 @@
 							follow it. If a file cannot be read inline, it routes to review.
 						</p>
 
-						<div class="mt-6 grid gap-3">
-							<div
-								class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
-							>
+						<div class="mt-6 divide-y divide-[rgb(var(--border))]">
+							<div class="py-4 first:pt-0">
 								<p class="text-sm font-semibold text-[rgb(var(--text))]">Sample result</p>
 								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
 									AI-readiness 62. Human-readiness 71. Top failure point: decisions need rules.
 								</p>
 							</div>
-							<div
-								class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
-							>
+							<div class="py-4">
 								<p class="text-sm font-semibold text-[rgb(var(--text))]">Why this is free</p>
 								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
 									Bad SOPs are the blocker. The score shows where the map needs work before agents
 									touch it.
 								</p>
 							</div>
-							<div
-								class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-4"
-							>
+							<div class="pt-4">
 								<p class="text-sm font-semibold text-[rgb(var(--text))]">Privacy note</p>
 								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
 									Use a real process. Remove secrets first. We use your email to send the score and
@@ -766,7 +771,7 @@
 							<div class="grid gap-6 xl:grid-cols-[280px_1fr] xl:items-start">
 								<div class="flex flex-col gap-4">
 									<div
-										class="flex h-full flex-col items-center justify-center rounded-[1.6rem] border border-[rgb(var(--border))] bg-white/70 p-6 text-center"
+										class="flex h-full flex-col items-center justify-center rounded-[1.6rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-6 text-center"
 									>
 										<p
 											class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
@@ -828,7 +833,7 @@
 												{followUpHelper}
 											</p>
 											<a
-												class="inline-flex shrink-0 items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-white shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
+												class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-[rgb(var(--text-inverse))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
 												href={followUpHref}
 												target={followUpHref.includes('cal.com') ? '_blank' : undefined}
 												rel={followUpHref.includes('cal.com') ? 'noreferrer' : undefined}
@@ -841,7 +846,7 @@
 
 									<div class="mt-6 grid gap-4 lg:grid-cols-2">
 										<div
-											class="rounded-[1.6rem] border border-[rgb(var(--border))] bg-white/70 p-5"
+											class="rounded-[1.6rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-5"
 										>
 											<p
 												class="text-[11px] font-semibold tracking-[0.22em] text-[rgb(var(--muted))] uppercase"
@@ -868,7 +873,7 @@
 										</div>
 
 										<div
-											class="rounded-[1.6rem] border border-[rgb(var(--border))] bg-white/70 p-5"
+											class="rounded-[1.6rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-5"
 										>
 											<p
 												class="text-[11px] font-semibold tracking-[0.22em] text-[rgb(var(--muted))] uppercase"
@@ -896,7 +901,7 @@
 									</div>
 
 									<div
-										class="mt-6 rounded-[1.6rem] border border-[rgb(var(--border))] bg-white/70 p-5"
+										class="mt-6 rounded-[1.6rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-5"
 									>
 										<div class="flex flex-wrap items-center justify-between gap-3">
 											<p
@@ -924,7 +929,9 @@
 								</div>
 							</div>
 						{:else}
-							<div class="rounded-[1.6rem] border border-[rgb(var(--border))] bg-white/70 p-6">
+							<div
+								class="rounded-[1.6rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-6"
+							>
 								<p
 									class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
 								>

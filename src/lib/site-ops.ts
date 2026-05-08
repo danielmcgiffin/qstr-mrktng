@@ -1,12 +1,13 @@
 import { pricingContent } from './pricing-content';
-
-export type NavItem = { label: string; href: string };
-export type CTA = { label: string; href: string };
-
-export type FeatureItem = { title: string; desc: string; icon: string };
-export type StepItem = { n: string; title: string; desc: string };
-export type FaqItem = { q: string; a: string };
-export type DetailItem = { title: string; desc: string; gifSrc?: string };
+import type {
+	CTA,
+	DetailItem,
+	FaqItem,
+	FeatureItem,
+	NavItem,
+	SeoContent,
+	StepItem
+} from './marketing-content';
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const signupHref =
@@ -14,6 +15,16 @@ const signupHref =
 
 export const site = {
 	brand: 'Quaestor',
+
+	seo: {
+		title: 'Quaestor - Your Operational Atlas',
+		description:
+			'Quaestor maps who does what, in which system, as a connected graph so your team finds answers instead of asking you.',
+		ogTitle: 'No more dead docs, bad handoffs, or tribal ops.',
+		ogDescription:
+			'Turn roles, process steps, and systems into a navigable map your team can work from.',
+		imageAlt: 'Quaestor showing connected processes, roles, and systems.'
+	} satisfies SeoContent,
 
 	nav: [
 		{ label: 'Home', href: '/' },
@@ -46,7 +57,7 @@ export const site = {
 			'bad handoffs'
 		],
 		subhead:
-			'Quaestor maps who does what, in which system, as an operation atlas... so your team finds answers instead of asking you.',
+			'Quaestor maps who does what, in which system, as an operational atlas... so your team finds answers instead of asking you.',
 		primaryCta: {
 			label: 'See it in action',
 			href: signupHref
@@ -202,17 +213,17 @@ export const site = {
 			{
 				title: 'Gaps and contradictions surface fast',
 				desc: 'When roles, actions, and systems are linked, missing ownership and broken handoffs show up immediately.',
-				gifSrc: '/flags.gif'
+				gifSrc: '/flags.webm'
 			},
 			{
 				title: 'Role portal answers real questions',
 				desc: 'Click into a role and see every connected process and system in one place. No scavenger hunt.',
-				gifSrc: '/role-details.gif'
+				gifSrc: '/role-details.webm'
 			},
 			{
 				title: 'Dynamic onboarding output',
 				desc: 'Generate a guide from atomic knowledge in the graph, on demand, instead of writing it all by hand.',
-				gifSrc: '/process-steps.gif'
+				gifSrc: '/process-steps.webm'
 			}
 		]
 	} satisfies {
