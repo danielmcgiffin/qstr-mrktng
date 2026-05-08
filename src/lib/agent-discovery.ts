@@ -5,9 +5,7 @@ import { site as universalHomeSite } from './site';
 import { site as opsHomeSite } from './site-ops';
 import { site as partnersHomeSite } from './site-partners';
 
-export const SITE_ORIGIN = (
-	env.PUBLIC_SITE_ORIGIN || 'https://marketing.dannymcgiffin.com'
-).replace(/\/+$/, '');
+export const SITE_ORIGIN = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
 
 export const DISCOVERY_LINKS = [
 	`</.well-known/api-catalog>; rel="api-catalog"`,

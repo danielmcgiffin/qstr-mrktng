@@ -1,14 +1,26 @@
 <script lang="ts">
 	import BrandText from '$lib/components/BrandText.svelte';
 	import { methodSections, methodPath } from '$lib/method';
+
+	const seo = {
+		title: 'Method - Quaestor',
+		description:
+			'The Quaestor method: a practical system for mapping, owning, and maintaining how your company runs.',
+		ogTitle: 'The operational atlas, step by step.',
+		ogDescription:
+			'Why most ops docs die, the model that keeps work alive, and how to map what is in your head.'
+	};
 </script>
 
 <svelte:head>
-	<title>Method — Quaestor</title>
-	<meta
-		name="description"
-		content="The Quaestor method: a practical system for mapping, owning, and maintaining how your company runs."
-	/>
+	<title>{seo.title}</title>
+	<meta name="description" content={seo.description} />
+	<meta property="og:title" content={seo.ogTitle} />
+	<meta property="og:description" content={seo.ogDescription} />
+	<meta property="og:image:alt" content="Quaestor operational atlas interface preview." />
+	<meta name="twitter:title" content={seo.ogTitle} />
+	<meta name="twitter:description" content={seo.ogDescription} />
+	<meta name="twitter:image:alt" content="Quaestor operational atlas interface preview." />
 </svelte:head>
 
 <section class="space-y-16">
@@ -50,7 +62,7 @@
 					style={i === 0 ? '' : ''}
 				>
 					<span
-						class="mt-0.5 w-6 shrink-0 text-sm font-medium text-[rgb(var(--muted))]/50 tabular-nums"
+						class="mt-0.5 w-6 shrink-0 text-sm font-medium text-[rgb(var(--muted))] tabular-nums"
 						>{String(i + 1).padStart(2, '0')}</span
 					>
 					<span class="flex-1">
@@ -63,8 +75,8 @@
 						>
 					</span>
 					<span
-						class="mt-1 text-[rgb(var(--muted))]/40 transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-[rgb(var(--surface-text-strong))]"
-						>→</span
+						class="mt-1 text-[rgb(var(--muted))] transition-all duration-200 group-hover:translate-x-0.5 group-hover:text-[rgb(var(--surface-text-strong))]"
+						aria-hidden="true">→</span
 					>
 				</a>
 				{#if i < methodSections.length - 1}

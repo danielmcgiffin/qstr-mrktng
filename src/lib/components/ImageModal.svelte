@@ -11,6 +11,8 @@
 		onClose: () => void;
 	} = $props();
 
+	const isVideo = $derived(Boolean(src && /\.(webm|mp4)$/i.test(src)));
+
 	const handleKeydown = (e: KeyboardEvent) => {
 		if (e.key === 'Escape' && src) {
 			onClose();
@@ -28,11 +30,24 @@
 		aria-label="Close modal"
 		transition:fade={{ duration: 150 }}
 	>
-		<img
-			{src}
-			{alt}
-			class="mx-auto block max-h-[92vh] w-[min(96vw,1800px)] rounded-2xl border border-[rgb(var(--border-strong))] object-contain shadow-[0_24px_60px_rgb(103_80_54_/_0.2)]"
-			transition:scale={{ duration: 200, start: 0.95 }}
-		/>
+		{#if isVideo}
+			<video
+				{src}
+				aria-label={alt}
+				autoplay
+				loop
+				muted
+				playsinline
+				class="mx-auto block max-h-[92vh] w-[min(96vw,1800px)] rounded-2xl border border-[rgb(var(--border-strong))] object-contain shadow-[0_24px_60px_rgb(103_80_54_/_0.2)]"
+				transition:scale={{ duration: 200, start: 0.95 }}
+			></video>
+		{:else}
+			<img
+				{src}
+				{alt}
+				class="mx-auto block max-h-[92vh] w-[min(96vw,1800px)] rounded-2xl border border-[rgb(var(--border-strong))] object-contain shadow-[0_24px_60px_rgb(103_80_54_/_0.2)]"
+				transition:scale={{ duration: 200, start: 0.95 }}
+			/>
+		{/if}
 	</button>
 {/if}

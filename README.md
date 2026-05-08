@@ -80,7 +80,7 @@ Copy from `.env.example` and fill only what you need.
 
 Public runtime vars (safe for browser exposure):
 
-- `PUBLIC_SITE_ORIGIN` (optional, defaults to `https://marketing.dannymcgiffin.com`)
+- `PUBLIC_SITE_ORIGIN` (optional, defaults to `https://qstr.tools`)
 - `PUBLIC_PLAUSIBLE_DOMAIN` (optional, defaults to `cursus.tools`)
 - `PUBLIC_PARTNER_INTAKE_ENDPOINT` (optional; if empty, partner intake falls back to `mailto:`)
 - `PUBLIC_PARTNER_INTAKE_EMAIL` (optional fallback email)

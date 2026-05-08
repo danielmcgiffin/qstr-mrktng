@@ -27,10 +27,7 @@
 	};
 
 	const plausibleDomain = env.PUBLIC_PLAUSIBLE_DOMAIN || 'cursus.tools';
-	const siteOrigin = (env.PUBLIC_SITE_ORIGIN || 'https://marketing.dannymcgiffin.com').replace(
-		/\/+$/,
-		''
-	);
+	const siteOrigin = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
 	const demoHref = 'https://qstr.cursus.tools/demo/process';
 	const bookingHref = 'https://cal.com/danny-cursus/15min';
 	const signupHref =
@@ -198,13 +195,18 @@
 </script>
 
 <svelte:head>
+	<link rel="preconnect" href="https://fonts.googleapis.com" />
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+	<link
+		rel="stylesheet"
+		href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+	/>
 	<link rel="icon" type="image/png" href={faviconHref} />
 	<link rel="canonical" href={canonicalHref} />
 	<meta property="og:site_name" content="Quaestor" />
 	<meta property="og:type" content={currentPath.startsWith('/method/') ? 'article' : 'website'} />
 	<meta property="og:url" content={canonicalHref} />
 	<meta property="og:image" content={ogImageHref} />
-	<meta property="og:image:alt" content="Quaestor operational atlas interface preview." />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content={ogImageHref} />
 	<script
@@ -219,14 +221,21 @@
 	style="border-image: linear-gradient(to right, transparent, rgba(118,94,67,0.18), transparent) 1;"
 >
 	<div class="mx-auto flex h-16 w-full max-w-7xl items-center justify-between px-6">
-		<a href="/" class="flex items-center gap-3">
-			<img src={logoSrc} alt={`${site.brand} logo`} class="h-8 w-auto" loading="eager" />
+		<a href="/" class="flex min-h-11 items-center gap-3">
+			<img
+				src={logoSrc}
+				alt={`${site.brand} logo`}
+				class="h-8 w-auto"
+				width="2401"
+				height="395"
+				loading="eager"
+			/>
 		</a>
 
-		<nav class="hidden items-center gap-10 md:flex lg:gap-12">
+		<nav class="hidden items-center gap-10 lg:flex lg:gap-12">
 			{#each headerNavItems as item}
 				<a
-					class="text-sm text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:text-[rgb(var(--accent))]"
+					class="-my-3 inline-flex min-h-11 min-w-11 items-center justify-center text-sm text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:text-[rgb(var(--accent))]"
 					href={item.href}
 					onclick={() => trackNavClick(item.label, item.href)}
 				>
@@ -235,7 +244,7 @@
 			{/each}
 		</nav>
 
-		<div class="hidden items-center gap-3 md:flex">
+		<div class="hidden items-center gap-3 lg:flex">
 			<a
 				class="btn btn-secondary"
 				href={headerCtas.secondary.href}
@@ -257,7 +266,7 @@
 		</div>
 
 		<button
-			class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] text-lg font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-[rgb(var(--bg-elev-2))] hover:text-[rgb(var(--text))] md:hidden"
+			class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] text-lg font-medium text-[rgb(var(--text-secondary))] transition-colors duration-200 hover:bg-[rgb(var(--bg-elev-2))] hover:text-[rgb(var(--text))] lg:hidden"
 			type="button"
 			aria-expanded={mobileNavOpen}
 			aria-controls="mobile-nav-menu"
@@ -269,7 +278,7 @@
 	</div>
 
 	{#if mobileNavOpen}
-		<div id="mobile-nav-menu" class="border-t border-[rgb(var(--border))] md:hidden">
+		<div id="mobile-nav-menu" class="border-t border-[rgb(var(--border))] lg:hidden">
 			<div class="mx-auto w-full max-w-7xl px-6 py-4">
 				<div class="space-y-2">
 					{#each headerNavItems as item}
@@ -308,4 +317,6 @@
 	{/if}
 </header>
 
-{@render children()}
+<main id="main-content">
+	{@render children()}
+</main>

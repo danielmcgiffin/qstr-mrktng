@@ -4,30 +4,28 @@
    Updated from Brand Bible (April 2026).
    ============================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
-
 :root {
-	/* Use palette */
-	--bg: 249 245 236; /* #F9F5EC */
-	--bg-panel: 255 254 250; /* #FFFEFA */
-	--bg-subtle: 243 238 224; /* #F3EEE0 */
+	/* Use palette - civic building / reference library / technical manual */
+	--bg: 249 245 236; /* #F9F5EC - Page bg cream */
+	--bg-panel: 255 254 250; /* #FFFEFA - Card / panel */
+	--bg-subtle: 243 238 224; /* #F3EEE0 - Subtle recess */
 
-	--text: 32 37 46; /* #20252E */
-	--text-muted: 91 96 103; /* #5B6067 */
-	--text-inverse: 255 254 250; /* cream on crimson */
+	--text: 32 37 46; /* #20252E - Text ink */
+	--text-muted: 91 96 103; /* #5B6067 - Text muted */
+	--text-inverse: 255 254 250; /* Cream on Crimson */
 
-	--accent: 163 31 33; /* #A31F21 */
+	--accent: 163 31 33; /* #A31F21 - Anchor crimson */
 	--accent-deep: 130 24 26; /* #82181A */
 	--accent-tint: 250 232 232; /* #FAE8E8 */
 
-	--border: 230 223 205; /* #E6DFCD */
-	--border-strong: 180 165 130; /* #B4A582 */
+	--border: 230 223 205; /* #E6DFCD - Divider */
+	--border-strong: 180 165 130; /* #B4A582 - Divider emphasis */
 	--focus-ring: 163 31 33;
 
-	/* Type */
-	--font-display: 'Fraunces', 'Source Serif 4', Georgia, serif;
-	--font-body: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
-	--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+	/* Type - Brand Bible stack */
+	--font-display: 'Fraunces', Georgia, serif;
+	--font-body: 'Inter', system-ui, sans-serif;
+	--font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
 
 	--fs-display: clamp(2.5rem, 5vw, 4.5rem);
 	--fs-h1: clamp(2rem, 3.5vw, 3rem);
@@ -39,25 +37,25 @@
 	--fs-micro: 0.75rem;
 
 	--lh-display: 1.05;
-	--lh-heading: 1.15;
+	--lh-heading: 1.1;
 	--lh-body: 1.6;
 
-	--ls-display: -0.01em;
+	--ls-display: 0;
 	--ls-label: 0.08em;
 
 	/* Layout */
-	--section-y: clamp(4rem, 8vw, 7rem);
+	--section-y: clamp(4rem, 10vw, 8rem);
 	--container-x: clamp(1.5rem, 4vw, 3rem);
 	--container-max: 72rem;
 
-	/* Radii + shadows */
-	--radius-sm: 6px;
-	--radius-md: 10px;
-	--radius-lg: 14px;
+	/* Radii + shadows - Hardened / Architectural */
+	--radius-sm: 0px;
+	--radius-md: 0px;
+	--radius-lg: 0px;
 	--radius-pill: 999px;
 
-	--shadow-sm: 0 1px 2px rgb(0 0 0 / 0.04);
-	--shadow-md: 0 4px 12px rgb(0 0 0 / 0.06);
+	--shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+	--shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05);
 }
 
 [data-theme='dark'] {

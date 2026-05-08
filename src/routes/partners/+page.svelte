@@ -50,6 +50,15 @@
 		trackEvent('signup_start', { location });
 	};
 
+	const trackPricingPlanClick = (planName: string, href: string) => {
+		const location = `partners_pricing_${planName.toLowerCase().replace(/\s+/g, '_')}`;
+		trackEvent('pricing_plan_click', { location, plan_name: planName, href });
+
+		if (href.includes('qstr.cursus.tools/login')) {
+			trackSignupStart(location);
+		}
+	};
+
 	const finalCtas = $derived.by((): FinalCta[] => {
 		const ctas: FinalCta[] = [
 			{
@@ -76,11 +85,14 @@
 </script>
 
 <svelte:head>
-	<title>Quaestor — Partner-first operational atlas</title>
-	<meta
-		name="description"
-		content="Quaestor helps ops partners turn their client delivery into a living operational atlas that stays useful after the engagement ends."
-	/>
+	<title>{site.seo.title}</title>
+	<meta name="description" content={site.seo.description} />
+	<meta property="og:title" content={site.seo.ogTitle ?? site.seo.title} />
+	<meta property="og:description" content={site.seo.ogDescription ?? site.seo.description} />
+	<meta property="og:image:alt" content={site.seo.imageAlt} />
+	<meta name="twitter:title" content={site.seo.ogTitle ?? site.seo.title} />
+	<meta name="twitter:description" content={site.seo.ogDescription ?? site.seo.description} />
+	<meta name="twitter:image:alt" content={site.seo.imageAlt} />
 </svelte:head>
 
 <div class="marketing-page">
@@ -140,7 +152,7 @@
 			subhead={site.pricing.subhead}
 			plans={site.pricing.plans}
 			freeLink={site.pricing.freeLink}
-			onPlanClick={(planName) => trackSignupStart(`partners_pricing_${planName.toLowerCase()}`)}
+			onPlanClick={trackPricingPlanClick}
 			onFreeLinkClick={() => trackSignupStart('partners_pricing_free_link')}
 		/>
 

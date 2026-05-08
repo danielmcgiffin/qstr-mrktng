@@ -44,17 +44,17 @@ export type AtlasEngagementContent = {
 	footerLine: string;
 };
 
-const bookingHref = 'https://cal.com/danny-cursus/15min';
+const bookingHref = 'https://tidycal.com/atlas-build/explo';
 
 export const atlasEngagementContent: AtlasEngagementContent = {
 	eyebrow: 'The Atlas Engagement',
-	headline: 'Take a real vacation in 30 days.',
-	subheadline: 'Without your business running through your phone.',
+	headline: 'Take the vacation.',
+	subheadline: "Here's what you're going to do.",
 	heroParagraphs: [
-		"Right now, your business runs on memory. Yours. Your ops person's. The one employee who knows where the weird client exception lives. The person everyone Slacks because the 'process' is buried in a Google Doc from 2021, a Notion nobody trusts, or a Trainual video that teaches the wrong thing slowly.",
-		"There's a name for that: hostage situation.",
-		"The Atlas Engagement turns the operational knowledge scattered across your business into a working map your team can actually use. In 4 weeks, you'll have a connected operating model of your back office: every covered role, every core process, every system, all linked, all owned, all searchable.",
-		'Not another documentation graveyard. A map.'
+		"You're going to stop being the answer key for every question. You're going to set your business up to run the day-to-day without you. And you're going to do it without dropping any of the plates you're currently spinning.",
+		"If you can't leave without there being some kind of emergency, we have a name for that: hostage situation.",
+		"The Atlas Engagement turns your existing operations, scattered across the people, papers, and systems that have cycled in and out over the years, into a working map your team can actually use. In 4 weeks, you'll have a connected operating model of your back office: every covered role, every core process, every system, all linked, all owned, all searchable.",
+		'Not a deck. Not a framework. Not a "deliverable" that goes nowhere. An atlas. Your business, out of your brain.'
 	],
 	primaryCta: {
 		label: 'Book a 15-minute Atlas Fit Call',
@@ -66,43 +66,43 @@ export const atlasEngagementContent: AtlasEngagementContent = {
 		{
 			badge: 'Week 1',
 			title: 'Discovery + Ingest',
-			body: "You give us the raw material: SOPs, Looms, training videos, Slack exports, onboarding emails, job descriptions, system notes. We pull the shape of the business out of the mess. You don't start from a blank page."
+			body: "You give us the raw material: SOPs, Looms, training videos, Slack exports, onboarding emails, job descriptions, system notes, impromptu voice recordings. We pull the shape of the business out of the mess. You don't start from a blank page, and you don't have to set aside any time to write anything."
 		},
 		{
 			badge: 'Week 2',
 			title: 'Draft + Walkthrough',
-			body: "We assemble a draft atlas. We sit down with you for one working session and walk every role, process, and system. You tell us what's right, what's wrong, and where reality differs from the official version. Some of this requires interviews with your team — usually 3-5 short sessions, max 45 minutes each. We do them. You don't."
+			body: "We assemble a draft atlas, then we'll sit down with you for one working session and walk every role, process, and system. You tell us what's right, what's wrong, and where your real world and your paper dreams don't match up. If you want, we can leverage brief interviews with your team as well. Usually 3-5 short sessions, max 45 minutes each."
 		},
 		{
 			badge: 'Week 3',
 			title: 'Refinement',
-			body: 'We close the gaps. Role manuals finalized. Process docs finalized. System index complete. Handoff document drafted.'
+			body: 'We close the gaps. Role manuals finalized. Process docs finalized. System index complete. Handoff drafted.'
 		},
 		{
 			badge: 'Week 4',
 			title: 'Rollout + Handoff',
-			body: 'We roll it out with your team. They learn where to look before they ask you. You take the vacation test.'
+			body: 'We roll it out with your team. They learn where to look before they ask you. You go take that vacation test.'
 		}
 	],
 	includedHeading: "What's included",
 	includedItems: [
-		'A complete operating atlas covering up to 25 roles, 40 core processes, and unlimited connected systems',
-		'Role manuals for every covered back-office seat',
-		'Core process documentation, searchable in 3 clicks or less',
-		'System index of every tool your team uses, mapped to the work it supports',
-		'The Founder Handoff Document — what you give your first ops hire on day one',
+		'A complete operating atlas covering your ~20 most important processes',
+		"Role manuals for every seat that's part of those processes",
+		'A library of process documentation, maximally searchable',
+		'System guides for every tool your team uses in those processes, mapped to the work it supports',
+		'The Founder Handoff Document: what you give your next ops leader on day one',
 		'A gap report flagging missing owners, stale processes, unclear handoffs, and single points of failure',
-		'12 months of Quaestor platform access ($3,000 value)',
-		'AI-powered drift detection that flags stale processes before they bite'
+		'12 months of Quaestor platform access ($3,000 value)'
 	],
 	notIncludedHeading: "What we won't do",
 	notIncludedItems: [
 		'No SOW theater. This page is the offer.',
 		'No 6-month consulting odyssey.',
 		"No retainer. Engagement ends in 4 weeks. You don't need us hovering.",
+		'No interviews with your CFO about his "vision." Groundwork first, then you can reach for the stars.',
 		"No MBA who's never run a business lecturing you about Lean Six Sigma.",
-		"We won't redesign your company from scratch. That's a different engagement.",
-		"We won't pretend AI alone replaces the work. Some of what's in your team's heads has to be extracted by a human asking good questions. That's our job, not yours."
+		"No redesigning your company from scratch (that's a different engagement).",
+		"No pretending AI alone replaces the work. Some of what's in your team's heads has to be extracted by a human asking good questions. That's our job, not yours."
 	],
 	priceHeading: 'Price',
 	price: '$7,500 one-time',
@@ -120,11 +120,11 @@ export const atlasEngagementContent: AtlasEngagementContent = {
 		{
 			heading: 'This is for you if',
 			items: [
-				'You run a 15-60 person services business',
+				'You run a 15-90 person business',
 				'You can name three things only you know how to do',
 				"You haven't taken a real vacation in over a year",
 				"You'd be in trouble if your ops person quit tomorrow",
-				"You've thought about hiring a consultant and decided you'd rather not"
+				"You've thought about hiring a consultant and hate that idea"
 			]
 		},
 		{
@@ -138,7 +138,8 @@ export const atlasEngagementContent: AtlasEngagementContent = {
 		}
 	],
 	availabilityHeading: 'Limited availability',
-	availabilityBody: 'We take 4 Atlas Engagements per quarter. Q3 has 2 slots open.',
+	availabilityBody:
+		'We take as many Atlas Engagements per quarter as we can, on a first-come, first-serve basis.',
 	upsellHeading: 'The bigger version',
 	upsellParagraphs: [
 		'The Atlas Engagement maps the business you have.',

@@ -1,6 +1,7 @@
 <script lang="ts">
 	import ImageModal from '$lib/components/ImageModal.svelte';
 	import BulletSection from '$lib/components/marketing/BulletSection.svelte';
+	import CardGridSection from '$lib/components/marketing/CardGridSection.svelte';
 	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
@@ -40,14 +41,26 @@
 	const trackSignupStart = (location: string) => {
 		trackEvent('signup_start', { location });
 	};
+
+	const trackPricingPlanClick = (planName: string, href: string) => {
+		const location = `home_pricing_${planName.toLowerCase().replace(/\s+/g, '_')}`;
+		trackEvent('pricing_plan_click', { location, plan_name: planName, href });
+
+		if (href.includes('qstr.cursus.tools/login')) {
+			trackSignupStart(location);
+		}
+	};
 </script>
 
 <svelte:head>
-	<title>Quaestor — It doesn’t have to be this hard.</title>
-	<meta
-		name="description"
-		content="Quaestor is an operational atlas that makes small businesses work, so the business stops routing every question back through you."
-	/>
+	<title>{site.seo.title}</title>
+	<meta name="description" content={site.seo.description} />
+	<meta property="og:title" content={site.seo.ogTitle ?? site.seo.title} />
+	<meta property="og:description" content={site.seo.ogDescription ?? site.seo.description} />
+	<meta property="og:image:alt" content={site.seo.imageAlt} />
+	<meta name="twitter:title" content={site.seo.ogTitle ?? site.seo.title} />
+	<meta name="twitter:description" content={site.seo.ogDescription ?? site.seo.description} />
+	<meta name="twitter:image:alt" content={site.seo.imageAlt} />
 </svelte:head>
 
 <div class="marketing-page">
@@ -91,13 +104,20 @@
 			}}
 		/>
 
+		<CardGridSection
+			id="trust"
+			headline={site.trust.headline}
+			subhead={site.trust.subhead}
+			items={site.trust.items}
+		/>
+
 		<PricingSection
 			id="pricing"
 			headline={site.pricing.headline}
 			subhead={site.pricing.subhead}
 			plans={site.pricing.plans}
 			freeLink={site.pricing.freeLink}
-			onPlanClick={(planName) => trackSignupStart(`home_pricing_${planName.toLowerCase()}`)}
+			onPlanClick={trackPricingPlanClick}
 			onFreeLinkClick={() => trackSignupStart('home_pricing_free_link')}
 		/>
 

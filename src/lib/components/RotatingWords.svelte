@@ -139,6 +139,7 @@
 		grid-area: 1 / 1;
 		position: relative;
 		display: inline-block;
+		overflow: hidden;
 		white-space: nowrap;
 	}
 
@@ -158,23 +159,20 @@
 
 	/* current: visible, then animate out DOWN */
 	.rw-current.out {
-		opacity: 0;
+		opacity: 1;
 		transform: translate3d(0, calc(-50% + 30px), 0);
-		transition:
-			transform var(--anim) cubic-bezier(0.16, 1, 0.3, 1),
-			opacity var(--anim) cubic-bezier(0.16, 1, 0.3, 1);
+		transition: transform var(--anim) cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
 	/* next: start ABOVE + invisible, then animate to center */
 	.rw-next.in {
-		opacity: 0;
+		opacity: 1;
 		transform: translate3d(0, calc(-50% - 30px), 0);
 		animation: rw-in var(--anim) cubic-bezier(0.16, 1, 0.3, 1) forwards;
 	}
 
 	@keyframes rw-in {
 		to {
-			opacity: 1;
 			transform: translate3d(0, -50%, 0);
 		}
 	}

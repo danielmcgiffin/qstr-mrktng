@@ -30,7 +30,7 @@
 		subhead: string;
 		plans: readonly PricingPlan[];
 		freeLink?: PricingCta;
-		onPlanClick?: (planName: string) => void;
+		onPlanClick?: (planName: string, href: string) => void;
 		onFreeLinkClick?: () => void;
 	} = $props();
 </script>
@@ -65,7 +65,7 @@
 						<a
 							class="btn btn-primary"
 							href={plan.cta.href}
-							onclick={() => onPlanClick?.(plan.name)}
+							onclick={() => onPlanClick?.(plan.name, plan.cta.href)}
 						>
 							{plan.cta.label}
 						</a>

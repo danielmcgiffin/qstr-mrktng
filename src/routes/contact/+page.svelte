@@ -1,13 +1,25 @@
 <script lang="ts">
 	import { trackEvent } from '$lib/analytics';
+
+	const seo = {
+		title: 'Contact - Quaestor Partners',
+		description:
+			'Talk with Quaestor about partner fit, client deployment support, or direct team rollout.',
+		ogTitle: "Let's talk partner fit.",
+		ogDescription:
+			'For ops partners, fractionals, and direct operator teams ready to map the first bottleneck workflow.'
+	};
 </script>
 
 <svelte:head>
-	<title>Contact — Quaestor Partners</title>
-	<meta
-		name="description"
-		content="Talk with Quaestor about partner fit, client deployment support, or direct team rollout."
-	/>
+	<title>{seo.title}</title>
+	<meta name="description" content={seo.description} />
+	<meta property="og:title" content={seo.ogTitle} />
+	<meta property="og:description" content={seo.ogDescription} />
+	<meta property="og:image:alt" content="Quaestor operational atlas interface preview." />
+	<meta name="twitter:title" content={seo.ogTitle} />
+	<meta name="twitter:description" content={seo.ogDescription} />
+	<meta name="twitter:image:alt" content="Quaestor operational atlas interface preview." />
 </svelte:head>
 
 <div class="min-h-screen overflow-x-hidden bg-[rgb(var(--bg))] text-[rgb(var(--text))]">
