@@ -27,15 +27,14 @@ const signupBaseHref =
 
 export const pricingContent: PricingContent = {
 	eyebrow: 'Pricing',
-	headline: 'Ready to get started.',
-	subhead:
-		"One price for your business. A workspace contains everything you need to map your entire business or, if you're larger or more complex, a whole business function (or client space or delivery type... etc).",
+	headline: 'Simple price. Serious leverage.',
+	subhead: 'One workspace maps the business. Add more when the operation demands it.',
 	plans: [
 		{
 			name: 'Quaestor Workspace',
 			price: '$3,000',
 			period: 'annual',
-			desc: 'One price for your business. You can purchase additional workspaces as needed for the same rate.',
+			desc: 'One workspace. Unlimited people. Unlimited operational map.',
 			perks: [
 				'Unlimited viewers & editors',
 				'Unlimited processes, roles, and systems',
@@ -51,7 +50,7 @@ export const pricingContent: PricingContent = {
 			name: 'Atlas Engagement',
 			price: '$7,500',
 			period: 'one time',
-			desc: 'A 4-week implementation that turns your 20 most important processes into a working atlas, with 12 months of platform access included.',
+			desc: 'Four weeks. Twenty core processes. A working atlas, plus 12 months of platform access.',
 			perks: [
 				'Done-for-you operating atlas',
 				'Rollout and handoff support',

@@ -21,36 +21,36 @@ export const methodContent: MethodContentSection[] = [
 	{
 		slug: 'diagnosis',
 		title: 'Why Most Ops Documentation Fails',
-		summary: 'The patterns that kill documentation efforts... and why yours probably already died.',
+		summary: 'The patterns that kill documentation. Yours is probably already bleeding.',
 		intro:
-			'You’ve seen this before. Maybe you built it yourself. Maybe you inherited it. Documentation that looked great on day one. A liability by month three. We’ve done this for a lot of businesses and found five failure modes. Quaestor eliminates all of them.',
+			'You have seen it. Maybe you built it. Great on day one. Dead by month three. Five failure modes do the damage. Quaestor is built to kill them.',
 		groups: [
 			{
 				items: [
 					{
 						id: 'theater',
 						title: 'Documentation theater',
-						desc: 'Long SOPs that look professional in the binder and are abandoned within a month. Everyone’s built these. Nobody uses them. This is 80% of the consultant deliverables and 90% of the templates online, built to look complete, not to disappear into the work. The effort goes into the writing, screenshots, and layout... but it’s hard to find info and harder to maintain. The business leaves the docs behind almost before the ink is dry.'
+						desc: 'Long SOPs. Clean binder. Dead in a month. Built to look complete, not to disappear into the work. Hard to find. Harder to maintain. The business leaves them behind.'
 					},
 					{
 						id: 'duplicates',
 						title: 'Duplicate systems of record',
-						desc: 'Copies of copies of copies. The same process described in a Google Doc, a wiki page, and an email thread... and none of them are current. Multiple versions of SOPs are the same as having no SOP at all. Instead of streamlining work, teams slow down to debate what "right" is, and it makes finding the right document in the shared drive a tedious nightmare.'
+						desc: 'Copies of copies. Same process in a doc, a wiki, and an email thread. None current. Multiple truths equal no truth. The team slows down to debate what "right" means.'
 					},
 					{
 						id: 'unowned',
 						title: 'Unowned actions, systems, or roles',
-						desc: 'When writing SOPs, people often use passive voice ("this will be done") without assigning ownership to a person or role. So "steps" that exist on paper have no owner (or no clear system, or lacking additional context) cause confusion and create operational drag. When something breaks, everyone’s pointing the finger at someone else. When something changes, no one’s updating the map. But having a role on every action keeps things moving well... accountability is load-bearing.'
+						desc: 'Passive voice kills accountability. "This will be done" names nobody. No owner means no update, no decision, no standard. Put a role on every action. Accountability is load-bearing.'
 					},
 					{
 						id: 'graveyard',
 						title: 'The documentation graveyard',
-						desc: 'Wikis nobody reads. SOPs layered on SOPs from reorgs in ages past. A SharePoint full of answers to questions no one is asking. The saddest part: someone spent real time and money building all of it. Usage fails for many reasons, often in combination, but the result is the same: investment without return.'
+						desc: 'Wikis nobody reads. SOPs from dead org charts. A SharePoint full of answers no one asks for. Real time. Real money. No return.'
 					},
 					{
 						id: 'consultant-imposed',
 						title: 'Consultant-imposed structures',
-						desc: 'Frameworks that look impressive in slides and don’t match how the business actually works. Binders. Maturity models. Capability matrices. Someone else’s abstraction stapled to your operation, sold back to you as insight. Most of it destroys more value than it creates. The map was never of your territory.'
+						desc: 'Slideware. Binders. Maturity models. Someone else’s abstraction stapled to your business. The map was never of your territory.'
 					}
 				]
 			}
@@ -61,7 +61,7 @@ export const methodContent: MethodContentSection[] = [
 		title: 'The Operating Model',
 		summary: 'Three primitives. Infinite connections. One source of truth.',
 		intro:
-			'Every business operation — no matter the industry, no matter the size — reduces to three essential elements and the relationships between them. Quaestor maps these relationships into a living graph so the picture of how work works is always current, always connected, and always queryable in the simplest, most frictionless way possible.',
+			'Every operation reduces to three things and the links between them. Quaestor turns those links into a living graph: current, connected, queryable.',
 		groups: [
 			{
 				items: [
@@ -73,7 +73,7 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'connections',
 						title: 'Everything connected, nothing duplicated',
-						desc: 'Each element links to every other element it touches. Change a role’s responsibilities and every affected process updates. Change a system, and the system is updated across your whole org’s process documentation. Realign a role, refine a process, change an activity or a resource, and never worry about what other documents you have to update because you made that update. One change, one place, zero drift.'
+						desc: 'Each element links to what it touches. Change a role, process, system, activity, or resource once. The map updates where it matters. One change. One place. Less drift.'
 					},
 					{
 						id: 'steps-connect',
@@ -83,17 +83,17 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'source-of-truth',
 						title: 'The map is the source of truth',
-						desc: 'Quaestor organizes operations so leadership can see the big picture and teams can retrieve what they need at the point of need. It’s not another copy of your docs. It’s a live graph connecting systems of record, people, and work. Quaestor doesn’t replace your tools, it connects them so your work can run the way it actually runs.'
+						desc: 'Leadership sees the field. Teams get what they need at the point of need. Quaestor is not another copy of your docs. It connects systems, people, and work.'
 					},
 					{
 						id: 'outputs',
 						title: 'Atomic knowledge, dynamic outputs',
-						desc: 'When you capture knowledge once at the smallest useful level, those pieces can be assembled into whatever output you need. Instead of writing and maintaining onboarding guides, role manuals, and system docs by hand, generate them on demand from current graph data. Write once, use everywhere.'
+						desc: 'Capture knowledge once at the smallest useful level. Generate guides, manuals, and system docs from current graph data. Write once. Use everywhere.'
 					},
 					{
 						id: 'built-for-people',
 						title: 'Built for your people, not your systems',
-						desc: 'Knowledge infrastructure is for the people doing the work. Not for the admins filing the documents. Not for the consultants who wrote them. If your operator has to hunt, the system failed. Knowledge workers already spend about 20% of their time looking things up. Quaestor surfaces what someone needs where the decision gets made. Not three folders deep in a shared drive nobody maintains.'
+						desc: 'Knowledge infrastructure is for the people doing the work. If your operator has to hunt, the system failed. Quaestor surfaces the answer where the decision gets made.'
 					}
 				]
 			}
@@ -104,14 +104,14 @@ export const methodContent: MethodContentSection[] = [
 		title: 'How to Map Your Operations',
 		summary: 'Start where it hurts. Ship the MVP. Build capture into the rhythm.',
 		intro:
-			'This doesn’t need a six-month implementation. Start with the workflow that costs the most time, map it in a sitting, and let the structure grow from there. The method works whether you’re mapping your own business or deploying it across multiple client engagements.',
+			'No six-month rollout. Start with the workflow that costs the most. Map it in a sitting. Ship the draft. Build from there.',
 		groups: [
 			{
 				items: [
 					{
 						id: 'existing-material',
 						title: 'Map what you already have',
-						desc: 'Most businesses are drowning in information and starving for insight. Before you write a single new SOP, do an honest audit. Docs in the shared drive. Loom videos somebody made last quarter. Slack canvases. The stuff in your senior operator’s head that’s never been written down. You probably have 60% of the raw material already, scattered across seven places. Everybody has information. The problem is nothing talks to anything else.'
+						desc: 'Do not write a new SOP yet. Audit what exists: docs, Looms, Slack canvases, system notes, and the senior operator’s head. You probably have the raw material. It is just scattered and disconnected.'
 					},
 					{
 						id: 'bottleneck',
@@ -121,7 +121,7 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'interfaces',
 						title: 'Define the handoffs',
-						desc: 'Where work passes between people is where operations break down. Make those edges explicit: who hands off to whom, what triggers the handoff, and who owns the next step. Handoffs without owners are just hopes.'
+						desc: 'Work breaks at handoff. Make the edge explicit: who sends, what triggers, what moves, who owns the next step. Handoffs without owners are hopes.'
 					},
 					{
 						id: 'station',
@@ -158,17 +158,17 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'watch-real-work',
 						title: 'Watch how work actually gets done',
-						desc: 'Ignore the official process doc. Watch how your senior operator actually handles the tough calls. That’s where the real knowledge is. The written version is somebody’s theory of how it should go. What happens on a Tuesday with a pissed-off client is the business. Capture the second one.'
+						desc: 'Ignore the official process for a minute. Watch the senior operator handle the hard call. The written version is theory. Tuesday with an angry client is the business. Capture that.'
 					},
 					{
 						id: 'ship',
 						title: 'Ship the 80%',
-						desc: 'A working map you can react to beats a perfect map you never finish. Publish the draft. Let the team push back, fill gaps, and correct what’s wrong. The map gets better through use, not through tweaking endlessly in isolation.'
+						desc: 'A working map beats a perfect map you never ship. Publish the draft. Let the team push back. The map gets better through contact.'
 					},
 					{
 						id: 'rhythm',
 						title: 'Make it a rhythm, not a project',
-						desc: 'Documentation projects fail because founders try to document everything at once. They burn out in three weeks. They quit. Your business didn’t accumulate complexity overnight, and you’re not going to solve it in a weekend sprint. Build capture into the rhythm of the work. Finish a client onboarding? Sit down with the team, open Quaestor, walk through what happened. What worked. What didn’t. What would’ve been useful to have. Do it again next time. Then once a quarter. Then once a year. Keep touching it. Do not schedule a three-hour block once a quarter called “documentation review.” That block has a 100% death rate.'
+						desc: 'Do not document everything at once. You will quit. Capture work in rhythm. Finish onboarding? Open Quaestor. What happened? What broke? What would have helped? Update the map. Repeat. Do not schedule a quarterly “documentation review.” That meeting dies.'
 					}
 				]
 			}
@@ -191,7 +191,7 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'interruptions',
 						title: 'Interruptions per week',
-						desc: 'The number of questions routed to a single person... usually the owner or similarly long-tenured expert. Track it before, track it after. That delta is the ROI.'
+						desc: 'Count the questions routed to one expert. Track before. Track after. The delta is the ROI.'
 					},
 					{
 						id: 'vacation-test',
@@ -201,7 +201,7 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'real-delegation',
 						title: 'Real delegation',
-						desc: 'Real delegation is when someone makes a decision and tells you about it after. If they’re still checking in, asking for advice, or getting pre-approval, the circuit isn’t closed. You’re still on the loop. The graduation moment is the first time an operator handles a hard call and you only hear about it at the end of the week. Watch for it.'
+						desc: 'Real delegation is when someone makes the call and tells you later. If they still need pre-approval, you are still in the loop. Watch for the first hard call handled without you.'
 					}
 				]
 			},

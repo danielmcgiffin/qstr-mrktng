@@ -5,10 +5,10 @@
 	const seo = {
 		title: 'Method - Quaestor',
 		description:
-			'The Quaestor method: a practical system for mapping, owning, and maintaining how your company runs.',
+			'The Quaestor method: map the work, assign ownership, and keep the business moving.',
 		ogTitle: 'The operational atlas, step by step.',
 		ogDescription:
-			'Why most ops docs die, the model that keeps work alive, and how to map what is in your head.'
+			'Why ops docs die, how the model works, and how to get the business out of your head.'
 	};
 </script>
 
@@ -34,14 +34,12 @@
 		<p
 			class="mt-5 max-w-2xl text-base leading-relaxed text-pretty text-[rgb(var(--text-secondary))] md:text-lg"
 		>
-			If your business can’t work without you, you don’t have a business. You have a job, and it
-			comes with chains. This method is how you get out.
+			If your business can’t work without you, it owns you. This method is how you get out.
 		</p>
 		<p
 			class="mt-4 max-w-2xl text-base leading-relaxed text-pretty text-[rgb(var(--text-secondary))] md:text-lg"
 		>
-			Four parts. Why most ops docs die. The model that doesn’t. How to map what’s in your head
-			without losing a weekend. The signals that tell you the map is doing real work.
+			Four parts. Why docs die. The model that lives. How to map the work. How to measure freedom.
 		</p>
 		<div class="mt-8 flex flex-col gap-3 sm:flex-row">
 			<a class="btn btn-primary" href={methodPath(methodSections[0].slug)}>

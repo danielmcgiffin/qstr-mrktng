@@ -18,11 +18,9 @@ export const site = {
 
 	seo: {
 		title: 'Quaestor - Your Operational Atlas',
-		description:
-			'Quaestor maps who does what, in which system, as a connected graph so your team finds answers instead of asking you.',
+		description: 'Quaestor maps who owns what, where it happens, and how the work moves.',
 		ogTitle: 'No more dead docs, bad handoffs, or tribal ops.',
-		ogDescription:
-			'Turn roles, process steps, and systems into a navigable map your team can work from.',
+		ogDescription: 'Turn roles, process steps, and systems into a map your team can use.',
 		imageAlt: 'Quaestor showing connected processes, roles, and systems.'
 	} satisfies SeoContent,
 
@@ -57,7 +55,7 @@ export const site = {
 			'bad handoffs'
 		],
 		subhead:
-			'Quaestor maps who does what, in which system, as an operational atlas... so your team finds answers instead of asking you.',
+			'Map who owns what, where it happens, and how the work moves. Stop being the answer desk.',
 		primaryCta: {
 			label: 'See it in action',
 			href: demoHref
@@ -88,14 +86,14 @@ export const site = {
 		eyebrow: 'You know the feeling',
 		headline: 'This is how it breaks.',
 		intro:
-			'If you have to schedule business around employee PTO plans... you aren’t ready to scale. The business keeps falling back into your inbox when you most need it to run without your hand on the wheel.',
+			'If PTO can break the business, the business is not ready. The work keeps falling back into your inbox.',
 		bullets: [
-			'The process lives in someone’s head and three Slack threads from 2022.',
-			'The SOP exists. It’s in a folder somewhere. Nobody’s opened it since it was written.',
-			'Every question routes to the same person because they’re the only one who knows how it actually works.',
-			'A key person leaves and years of context and judgement walk out the door with them.'
+			'The process lives in a head and three Slack threads.',
+			'The SOP exists. Nobody trusts it.',
+			'Every hard question routes to the same person.',
+			'One person leaves. Years of judgment leave with them.'
 		],
-		punchline: 'You need to get the business out of your head, and into your team’s hands.'
+		punchline: 'Get the business out of your head. Put it in your team’s hands.'
 	} satisfies {
 		eyebrow: string;
 		headline: string;
@@ -109,21 +107,21 @@ export const site = {
 	// ───────────────────────────────────────────
 	shadowOps: {
 		eyebrow: 'Shadow ops',
-		headline: 'Shadow Ops: the hidden operating system inside your business.',
+		headline: 'Shadow ops is running the business.',
 		subhead:
-			'Shadow ops is the load-bearing knowledge trapped in founders, long-time team members, and old communications. It works enough... right up until someone is out sick, quits, or gets overwhelmed.',
+			'The real system lives in founders, veterans, and old messages. It works until someone disappears.',
 		points: [
 			{
 				title: 'Human API',
-				desc: 'If one person has to answer every edge-case question, they are the API. That’s operational debt waiting to come due.'
+				desc: 'If one person answers every edge case, they are the system.'
 			},
 			{
 				title: 'Coordination tax',
-				desc: 'Every undocumented handoff adds delays, follow-up messages, and rework. The tax compounds every week.'
+				desc: 'Every undocumented handoff adds delay, rework, and noise.'
 			},
 			{
 				title: 'Documentation graveyards',
-				desc: 'Dead SOPs are a symptom. The root cause is ease of access, competent search, and the missing relationships between roles, processes, and systems.'
+				desc: 'Dead SOPs are not the disease. Missing ownership is.'
 			}
 		]
 	} satisfies {
@@ -138,29 +136,29 @@ export const site = {
 	// ───────────────────────────────────────────
 	howItWorks: {
 		eyebrow: 'How it works',
-		headline: 'Map it once, and it can keep itself alive.',
+		headline: 'Map the pain. Break the loop.',
 		subhead:
-			'Start with the workflow that hurts the most. Map the roles, steps, systems, decisions, and standards. Then give the team something they can actually use instead of another folder they have to interpret.',
+			'Start with the workflow that hurts. Map roles, steps, systems, decisions, and standards. Give the team orders they can execute.',
 		steps: [
 			{
 				n: '01',
 				title: 'Start with the bottleneck',
-				desc: 'Pick the workflow that generates the most interruptions. Map the roles, steps, and systems involved.'
+				desc: 'Pick the workflow causing the most interruptions.'
 			},
 			{
 				n: '02',
 				title: 'Connect everything',
-				desc: 'Link ownership to steps and steps to systems so the shape of operations becomes visible.'
+				desc: 'Link owner, step, system, and standard.'
 			},
 			{
 				n: '03',
 				title: 'Ship it to the team',
-				desc: 'Publish the map so people can search, find, and stop asking you. Answers in three clicks.'
+				desc: 'Publish the map. Make the answer findable.'
 			},
 			{
 				n: '04',
 				title: 'Keep it honest',
-				desc: 'Stale steps get flagged. Owners get nudged. The map stays current because the system will not let it rot quietly.'
+				desc: 'Flag stale steps. Nudge owners. Stop quiet rot.'
 			}
 		]
 	} satisfies {
@@ -174,23 +172,23 @@ export const site = {
 	// SUPPORTING DETAIL
 	// ───────────────────────────────────────────
 	features: {
-		eyebrow: 'What people can actually use',
+		eyebrow: 'Usable work',
 		headline: 'A map beats a folder. Ownership beats guessing.',
-		subhead: 'Everything connects. Everything has an owner. Everything stays current.',
+		subhead: 'Everything connects. Everything has an owner.',
 		items: [
 			{
 				title: 'Onboarding in days, not weeks',
-				desc: 'Generate role-specific guides from the graph. New hires find answers without finding you.',
+				desc: 'Generate role guides from the graph. New hires move faster.',
 				icon: 'rocket'
 			},
 			{
 				title: 'Clean handoffs',
-				desc: 'Every handoff point is explicit and owned. No more mystery meat between teams.',
+				desc: 'Every handoff is explicit and owned.',
 				icon: 'refresh-cw'
 			},
 			{
 				title: 'Stale steps get flagged',
-				desc: 'Ownership is explicit. When a linked system changes, affected steps surface before they hurt.',
+				desc: 'System changed? Affected steps surface before they hurt.',
 				icon: 'bell-ring'
 			}
 		]
@@ -206,23 +204,22 @@ export const site = {
 	// ───────────────────────────────────────────
 	proof: {
 		eyebrow: 'Proof in the product',
-		headline: 'What buyers see in the first 15 minutes.',
-		subhead:
-			'The demo is built around one bottleneck workflow so prospects can see immediate contrast with static docs.',
+		headline: 'The difference is visible fast.',
+		subhead: 'One bottleneck workflow. One live map. Immediate contrast with static docs.',
 		items: [
 			{
 				title: 'Gaps and contradictions surface fast',
-				desc: 'When roles, actions, and systems are linked, missing ownership and broken handoffs show up immediately.',
+				desc: 'Link roles, actions, and systems. Broken handoffs show up.',
 				gifSrc: '/flags.webm'
 			},
 			{
 				title: 'Role portal answers real questions',
-				desc: 'Click into a role and see every connected process and system in one place. No scavenger hunt.',
+				desc: 'Open a role. See every connected process and system.',
 				gifSrc: '/role-details.webm'
 			},
 			{
 				title: 'Dynamic onboarding output',
-				desc: 'Generate a guide from atomic knowledge in the graph, on demand, instead of writing it all by hand.',
+				desc: 'Generate current guides from the graph.',
 				gifSrc: '/process-steps.webm'
 			}
 		]
@@ -244,23 +241,23 @@ export const site = {
 	faq: {
 		eyebrow: 'What people ask next',
 		headline: 'What people ask next:',
-		subhead: 'Short answers to the last few reasons people hesitate.',
+		subhead: 'Direct answers.',
 		items: [
 			{
 				q: 'How is this different from Notion / Confluence / a wiki?',
-				a: 'Wikis store pages. Quaestor stores relationships: roles, processes, and systems linked into a single graph. Change a role’s responsibilities and every connected process updates. That’s not something a wiki can do, because a wiki doesn’t automatically know what’s connected to what.'
+				a: 'Wikis store pages. Quaestor stores relationships. Change a role, process, or system once. The map stays connected.'
 			},
 			{
 				q: 'How long does setup take?',
-				a: 'Most teams map their first bottleneck workflow in a single sitting. From there, the map grows organically; each new workflow connects to what’s already there. There’s no building a documentation library from scratch; you’re building a network one link at a time.'
+				a: 'Map the first bottleneck in one sitting. Add the next workflow when it matters. Build the network one link at a time.'
 			},
 			{
 				q: 'What if I already have SOPs and docs?',
-				a: 'Good! That’s raw material, not wasted effort. Import the roles, steps, and systems from what you’ve already built. The docs become references linked from the map, not duplicated inside it. The map makes it easy for the team to use the docs.'
+				a: 'Good. Use them as raw material. Extract roles, steps, and systems. Link the docs where they belong.'
 			},
 			{
 				q: 'Is this just another tool I have to maintain?',
-				a: 'Because of our flags system, every team member plays a role in keeping the documentation fresh on a rolling basis, so there’s no annual guilt-trip lift. The maintenance is built into how the tool already works.'
+				a: 'No. The team flags drift while doing the work. Maintenance becomes contact, not ceremony.'
 			}
 		]
 	} satisfies {
@@ -275,7 +272,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	finalCta: {
 		headline: 'Start with the process that hurts the most.',
-		text: 'Map one workflow, make the handoffs clear, and see how quickly the business stops routing everything back through you.',
+		text: 'Map one workflow. Make the handoffs clear. Stop the questions before they reach you.',
 		cta: {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=ops_final_cta`

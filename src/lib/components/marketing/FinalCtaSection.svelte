@@ -27,7 +27,7 @@
 			<h2 class="final-cta-title"><BrandText text={headline} /></h2>
 			<p class="final-cta-copy"><BrandText {text} /></p>
 
-			<div class="button-row">
+			<div class="button-row final-cta-actions">
 				{#each ctas as cta}
 					<a
 						class={'btn ' + (cta.variant === 'secondary' ? 'btn-secondary' : 'btn-primary')}

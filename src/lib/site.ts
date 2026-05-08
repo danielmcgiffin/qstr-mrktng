@@ -19,10 +19,9 @@ export const site = {
 	seo: {
 		title: "Quaestor - It doesn't have to be this hard.",
 		description:
-			'Quaestor is an operational atlas that makes small businesses work, so the business stops routing every question back through you.',
+			'Quaestor maps the business into a living atlas, so every answer stops routing through you.',
 		ogTitle: 'Quaestor - How your business actually works.',
-		ogDescription:
-			'Map roles, processes, and systems into an operational atlas your team can actually use.',
+		ogDescription: 'Map roles, processes, and systems. Stop being the answer key.',
 		imageAlt: 'Quaestor operational atlas interface preview.'
 	} satisfies SeoContent,
 
@@ -36,7 +35,7 @@ export const site = {
 	] satisfies NavItem[],
 
 	navCta: {
-		label: 'Start your atlas for free',
+		label: 'Start free',
 		href: `${signupBaseHref}&utm_content=nav`
 	} satisfies CTA,
 
@@ -46,12 +45,12 @@ export const site = {
 	hero: {
 		headline: "If the business only works when you're there, it's not a business.",
 		subhead:
-			"You have a job... and you're stuck at it. Quaestor is the operating system that gets the business out of your head and into something your team can actually run with.",
+			'You are the bottleneck. Get the work out of your head. Put it where the team can run it.',
 		primaryCta: {
-			label: 'Start your atlas for free',
+			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`
 		},
-		secondaryCta: { label: 'See a sample org', href: demoHref }
+		secondaryCta: { label: 'See the map', href: demoHref }
 	} satisfies {
 		headline: string;
 		subhead: string;
@@ -74,14 +73,14 @@ export const site = {
 	forYou: {
 		headline: "The Founder's Bottleneck",
 		intro:
-			'There’s the way you say your business works, and then there’s what actually happens when everything’s exploding. That gap is costing you time, money, and sanity.',
+			'The official process says one thing. The real work says another. That gap burns time, money, and sanity.',
 		bullets: [
-			'Your people wait on you for every answer.',
-			'If you leave, things stop.',
-			'If your people leave, the work falls back on you.',
-			'The business runs on memory right up until memory fails.'
+			'Your team waits for your answer.',
+			'You leave. Work stalls.',
+			'They leave. The work lands back on you.',
+			'Memory works until it fails.'
 		],
-		punchline: 'If it only works when you’re around, you don’t have a business.'
+		punchline: 'If it needs you to run, it owns you.'
 	} satisfies {
 		headline: string;
 		intro: string;
@@ -93,21 +92,21 @@ export const site = {
 	// WHY THIS HAPPENS
 	// ───────────────────────────────────────────
 	shadowOps: {
-		headline: 'The story and the reality keep drifting apart.',
+		headline: 'Memory is not an operating system.',
 		subhead:
-			'Static docs capture what someone meant to write down. The work keeps moving. The people doing it keep improvising. Ownership, systems, and standards drift apart until the business routes back through whoever still remembers how it actually works.',
+			'Docs stale. People improvise. Owners blur. Then every hard question routes back to whoever remembers.',
 		points: [
 			{
 				title: 'The answer lives in a person',
-				desc: 'If everyone still needs one person to decode the work, the process is not really in the business yet.'
+				desc: 'If one person has to decode the work, the process is not in the business yet.'
 			},
 			{
-				title: 'The handoff keeps collapsing',
-				desc: 'When handoffs are fuzzy, people stop, wait, and improvise. The owner gets pulled back in.'
+				title: 'The handoff breaks',
+				desc: 'Fuzzy handoffs make people stop, wait, and improvise. The owner gets dragged back in.'
 			},
 			{
-				title: 'The doc goes stale quietly',
-				desc: 'What was useful at handoff turns into a graveyard when nothing catches drift.'
+				title: 'The doc rots quietly',
+				desc: 'If nothing catches drift, useful docs become dead weight.'
 			}
 		]
 	} satisfies {
@@ -120,29 +119,29 @@ export const site = {
 	// HOW IT WORKS
 	// ───────────────────────────────────────────
 	howItWorks: {
-		headline: 'This is how it stops falling apart.',
+		headline: 'Break the loop.',
 		subhead:
-			'Start with the process that keeps pulling you back in. That’s the tell the work isn’t working yet. Write out what right looks like step by step: who does what, which system they use, and how decisions get made. When the handoffs get cleaner and your Slack gets quieter, you know it’s working.',
+			'Pick the process that drags you back. Map who owns it, where it happens, and what done means. Ship it. Tighten it. Keep moving.',
 		steps: [
 			{
 				n: '01',
-				title: 'Start where it pulls you back in',
-				desc: 'Begin with the process that keeps routing back through you.'
+				title: 'Start at the bottleneck',
+				desc: 'Pick the workflow that keeps interrupting you.'
 			},
 			{
 				n: '02',
 				title: 'Map the real work',
-				desc: 'Write it out step by step: who does what, which system they use, how they decide, and what right looks like.'
+				desc: 'Capture owner, system, decision, and standard.'
 			},
 			{
 				n: '03',
 				title: 'Clean up the handoffs',
-				desc: 'When people can move work forward without stopping at your desk, the structure is getting real.'
+				desc: 'Make the next move obvious. No guessing.'
 			},
 			{
 				n: '04',
 				title: 'Keep it alive',
-				desc: 'Quaestor uses flags so nothing quietly drifts out of date the way static docs do.'
+				desc: 'Flags catch drift before the map goes stale.'
 			}
 		]
 	} satisfies {
@@ -155,23 +154,23 @@ export const site = {
 	// SUPPORTING DETAIL
 	// ───────────────────────────────────────────
 	features: {
-		eyebrow: 'What people can actually use',
-		headline: 'The work is visible to the people doing it.',
-		subhead: 'Roles, process steps, and flags give people something they can actually work from.',
+		eyebrow: 'Usable work',
+		headline: 'Own it. Find it. Fix it.',
+		subhead: 'Roles, steps, systems, and flags. No scavenger hunt.',
 		items: [
 			{
 				title: 'Role manual',
-				desc: 'See what a role owns, what processes it touches, and where the work lives.',
+				desc: 'See what the role owns, touches, and uses.',
 				icon: 'users'
 			},
 			{
 				title: 'Process steps',
-				desc: 'See the steps, the systems, the decisions, and what right looks like.',
+				desc: 'See the steps, systems, decisions, and standards.',
 				icon: 'refresh-cw'
 			},
 			{
 				title: 'Flags',
-				desc: 'See what is drifting before the work quietly falls apart again.',
+				desc: 'Catch drift before work breaks.',
 				icon: 'bell-ring'
 			}
 		]
@@ -186,23 +185,23 @@ export const site = {
 	// PROOF
 	// ───────────────────────────────────────────
 	proof: {
-		headline: 'You could just hand this to someone.',
+		headline: 'Hand this to the next operator.',
 		subhead:
-			'Open the atlas and click through the work. You can see what a role owns, how a process actually runs, and what needs attention before it breaks. This isn’t another folder full of pages. It’s something another person can actually use.',
+			'Open the atlas. See the role, the process, the system, and the risk. Not a folder. A command map.',
 		items: [
 			{
 				title: 'Role manual',
-				desc: 'Open a role and see what that person owns, what processes they touch, and where the work lives.',
+				desc: 'Open a role. See ownership, processes, and systems.',
 				gifSrc: '/role-details.webm'
 			},
 			{
 				title: 'Process steps',
-				desc: 'See the steps, the systems, the decisions, and what right looks like.',
+				desc: 'See the work, step by step.',
 				gifSrc: '/process-steps.webm'
 			},
 			{
 				title: 'Flags',
-				desc: 'When something drifts, Quaestor surfaces it before the work quietly falls apart again.',
+				desc: 'When work drifts, Quaestor marks it.',
 				gifSrc: '/flags.webm'
 			}
 		]
@@ -213,21 +212,20 @@ export const site = {
 	},
 
 	trust: {
-		headline: 'A calmer business is the proof.',
-		subhead:
-			'The first win is not a prettier wiki. It is fewer repeat questions, cleaner handoffs, and work that keeps moving when the usual answer-person is not there.',
+		headline: 'Freedom is the proof.',
+		subhead: 'Fewer repeat questions. Cleaner handoffs. Work that moves when you are gone.',
 		items: [
 			{
 				title: 'The vacation test',
-				desc: 'Can the team run a normal week without routing every edge case through the founder?'
+				desc: 'Can the team run a normal week without you?'
 			},
 			{
 				title: 'The handoff test',
-				desc: 'Can a person see what they own, where the work happens, and what right looks like?'
+				desc: 'Can someone see what they own and move?'
 			},
 			{
 				title: 'The new-hire test',
-				desc: 'Can someone useful get oriented from the map before they start asking around?'
+				desc: 'Can a new hire get useful before asking around?'
 			}
 		]
 	} satisfies {
@@ -246,24 +244,24 @@ export const site = {
 	// ───────────────────────────────────────────
 	faq: {
 		eyebrow: 'Common questions',
-		headline: '',
-		subhead: 'Short answers to the last few reasons people hesitate.',
+		headline: 'FAQ',
+		subhead: 'Direct answers.',
 		items: [
 			{
 				q: 'Is this just another documentation tool?',
-				a: 'No. Legacy documentation tools are built around the writer and the organizer. Quaestor is built around the person doing the work. It treats roles, processes, and systems as first-class, instead of burying the business inside pages and pages of text.'
+				a: 'No. Wikis store pages. Quaestor maps roles, processes, systems, and ownership. The worker gets the answer, not another folder.'
 			},
 			{
 				q: 'How do I get up and running fast?',
-				a: 'Start with the process that keeps you chained to your phone. Once you’ve gotten what’s in your head into the system, you have something people can use.'
+				a: 'Start with the process chained to your phone. Map it. Publish it. Let the team use it.'
 			},
 			{
 				q: 'What if we already have SOPs and docs?',
-				a: 'Use them as source material. Bring them in, clean them up, structure them, and fill the gaps so your existing docs become operations multipliers instead of wasted storage space.'
+				a: 'Good. Use them as raw material. Structure the work. Kill the gaps. Keep what earns its place.'
 			},
 			{
 				q: 'Why won’t this die like my last solution?',
-				a: 'Flags! Your doers can catch when the docs drift. People can mark what’s unclear, thin, or outdated. The point is to keep it alive in the flow of work, not wait for an annual cleanup project.'
+				a: 'Because drift gets flagged in the work. No annual cleanup ritual. No guilt project. Keep it alive or cut it.'
 			}
 		]
 	} satisfies {
@@ -277,10 +275,10 @@ export const site = {
 	// FINAL CTA
 	// ───────────────────────────────────────────
 	finalCta: {
-		headline: 'Start with one process.',
-		text: 'Pick the process that keeps pulling you back in. Map it, hand it off, and see what changes.',
+		headline: 'Start with the chain.',
+		text: 'Pick the process that keeps pulling you back. Map it. Hand it off. Take back ground.',
 		cta: {
-			label: 'Start your atlas for free',
+			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=final_cta`
 		}
 	} satisfies {

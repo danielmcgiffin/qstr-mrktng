@@ -3,11 +3,10 @@
 
 	const seo = {
 		title: 'Contact - Quaestor Partners',
-		description:
-			'Talk with Quaestor about partner fit, client deployment support, or direct team rollout.',
-		ogTitle: "Let's talk partner fit.",
+		description: 'Talk with Quaestor about partner fit, client rollout, or direct team deployment.',
+		ogTitle: "Let's test fit.",
 		ogDescription:
-			'For ops partners, fractionals, and direct operator teams ready to map the first bottleneck workflow.'
+			'For ops partners, fractionals, and operator teams ready to map the first bottleneck.'
 	};
 </script>
 
@@ -33,11 +32,11 @@
 						Contact
 					</span>
 					<h1 class="mt-5 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
-						Let's talk partner fit
+						Let's test fit.
 					</h1>
 					<p class="mt-4 text-pretty text-[rgb(var(--muted))] md:text-lg">
-						Partner-first is our default motion. If you deploy ops systems for clients, we'll map
-						fit and next steps. Direct operator teams can also start here.
+						Partner-first is the default. If you deploy ops systems, we map fit and next steps.
+						Direct teams can start here too.
 					</p>
 				</div>
 
@@ -45,8 +44,7 @@
 					<div class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6">
 						<h2 class="text-base font-semibold">Partners and fractionals</h2>
 						<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--muted))]">
-							If you deploy ops systems across client engagements, let's align on fit, motion, and
-							your first rollout.
+							Bring the client bottleneck. We will map fit, motion, and the first rollout.
 						</p>
 						<a
 							class="btn btn-primary mt-6"
@@ -72,8 +70,7 @@
 					<div class="rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--bg-elev))] p-6">
 						<h2 class="text-base font-semibold">Direct teams</h2>
 						<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--muted))]">
-							If you're an operator team working without a partner, we can still walk your first
-							bottleneck workflow and scope rollout support.
+							No partner? Bring the workflow that keeps breaking. We will scope the next move.
 						</p>
 						<a
 							class="btn btn-secondary mt-6"

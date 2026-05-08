@@ -227,16 +227,16 @@ const renderPartnersMarkdown = (): string =>
 
 const renderContactMarkdown = (): string => `# Contact Quaestor
 
-Talk with Quaestor about partner fit, client deployment support, or direct team rollout.
+Talk with Quaestor about partner fit, client rollout, or direct team deployment.
 
 ## Partners and fractionals
-If you deploy ops systems across client engagements, Quaestor will align on fit, motion, and your first rollout.
+Bring the client bottleneck. We will map fit, motion, and the first rollout.
 
 - [View partner details](${absoluteUrl('/partners')})
 - [Book directly](https://cal.com/danny-cursus/15min)
 
 ## Direct teams
-If you are an operator team working without a partner, Quaestor can still help you walk the first bottleneck workflow and scope rollout support.
+No partner? Bring the workflow that keeps breaking. We will scope the next move.
 
 - [Book a 15-min call](https://cal.com/danny-cursus/15min)`;
 
@@ -269,15 +269,13 @@ export const getMarkdownForPath = (pathname: string): string | null => {
 
 	if (normalizedPath === '/') {
 		return renderHomeMarkdown(universalHomeSite, {
-			title: 'Quaestor — It doesn’t have to be this hard.',
-			description:
-				'Quaestor is an operational atlas that makes small businesses work, so the business stops routing every question back through you.',
-			primaryAudience:
-				'Founders, operators, and owners who know the value of process but are tired of carrying the business in their heads',
+			title: "Quaestor - It doesn't have to be this hard.",
+			description: 'Quaestor maps the business, so every answer stops routing through you.',
+			primaryAudience: 'Founders and operators carrying the business in their heads',
 			primaryCtaLabel: 'Start free',
 			primaryCtaHref:
 				'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=hero',
-			secondaryCtaLabel: 'Explore the demo',
+			secondaryCtaLabel: 'See the map',
 			secondaryCtaHref: 'https://qstr.cursus.tools/demo/process'
 		});
 	}
