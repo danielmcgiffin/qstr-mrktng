@@ -18,10 +18,9 @@ export const site = {
 	seo: {
 		title: 'Quaestor - Partner-first operational atlas',
 		description:
-			'Quaestor gives ops partners a living operational atlas their clients can keep using after the engagement ends.',
+			'Quaestor gives ops partners a living atlas their clients keep using after handoff.',
 		ogTitle: 'Turn client handoffs into a living operational atlas.',
-		ogDescription:
-			'Map the work, hand over something navigable, and keep client operations from drifting back into static docs.',
+		ogDescription: 'Map the work. Hand over something alive. Stop the drift back to static docs.',
 		imageAlt: 'Quaestor operational atlas interface preview for partners.'
 	} satisfies SeoContent,
 
@@ -70,7 +69,7 @@ export const site = {
 			'40-slide deck'
 		],
 		subhead:
-			'You mapped the work, wrote the SOPs, and trained the team. Then the engagement ended, and no one looked at them anymore. Quaestor turns that work into a living operational atlas your client can keep using.',
+			'You mapped the work. Then the engagement ended. The docs died. Quaestor keeps the work alive.',
 		primaryCta: {
 			label: 'Book a partner call',
 			href: bookingHref
@@ -100,16 +99,14 @@ export const site = {
 	forYou: {
 		eyebrow: 'The delivery gap',
 		headline: 'Great engagement. Dead deliverable.',
-		intro:
-			'Strong delivery. Clean handoff. Six months later the founder is back to being his team’s help desk again and your work is sitting in a folder nobody trusts.',
+		intro: 'Strong delivery. Clean handoff. Six months later, the founder is the help desk again.',
 		bullets: [
-			'You map the work, train the team, and leave a clean handoff.',
-			'Updates stop as soon as the engagement ends.',
-			'Ownership gets fuzzy and questions route back through leadership again.',
-			'By next quarter the playbook is forgotten and the same fires are back.'
+			'You map the work and train the team.',
+			'Then updates stop.',
+			'Ownership blurs.',
+			'The old fires come back.'
 		],
-		punchline:
-			'The problem isn’t your method. It’s a design failure of docs & wikis. They were never meant for modern operations.'
+		punchline: 'Your method is not the problem. Static docs are.'
 	} satisfies {
 		eyebrow: string;
 		headline: string;
@@ -125,19 +122,19 @@ export const site = {
 		eyebrow: 'Why it dies after handoff',
 		headline: 'Static docs can’t carry live operations.',
 		subhead:
-			'Document libraries are snapshots. Your client operations need living relationships between people, steps, systems, and standards so the work stays usable after you roll off.',
+			'Document libraries are snapshots. Operations need live links between people, steps, systems, and standards.',
 		points: [
 			{
 				title: 'Ownership blurs in prose',
-				desc: 'If accountability is trapped inside paragraphs, handoffs get fuzzy fast.'
+				desc: 'Accountability buried in paragraphs does not survive handoff.'
 			},
 			{
 				title: 'Change never propagates',
-				desc: 'One role or system changes and the static deliverable starts drifting immediately.'
+				desc: 'One role changes. One system changes. The static deliverable starts lying.'
 			},
 			{
-				title: 'Retrieval is still a scavenger hunt',
-				desc: 'If the team has to interpret folders and pages, the founder becomes the help desk again.'
+				title: 'Retrieval stays broken',
+				desc: 'If the team has to hunt, the founder becomes the help desk.'
 			}
 		]
 	} satisfies {
@@ -152,29 +149,29 @@ export const site = {
 	// ───────────────────────────────────────────
 	howItWorks: {
 		eyebrow: 'How it works',
-		headline: 'This is how your work stays alive.',
+		headline: 'Keep the work alive.',
 		subhead:
-			'Start with the client bottleneck that keeps dragging leadership back in. Map the roles, process steps, systems, decisions, and standards. Hand over a map the client can work from instead of a folder they have to interpret.',
+			'Start with the client bottleneck. Map roles, steps, systems, decisions, and standards. Hand over a map, not a folder.',
 		steps: [
 			{
 				n: '01',
 				title: 'Scope one bottleneck',
-				desc: 'Start with the workflow that keeps routing back through the founder or operator.'
+				desc: 'Pick the workflow that keeps hitting leadership.'
 			},
 			{
 				n: '02',
 				title: 'Map the real work',
-				desc: 'Capture who does what, in which system, how decisions get made, and what right looks like.'
+				desc: 'Capture owner, system, decision, and standard.'
 			},
 			{
 				n: '03',
 				title: 'Hand off a live atlas',
-				desc: 'Give the client something they can navigate and use instead of a static deliverable.'
+				desc: 'Give the client a map they can run.'
 			},
 			{
 				n: '04',
 				title: 'Catch drift after rolloff',
-				desc: 'Flags surface stale work so your delivery does not quietly rot after the engagement ends.'
+				desc: 'Flags surface stale work before the handoff rots.'
 			}
 		]
 	} satisfies {
@@ -190,22 +187,21 @@ export const site = {
 	features: {
 		eyebrow: 'What your client gets',
 		headline: 'A map beats a folder after the engagement ends.',
-		subhead:
-			'Ownership, retrieval, and maintenance stay inside the work instead of depending on the founder remembering what you meant.',
+		subhead: 'Ownership, retrieval, and maintenance stay in the work.',
 		items: [
 			{
 				title: 'Clear ownership',
-				desc: 'Every step has a role attached to it, so accountability survives the handoff.',
+				desc: 'Every step has a role. Accountability survives.',
 				icon: 'users'
 			},
 			{
 				title: 'Cleaner handoffs',
-				desc: 'Process steps and systems stay connected, so people can move work forward without guessing.',
+				desc: 'Steps and systems stay connected. People move without guessing.',
 				icon: 'refresh-cw'
 			},
 			{
 				title: 'Ongoing maintenance',
-				desc: 'Flags catch drift before the deliverable turns into another dead artifact.',
+				desc: 'Flags catch drift before the deliverable dies.',
 				icon: 'bell-ring'
 			}
 		]
@@ -222,22 +218,21 @@ export const site = {
 	proof: {
 		eyebrow: 'Proof',
 		headline: 'You can hand this to the client.',
-		subhead:
-			'Open the atlas and click through the work. The client can see who owns what, how the process actually runs, and what is drifting before it breaks.',
+		subhead: 'Open the atlas. See ownership, process, systems, and drift.',
 		items: [
 			{
 				title: 'Role manual',
-				desc: 'A client operator can open a role and see exactly what that person owns and where the work lives.',
+				desc: 'Open a role. See what it owns and where work lives.',
 				gifSrc: '/role-details.webm'
 			},
 			{
 				title: 'Process steps',
-				desc: 'The client can see the steps, systems, decisions, and standards without digging through a folder.',
+				desc: 'See steps, systems, decisions, and standards.',
 				gifSrc: '/process-steps.webm'
 			},
 			{
 				title: 'Flags',
-				desc: 'When the work drifts, the client sees it before your deliverable quietly dies.',
+				desc: 'When work drifts, the client sees it.',
 				gifSrc: '/flags.webm'
 			}
 		]
@@ -259,23 +254,23 @@ export const site = {
 	faq: {
 		eyebrow: 'Common questions',
 		headline: '',
-		subhead: 'Short answers to the questions that come up once the model clicks.',
+		subhead: 'Direct answers.',
 		items: [
 			{
 				q: 'How is this different from Notion / Confluence / a wiki?',
-				a: 'Wikis store pages. Quaestor stores relationships: who owns each action, in which process, in which system. That structure is why your deliverables stay useful after rollout instead of drifting into dead pages.'
+				a: 'Wikis store pages. Quaestor stores relationships: owner, action, process, system. That is why the handoff lives.'
 			},
 			{
 				q: 'How quickly can I use this in a client engagement?',
-				a: 'Most partners can map one meaningful bottleneck workflow in the first implementation session and show value immediately. You expand from a working map instead of waiting for a complete documentation project.'
+				a: 'Map one bottleneck in the first session. Show value fast. Expand from the live map.'
 			},
 			{
 				q: 'What if the client already has SOPs and docs?',
-				a: 'Use them as source material. Quaestor links existing documentation to owned actions and systems so retrieval is contextual and maintenance is explicit.'
+				a: 'Use them as source material. Link the useful parts to owners, actions, and systems.'
 			},
 			{
 				q: 'What happens after I roll off?',
-				a: 'The client keeps a living atlas with named owners and staleness signals. Your implementation does not die in a static handoff folder.'
+				a: 'The client keeps a live atlas with owners and drift signals. Your work keeps working.'
 			}
 		]
 	} satisfies {
@@ -290,7 +285,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	finalCta: {
 		headline: 'Start with the processes you keep rebuilding.',
-		text: 'Bring the client bottleneck that keeps falling back to the founder. We’ll show you how to turn it into a live atlas that survives the handoff.',
+		text: 'Bring the bottleneck that keeps hitting the founder. Turn it into a live atlas. Make the handoff hold.',
 		primaryCta: {
 			label: 'Book a partner call',
 			href: bookingHref

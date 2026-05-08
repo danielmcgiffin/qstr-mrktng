@@ -36,10 +36,9 @@
 	const seo = {
 		title: 'AI Score for SOPs | Quaestor',
 		description:
-			'Paste an SOP and get AI-readiness, Human-readiness, and the handoffs likely to break.',
+			'Paste an SOP. Get AI-readiness, human-readiness, and the handoffs likely to break.',
 		ogTitle: 'Paste an SOP. Get two scores. See what breaks.',
-		ogDescription:
-			'Score a process for AI readiness and human readiness before you automate or hand it off.'
+		ogDescription: 'Score the process before you automate it or hand it off.'
 	};
 	const aiAreaItems = [
 		{ key: 'named_doer', label: 'Named owner', max: 15 },
@@ -577,8 +576,7 @@
 						Get two scores. See what breaks.
 					</h2>
 					<p class="mx-auto mt-4 max-w-2xl text-pretty text-[rgb(var(--muted))]">
-						Paste the process first. Add your email so we can send the score and follow up if the
-						file needs review.
+						Paste the process. Add your email. Get the score. Fix what breaks.
 					</p>
 				</div>
 

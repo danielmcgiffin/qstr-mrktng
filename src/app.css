@@ -624,6 +624,10 @@ select {
 	text-wrap: pretty;
 }
 
+.final-cta-actions {
+	justify-content: center;
+}
+
 .marketing-footer {
 	position: relative;
 	border-top: 1px solid rgb(var(--border));
