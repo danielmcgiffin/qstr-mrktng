@@ -3,7 +3,15 @@
 	import './layout.css';
 	import { env } from '$env/dynamic/public';
 	import { page } from '$app/stores';
-	import { trackEvent } from '$lib/analytics';
+	import { tick } from 'svelte';
+	import {
+		installInteractionTracking,
+		installPageExposureTracking,
+		normalizeAnalyticsPath,
+		trackEvent,
+		trackPageView,
+		type AnalyticsPageContext
+	} from '$lib/analytics';
 	import { site } from '$lib/site';
 	import { site as partnerSite } from '$lib/site-partners';
 
@@ -29,20 +37,28 @@
 	const plausibleDomain = env.PUBLIC_PLAUSIBLE_DOMAIN || 'cursus.tools';
 	const defaultGaMeasurementId = 'G-PMQNSJP905';
 	const gaMeasurementId = (env.PUBLIC_GA_MEASUREMENT_ID ?? defaultGaMeasurementId).trim();
-	const gaScriptSrc = gaMeasurementId
-		? `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaMeasurementId)}`
+	const validGaMeasurementId = /^G-[A-Z0-9-]+$/i.test(gaMeasurementId) ? gaMeasurementId : '';
+	const gaScriptSrc = validGaMeasurementId
+		? `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(validGaMeasurementId)}`
 		: undefined;
+	const gaBootstrapHtml = validGaMeasurementId
+		? `<script>window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${validGaMeasurementId}',{send_page_view:false});window.qstrGaConfigured='${validGaMeasurementId}';` +
+			'</' +
+			'script>'
+		: '';
 	const siteOrigin = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
 	const demoHref = 'https://qstr.cursus.tools/demo/process';
 	const bookingHref = 'https://cal.com/danny-cursus/15min';
 	const signupHref =
 		'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=header';
 
-	const normalizePath = (pathname: string): string => {
-		const stripped = pathname.replace(/^\/proxy\/\d+(?=\/|$)/, '') || '/';
-		if (stripped === '/') return stripped;
-		return stripped.replace(/\/+$/, '') || '/';
-	};
+	const normalizePath = normalizeAnalyticsPath;
+	const isPublicAnalyticsPath = (pagePath: string): boolean => !pagePath.startsWith('/admin');
+	const getAnalyticsPageContext = (url: URL): AnalyticsPageContext => ({
+		pagePath: `${normalizePath(url.pathname)}${url.search}`,
+		pageUrl: url.href,
+		pageTitle: typeof document === 'undefined' ? undefined : document.title
+	});
 
 	const isBookingLink = (href: string): boolean => href.includes('cal.com');
 
@@ -163,30 +179,41 @@
 		return () => document.body.classList.remove('paper-theme');
 	});
 
-	let googleAnalyticsInitialized = false;
+	$effect(() => {
+		if (typeof document === 'undefined') return;
+
+		return installInteractionTracking({
+			shouldTrackPath: isPublicAnalyticsPath,
+			getPageContext: () => getAnalyticsPageContext($page.url)
+		});
+	});
 
 	$effect(() => {
 		const url = $page.url;
-		if (typeof window === 'undefined' || !gaMeasurementId) return;
+		if (typeof window === 'undefined') return;
 
-		window.dataLayer = window.dataLayer ?? [];
-		window.gtag =
-			window.gtag ??
-			((...args: unknown[]) => {
-				window.dataLayer?.push(args);
+		let cancelled = false;
+		let stopExposureTracking: (() => void) | undefined;
+
+		void tick().then(() => {
+			if (cancelled) return;
+
+			const context = getAnalyticsPageContext(url);
+			if (!isPublicAnalyticsPath(context.pagePath)) return;
+
+			if (gaMeasurementId) {
+				trackPageView(gaMeasurementId, context);
+			}
+
+			stopExposureTracking = installPageExposureTracking(context, {
+				shouldTrackPath: isPublicAnalyticsPath
 			});
-
-		if (!googleAnalyticsInitialized) {
-			window.gtag('js', new Date());
-			window.gtag('config', gaMeasurementId, { send_page_view: false });
-			googleAnalyticsInitialized = true;
-		}
-
-		window.gtag('event', 'page_view', {
-			page_title: document.title,
-			page_location: url.href,
-			page_path: `${normalizePath(url.pathname)}${url.search}`
 		});
+
+		return () => {
+			cancelled = true;
+			stopExposureTracking?.();
+		};
 	});
 
 	$effect(() => {
@@ -240,7 +267,9 @@
 	<meta property="og:image" content={ogImageHref} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content={ogImageHref} />
-	{#if gaScriptSrc}
+	{#if gaBootstrapHtml && gaScriptSrc}
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html gaBootstrapHtml}
 		<script async src={gaScriptSrc}></script>
 	{/if}
 	<script

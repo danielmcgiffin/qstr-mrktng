@@ -71,8 +71,20 @@ The site uses a dynamic header that adjusts its Primary CTA based on the user's 
 
 ### Shared utilities
 
-- `src/lib/analytics.ts` — event tracking helper used by CTA interactions.
+- `src/lib/analytics.ts` — global analytics helper for GA4/Plausible/dataLayer events.
 - `static/` — image/video assets used by pages.
+
+### Analytics coverage
+
+Global layout instrumentation records public-page behavior across the marketing site:
+
+- `page_view` — every public SvelteKit route change.
+- `section_view` — first meaningful view of each section/article on a page.
+- `scroll_depth` — 25/50/75/90/100% page-depth milestones.
+- `link_click`, `button_click`, `details_toggle`, `form_submit` — broad interaction coverage.
+- Funnel-specific events such as `signup_start`, `demo_click`, `booking_click`, `partner_intake_click`, `ai_score_click`, and `pricing_plan_click` remain in place.
+
+`/admin` routes are excluded from global analytics.
 
 ## 4) Environment variables
 
