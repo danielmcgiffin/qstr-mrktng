@@ -82,6 +82,7 @@ Public runtime vars (safe for browser exposure):
 
 - `PUBLIC_SITE_ORIGIN` (optional, defaults to `https://qstr.tools`)
 - `PUBLIC_PLAUSIBLE_DOMAIN` (optional, defaults to `cursus.tools`)
+- `PUBLIC_GA_MEASUREMENT_ID` (optional GA4 measurement ID override; defaults to `G-PMQNSJP905`, set to an empty value to disable GA)
 - `PUBLIC_PARTNER_INTAKE_ENDPOINT` (optional; if empty, partner intake falls back to `mailto:`)
 - `PUBLIC_PARTNER_INTAKE_EMAIL` (optional fallback email)
 

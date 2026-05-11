@@ -27,6 +27,11 @@
 	};
 
 	const plausibleDomain = env.PUBLIC_PLAUSIBLE_DOMAIN || 'cursus.tools';
+	const defaultGaMeasurementId = 'G-PMQNSJP905';
+	const gaMeasurementId = (env.PUBLIC_GA_MEASUREMENT_ID ?? defaultGaMeasurementId).trim();
+	const gaScriptSrc = gaMeasurementId
+		? `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(gaMeasurementId)}`
+		: undefined;
 	const siteOrigin = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
 	const demoHref = 'https://qstr.cursus.tools/demo/process';
 	const bookingHref = 'https://cal.com/danny-cursus/15min';
@@ -158,6 +163,32 @@
 		return () => document.body.classList.remove('paper-theme');
 	});
 
+	let googleAnalyticsInitialized = false;
+
+	$effect(() => {
+		const url = $page.url;
+		if (typeof window === 'undefined' || !gaMeasurementId) return;
+
+		window.dataLayer = window.dataLayer ?? [];
+		window.gtag =
+			window.gtag ??
+			((...args: unknown[]) => {
+				window.dataLayer?.push(args);
+			});
+
+		if (!googleAnalyticsInitialized) {
+			window.gtag('js', new Date());
+			window.gtag('config', gaMeasurementId, { send_page_view: false });
+			googleAnalyticsInitialized = true;
+		}
+
+		window.gtag('event', 'page_view', {
+			page_title: document.title,
+			page_location: url.href,
+			page_path: `${normalizePath(url.pathname)}${url.search}`
+		});
+	});
+
 	$effect(() => {
 		if (typeof window === 'undefined') return;
 
@@ -209,6 +240,9 @@
 	<meta property="og:image" content={ogImageHref} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content={ogImageHref} />
+	{#if gaScriptSrc}
+		<script async src={gaScriptSrc}></script>
+	{/if}
 	<script
 		defer
 		data-domain={plausibleDomain}

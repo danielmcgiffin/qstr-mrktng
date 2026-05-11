@@ -7,7 +7,7 @@ declare global {
 			eventName: string,
 			options?: { props?: Record<string, AnalyticsPrimitive> }
 		) => void;
-		dataLayer?: Array<Record<string, unknown>>;
+		dataLayer?: Array<Record<string, unknown> | unknown[]>;
 		gtag?: (...args: unknown[]) => void;
 	}
 }
