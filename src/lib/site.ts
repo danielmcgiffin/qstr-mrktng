@@ -43,9 +43,9 @@ export const site = {
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
-		headline: "If the business only works when you're there, it's not a business.",
+		headline: 'Scale, sell, or step back without surrendering command.',
 		subhead:
-			'You are the bottleneck. Get the work out of your head. Put it where the team can run it.',
+			'Quaestor turns the scattered info your business runs on into a living operational atlas so your company can grow without everything running through you.',
 		primaryCta: {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`
