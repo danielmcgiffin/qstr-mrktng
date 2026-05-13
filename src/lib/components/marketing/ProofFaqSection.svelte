@@ -41,6 +41,7 @@
 
 	const isVideo = (src: string) => /\.(webm|mp4)$/i.test(src);
 	const mediaType = (src: string) => (src.endsWith('.mp4') ? 'video/mp4' : 'video/webm');
+	const modalMediaSrc = (src: string) => src.replace(/\.webm$/i, '.gif');
 </script>
 
 <section {id} class="marketing-section">
@@ -58,7 +59,7 @@
 							type="button"
 							class="proof-image-button"
 							aria-label={`Open ${item.title} animation`}
-							onclick={() => item.gifSrc && onImageOpen?.(item.gifSrc, item.title)}
+							onclick={() => item.gifSrc && onImageOpen?.(modalMediaSrc(item.gifSrc), item.title)}
 						>
 							{#if isVideo(item.gifSrc)}
 								<video autoplay loop muted playsinline preload="metadata" width="800" height="393">
