@@ -13,7 +13,7 @@
 
 	const isVideo = $derived(Boolean(src && /\.(webm|mp4)$/i.test(src)));
 	const mediaClass =
-		'mx-auto block h-auto max-h-[92vh] max-w-[calc(100vw-2rem)] rounded-2xl border border-[rgb(var(--border-strong))] object-contain shadow-[0_24px_60px_rgb(103_80_54_/_0.2)] sm:max-w-[calc(100vw-4rem)]';
+		'mx-auto block h-auto max-h-[92vh] w-[min(96vw,1120px)] rounded-2xl border border-[rgb(var(--border-strong))] object-contain shadow-[0_24px_60px_rgb(103_80_54_/_0.2)]';
 
 	const handleKeydown = (e: KeyboardEvent) => {
 		if (e.key === 'Escape' && src) {
