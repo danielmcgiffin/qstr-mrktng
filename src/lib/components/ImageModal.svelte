@@ -44,12 +44,7 @@
 				transition:scale={{ duration: 200, start: 0.95 }}
 			></video>
 		{:else}
-			<img
-				{src}
-				{alt}
-				class={mediaClass}
-				transition:scale={{ duration: 200, start: 0.95 }}
-			/>
+			<img {src} {alt} class={mediaClass} transition:scale={{ duration: 200, start: 0.95 }} />
 		{/if}
 	</button>
 {/if}
