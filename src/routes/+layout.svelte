@@ -12,8 +12,8 @@
 		trackPageView,
 		type AnalyticsPageContext
 	} from '$lib/analytics';
-	import { site } from '$lib/site';
-	import { site as partnerSite } from '$lib/site-partners';
+	import { site } from './content';
+	import { site as partnerSite } from './partners/content';
 
 	let { children } = $props();
 
@@ -79,11 +79,9 @@
 	const ogImageHref = `${siteOrigin}/demo-screenshot.png`;
 	const canonicalHref = $derived(`${siteOrigin}${currentPath}`);
 	const currentHomeHref = $derived(currentPath === '/ops' ? '/ops' : '/');
-	const headerNavItems = $derived([
-		{ label: 'Operators', href: '/ops' },
-		{ label: 'Partners', href: '/partners' },
-		...site.nav.filter((item) => !['Home', 'Partners', 'Demo'].includes(item.label))
-	]);
+	const headerNavItems = $derived(
+		site.nav.filter((item) => !['Home', 'Operators', 'Partners', 'Demo'].includes(item.label))
+	);
 	const headerCtas = $derived.by((): { primary: HeaderCta; secondary: HeaderCta } => {
 		if (currentPath === '/partners') {
 			if (partnerSite.partnerApply.live) {
@@ -257,7 +255,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
 	<link
 		rel="stylesheet"
-		href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
+		href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap"
 	/>
 	<link rel="icon" type="image/png" href={faviconHref} />
 	<link rel="canonical" href={canonicalHref} />

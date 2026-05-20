@@ -105,11 +105,11 @@ select {
 
 .marketing-section {
 	position: relative;
-	padding-block: 4rem;
+	padding-block: 3rem;
 }
 
 .marketing-section-hero {
-	padding-block: 3.5rem 5rem;
+	padding-block: 2.625rem 3.75rem;
 }
 
 .marketing-container {
@@ -316,6 +316,16 @@ select {
 	width: 100%;
 	border-radius: calc(var(--radius-lg) + 0.2rem);
 	box-shadow: 0 0 0 1px rgb(255 255 255 / 0.78);
+}
+
+.proof-demo-frame {
+	max-width: 64rem;
+	margin-top: 2.5rem;
+}
+
+.proof-demo-frame video {
+	aspect-ratio: 16 / 9;
+	object-fit: contain;
 }
 
 .card-grid {
@@ -628,62 +638,17 @@ select {
 	justify-content: center;
 }
 
-.marketing-footer {
-	position: relative;
-	border-top: 1px solid rgb(var(--border));
-	padding-block: 3rem;
-}
-
-.marketing-footer-row {
-	display: flex;
-	flex-direction: column;
-	gap: 2rem;
-}
-
-.footer-brand {
-	font-size: var(--fs-small);
-	font-weight: 600;
-}
-
-.footer-muted {
-	margin-top: 0.5rem;
-	color: rgb(var(--muted));
-	font-size: var(--fs-micro);
-}
-
-.footer-links {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 1rem;
-	color: rgb(var(--muted));
-	font-size: var(--fs-small);
-}
-
-.footer-links a {
-	display: inline-flex;
-	min-width: 2.75rem;
-	min-height: 2.75rem;
-	align-items: center;
-	justify-content: center;
-	color: inherit;
-	text-decoration: none;
-}
-
-.footer-links a:hover {
-	color: rgb(var(--surface-text-strong));
-}
-
 @media (min-width: 768px) {
 	.method-page p {
 		font-size: 1.0625rem;
 	}
 
 	.marketing-section {
-		padding-block: 6rem;
+		padding-block: 4.5rem;
 	}
 
 	.marketing-section-hero {
-		padding-block: 5rem 6rem;
+		padding-block: 3.75rem 4.5rem;
 	}
 
 	.section-copy,
@@ -725,11 +690,5 @@ select {
 
 	.final-cta {
 		padding-inline: 3rem;
-	}
-
-	.marketing-footer-row {
-		flex-direction: row;
-		align-items: center;
-		justify-content: space-between;
 	}
 }

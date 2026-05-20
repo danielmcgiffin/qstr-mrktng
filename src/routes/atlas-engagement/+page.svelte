@@ -1,15 +1,6 @@
 <script lang="ts">
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
-	import { atlasEngagementContent as content } from '$lib/atlas-engagement-content';
-	import { site } from '$lib/site';
-
-	const year = new Date().getFullYear();
-	const footerLinks = [
-		{ label: 'Home', href: '/' },
-		{ label: 'Method', href: '/method' },
-		{ label: 'Partners', href: '/partners' },
-		{ label: 'Contact', href: '/contact' }
-	] as const;
+	import { atlasEngagementContent as content } from './content';
 </script>
 
 <svelte:head>
@@ -181,13 +172,7 @@
 			</div>
 		</section>
 
-		<MarketingFooter
-			brand={site.brand}
-			tagline={site.footer.tagline}
-			copyrightName={site.footer.copyrightName}
-			{year}
-			links={footerLinks}
-		/>
+		<MarketingFooter />
 	</div>
 </div>
 

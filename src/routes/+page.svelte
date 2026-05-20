@@ -9,16 +9,7 @@
 	import ProofFaqSection from '$lib/components/marketing/ProofFaqSection.svelte';
 	import StepsSection from '$lib/components/marketing/StepsSection.svelte';
 	import { trackEvent } from '$lib/analytics';
-	import { site } from '$lib/site';
-
-	const year = new Date().getFullYear();
-	const footerLinks = [
-		{ label: 'Problem', href: '/#problem' },
-		{ label: 'Proof', href: '/#proof' },
-		{ label: 'Pricing', href: '/#pricing' },
-		{ label: 'Method', href: '/method' },
-		{ label: 'Partners', href: '/partners' }
-	] as const;
+	import { site } from './content';
 
 	let activeModalImage = $state<string | null>(null);
 	let activeModalAlt = $state('');
@@ -94,6 +85,7 @@
 			headline={site.proof.headline}
 			subhead={site.proof.subhead}
 			items={site.proof.items}
+			demoVideo={site.demo}
 			faqHeadline={site.faq.headline}
 			faqItems={site.faq.items}
 			demoCta={{ label: 'Explore the demo', href: site.hero.secondaryCta.href }}
@@ -133,13 +125,7 @@
 			]}
 		/>
 
-		<MarketingFooter
-			brand={site.brand}
-			tagline={site.footer.tagline}
-			copyrightName={site.footer.copyrightName}
-			{year}
-			links={footerLinks}
-		/>
+		<MarketingFooter />
 	</div>
 </div>
 

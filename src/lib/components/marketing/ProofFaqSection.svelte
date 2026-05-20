@@ -17,11 +17,19 @@
 		href: string;
 	};
 
+	type DemoVideo = {
+		videoSrc: string;
+		posterSrc?: string;
+		alt: string;
+		label?: string;
+	};
+
 	let {
 		id,
 		headline,
 		subhead,
 		items,
+		demoVideo,
 		faqHeadline,
 		faqItems,
 		demoCta,
@@ -32,6 +40,7 @@
 		headline: string;
 		subhead: string;
 		items: readonly DetailItem[];
+		demoVideo?: DemoVideo;
 		faqHeadline: string;
 		faqItems: readonly FaqItem[];
 		demoCta: CTA;
@@ -50,6 +59,23 @@
 			<h2 class="section-title"><BrandText text={headline} /></h2>
 			<p class="section-copy section-copy-large"><BrandText text={subhead} /></p>
 		</div>
+
+		{#if demoVideo}
+			<div class="media-frame proof-demo-frame">
+				<video
+					controls
+					muted
+					playsinline
+					preload="metadata"
+					poster={demoVideo.posterSrc}
+					aria-label={demoVideo.alt}
+					width="1600"
+					height="900"
+				>
+					<source src={demoVideo.videoSrc} type={mediaType(demoVideo.videoSrc)} />
+				</video>
+			</div>
+		{/if}
 
 		<div class="proof-grid">
 			{#each items as item}

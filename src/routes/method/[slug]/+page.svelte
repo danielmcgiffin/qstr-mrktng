@@ -1,8 +1,8 @@
 <script lang="ts">
 	import BrandText from '$lib/components/BrandText.svelte';
-	import { methodPath } from '$lib/method';
-	import type { MethodSection } from '$lib/method';
-	import type { MethodContentSection } from '$lib/method-content';
+	import { methodPath } from '../nav';
+	import type { MethodSection } from '../nav';
+	import type { MethodContentSection } from '../content';
 
 	export let data: {
 		section: MethodContentSection;
