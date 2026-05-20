@@ -1,6 +1,6 @@
 <script lang="ts">
 	import BrandText from '$lib/components/BrandText.svelte';
-	import { methodSections, methodPath } from '$lib/method';
+	import { methodSections, methodPath } from './nav';
 
 	const seo = {
 		title: 'Method - Quaestor',

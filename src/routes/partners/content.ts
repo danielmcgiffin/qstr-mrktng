@@ -1,4 +1,4 @@
-import { pricingContent } from './pricing-content';
+import { pricingContent } from '../pricing-content';
 import type {
 	CTA,
 	DetailItem,
@@ -7,7 +7,7 @@ import type {
 	NavItem,
 	SeoContent,
 	StepItem
-} from './marketing-content';
+} from '$lib/marketing-content';
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const bookingHref = 'https://cal.com/danny-cursus/15min';
@@ -26,8 +26,9 @@ export const site = {
 
 	nav: [
 		{ label: 'Home', href: '/' },
-		{ label: 'Partners', href: '/partners' },
-		{ label: 'Method', href: '/method' },
+		{ label: 'About', href: '/about' },
+		{ label: 'Why', href: '/method' },
+		{ label: 'Docs', href: '/docs' },
 		{ label: 'Demo', href: demoHref },
 		{ label: 'Blog', href: 'https://blog.cursus.tools' },
 		{ label: 'Contact', href: '/contact' }
@@ -88,9 +89,11 @@ export const site = {
 	// DEMO
 	// ───────────────────────────────────────────
 	demo: {
+		videoSrc: '/qstr-demo.webm',
 		gifSrc: '/demo-screenshot.png',
 		posterSrc: '/demo-screenshot.png',
-		alt: 'Quaestor showing a connected operational atlas with roles, processes, and systems.'
+		alt: 'Quaestor showing a connected operational atlas with roles, processes, and systems.',
+		label: 'Quaestor product demo video'
 	},
 
 	// ───────────────────────────────────────────

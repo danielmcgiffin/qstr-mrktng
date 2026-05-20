@@ -40,12 +40,16 @@ npm run lint
 
 ### High-signal content files
 
-- `src/lib/site.ts` — marketing copy for the default homepage (`/`).
-- `src/lib/site-ops.ts` — marketing copy for the **Operators** homepage (`/ops`).
-- `src/lib/site-partners.ts` — marketing copy for the **Partners** page (`/partners`).
-- `src/lib/pricing-content.ts` — shared pricing copy used by the marketing pages.
-- `src/lib/method-content.ts` — long-form method chapter content.
-- `src/lib/method.ts` — method index and slug helpers.
+- `src/routes/content.ts` — marketing copy for the default homepage (`/`).
+- `src/routes/ops/content.ts` — marketing copy for the **Operators** homepage (`/ops`).
+- `src/routes/partners/content.ts` — marketing copy for the **Partners** page (`/partners`).
+- `src/routes/about/content.ts` — founder cards and about page copy.
+- `src/routes/docs/content.ts` — docs index copy.
+- `src/routes/changelog/content.ts` — changelog skeleton copy.
+- `src/routes/pricing-content.ts` — shared pricing copy used by the marketing pages.
+- `src/routes/method/content.ts` — long-form method chapter content.
+- `src/routes/method/nav.ts` — method index and slug helpers.
+- `src/routes/security/content.ts` — security and data handling page copy.
 - `src/lib/components/marketing/` — shared section components used by the marketing pages.
 
 ### Routes
@@ -56,6 +60,10 @@ npm run lint
 - `src/routes/method/+page.svelte` — method landing page.
 - `src/routes/method/[slug]/+page.svelte` + `+page.ts` — chapter pages.
 - `src/routes/partners/+page.svelte` — **Partners** page.
+- `src/routes/about/+page.svelte` — founder/about page.
+- `src/routes/docs/+page.svelte` — docs skeleton.
+- `src/routes/changelog/+page.svelte` — release notes placeholder.
+- `src/routes/security/+page.svelte` — security and data handling page.
 - `src/routes/contact/+page.svelte` — contact page.
 - `src/routes/ai-score/submit/+server.ts` — backend for AI Score (JSON + Base64 attachment).
 - `src/routes/grade/+server.ts` — Anthropic/Supabase grading endpoint (`POST /grade`, `PATCH /grade`).
@@ -66,8 +74,8 @@ npm run lint
 The site uses a dynamic header that adjusts its Primary CTA based on the user's current context:
 
 - **Operators view (`/ops`)**: Primary CTA is "Get my AI-readiness score" (`/ai-score`).
-- **Partners view (`/partners`)**: Primary CTA is the partner call/apply path from `src/lib/site-partners.ts`.
-- **Default**: Primary CTA is the signup path from `src/lib/site.ts`.
+- **Partners view (`/partners`)**: Primary CTA is the partner call/apply path from `src/routes/partners/content.ts`.
+- **Default**: Primary CTA is the signup path from `src/routes/content.ts`.
 
 ### Shared utilities
 

@@ -1,11 +1,25 @@
 import { env } from '$env/dynamic/public';
-import { methodContent } from '$lib/method-content';
+import { docsArticles } from '../docs/articles';
+import { methodContent } from '../method/content';
 
 export const prerender = true;
 
 export async function GET() {
 	const domain = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
-	const pages = ['', '/ops', '/partners', '/method', '/atlas-engagement', '/contact', '/ai-score'];
+	const pages = [
+		'',
+		'/ops',
+		'/partners',
+		'/about',
+		'/docs',
+		'/changelog',
+		'/method',
+		'/atlas-engagement',
+		'/legal',
+		'/security',
+		'/contact',
+		'/ai-score'
+	];
 
 	const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -20,6 +34,13 @@ ${methodContent
 	.map(
 		(m) => `  <url>
     <loc>${domain}/method/${m.slug}</loc>
+  </url>`
+	)
+	.join('\n')}
+${docsArticles
+	.map(
+		(article) => `  <url>
+    <loc>${domain}/docs/${article.slug}</loc>
   </url>`
 	)
 	.join('\n')}

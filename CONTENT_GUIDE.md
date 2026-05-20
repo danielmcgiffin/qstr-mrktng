@@ -4,11 +4,15 @@ Most small marketing edits should be data edits, not Svelte layout edits.
 
 ## Common Edits
 
-- Homepage copy: edit `src/lib/site.ts`.
-- Operators page copy: edit `src/lib/site-ops.ts`.
-- Partners page copy and partner CTA behavior: edit `src/lib/site-partners.ts`.
-- Pricing: edit `src/lib/pricing-content.ts`.
-- Method chapters: edit `src/lib/method-content.ts`.
+- Homepage copy: edit `src/routes/content.ts`.
+- Operators page copy: edit `src/routes/ops/content.ts`.
+- Partners page copy and partner CTA behavior: edit `src/routes/partners/content.ts`.
+- About page founder cards/copy: edit `src/routes/about/content.ts`.
+- Docs skeleton copy: edit `src/routes/docs/content.ts`.
+- Changelog skeleton copy: edit `src/routes/changelog/content.ts`.
+- Pricing: edit `src/routes/pricing-content.ts`.
+- Method chapters: edit `src/routes/method/content.ts`.
+- Security page copy: edit `src/routes/security/content.ts`.
 - Contact page copy: edit `src/routes/contact/+page.svelte`.
 - Global header CTA rules: edit `src/routes/+layout.svelte`.
 - Canonical/OG site origin: set `PUBLIC_SITE_ORIGIN`.

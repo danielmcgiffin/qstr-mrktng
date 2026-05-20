@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
-import { methodContent } from '$lib/method-content';
-import { methodSections } from '$lib/method';
+import { methodContent } from '../content';
+import { methodSections } from '../nav';
 
 export const prerender = true;
 

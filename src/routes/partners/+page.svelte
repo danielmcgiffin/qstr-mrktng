@@ -9,7 +9,7 @@
 	import ProofFaqSection from '$lib/components/marketing/ProofFaqSection.svelte';
 	import StepsSection from '$lib/components/marketing/StepsSection.svelte';
 	import { trackEvent } from '$lib/analytics';
-	import { site } from '$lib/site-partners';
+	import { site } from './content';
 
 	type FinalCta = {
 		label: string;
@@ -19,15 +19,6 @@
 		onclick?: () => void;
 		showArrow?: boolean;
 	};
-
-	const year = new Date().getFullYear();
-	const footerLinks = [
-		{ label: 'Problem', href: '#problem' },
-		{ label: 'Proof', href: '#proof' },
-		{ label: 'Pricing', href: '#pricing' },
-		{ label: 'Method', href: '/method' },
-		{ label: 'Operators', href: '/ops' }
-	] as const;
 
 	let activeModalImage = $state<string | null>(null);
 	let activeModalAlt = $state('');
@@ -136,6 +127,7 @@
 			headline={site.proof.headline}
 			subhead={site.proof.subhead}
 			items={site.proof.items}
+			demoVideo={site.demo}
 			faqHeadline={site.faq.headline}
 			faqItems={site.faq.items}
 			demoCta={{ label: 'See the demo', href: site.hero.secondaryCta.href }}
@@ -158,13 +150,7 @@
 
 		<FinalCtaSection headline={site.finalCta.headline} text={site.finalCta.text} ctas={finalCtas} />
 
-		<MarketingFooter
-			brand={site.brand}
-			tagline={site.footer.tagline}
-			copyrightName={site.footer.copyrightName}
-			{year}
-			links={footerLinks}
-		/>
+		<MarketingFooter />
 	</div>
 </div>
 

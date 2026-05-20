@@ -4,7 +4,7 @@ export type MethodSection = {
 	summary: string;
 };
 
-import { methodContent } from '$lib/method-content';
+import { methodContent } from './content';
 
 export const methodSections: MethodSection[] = methodContent.map((section) => ({
 	slug: section.slug,

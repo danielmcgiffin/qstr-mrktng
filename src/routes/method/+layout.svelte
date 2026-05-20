@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { methodSections, methodPath } from '$lib/method';
+	import { methodSections, methodPath } from './nav';
 	import { page } from '$app/stores';
 
 	let { children } = $props();

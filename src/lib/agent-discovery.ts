@@ -1,9 +1,15 @@
 import { env } from '$env/dynamic/public';
-import { methodContent } from './method-content';
-import { methodPath } from './method';
-import { site as universalHomeSite } from './site';
-import { site as opsHomeSite } from './site-ops';
-import { site as partnersHomeSite } from './site-partners';
+import { site as universalHomeSite } from '../routes/content';
+import { aboutContent } from '../routes/about/content';
+import { changelogContent } from '../routes/changelog/content';
+import { docsArticles } from '../routes/docs/articles';
+import { docsContent } from '../routes/docs/content';
+import { legalContent } from '../routes/legal/content';
+import { methodContent } from '../routes/method/content';
+import { methodPath } from '../routes/method/nav';
+import { site as opsHomeSite } from '../routes/ops/content';
+import { site as partnersHomeSite } from '../routes/partners/content';
+import { securityContent } from '../routes/security/content';
 
 export const SITE_ORIGIN = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
 
@@ -160,8 +166,12 @@ ${renderFaqMarkdown(site.faq.items)}
 
 ## Links
 - [Partners](${absoluteUrl('/partners')})
+- [About](${absoluteUrl('/about')})
+- [Docs](${absoluteUrl('/docs')})
 - [Method](${absoluteUrl('/method')})
 - [AI Score](${absoluteUrl('/ai-score')})
+- [Legal](${absoluteUrl('/legal')})
+- [Security](${absoluteUrl('/security')})
 - [Contact](${absoluteUrl('/contact')})
 - [Demo](https://qstr.cursus.tools/demo/process)`;
 
@@ -240,6 +250,83 @@ No partner? Bring the workflow that keeps breaking. We will scope the next move.
 
 - [Book a 15-min call](https://cal.com/danny-cursus/15min)`;
 
+const renderAboutMarkdown = (): string => `# ${aboutContent.seo.ogTitle}
+
+${aboutContent.foundersIntro}
+
+${aboutContent.founders
+	.map(
+		(founder) => `## ${founder.name}
+${founder.role}
+
+${founder.bio.join('\n\n')}${founder.focus?.length ? `\n\nFocus: ${founder.focus.join(', ')}` : ''}`
+	)
+	.join('\n\n')}
+
+## Links
+- [Contact](${absoluteUrl('/contact')})
+- [Security](${absoluteUrl('/security')})
+- [Method](${absoluteUrl('/method')})`;
+
+const renderDocsMarkdown = (): string => `# ${docsContent.seo.ogTitle}
+
+${docsContent.intro}
+
+${docsContent.sections
+	.map(
+		(section) =>
+			`## ${section.title}\n${section.topics
+				.map((topic) =>
+					topic.href ? `- [${topic.label}](${absoluteUrl(topic.href)})` : `- ${topic.label}`
+				)
+				.join('\n')}`
+	)
+	.join('\n\n')}
+
+## Articles
+${docsArticles
+	.map(
+		(article) =>
+			`### ${article.title}\n${article.description}\n\n${article.blocks
+				.map((block) => `#### ${block.title}\n${block.body.join('\n\n')}`)
+				.join('\n\n')}\n\n[Open article](${absoluteUrl(`/docs/${article.slug}`)})`
+	)
+	.join('\n\n')}`;
+
+const renderChangelogMarkdown = (): string => `# ${changelogContent.title}
+
+${changelogContent.intro}
+
+## Links
+- [Docs](${absoluteUrl('/docs')})
+- [Contact](${absoluteUrl('/contact')})`;
+
+const renderLegalMarkdown = (): string => `# ${legalContent.seo.ogTitle}
+
+${legalContent.intro}
+
+Entity: ${legalContent.entityName}
+Support: ${legalContent.supportEmail}
+
+${legalContent.sections
+	.map((section) => {
+		const paragraphs = section.paragraphs.join('\n\n');
+		const items = section.items?.length
+			? `\n\n${section.items.map((item) => `- ${item}`).join('\n')}`
+			: '';
+		const links = section.links?.length
+			? `\n\n${section.links.map((link) => `- [${link.label}](${absoluteUrl(link.href)})`).join('\n')}`
+			: '';
+
+		return `## ${section.title}\n\n${paragraphs}${items}${links}`;
+	})
+	.join('\n\n')}
+
+## Links
+- [Security](${absoluteUrl('/security')})
+- [Contact](${absoluteUrl('/contact')})
+- [Docs](${absoluteUrl('/docs')})`;
+
 const renderAiScoreMarkdown = (): string => `# AI Score
 
 Paste an SOP, flow, or process doc and get AI-readiness, Human-readiness, and the handoffs likely to break.
@@ -261,6 +348,31 @@ Paste an SOP, flow, or process doc and get AI-readiness, Human-readiness, and th
 - Files that cannot score inline route to review for follow-up
 
 ## Links
+- [Contact](${absoluteUrl('/contact')})
+- [Security](${absoluteUrl('/security')})
+- [Method](${absoluteUrl('/method')})`;
+
+const renderSecurityMarkdown = (): string => `# ${securityContent.title}
+
+${securityContent.opening}
+
+Last updated: ${securityContent.lastUpdated}
+
+${securityContent.verificationNote}
+
+${securityContent.sections
+	.map((section) => `## ${section.title}\n\n${section.paragraphs.join('\n\n')}`)
+	.join('\n\n')}
+
+## ${securityContent.subprocessors.title}
+${securityContent.subprocessors.intro}
+
+${securityContent.subprocessors.items
+	.map((provider) => `- **${provider.name}:** ${provider.purpose}`)
+	.join('\n')}
+
+## Links
+- [About](${absoluteUrl('/about')})
 - [Contact](${absoluteUrl('/contact')})
 - [Method](${absoluteUrl('/method')})`;
 
@@ -295,8 +407,13 @@ export const getMarkdownForPath = (pathname: string): string | null => {
 	}
 
 	if (normalizedPath === '/partners') return renderPartnersMarkdown();
+	if (normalizedPath === '/about') return renderAboutMarkdown();
+	if (normalizedPath === '/docs') return renderDocsMarkdown();
+	if (normalizedPath === '/changelog') return renderChangelogMarkdown();
+	if (normalizedPath === '/legal') return renderLegalMarkdown();
 	if (normalizedPath === '/contact') return renderContactMarkdown();
 	if (normalizedPath === '/ai-score') return renderAiScoreMarkdown();
+	if (normalizedPath === '/security') return renderSecurityMarkdown();
 	if (normalizedPath === '/method') return renderMethodIndexMarkdown();
 
 	if (normalizedPath.startsWith('/method/')) {

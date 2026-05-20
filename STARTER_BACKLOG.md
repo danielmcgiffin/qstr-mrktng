@@ -20,10 +20,10 @@ Small, high-confidence tasks for next Claude Code PRs.
 ### Task 2: Add social proof/testimonial block to homepage
 
 - **Goal:** increase trust signals above pricing.
-- **Likely files:** `src/lib/site.ts`, `src/routes/+page.svelte`.
+- **Likely files:** `src/routes/content.ts`, `src/routes/+page.svelte`.
 - **Acceptance criteria:**
   - New section renders cleanly on mobile and desktop.
-  - Content is configured from data in `site.ts`.
+  - Content is configured from data in `src/routes/content.ts`.
 
 ## P2 — Operational safety
 

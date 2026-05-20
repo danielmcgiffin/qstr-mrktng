@@ -7,7 +7,7 @@ import type {
 	NavItem,
 	SeoContent,
 	StepItem
-} from './marketing-content';
+} from '$lib/marketing-content';
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const signupBaseHref =
@@ -27,8 +27,9 @@ export const site = {
 
 	nav: [
 		{ label: 'Home', href: '/' },
-		{ label: 'Partners', href: '/partners' },
-		{ label: 'Method', href: '/method' },
+		{ label: 'About', href: '/about' },
+		{ label: 'Why', href: '/method' },
+		{ label: 'Docs', href: '/docs' },
 		{ label: 'Demo', href: demoHref },
 		{ label: 'Blog', href: 'https://blog.cursus.tools' },
 		{ label: 'Contact', href: '/contact' }
@@ -45,7 +46,7 @@ export const site = {
 	hero: {
 		headline: 'Scale, sell, or step back without surrendering command.',
 		subhead:
-			'Quaestor turns the scattered info your business runs on into a living operational atlas so your company can grow without everything running through you.',
+			'Quaestor is software for mapping how your business actually runs: roles, processes, systems, handoffs, and decisions, all connected in one searchable operating map. So your company can grow without everything running through you.',
 		primaryCta: {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`
@@ -62,9 +63,11 @@ export const site = {
 	// DEMO
 	// ───────────────────────────────────────────
 	demo: {
+		videoSrc: '/qstr-demo.webm',
 		gifSrc: '/demo-screenshot.png',
 		posterSrc: '/demo-screenshot.png',
-		alt: 'Quaestor showing a connected operational atlas with roles, processes, and systems.'
+		alt: 'Quaestor showing a connected operational atlas with roles, processes, and systems.',
+		label: 'Quaestor product demo video'
 	},
 
 	// ───────────────────────────────────────────
@@ -292,6 +295,23 @@ export const site = {
 	// ───────────────────────────────────────────
 	footer: {
 		tagline: 'Handle Your Business.',
-		copyrightName: 'Quaestor'
+		copyrightName: 'Quaestor',
+		entityName: 'Cursus Tools, LLC',
+		supportEmail: 'support@cursus.tools',
+		linkedinHref: 'https://www.linkedin.com/company/cursus-tools',
+		legalLinks: [
+			{ label: 'Privacy', href: '/legal#privacy' },
+			{ label: 'Terms', href: '/legal#terms' },
+			{ label: 'DPA', href: '/legal#dpa' },
+			{ label: 'Subprocessors', href: '/legal#subprocessors' }
+		],
+		productLinks: [
+			{ label: 'Problem', href: '/#problem' },
+			{ label: 'Proof', href: '/#proof' },
+			{ label: 'Pricing', href: '/#pricing' },
+			{ label: 'Why', href: '/method' },
+			{ label: 'Partners', href: '/partners' },
+			{ label: 'About', href: '/about' }
+		]
 	} as const
 } as const;
