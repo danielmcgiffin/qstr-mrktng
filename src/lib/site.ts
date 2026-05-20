@@ -45,7 +45,7 @@ export const site = {
 	hero: {
 		headline: 'Scale, sell, or step back without surrendering command.',
 		subhead:
-			'Quaestor turns the scattered info your business runs on into a living operational atlas so your company can grow without everything running through you.',
+			'Quaestor is software for mapping how your business actually runs: roles, processes, systems, handoffs, and decisions, all connected in one searchable operating map. So your company can grow without everything running through you.',
 		primaryCta: {
 			label: 'Start free',
 			href: `${signupBaseHref}&utm_content=hero`
