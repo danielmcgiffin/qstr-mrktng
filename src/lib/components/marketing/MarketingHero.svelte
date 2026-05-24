@@ -15,6 +15,8 @@
 		subhead,
 		primaryCta,
 		secondaryCta,
+		imageSrc,
+		imageAlt = '',
 		primaryExternal = false,
 		secondaryExternal = false,
 		onPrimaryClick,
@@ -26,6 +28,8 @@
 		subhead: string;
 		primaryCta: CTA;
 		secondaryCta: CTA;
+		imageSrc?: string;
+		imageAlt?: string;
 		primaryExternal?: boolean;
 		secondaryExternal?: boolean;
 		onPrimaryClick?: () => void;
@@ -77,8 +81,14 @@
 				</a>
 			</div>
 		</div>
-		<div class="hero-visual">
-			<AtlasHeroVisual />
+		<div class="hero-visual" class:hero-visual-framed={Boolean(imageSrc)}>
+			{#if imageSrc}
+				<div class="hero-image-shell">
+					<img class="hero-image" src={imageSrc} alt={imageAlt} loading="eager" decoding="async" />
+				</div>
+			{:else}
+				<AtlasHeroVisual />
+			{/if}
 		</div>
 	</div>
 </section>
@@ -91,9 +101,43 @@
 		align-items: center;
 	}
 
+	.hero-visual {
+		min-width: 0;
+	}
+
+	.hero-visual-framed {
+		justify-self: stretch;
+	}
+
+	.hero-image-shell {
+		position: relative;
+		width: min(100%, 34rem);
+		margin-inline: auto;
+		padding: clamp(0.625rem, 1.2vw, 0.95rem);
+		border: 2px solid rgb(var(--accent));
+		border-radius: calc(var(--radius-lg) + 0.75rem);
+		background: rgb(var(--bg-panel));
+		box-shadow:
+			0 18px 36px rgb(var(--accent) / 0.12),
+			inset 0 1px 0 rgb(255 255 255 / 0.65);
+	}
+
+	.hero-image {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-lg);
+		box-shadow: 0 0 0 1px rgb(var(--border) / 0.55);
+	}
+
 	@media (max-width: 768px) {
 		.hero-grid {
 			grid-template-columns: 1fr;
+			gap: 2.5rem;
+		}
+
+		.hero-image-shell {
+			width: min(100%, 28rem);
 		}
 	}
 </style>

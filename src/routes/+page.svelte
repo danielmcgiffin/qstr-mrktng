@@ -1,18 +1,21 @@
 <script lang="ts">
-	import ImageModal from '$lib/components/ImageModal.svelte';
-	import BulletSection from '$lib/components/marketing/BulletSection.svelte';
 	import CardGridSection from '$lib/components/marketing/CardGridSection.svelte';
 	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
 	import PricingSection from '$lib/components/marketing/PricingSection.svelte';
-	import ProofFaqSection from '$lib/components/marketing/ProofFaqSection.svelte';
-	import StepsSection from '$lib/components/marketing/StepsSection.svelte';
+	import SocialProofSection from '$lib/components/marketing/SocialProofSection.svelte';
 	import { trackEvent } from '$lib/analytics';
 	import { site } from './content';
 
-	let activeModalImage = $state<string | null>(null);
-	let activeModalAlt = $state('');
+	const footerLinks = [
+		{ label: 'What sets us apart', href: '/#problem' },
+		{ label: 'Reactions', href: '/#reactions' },
+		{ label: 'Pricing', href: '/#pricing' },
+		{ label: 'Why', href: '/method' },
+		{ label: 'Docs', href: '/docs' },
+		{ label: 'About', href: '/about' }
+	] as const;
 
 	const trackHeroPrimaryCta = () => {
 		const href = site.hero.primaryCta.href;
@@ -61,46 +64,24 @@
 			subhead={site.hero.subhead}
 			primaryCta={site.hero.primaryCta}
 			secondaryCta={site.hero.secondaryCta}
+			imageSrc={site.hero.imageSrc}
+			imageAlt={site.hero.imageAlt}
 			onPrimaryClick={trackHeroPrimaryCta}
 			onSecondaryClick={() => trackDemoClick('home_hero_secondary')}
 		/>
 
-		<BulletSection
-			id="problem"
-			headline={site.forYou.headline}
-			intro={site.forYou.intro}
-			bullets={site.forYou.bullets}
-			punchline={site.forYou.punchline}
-		/>
-
-		<StepsSection
-			id="workflow"
-			headline={site.howItWorks.headline}
-			subhead={site.howItWorks.subhead}
-			steps={site.howItWorks.steps}
-		/>
-
-		<ProofFaqSection
-			id="proof"
-			headline={site.proof.headline}
-			subhead={site.proof.subhead}
-			items={site.proof.items}
-			demoVideo={site.demo}
-			faqHeadline={site.faq.headline}
-			faqItems={site.faq.items}
-			demoCta={{ label: 'Explore the demo', href: site.hero.secondaryCta.href }}
-			onDemoClick={() => trackDemoClick('home_proof_demo')}
-			onImageOpen={(src, alt) => {
-				activeModalImage = src;
-				activeModalAlt = alt;
-			}}
-		/>
-
 		<CardGridSection
-			id="trust"
-			headline={site.trust.headline}
-			subhead={site.trust.subhead}
-			items={site.trust.items}
+			id="problem"
+			headline={site.setsApart.headline}
+			subhead={site.setsApart.subhead}
+			items={site.setsApart.items}
+			layout="stack"
+		/>
+
+		<SocialProofSection
+			id="reactions"
+			headline={site.socialProof.headline}
+			items={site.socialProof.items}
 		/>
 
 		<PricingSection
@@ -111,6 +92,13 @@
 			freeLink={site.pricing.freeLink}
 			onPlanClick={trackPricingPlanClick}
 			onFreeLinkClick={() => trackSignupStart('home_pricing_free_link')}
+		/>
+
+		<CardGridSection
+			id="trust"
+			headline={site.trust.headline}
+			subhead={site.trust.subhead}
+			items={site.trust.items}
 		/>
 
 		<FinalCtaSection
@@ -125,8 +113,6 @@
 			]}
 		/>
 
-		<MarketingFooter />
+		<MarketingFooter links={footerLinks} />
 	</div>
 </div>
-
-<ImageModal src={activeModalImage} alt={activeModalAlt} onClose={() => (activeModalImage = null)} />

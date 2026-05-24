@@ -14,6 +14,8 @@
 		perks: readonly string[];
 		cta: PricingCta;
 		featured: boolean;
+		badge?: string;
+		note?: string;
 	};
 
 	let {
@@ -35,9 +37,9 @@
 	} = $props();
 </script>
 
-<section {id} class="marketing-section">
+<section {id} class="marketing-section pricing-section">
 	<div class="marketing-container">
-		<div class="section-header">
+		<div class="section-header pricing-header">
 			<h2 class="section-title"><BrandText text={headline} /></h2>
 			<p class="section-copy section-copy-large"><BrandText text={subhead} /></p>
 		</div>
@@ -45,11 +47,21 @@
 		<div class="pricing-grid">
 			{#each plans as plan}
 				<div class={'pricing-card ' + (plan.featured ? 'pricing-card-featured' : '')}>
-					<div class="pricing-card-header">
-						<h3 class="pricing-name"><BrandText text={plan.name} /></h3>
-						<div class="pricing-period">{plan.period}</div>
+					{#if plan.badge}
+						<div class="pricing-badge" class:pricing-badge-featured={plan.featured}>
+							{#if plan.featured}
+								<span aria-hidden="true">&diams;</span>
+							{/if}
+							<BrandText text={plan.badge} />
+						</div>
+					{/if}
+
+					<h3 class="pricing-name"><BrandText text={plan.name} /></h3>
+					<div class="pricing-price-row">
+						<span class="pricing-price">{plan.price}</span>
+						<span class="pricing-period">/ {plan.period}</span>
 					</div>
-					<div class="pricing-price">{plan.price}</div>
+					<div class="pricing-rule"></div>
 					<p class="pricing-desc"><BrandText text={plan.desc} /></p>
 
 					<ul class="check-list">
@@ -70,6 +82,13 @@
 							{plan.cta.label}
 						</a>
 					</div>
+
+					{#if plan.note}
+						<p class="pricing-note">
+							<span class="pricing-note-icon" aria-hidden="true">&oplus;</span>
+							<BrandText text={plan.note} />
+						</p>
+					{/if}
 				</div>
 			{/each}
 		</div>

@@ -59,6 +59,15 @@ const renderFaqMarkdown = (items: ReadonlyArray<{ q: string; a: string }>): stri
 
 type MarketingHomeContent = {
 	brand: string;
+	setsApart?: {
+		headline: string;
+		subhead: string;
+		items: ReadonlyArray<{ title: string; desc: string }>;
+	};
+	socialProof?: {
+		headline: string;
+		items: ReadonlyArray<{ pullQuote: string; quote: string; attribution: string }>;
+	};
 	forYou: {
 		headline: string;
 		bullets: readonly string[];
@@ -111,6 +120,8 @@ const renderHomeMarkdown = (
 		primaryCtaHref: string;
 		secondaryCtaLabel: string;
 		secondaryCtaHref: string;
+		includeHowItWorks?: boolean;
+		includeProof?: boolean;
 	}
 ): string => `# ${options.title}
 
@@ -125,6 +136,10 @@ ${options.description}
 - [${options.secondaryCtaLabel}](${absoluteUrl(options.secondaryCtaHref)})
 - [Contact](${absoluteUrl('/contact')})
 
+${site.setsApart ? `## ${site.setsApart.headline}\n${site.setsApart.subhead}\n\n${site.setsApart.items.map((item) => `- **${item.title}:** ${item.desc}`).join('\n')}\n` : ''}
+
+${site.socialProof ? `## ${site.socialProof.headline}\n${site.socialProof.items.map((item) => `- **${item.pullQuote}** ${item.quote} - ${item.attribution}`).join('\n')}\n` : ''}
+
 ## Core problem
 ### ${site.forYou.headline}
 ${site.forYou.bullets.map((bullet) => `- ${bullet}`).join('\n')}
@@ -137,11 +152,15 @@ ${site.shadowOps.subhead}
 
 ${site.shadowOps.points.map((point) => `- **${point.title}:** ${point.desc}`).join('\n')}
 
-## How it works
+${
+	options.includeHowItWorks === false
+		? ''
+		: `## How it works
 ### ${site.howItWorks.headline}
 ${site.howItWorks.subhead}
 
-${site.howItWorks.steps.map((step) => `${step.n}. **${step.title}** — ${step.desc}`).join('\n')}
+${site.howItWorks.steps.map((step) => `${step.n}. **${step.title}** — ${step.desc}`).join('\n')}\n`
+}
 
 ## Features
 ### ${site.features.headline}
@@ -149,11 +168,15 @@ ${site.features.subhead}
 
 ${site.features.items.map((item) => `- **${item.title}:** ${item.desc}`).join('\n')}
 
-## Proof
+${
+	options.includeProof === false
+		? ''
+		: `## Proof
 ### ${site.proof.headline}
 ${site.proof.subhead}
 
-${site.proof.items.map((item) => `- **${item.title}:** ${item.desc}`).join('\n')}
+${site.proof.items.map((item) => `- **${item.title}:** ${item.desc}`).join('\n')}\n`
+}
 
 ## Pricing
 ### ${site.pricing.headline}
@@ -384,11 +407,13 @@ export const getMarkdownForPath = (pathname: string): string | null => {
 			title: "Quaestor - It doesn't have to be this hard.",
 			description: 'Quaestor maps the business, so every answer stops routing through you.',
 			primaryAudience: 'Founders and operators carrying the business in their heads',
-			primaryCtaLabel: 'Start free',
+			primaryCtaLabel: 'Map your business',
 			primaryCtaHref:
 				'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=hero',
-			secondaryCtaLabel: 'See the map',
-			secondaryCtaHref: 'https://qstr.cursus.tools/demo/process'
+			secondaryCtaLabel: 'See how it works',
+			secondaryCtaHref: 'https://qstr.cursus.tools/demo/process',
+			includeHowItWorks: false,
+			includeProof: false
 		});
 	}
 

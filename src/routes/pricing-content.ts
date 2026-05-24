@@ -12,6 +12,7 @@ export type PricingPlan = {
 	cta: PricingCta;
 	featured: boolean;
 	badge?: string;
+	note?: string;
 };
 
 export type PricingContent = {
@@ -28,39 +29,48 @@ const signupBaseHref =
 export const pricingContent: PricingContent = {
 	eyebrow: 'Pricing',
 	headline: 'Simple price. Serious leverage.',
-	subhead: 'One workspace maps the business. Add more when the operation demands it.',
+	subhead:
+		'Start with the software. Or have us help build your first operating atlas. Priced by workspace, not by seat, because the point is to get the whole team using the same map.',
 	plans: [
 		{
 			name: 'Quaestor Workspace',
 			price: '$3,000',
-			period: 'annual',
-			desc: 'One workspace. Unlimited people. Unlimited operational map.',
+			period: 'year',
+			desc: 'For teams ready to map their own operations.',
 			perks: [
-				'Unlimited viewers & editors',
+				'Unlimited viewers and editors',
 				'Unlimited processes, roles, and systems',
-				'Unlimited flags and team feedback'
+				'Role, workflow, and system views',
+				'Flags and team feedback',
+				'Updates that keep connected views current'
 			],
 			cta: {
-				label: 'Start today',
+				label: 'Start your workspace',
 				href: `${signupBaseHref}&utm_content=pricing_growth`
 			},
-			featured: true
+			featured: false,
+			badge: 'Software only',
+			note: 'Best if you already know what you want to map first.'
 		},
 		{
 			name: 'Atlas Engagement',
 			price: '$7,500',
 			period: 'one time',
-			desc: 'Four weeks. Twenty core processes. A working atlas, plus 12 months of platform access.',
+			desc: 'For teams who want the first version built with them.',
 			perks: [
-				'Done-for-you operating atlas',
+				'Guided operating atlas build',
+				'Up to 20 core workflows mapped',
+				'Roles, systems, handoffs, and flags connected',
 				'Rollout and handoff support',
-				'12 months of platform access included'
+				'12 months of Quaestor Workspace included'
 			],
 			cta: {
-				label: 'See the engagement',
+				label: 'Book an Atlas call',
 				href: '/atlas-engagement'
 			},
-			featured: false
+			featured: true,
+			badge: 'Fastest path to value',
+			note: "Best if the work is still mostly in people's heads."
 		}
 	]
 };

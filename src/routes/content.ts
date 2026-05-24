@@ -44,19 +44,23 @@ export const site = {
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
-		headline: 'Scale, sell, or step back without surrendering command.',
+		headline: 'Retake Command',
 		subhead:
-			'Quaestor is software for mapping how your business actually runs: roles, processes, systems, handoffs, and decisions, all connected in one searchable operating map. So your company can grow without everything running through you.',
+			"Quaestor turns the way your business actually runs into a map of workflows, roles, systems, and handoffs, so your team can find answers and you can see what's bending before it breaks.",
 		primaryCta: {
-			label: 'Start free',
+			label: 'Map your business',
 			href: `${signupBaseHref}&utm_content=hero`
 		},
-		secondaryCta: { label: 'See the map', href: demoHref }
+		secondaryCta: { label: 'See how it works', href: demoHref },
+		imageSrc: '/Hero.png',
+		imageAlt: 'Quaestor operational atlas hero image.'
 	} satisfies {
 		headline: string;
 		subhead: string;
 		primaryCta: CTA;
 		secondaryCta: CTA;
+		imageSrc?: string;
+		imageAlt?: string;
 	},
 
 	// ───────────────────────────────────────────
@@ -68,6 +72,75 @@ export const site = {
 		posterSrc: '/demo-screenshot.png',
 		alt: 'Quaestor showing a connected operational atlas with roles, processes, and systems.',
 		label: 'Quaestor product demo video'
+	},
+
+	// ───────────────────────────────────────────
+	// WHAT SETS US APART
+	// ───────────────────────────────────────────
+	setsApart: {
+		headline: 'What Sets Us Apart',
+		subhead:
+			'Repositories store files. Recorders capture tasks. Project tools track work. Quaestor maps the operating model underneath it all.',
+		items: [
+			{
+				title: 'See the whole operation',
+				desc: 'A map of your workflows, roles, systems, and handoffs. Not a folder, not a wiki, not a mind-map, but the actual shape of your business.'
+			},
+			{
+				title: 'Start with the role',
+				desc: 'Open a role and see what it owns, what it touches, and which systems it uses. No more rebuilding a manual every time someone changes seats.'
+			},
+			{
+				title: 'Update once, everywhere',
+				desc: 'When the work changes, easily update the source. The connected views stay current without you needing to rewrite five different docs.'
+			},
+			{
+				title: 'Find the weak spots',
+				desc: 'Your team can flag outdated, incomplete, or unclear areas right where the work lives. You see what needs fixing instead of waiting for the next fire.'
+			},
+			{
+				title: 'One map, many views',
+				desc: 'Use the same workspace to onboard a hire, review a role, plan a reorg, prepare for a system migration, or fix where the owner is still the bottleneck.'
+			}
+		]
+	} satisfies {
+		headline: string;
+		subhead: string;
+		items: DetailItem[];
+	},
+
+	// ───────────────────────────────────────────
+	// SOCIAL PROOF
+	// ───────────────────────────────────────────
+	socialProof: {
+		headline: 'Early User Reactions',
+		items: [
+			{
+				pullQuote: "It's process documentation people will USE.",
+				quote:
+					"Super intuitive. Quaestor breaks down process entry into the questions that actually make written workflows usable. Then it lets you sort and re-sort those processes according to what you need, so they're genuinely transferable - not just useful to the person who wrote them.",
+				attribution: 'Podcast Producer'
+			},
+			{
+				pullQuote: 'He was off to the races.',
+				quote:
+					'I got Quaestor set up before I made my first operations hire and he was off to the races. Literally been keeping me sane.',
+				attribution: 'Professional Services Founder'
+			},
+			{
+				pullQuote: 'I needed to see the whole thing.',
+				quote:
+					'I run our business out of Quaestor because I need the same thing our customers need: one place to see the work, the roles, the systems, and the bottlenecks in one place where I can work on it.',
+				attribution: 'Danny McGiffin, Founder, Quaestor'
+			}
+		]
+	} satisfies {
+		headline: string;
+		items: {
+			pullQuote: string;
+			quote: string;
+			attribution: string;
+		}[];
 	},
 
 	// ───────────────────────────────────────────
