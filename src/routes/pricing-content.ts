@@ -70,7 +70,7 @@ export const pricingContent: PricingContent = {
 			},
 			featured: true,
 			badge: 'Fastest path to value',
-			note: "Best if the work is still mostly in people's heads."
+			note: 'Best if the work is still mostly in your head.'
 		}
 	]
 };
