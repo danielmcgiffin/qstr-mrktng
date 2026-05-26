@@ -27,7 +27,7 @@ export const site = {
 	nav: [
 		{ label: 'Home', href: '/' },
 		{ label: 'About', href: '/about' },
-		{ label: 'Why', href: '/method' },
+		{ label: 'How', href: '/method' },
 		{ label: 'Docs', href: '/docs' },
 		{ label: 'Demo', href: demoHref },
 		{ label: 'Blog', href: 'https://blog.cursus.tools' },

@@ -24,7 +24,7 @@
 			{ label: 'Problem', href: '/#problem' },
 			{ label: 'Reactions', href: '/#reactions' },
 			{ label: 'Pricing', href: '/#pricing' },
-			{ label: 'Why', href: '/method' },
+			{ label: 'How', href: '/method' },
 			{ label: 'Partners', href: '/partners' },
 			{ label: 'About', href: '/about' }
 		]

@@ -12,7 +12,7 @@
 		{ label: 'What sets us apart', href: '/#problem' },
 		{ label: 'Reactions', href: '/#reactions' },
 		{ label: 'Pricing', href: '/#pricing' },
-		{ label: 'Why', href: '/method' },
+		{ label: 'How', href: '/method' },
 		{ label: 'Docs', href: '/docs' },
 		{ label: 'About', href: '/about' }
 	] as const;
