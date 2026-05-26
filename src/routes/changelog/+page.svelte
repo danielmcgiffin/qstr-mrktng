@@ -19,7 +19,6 @@
 	<div class="marketing-page-inner changelog-page">
 		<section class="marketing-section marketing-section-hero changelog-hero">
 			<div class="marketing-container-narrow">
-				<p class="label-cap"><BrandText text={content.eyebrow} /></p>
 				<h1 class="hero-title changelog-title"><BrandText text={content.title} /></h1>
 				<p class="changelog-intro"><BrandText text={content.intro} /></p>
 			</div>

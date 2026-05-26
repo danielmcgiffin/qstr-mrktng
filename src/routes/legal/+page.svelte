@@ -22,7 +22,6 @@
 	<div class="marketing-page-inner legal-page">
 		<section class="marketing-section marketing-section-hero legal-hero">
 			<div class="marketing-container-narrow">
-				<p class="label-cap"><BrandText text={content.eyebrow} /></p>
 				<h1 class="hero-title legal-title"><BrandText text={content.title} /></h1>
 				<p class="legal-intro"><BrandText text={content.intro} /></p>
 

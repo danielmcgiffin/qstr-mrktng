@@ -16,7 +16,6 @@
 		<section class="marketing-section marketing-section-hero">
 			<div class="marketing-container-narrow">
 				<div class="atlas-hero panel-card">
-					<p class="label-cap">{content.eyebrow}</p>
 					<h1 class="hero-title atlas-hero-title">{content.headline}</h1>
 					<p class="atlas-subheadline">{content.subheadline}</p>
 

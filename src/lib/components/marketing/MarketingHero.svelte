@@ -9,7 +9,6 @@
 	};
 
 	let {
-		kicker,
 		headline,
 		rotatingWords = [],
 		subhead,
@@ -22,7 +21,6 @@
 		onPrimaryClick,
 		onSecondaryClick
 	}: {
-		kicker?: string;
 		headline: string;
 		rotatingWords?: string[];
 		subhead: string;
@@ -40,11 +38,7 @@
 <section class="marketing-section marketing-section-hero">
 	<div class="marketing-container-narrow hero-grid">
 		<div class="hero-content">
-			{#if kicker}
-				<span class="label-cap">{kicker}</span>
-			{/if}
-
-			<h1 class:hero-title-with-kicker={Boolean(kicker)} class="hero-title">
+			<h1 class="hero-title">
 				{#if rotatingWords.length}
 					<span class="hero-title-grid">
 						<span class="hero-title-lead"><BrandText text={headline} />&nbsp;</span>

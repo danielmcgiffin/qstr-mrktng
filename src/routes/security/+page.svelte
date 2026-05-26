@@ -20,7 +20,6 @@
 	<div class="marketing-page-inner security-page">
 		<section class="marketing-section marketing-section-hero security-hero">
 			<div class="marketing-container-narrow">
-				<p class="label-cap"><BrandText text={content.eyebrow} /></p>
 				<h1 class="hero-title security-title"><BrandText text={content.title} /></h1>
 				<p class="security-opening"><BrandText text={content.opening} /></p>
 

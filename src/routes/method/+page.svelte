@@ -28,8 +28,7 @@
 	<div class="marketing-page-inner method-overview-page">
 		<section class="marketing-section marketing-section-hero method-hero">
 			<div class="marketing-container-narrow">
-				<span class="label-cap">The Method</span>
-				<h1 class="hero-title hero-title-with-kicker">
+				<h1 class="hero-title">
 					The operational atlas, <span class="text-[rgb(var(--accent))]">step by step</span>
 				</h1>
 				<p class="section-copy section-copy-large">
