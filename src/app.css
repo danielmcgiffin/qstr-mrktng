@@ -110,6 +110,23 @@ select {
 
 .marketing-section-hero {
 	padding-block: 2.625rem 3.75rem;
+	background-color: #2b1a1a;
+	--text: 249 245 236; /* Cream / parchment */
+	--text-muted: 195 186 170; /* Muted cream */
+	--muted: 195 186 170;
+	--accent: 235 60 66; /* Brighter accent crimson for dark bg */
+	--border: 90 75 75; /* Dark warm border */
+}
+
+.marketing-section-hero .btn-secondary {
+	border-color: rgb(249 245 236 / 0.35);
+	background: transparent;
+	color: rgb(249 245 236);
+}
+
+.marketing-section-hero .btn-secondary:hover {
+	background: rgb(249 245 236 / 0.08);
+	border-color: rgb(249 245 236);
 }
 
 .marketing-container {

@@ -22,7 +22,7 @@
 		],
 		productLinks: [
 			{ label: 'Problem', href: '/#problem' },
-			{ label: 'Proof', href: '/#proof' },
+			{ label: 'Reactions', href: '/#reactions' },
 			{ label: 'Pricing', href: '/#pricing' },
 			{ label: 'Why', href: '/method' },
 			{ label: 'Partners', href: '/partners' },
