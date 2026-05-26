@@ -20,7 +20,6 @@
 	<div class="marketing-page-inner about-page">
 		<section class="marketing-section marketing-section-hero about-hero">
 			<div class="marketing-container-narrow">
-				<p class="label-cap"><BrandText text={content.eyebrow} /></p>
 				<h1 class="hero-title about-title"><BrandText text={content.title} /></h1>
 				<p class="section-copy section-copy-large"><BrandText text={content.foundersIntro} /></p>
 			</div>

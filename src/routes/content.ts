@@ -354,7 +354,7 @@ export const site = {
 		headline: 'Start with the chain.',
 		text: 'Pick the process that keeps pulling you back. Map it. Hand it off. Take back ground.',
 		cta: {
-			label: 'Start free',
+			label: 'Map your business',
 			href: `${signupBaseHref}&utm_content=final_cta`
 		}
 	} satisfies {
