@@ -24,29 +24,21 @@
 </svelte:head>
 
 <section class="space-y-16">
-	<div>
-		<h1
-			class="gradient-text text-4xl leading-[1.1] font-semibold tracking-tight text-balance md:text-5xl"
-		>
-			The operational atlas,
-			<span class="text-[rgb(var(--accent))]">step by step</span>
+	<div class="hero-content">
+		<span class="label-cap">The Method</span>
+		<h1 class="hero-title hero-title-with-kicker">
+			The operational atlas, <span class="text-[rgb(var(--accent))]">step by step</span>
 		</h1>
-		<p
-			class="mt-5 max-w-2xl text-base leading-relaxed text-pretty text-[rgb(var(--text-secondary))] md:text-lg"
-		>
-			If your business can’t work without you, it owns you. This method is how you get out.
+		<p class="hero-subhead">
+			If your business can’t work without you, it owns you. This method is how you get out. Four
+			parts: why docs die, the model that lives, how to map the work, and how to measure freedom.
 		</p>
-		<p
-			class="mt-4 max-w-2xl text-base leading-relaxed text-pretty text-[rgb(var(--text-secondary))] md:text-lg"
-		>
-			Four parts. Why docs die. The model that lives. How to map the work. How to measure freedom.
-		</p>
-		<div class="mt-8 flex flex-col gap-3 sm:flex-row">
+		<div class="button-row">
 			<a class="btn btn-primary" href={methodPath(methodSections[0].slug)}>
 				Start at the top <span aria-hidden="true">&rarr;</span>
 			</a>
 			<a class="btn btn-secondary" href="https://qstr.cursus.tools/demo/process">
-				See the product <span aria-hidden="true">&rarr;</span>
+				See the product
 			</a>
 		</div>
 	</div>
