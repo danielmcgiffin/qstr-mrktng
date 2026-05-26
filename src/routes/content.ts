@@ -296,12 +296,12 @@ export const site = {
 				desc: 'Can the team run a normal week without you?'
 			},
 			{
-				title: 'The handoff test',
-				desc: 'Can someone see what they own and move?'
+				title: 'The new-hire test',
+				desc: 'Can your new hire see everything they do and touch in one place?'
 			},
 			{
-				title: 'The new-hire test',
-				desc: 'Can a new hire get useful before asking around?'
+				title: 'The exit test',
+				desc: 'Could someone run this without ever even meeting you?'
 			}
 		]
 	} satisfies {
