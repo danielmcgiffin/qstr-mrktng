@@ -62,13 +62,12 @@ export const aboutContent: AboutContent = {
 			name: 'John Marlett',
 			role: 'Founder, Engineering',
 			initials: 'JM',
-			headshotSrc: null,
+			headshotSrc: '/John_headshot.jpeg',
 			headshotAlt: 'Headshot of John Marlett',
 			bio: [
-				'John turns the atlas model into working product infrastructure.',
-				'He works closest to the places where product claims become real: architecture, data, security posture, and the application itself.'
-			],
-			focus: ['Product engineering', 'AWS infrastructure', 'data model']
+				"John turns Quaestor's atlas model into working product infrastructure.",
+				'He works closest to the places where product claims become real: user experience, architecture, data, security, and the application itself.'
+			]
 		}
 	],
 	finalCta: {
