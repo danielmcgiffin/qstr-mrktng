@@ -36,7 +36,7 @@ export const site = {
 	] satisfies NavItem[],
 
 	navCta: {
-		label: 'Start free',
+		label: 'Map your business',
 		href: `${signupBaseHref}&utm_content=nav`
 	} satisfies CTA,
 
