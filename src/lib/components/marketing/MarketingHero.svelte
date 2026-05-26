@@ -108,11 +108,11 @@
 		width: min(100%, 34rem);
 		margin-inline: auto;
 		padding: clamp(0.625rem, 1.2vw, 0.95rem);
-		border: 2px solid rgb(var(--accent));
+		border: 1px solid rgb(var(--border));
 		border-radius: calc(var(--radius-lg) + 0.75rem);
 		background: rgb(var(--bg-panel));
 		box-shadow:
-			0 18px 36px rgb(var(--accent) / 0.12),
+			0 18px 36px rgb(var(--text) / 0.08),
 			inset 0 1px 0 rgb(255 255 255 / 0.65);
 	}
 
