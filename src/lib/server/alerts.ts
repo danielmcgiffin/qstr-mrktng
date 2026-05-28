@@ -221,3 +221,27 @@ export const sendAiScoreSubmissionAlert = async (params: {
 		});
 	}
 };
+
+export const sendContactFormEmail = async (params: {
+	name: string;
+	email: string;
+	message: string;
+}): Promise<void> => {
+	const fromEmail = getPrivateEnv('AI_SCORE_FROM_EMAIL', 'PRIVATE_FROM_ADMIN_EMAIL');
+	if (!fromEmail) {
+		throw new Error('Contact email delivery is not configured (AI_SCORE_FROM_EMAIL missing).');
+	}
+
+	const subject = `Quaestor Contact Form submission from ${params.name}`;
+	const text = [`Name: ${params.name}`, `Email: ${params.email}`, `Message:`, params.message].join(
+		'\n'
+	);
+
+	await sendEmail({
+		to: 'info@cursus.tools',
+		from: fromEmail,
+		subject,
+		text,
+		replyTo: params.email
+	});
+};
