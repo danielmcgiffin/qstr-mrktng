@@ -65,8 +65,8 @@ export const aboutContent: AboutContent = {
 			headshotSrc: '/John_headshot.jpeg',
 			headshotAlt: 'Headshot of John Marlett',
 			bio: [
-				"John is like a happy little house elf, quietly humming away on making sure this thing turns on."
-				]
+				'John is like a happy little house elf, quietly humming away on making sure this thing turns on.'
+			]
 		}
 	],
 	finalCta: {
