@@ -719,45 +719,72 @@
 						</div>
 					</form>
 
-					<aside
-						class="rounded-[1.9rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-6 shadow-[0_18px_44px_rgb(103_80_54_/_0.08)] md:p-7"
-					>
-						<p
-							class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
+					<div class="space-y-6">
+						<aside
+							class="rounded-[1.9rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-6 shadow-[0_18px_44px_rgb(103_80_54_/_0.08)] md:p-7"
 						>
-							What you get
-						</p>
-						<h3 class="mt-3 text-2xl font-semibold text-[rgb(var(--text))]">
-							Two scores and the failure points.
-						</h3>
-						<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-							The grader checks whether an agent can execute the process and whether a new hire can
-							follow it. If a file cannot be read inline, it routes to review.
-						</p>
+							<p
+								class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
+							>
+								What you get
+							</p>
+							<h3 class="mt-3 text-2xl font-semibold text-[rgb(var(--text))]">
+								Two scores and the failure points.
+							</h3>
+							<p class="mt-3 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
+								The grader checks whether an agent can execute the process and whether a new hire
+								can follow it. If a file cannot be read inline, it routes to review.
+							</p>
 
-						<div class="mt-6 divide-y divide-[rgb(var(--border))]">
-							<div class="py-4 first:pt-0">
-								<p class="text-sm font-semibold text-[rgb(var(--text))]">Sample result</p>
-								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									AI-readiness 62. Human-readiness 71. Top failure point: decisions need rules.
-								</p>
+							<div class="mt-6 divide-y divide-[rgb(var(--border))]">
+								<div class="py-4 first:pt-0">
+									<p class="text-sm font-semibold text-[rgb(var(--text))]">Sample result</p>
+									<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
+										AI-readiness 62. Human-readiness 71. Top failure point: decisions need rules.
+									</p>
+								</div>
+								<div class="py-4">
+									<p class="text-sm font-semibold text-[rgb(var(--text))]">Why this is free</p>
+									<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
+										Bad SOPs are the blocker. The score shows where the map needs work before agents
+										touch it.
+									</p>
+								</div>
+								<div class="pt-4">
+									<p class="text-sm font-semibold text-[rgb(var(--text))]">Privacy note</p>
+									<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
+										Use a real process. Remove secrets first. We use your email to send the score
+										and follow up if review is needed.
+									</p>
+								</div>
 							</div>
-							<div class="py-4">
-								<p class="text-sm font-semibold text-[rgb(var(--text))]">Why this is free</p>
-								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									Bad SOPs are the blocker. The score shows where the map needs work before agents
-									touch it.
-								</p>
-							</div>
-							<div class="pt-4">
-								<p class="text-sm font-semibold text-[rgb(var(--text))]">Privacy note</p>
-								<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
-									Use a real process. Remove secrets first. We use your email to send the score and
-									follow up if review is needed.
-								</p>
+						</aside>
+
+						<div
+							class="rounded-[1.9rem] border border-[rgb(var(--border))] bg-[rgb(var(--bg-panel))]/70 p-6 shadow-[0_18px_44px_rgb(103_80_54_/_0.08)] md:p-7"
+						>
+							<p
+								class="text-[11px] font-semibold tracking-[0.24em] text-[rgb(var(--muted))] uppercase"
+							>
+								No SOP yet?
+							</p>
+							<h3 class="mt-3 text-lg font-semibold text-[rgb(var(--text))]">
+								Wish you had something to grade?
+							</h3>
+							<p class="mt-2 text-sm leading-relaxed text-[rgb(var(--text-secondary))]">
+								Get an individual <strong class="brand-word">Quaestor</strong> workspace for free today
+								and start with your easiest process.
+							</p>
+							<div class="mt-5">
+								<a
+									class="btn btn-secondary w-full text-center"
+									href="https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_wish"
+								>
+									Start mapping free &rarr;
+								</a>
 							</div>
 						</div>
-					</aside>
+					</div>
 				</div>
 
 				{#if gradeResult}
