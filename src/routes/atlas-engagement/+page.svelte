@@ -1,6 +1,15 @@
 <script lang="ts">
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
+	import { trackEvent } from '$lib/analytics';
 	import { atlasEngagementContent as content } from './content';
+
+	const trackAtlasFitCall = (location: string) => {
+		trackEvent('booking_click', { location });
+	};
+
+	const trackTransitionApply = (location: string) => {
+		trackEvent('booking_click', { location, type: 'transition_atlas' });
+	};
 </script>
 
 <svelte:head>
@@ -31,6 +40,7 @@
 							href={content.primaryCta.href}
 							target="_blank"
 							rel="noreferrer"
+							onclick={() => trackAtlasFitCall('atlas_hero_primary')}
 						>
 							{content.primaryCta.label}
 						</a>
@@ -138,7 +148,13 @@
 				<p class="section-copy section-copy-large atlas-availability-copy">
 					{content.availabilityBody}
 				</p>
-				<a class="btn btn-primary" href={content.primaryCta.href} target="_blank" rel="noreferrer">
+				<a
+					class="btn btn-primary"
+					href={content.primaryCta.href}
+					target="_blank"
+					rel="noreferrer"
+					onclick={() => trackAtlasFitCall('atlas_availability_primary')}
+				>
 					{content.primaryCta.label}
 				</a>
 			</div>
@@ -158,6 +174,7 @@
 						href={content.upsellCta.href}
 						target="_blank"
 						rel="noreferrer"
+						onclick={() => trackTransitionApply('atlas_upsell_secondary')}
 					>
 						{content.upsellCta.label}
 					</a>

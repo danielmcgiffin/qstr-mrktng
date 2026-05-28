@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
 	import BrandText from '$lib/components/BrandText.svelte';
-	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import type { DocsArticle } from '../articles';
 
 	export let data: {
@@ -22,63 +21,51 @@
 	<meta name="twitter:image:alt" content="Quaestor docs article preview." />
 </svelte:head>
 
-<div class="marketing-page">
-	<div class="marketing-page-inner docs-article-page">
-		<article class="marketing-section docs-article">
-			<div class="marketing-container-tight">
-				<a class="docs-back-link" href={resolve('/docs')}>Docs</a>
+<article class="docs-article">
+	<a class="docs-back-link" href={resolve('/docs')}>&larr; Docs Index</a>
 
-				<header class="docs-article-header">
-					<p class="label-cap"><BrandText text={data.article.category} /></p>
-					<h1 class="hero-title docs-article-title"><BrandText text={data.article.title} /></h1>
-					<p class="docs-article-description"><BrandText text={data.article.description} /></p>
-				</header>
+	<header class="docs-article-header">
+		<p class="label-cap"><BrandText text={data.article.category} /></p>
+		<h1 class="hero-title docs-article-title"><BrandText text={data.article.title} /></h1>
+		<p class="docs-article-description"><BrandText text={data.article.description} /></p>
+	</header>
 
-				<div class="docs-article-body">
-					{#each data.article.blocks as block (block.title)}
-						<section>
-							<h2><BrandText text={block.title} /></h2>
-							{#each block.body as paragraph (paragraph)}
-								<p><BrandText text={paragraph} /></p>
-							{/each}
-						</section>
-					{/each}
-				</div>
-
-				<nav class="docs-article-nav" aria-label="Docs article navigation">
-					{#if data.prev}
-						<a href={resolve(`/docs/${data.prev.slug}` as '/')}>
-							<span>Previous</span>
-							<strong><BrandText text={data.prev.title} /></strong>
-						</a>
-					{:else}
-						<span></span>
-					{/if}
-
-					{#if data.next}
-						<a class="docs-article-nav-next" href={resolve(`/docs/${data.next.slug}` as '/')}>
-							<span>Next</span>
-							<strong><BrandText text={data.next.title} /></strong>
-						</a>
-					{:else}
-						<a class="docs-article-nav-next" href={resolve('/changelog')}>
-							<span>Next</span>
-							<strong>Changelog</strong>
-						</a>
-					{/if}
-				</nav>
-			</div>
-		</article>
-
-		<MarketingFooter />
+	<div class="docs-article-body">
+		{#each data.article.blocks as block (block.title)}
+			<section>
+				<h2><BrandText text={block.title} /></h2>
+				{#each block.body as paragraph (paragraph)}
+					<p><BrandText text={paragraph} /></p>
+				{/each}
+			</section>
+		{/each}
 	</div>
-</div>
+
+	<nav class="docs-article-nav" aria-label="Docs article navigation">
+		{#if data.prev}
+			<a href={resolve(`/docs/${data.prev.slug}` as '/')}>
+				<span>Previous</span>
+				<strong><BrandText text={data.prev.title} /></strong>
+			</a>
+		{:else}
+			<span></span>
+		{/if}
+
+		{#if data.next}
+			<a class="docs-article-nav-next" href={resolve(`/docs/${data.next.slug}` as '/')}>
+				<span>Next</span>
+				<strong><BrandText text={data.next.title} /></strong>
+			</a>
+		{:else}
+			<a class="docs-article-nav-next" href={resolve('/changelog')}>
+				<span>Next</span>
+				<strong>Changelog</strong>
+			</a>
+		{/if}
+	</nav>
+</article>
 
 <style>
-	.docs-article-page {
-		padding-top: 0.5rem;
-	}
-
 	.docs-article {
 		padding-top: 3rem;
 	}

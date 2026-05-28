@@ -712,7 +712,7 @@
 							<button
 								type="submit"
 								disabled={submitDisabled}
-								class="inline-flex min-h-11 min-w-[190px] items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-[rgb(var(--text-inverse))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-70"
+								class="btn btn-primary min-w-[190px] disabled:cursor-not-allowed disabled:opacity-70"
 							>
 								{submitLabel}
 							</button>
@@ -831,13 +831,13 @@
 												{followUpHelper}
 											</p>
 											<a
-												class="inline-flex min-h-11 shrink-0 items-center justify-center rounded-xl bg-[rgb(var(--accent))] px-4 py-2 text-sm font-medium text-[rgb(var(--text-inverse))] shadow-[0_0_0_1px_rgba(255,255,255,0.12)] hover:brightness-110"
+												class="btn btn-primary shrink-0"
 												href={followUpHref}
 												target={followUpHref.includes('cal.com') ? '_blank' : undefined}
 												rel={followUpHref.includes('cal.com') ? 'noreferrer' : undefined}
 												onclick={trackResultCta}
 											>
-												<BrandText text={followUpLabel} /> →
+												<BrandText text={followUpLabel} /> &rarr;
 											</a>
 										</div>
 									</div>

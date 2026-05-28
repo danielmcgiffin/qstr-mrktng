@@ -84,10 +84,10 @@ export const site = {
 		items: [
 			{
 				title: 'See the whole operation',
-				desc: 'A map of your workflows, roles, systems, and handoffs. Not a folder, not a wiki, not a mind-map, but the actual shape of your business.'
+				desc: 'A map of your workflows, roles, systems, and handoffs. Not a folder, not a wiki, not a mind-map, but everything connected together in one place.'
 			},
 			{
-				title: 'Start with the role',
+				title: 'People at the center',
 				desc: 'Open a role and see what it owns, what it touches, and which systems it uses. No more rebuilding a manual every time someone changes seats.'
 			},
 			{
@@ -100,7 +100,7 @@ export const site = {
 			},
 			{
 				title: 'One map, many views',
-				desc: 'Use the same workspace to onboard a hire, review a role, plan a reorg, prepare for a system migration, or fix where the owner is still the bottleneck.'
+				desc: 'Use the same workspace to onboard a hire, review a role, plan an expansion, prepare for implementing a new system, and fix where the owner is still the bottleneck.'
 			}
 		]
 	} satisfies {
@@ -367,7 +367,7 @@ export const site = {
 	// FOOTER
 	// ───────────────────────────────────────────
 	footer: {
-		tagline: 'Handle Your Business.',
+		tagline: 'Own it.',
 		copyrightName: 'Quaestor',
 		entityName: 'Cursus Tools, LLC',
 		supportEmail: 'support@cursus.tools',
@@ -379,8 +379,8 @@ export const site = {
 			{ label: 'Subprocessors', href: '/legal#subprocessors' }
 		],
 		productLinks: [
-			{ label: 'Problem', href: '/#problem' },
-			{ label: 'Reactions', href: '/#reactions' },
+			{ label: 'Our Edge', href: '/#problem' },
+			{ label: 'User Reactions', href: '/#reactions' },
 			{ label: 'Pricing', href: '/#pricing' },
 			{ label: 'How', href: '/method' },
 			{ label: 'Partners', href: '/partners' },

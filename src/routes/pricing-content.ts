@@ -59,9 +59,9 @@ export const pricingContent: PricingContent = {
 			desc: 'For teams who want the first version built with them.',
 			perks: [
 				'Guided operating atlas build',
-				'Up to 20 core workflows mapped',
-				'Roles, systems, handoffs, and flags connected',
+				'Up to 15 core workflows mapped',
 				'Rollout and handoff support',
+				'Training for your operators',
 				'12 months of Quaestor Workspace included'
 			],
 			cta: {

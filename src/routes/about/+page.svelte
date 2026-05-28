@@ -2,6 +2,7 @@
 	import BrandText from '$lib/components/BrandText.svelte';
 	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
+	import { trackEvent } from '$lib/analytics';
 	import { aboutContent as content } from './content';
 </script>
 
@@ -73,7 +74,13 @@
 		<FinalCtaSection
 			headline={content.finalCta.headline}
 			text={content.finalCta.text}
-			ctas={[{ label: content.finalCta.label, href: content.finalCta.href }]}
+			ctas={[
+				{
+					label: content.finalCta.label,
+					href: content.finalCta.href,
+					onclick: () => trackEvent('contact_click', { location: 'about_final_cta' })
+				}
+			]}
 		/>
 
 		<MarketingFooter />

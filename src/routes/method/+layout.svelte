@@ -1,14 +1,22 @@
 <script lang="ts">
 	import { methodSections, methodPath } from './nav';
 	import { page } from '$app/stores';
+	import { resolve } from '$app/paths';
 
 	let { children } = $props();
 
+	// Normalize pathname to strip proxy prefix and trailing slashes for routing checks
 	const pathname = $derived($page.url.pathname);
+	const normalizedPathname = $derived.by(() => {
+		const stripped = pathname.replace(/^\/proxy\/\d+(?=\/|$)/, '') || '/';
+		if (stripped === '/') return stripped;
+		return stripped.replace(/\/+$/, '') || '/';
+	});
+
 	const activeIndex = $derived(
-		methodSections.findIndex((section) => pathname === methodPath(section.slug))
+		methodSections.findIndex((section) => normalizedPathname === methodPath(section.slug))
 	);
-	const isOverview = $derived(pathname === '/method' || pathname === '/method/');
+	const isOverview = $derived(normalizedPathname === '/method');
 
 	let mobileNavOpen = $state(false);
 
@@ -39,7 +47,7 @@
 												(isOverview
 													? 'font-medium text-[rgb(var(--accent))]'
 													: 'text-[rgb(var(--muted))] hover:text-[rgb(var(--surface-text-strong))]')}
-											href="/method"
+											href={resolve('/method')}
 										>
 											Overview
 										</a>
@@ -51,7 +59,7 @@
 													(activeIndex === i
 														? 'font-medium text-[rgb(var(--accent))]'
 														: 'text-[rgb(var(--muted))] hover:text-[rgb(var(--surface-text-strong))]')}
-												href={methodPath(item.slug)}
+												href={resolve(methodPath(item.slug) as '/')}
 											>
 												<span class="w-4 text-xs text-current/80 tabular-nums"
 													>{String(i + 1).padStart(2, '0')}</span
@@ -88,7 +96,7 @@
 													(isOverview
 														? 'font-medium text-[rgb(var(--accent))]'
 														: 'text-[rgb(var(--muted))]')}
-												href="/method"
+												href={resolve('/method')}
 												onclick={() => (mobileNavOpen = false)}
 											>
 												Overview
@@ -101,7 +109,7 @@
 														(activeIndex === i
 															? 'font-medium text-[rgb(var(--accent))]'
 															: 'text-[rgb(var(--muted))]')}
-													href={methodPath(item.slug)}
+													href={resolve(methodPath(item.slug) as '/')}
 													onclick={() => (mobileNavOpen = false)}
 												>
 													<span class="mr-2 text-current/80 tabular-nums"

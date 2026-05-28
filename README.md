@@ -151,3 +151,50 @@ If you're still running inside the parent monorepo (`/srv/dev/qstr`), there is a
 - [ ] Confirm GitHub repo secrets: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`.
 - [ ] Ensure agent reads `CLAUDE.md` before first task.
 - [ ] Start from `STARTER_BACKLOG.md` for first PRs.
+
+## 7) Production Release Checklist
+
+Follow these steps to repeatably deploy updates to production safely.
+
+### Step 1: Pre-Release Validation
+
+Before running any deploy commands, run the validation gate locally to ensure formatting, linting, and SvelteKit compilation pass:
+
+```bash
+# Formats files, checks types, lints, and builds the production bundle
+npm run format
+npm run check
+npm run lint
+npm run build
+```
+
+Verify that all commands finish successfully with `0 errors and 0 warnings`.
+
+### Step 2: Deploy to Production
+
+To push the build live on Cloudflare Pages, run the production deploy command:
+
+```bash
+# Deploys the built files to Cloudflare Pages (targeting main branch / production)
+npm run cf:pages:deploy:prod
+```
+
+_Note: Alternatively, pushing code to the `main` branch on GitHub will automatically trigger the GitHub Actions deployment workflow._
+
+### Step 3: Smoke Checks
+
+Once the deployment finishes, perform these manual tests:
+
+1. **Homepage Check:** Open the site (e.g., `https://qstr.tools`) and verify the header logo, typography, and styling render properly.
+2. **Navigation Check:** Visit `/method` and `/docs` to confirm sidebar navigation, category grouping, and active route highlighting behave correctly.
+3. **Lead Gen / AI Score Check:** Navigate to `/ai-score`. Paste a small text paragraph and click "Score my SOP" to verify the grader API finishes scoring and renders the readiness results block.
+4. **CTA Click Check:** Click a scheduling CTA button (e.g. TidyCal or Cal.com links) and confirm it opens the booking tool in a new tab.
+
+### Step 4: Rollback (If needed)
+
+If any critical issues are discovered:
+
+1. Log into your **Cloudflare Dashboard**.
+2. Navigate to **Workers & Pages** > **Pages** > **qstr-mrktng**.
+3. Under the **Deployments** tab, find the last successful deployment (prior to this release).
+4. Click the three dots next to that deployment and select **Rollback to this deployment** (or **Set as Active**) to immediately revert production.

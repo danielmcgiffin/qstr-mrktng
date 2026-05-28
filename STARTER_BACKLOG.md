@@ -9,7 +9,7 @@ Small, high-confidence tasks for next Claude Code PRs.
 
 ## P1 — Content and conversion improvements
 
-### Task 1: Audit CTA tracking consistency
+### ✅ Task 1: Audit CTA tracking consistency
 
 - **Goal:** ensure all high-value CTAs fire analytics events.
 - **Likely files:** `src/routes/+page.svelte`, `src/routes/+layout.svelte`, `src/routes/partners/+page.svelte`, `src/routes/contact/+page.svelte`.
@@ -17,7 +17,7 @@ Small, high-confidence tasks for next Claude Code PRs.
   - Hero/nav/contact/partner primary CTAs emit events.
   - Event naming remains consistent with existing schema.
 
-### Task 2: Add social proof/testimonial block to homepage
+### ✅ Task 2: Add social proof/testimonial block to homepage
 
 - **Goal:** increase trust signals above pricing.
 - **Likely files:** `src/routes/content.ts`, `src/routes/+page.svelte`.
@@ -27,7 +27,7 @@ Small, high-confidence tasks for next Claude Code PRs.
 
 ## P2 — Operational safety
 
-### Task 3: Document release checklist
+### ✅ Task 3: Document release checklist
 
 - **Goal:** make production release steps repeatable for non-engineers.
 - **Likely files:** `README.md`.

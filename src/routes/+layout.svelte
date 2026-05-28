@@ -1,6 +1,6 @@
 <script lang="ts">
-	import '../app.css';
 	import './layout.css';
+	import '../app.css';
 	import { env } from '$env/dynamic/public';
 	import { page } from '$app/stores';
 	import { tick } from 'svelte';
@@ -130,7 +130,7 @@
 			return;
 		}
 
-		if (href.includes('cal.com')) {
+		if (href.includes('cal.com') || href.includes('tidycal.com')) {
 			trackEvent('booking_click', { location });
 			return;
 		}

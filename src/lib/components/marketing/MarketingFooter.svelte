@@ -9,7 +9,7 @@
 
 	const defaultFooter = {
 		brand: 'Quaestor',
-		tagline: 'Handle Your Business.',
+		tagline: 'Own it.',
 		copyrightName: 'Quaestor',
 		entityName: 'Cursus Tools, LLC',
 		supportEmail: 'support@cursus.tools',
@@ -21,8 +21,8 @@
 			{ label: 'Subprocessors', href: '/legal#subprocessors' }
 		],
 		productLinks: [
-			{ label: 'Problem', href: '/#problem' },
-			{ label: 'Reactions', href: '/#reactions' },
+			{ label: 'Our Edge', href: '/#problem' },
+			{ label: 'User Reactions', href: '/#reactions' },
 			{ label: 'Pricing', href: '/#pricing' },
 			{ label: 'How', href: '/method' },
 			{ label: 'Partners', href: '/partners' },
@@ -57,8 +57,12 @@
 	<div class="marketing-container">
 		<div class="footer-grid">
 			<div class="footer-col footer-brand-col">
-				<div class="footer-brand"><BrandText text={brand} /></div>
-				<div class="footer-tagline"><BrandText text={tagline} /></div>
+				<div class="footer-brand">
+					<BrandText text={brand.endsWith('.') ? brand.slice(0, -1) : brand} /><span
+						class="brand-word">.</span
+					>
+					<span class="footer-tagline-inline"><BrandText text={tagline} /></span>
+				</div>
 				<div class="footer-entity"><BrandText text={entityName} /></div>
 				<div class="footer-contact">
 					<a href="mailto:{supportEmail}">{supportEmail}</a>
@@ -130,10 +134,11 @@
 		font-weight: 700;
 	}
 
-	.footer-tagline {
+	.footer-tagline-inline {
 		color: rgb(var(--surface-text-strong));
 		font-size: var(--fs-small);
 		font-weight: 500;
+		margin-left: 0.25rem;
 	}
 
 	.footer-entity {

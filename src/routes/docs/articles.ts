@@ -14,29 +14,26 @@ export type DocsArticle = {
 export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'create-your-workspace',
-		title: 'Create your workspace',
-		description: 'Set up the workspace that will hold your operating map.',
+		title: 'Establish your workspace',
+		description: 'The foundational container for your operations atlas.',
 		category: 'Getting started',
 		blocks: [
 			{
-				title: 'What the workspace is',
+				title: 'The single source of truth',
 				body: [
-					'Your workspace is the container for one operating atlas: the roles, processes, systems, actions, and links that describe how the business actually runs.',
-					'Use one workspace for one company or operating unit. If two teams share customers, systems, and handoffs, they usually belong in the same workspace.'
+					'Your workspace holds the map of your operations. It connects the roles, processes, systems, and actions that define how the business runs. If teams share customers, systems, and handoffs, keep them in one workspace to prevent confusion.'
 				]
 			},
 			{
-				title: 'Before you add content',
+				title: 'Before capturing work',
 				body: [
-					'Pick one workflow that already creates questions, rework, or founder interruptions. Do not start by documenting the whole company.',
-					'Gather whatever already exists: SOPs, onboarding docs, Looms, Slack notes, system checklists, and the person who knows the real version.'
+					'Do not try to map the whole company at once. Start with one workflow that causes questions, errors, or constant interruptions. Gather the videos, checklists, and notes that already exist.'
 				]
 			},
 			{
-				title: 'First pass',
+				title: 'The initial draft',
 				body: [
-					'Create the workspace, name it after the business or operating unit, and add the first few roles, processes, and systems that touch the bottleneck workflow.',
-					'The first pass should be useful, not complete. You can connect and refine the atlas after the core workflow is visible.'
+					'Set up the workspace and add the core roles and systems that touch your bottleneck workflow. Focus on immediate utility, not perfection. The map will grow and improve as you connect more work.'
 				]
 			}
 		]
@@ -44,28 +41,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'add-your-first-role',
 		title: 'Add your first role',
-		description: 'Define who owns work without tying the map to one employee.',
+		description: 'Define ownership without tying operations to a specific employee.',
 		category: 'Getting started',
 		blocks: [
 			{
-				title: 'Use roles, not people',
+				title: 'Roles over individuals',
 				body: [
-					'A role is a seat in the operating model. A person can hold a role, but the role is what owns decisions, actions, and handoffs.',
-					'Name the role the way the team would say it in real work: Ops Manager, Client Success Lead, Bookkeeper, Founder, or Implementation Specialist.'
+					'A role is a seat in your business. A person occupies the seat, but the role owns the decisions and handoffs. Use the simple, common names your team actually uses (like Ops Lead or Account Manager) rather than fancy titles.'
 				]
 			},
 			{
-				title: 'Write the responsibility boundary',
+				title: 'Boundaries of accountability',
 				body: [
-					'Add the short version of what this role is accountable for. Focus on decisions and outcomes, not a job-description paragraph.',
-					'A useful role description answers: what does this role decide, what does it produce, and when does another role need to receive something from it?'
+					'Define roles by their concrete outcomes and decisions, not long job descriptions. Make it clear what they decide, what they produce, and who depends on their output.'
 				]
 			},
 			{
-				title: 'Connect it immediately',
+				title: 'Immediate integration',
 				body: [
-					'After creating the role, connect it to at least one process step or action. Unconnected roles become org-chart decoration.',
-					'If nobody can name a process the role owns or supports, the role may be too vague.'
+					'A role must interact with the business to have value. Connect every new role to a process step or action immediately. Unconnected roles are just decoration; connected roles hold weight.'
 				]
 			}
 		]
@@ -73,28 +67,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'add-your-first-process',
 		title: 'Add your first process',
-		description: 'Capture a workflow as a chain of owned, executable steps.',
+		description: 'Capture workflows as a continuous sequence of executable steps.',
 		category: 'Getting started',
 		blocks: [
 			{
-				title: 'Start with the trigger',
+				title: 'Define the trigger',
 				body: [
-					'Every process starts because something happened: a contract is signed, a ticket changes status, a client sends a request, a payment fails, or a weekly review begins.',
-					'Write the trigger plainly. If the start condition is fuzzy, the rest of the process will be fuzzy too.'
+					'Every process starts because something happened—a signed contract, a status change in a tool, or a specific date. Define this start condition clearly so the team knows exactly when to begin.'
 				]
 			},
 			{
-				title: 'Describe steps as stations',
+				title: 'Steps as stations',
 				body: [
-					'Each step should name the owner, input, operation, output, and destination. That is the minimum structure for work another person can run.',
-					'If a step says "handle request" or "follow up as needed", split it until the action is observable.'
+					'Define each step with clear inputs, operations, outputs, and destinations. This gives the operator everything they need to execute. Break down vague instructions like "handle request" into clear actions.'
 				]
 			},
 			{
-				title: 'Stop at the first useful version',
+				title: 'Publish for momentum',
 				body: [
-					'The first process does not need every exception. Capture the normal path first, then add edge cases after the team uses it.',
-					'A process is ready to publish when someone outside your head can run the next step without a meeting.'
+					'Publish the process as soon as an operator can execute it without a meeting. Document the standard path first, and add exceptions as the team uses it.'
 				]
 			}
 		]
@@ -102,28 +93,26 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'add-systems',
 		title: 'Add systems',
-		description: 'Map the tools where work happens and decisions are recorded.',
+		description:
+			'Anchor the work to the tools where truth is established and decisions are recorded.',
 		category: 'Getting started',
 		blocks: [
 			{
-				title: 'What counts as a system',
+				title: 'Defining a system',
 				body: [
-					'A system is any place work happens or truth is stored: CRM, email, project management, accounting, shared drive, ticketing, payroll, calendar, or an internal spreadsheet.',
-					'Do not duplicate the system in Quaestor. Add the system so processes can point to the real place where the work happens.'
+					'A system is where work happens or truth is stored—like your CRM, email, accounting software, or shared drives. Point to the system; do not try to duplicate it in Quaestor.'
 				]
 			},
 			{
-				title: 'Add operational context',
+				title: 'Operational context',
 				body: [
-					'For each system, capture what it is used for, which roles touch it, and what kind of records live there.',
-					'The useful question is not "what software do we use?" It is "what business truth lives here, and who depends on it?"'
+					'State what the system is used for, who uses it, and what data lives inside it. Focus on what business reality lives in the tool, not just the software name.'
 				]
 			},
 			{
-				title: 'Link systems to actions',
+				title: 'Linking to action',
 				body: [
-					'Connect the system to the actions performed inside it. A CRM is abstract; "update deal stage after signed SOW" is operational.',
-					'These links are what keep the atlas from becoming another static software inventory.'
+					'Connect systems directly to the steps performed within them. This ensures your tools are linked to the actual work.'
 				]
 			}
 		]
@@ -131,28 +120,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'connect-actions-to-roles-and-systems',
 		title: 'Connect actions to roles and systems',
-		description: 'Make every action accountable and anchored to the tool where it happens.',
+		description: 'Establish clear accountability and locate the work.',
 		category: 'Getting started',
 		blocks: [
 			{
-				title: 'The basic rule',
+				title: 'The foundational rule',
 				body: [
-					'Every action should have a role and, when applicable, a system. The role owns the work. The system is where the work happens or where the output lands.',
-					'An action without a role has no accountability. An action without a system may still be valid, but it should be intentionally system-free.'
+					'Every action needs a role to own it and a system where it happens. An action without a role has no accountability. An action without a system is disconnected.'
 				]
 			},
 			{
-				title: 'Write action names as commands',
+				title: 'Executable commands',
 				body: [
-					'Use verbs: create client folder, approve access request, send kickoff email, reconcile invoice, update renewal date.',
-					'Command-shaped actions are easier to assign, audit, search, and eventually automate.'
+					'Write actions as simple commands: reconcile invoice, send email, create folder. Active verbs clarify expectations and make automation easier later.'
 				]
 			},
 			{
-				title: 'Check the handoff',
+				title: 'Handoff validation',
 				body: [
-					'For each action, ask what output is produced and where it goes next. If the output has no destination, the process stops silently.',
-					'Good links make the next role obvious before anyone asks.'
+					'Make sure every action produces a clear output with a destination. If the output has nowhere to go, the process stops and breaks.'
 				]
 			}
 		]
@@ -160,29 +146,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'search-and-lookup',
 		title: 'Search and lookup',
-		description:
-			'Find the current role, process, system, or action without hunting through old docs.',
+		description: 'Navigate the business through connected operational objects.',
 		category: 'Using the atlas',
 		blocks: [
 			{
-				title: 'Search for the object, not the document',
+				title: 'Search the graph, not a document',
 				body: [
-					'Quaestor is organized around operational objects: roles, processes, systems, and actions. Search for the thing you need to operate, not the title of an old SOP.',
-					'Useful searches usually include the customer event, system name, role name, or output you are trying to produce.'
+					'Quaestor operates on data, not static documents. When you need an answer, search for the role, the system, or the specific client event you are trying to execute—not the title of an old SOP. Locate the real object, not a static page.'
 				]
 			},
 			{
-				title: 'Follow the links',
+				title: 'Navigate the connections',
 				body: [
-					'When you land on a process, use the connected roles and systems to understand who owns each part and where the work happens.',
-					'When you land on a role or system, use the connected actions to see what that role or system actually does in the business.'
+					'When viewing a process, use the links to see who owns each step and where the work happens. When viewing a role, see its actual impact on the business.'
 				]
 			},
 			{
-				title: 'Fix bad lookup results',
+				title: 'Refine through use',
 				body: [
-					'If the right answer is hard to find, improve the object names and descriptions. Search problems are usually naming problems.',
-					'Prefer the words your team already uses. The atlas should match the operating language of the company.'
+					'If an answer is hard to find, simplify the names. Match the vocabulary your team uses in daily operations.'
 				]
 			}
 		]
@@ -190,28 +172,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'role-manuals',
 		title: 'Role manuals',
-		description: 'Use connected role data as the starting point for onboarding and delegation.',
+		description: 'Leverage dynamic data for onboarding and true delegation.',
 		category: 'Using the atlas',
 		blocks: [
 			{
-				title: 'What a role manual contains',
+				title: 'Dynamic generation',
 				body: [
-					'A role manual should collect the role purpose, owned processes, recurring actions, systems used, key handoffs, and decision boundaries.',
-					'It should be generated from the connected atlas wherever possible, not maintained as a separate document that drifts.'
+					"A role manual is a live view of a role's purpose, processes, systems, and handoffs, pulled directly from the atlas. Do not maintain it as a separate document."
 				]
 			},
 			{
-				title: 'Use it for onboarding',
+				title: 'Contextual onboarding',
 				body: [
-					'Give a new operator the manual for the role they are stepping into, then walk through the connected processes and systems in order.',
-					'The manual is useful when it points to live work. It is not useful when it reads like a generic job description.'
+					'Give new hires a live manual that points directly to their connected work, rather than a generic job description. Walk through their processes in order.'
 				]
 			},
 			{
-				title: 'Keep it current',
+				title: 'Maintain the source',
 				body: [
-					'When the role changes, update the underlying role, process, action, or system records. The manual should reflect the map.',
-					'If you edit only the manual, you have created a second source of truth.'
+					'When a role changes, update the underlying roles, processes, or systems. Editing a manual in isolation creates duplicate truths; updating the map updates the organization.'
 				]
 			}
 		]
@@ -219,28 +198,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'process-steps',
 		title: 'Process steps',
-		description: 'Structure each step so a person or agent can execute it without hidden context.',
+		description: 'Eliminate ambiguity with structured, atomic knowledge.',
 		category: 'Using the atlas',
 		blocks: [
 			{
-				title: 'Five parts',
+				title: 'The five components',
 				body: [
-					'Each process step needs a trigger, input, operation, output, and destination.',
-					'This structure turns vague process prose into executable work. It also exposes missing context quickly.'
+					'Every step needs a trigger, input, operation, output, and destination. This structure turns vague text into executable actions and highlights missing context.'
 				]
 			},
 			{
-				title: 'Inputs and outputs must have shape',
+				title: 'Defined outputs',
 				body: [
-					'Do not say "client info" if the next role needs a signed SOW, billing contact, target launch date, and implementation notes.',
-					'Do not say "send update" if the output must be a Slack message in a specific channel with the client name, blocker, owner, and next deadline.'
+					'Inputs and outputs must have a clear shape. Replace vague terms like "client info" with exact details (like signed SOW, billing email, and launch date).'
 				]
 			},
 			{
-				title: 'One owner per step',
+				title: 'Singular ownership',
 				body: [
-					'A step can involve multiple people, but it should have one accountable role.',
-					'If ownership changes inside the step, split the step. That is a handoff, not a detail.'
+					'Only one role can own a step. If the owner changes during the step, split the step to show the handoff.'
 				]
 			}
 		]
@@ -248,28 +224,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'flags',
 		title: 'Flags',
-		description: 'Use flags to mark risk, drift, missing ownership, or places that need review.',
+		description: 'Identify friction and maintain operational momentum.',
 		category: 'Using the atlas',
 		blocks: [
 			{
-				title: 'What to flag',
+				title: 'Targeted identification',
 				body: [
-					'Flag anything that weakens execution: missing owner, unclear input, stale system note, undocumented exception, broken handoff, or decision that still routes to the founder.',
-					'Flags are not polish tasks. They identify places where work can stall.'
+					'Use flags to mark bottlenecks—like missing owners, unclear inputs, or decisions that get stuck. Flags point to operational weaknesses, not formatting issues.'
 				]
 			},
 			{
-				title: 'Make flags specific',
+				title: 'Actionable clarity',
 				body: [
-					'A useful flag names the issue and the object it affects. "Needs cleanup" is vague. "Billing handoff has no output format" is actionable.',
-					'Assign the flag to the role best positioned to fix it.'
+					'Be specific. "Needs review" is too vague. "Missing output format for billing handoff" is actionable. Assign the flag to the role that can fix it.'
 				]
 			},
 			{
-				title: 'Close the loop',
+				title: 'Rhythmic review',
 				body: [
-					'Review flags in the same rhythm as real operations: after onboarding, after client delivery, after a dropped handoff, or after a repeated question.',
-					'Do not let flags become a backlog nobody owns.'
+					'Review flags as part of your regular operations—after onboarding, after project delivery, or after an error—to keep the work moving.'
 				]
 			}
 		]
@@ -277,29 +250,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'handoffs',
 		title: 'Handoffs',
-		description:
-			'Document the edge where work leaves one role and becomes another role’s responsibility.',
+		description: 'Fortify the spaces between roles.',
 		category: 'Using the atlas',
 		blocks: [
 			{
-				title: 'Why handoffs matter',
+				title: 'The point of failure',
 				body: [
-					'Most operational breakage happens between roles, not inside a single task. The sender thinks the work is done; the receiver lacks what they need.',
-					'A handoff is complete only when the next role receives the right output, in the right place, with enough context to act.'
+					'Breakdowns happen in the transition between roles, not inside tasks. A handoff is only successful when the receiver gets the right output, in the right place, with enough context to act.'
 				]
 			},
 			{
-				title: 'Name the sender and receiver',
+				title: 'Explicit transitions',
 				body: [
-					'Every handoff should identify the sending role, receiving role, output, destination, and trigger for the next step.',
-					'If the receiver is "whoever sees it", the handoff is not designed yet.'
+					'Define the sender, the receiver, the output, and the trigger for the next step. If the receiver is unclear, the handoff is incomplete.'
 				]
 			},
 			{
-				title: 'Document the failure mode',
+				title: 'Capture the failure mode',
 				body: [
-					'Add the common thing that goes wrong: missing file, wrong status, unclear priority, no deadline, or silent client exception.',
-					'Failure modes are where tribal knowledge hides. Capture them while they are fresh.'
+					'Document the common errors (like missing files or wrong status tags) to capture local knowledge before it causes a delay.'
 				]
 			}
 		]
@@ -307,21 +276,25 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'users-and-access',
 		title: 'Users and access',
-		description: 'Give teammates the access they need without blurring ownership.',
+		description: 'Distribute visibility without diluting ownership.',
 		category: 'Administration',
 		blocks: [
 			{
-				title: 'Access follows operating need',
+				title: 'Aligned access',
 				body: [
-					'Invite users who need to read, maintain, or operate against the atlas. Keep access aligned with the role they perform in the business.',
-					'Do not use access as a substitute for ownership. A user can edit many things; a role still owns the work.'
+					'Give access based on operational need. Invite team members to read or edit based on the role they perform.'
 				]
 			},
 			{
-				title: 'Review access during role changes',
+				title: 'Access is not accountability',
 				body: [
-					'When someone changes seats, review the roles, systems, and processes they touch.',
-					'The operating map should make access reviews easier because it shows which systems and actions depend on the role.'
+					'Being able to edit a process does not make you the owner. The role remains the single point of accountability.'
+				]
+			},
+			{
+				title: 'Intentional transitions',
+				body: [
+					'When someone changes seats, use the map to review the systems and processes they touch to ensure a clean handoff of access.'
 				]
 			}
 		]
@@ -329,21 +302,19 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'workspace-settings',
 		title: 'Workspace settings',
-		description: 'Keep workspace-level details aligned with the business unit being mapped.',
+		description: 'Maintain a cohesive and recognizable environment.',
 		category: 'Administration',
 		blocks: [
 			{
-				title: 'Use plain names',
+				title: 'Clarity in naming',
 				body: [
-					'Name the workspace after the company or operating unit your team recognizes. Clever internal labels make search and support harder.',
-					'If you operate multiple brands or divisions, create a naming convention before the second workspace appears.'
+					'Name the workspace after the company or business unit your team recognizes. Avoid clever codes or names that confuse new hires.'
 				]
 			},
 			{
-				title: 'Keep ownership visible',
+				title: 'Visible administration',
 				body: [
-					'The workspace should have a clear administrative owner responsible for access, hygiene, and escalation.',
-					'That owner does not need to maintain every process, but they should know who does.'
+					'Assign a clear owner for workspace hygiene and access. They do not have to maintain every process, but they are responsible for the structure.'
 				]
 			}
 		]
@@ -351,21 +322,19 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'exporting-your-data',
 		title: 'Exporting your data',
-		description: 'Understand what to preserve when you need a copy of the atlas.',
+		description: 'Preserve the architecture of your operations.',
 		category: 'Administration',
 		blocks: [
 			{
-				title: 'Export the relationships',
+				title: 'Relational value',
 				body: [
-					'The value of the atlas is not just the text fields. It is the connections between roles, processes, systems, actions, and handoffs.',
-					'When preparing an export, preserve enough structure that another person can see what owns what and where work moves next.'
+					'The value of the map is the connections between roles, systems, and processes. Keep this structure intact during exports so the workflow remains clear.'
 				]
 			},
 			{
-				title: 'Use exports for review, not drift',
+				title: 'Audits, not drift',
 				body: [
-					'Exports are useful for audits, reviews, and transition planning. They should not become a parallel documentation system.',
-					'If the exported copy gets edited separately, the atlas is no longer the source of truth.'
+					'Use exports for reviews or audits. Do not update exported files separately, or you will create a second source of truth.'
 				]
 			}
 		]
@@ -373,21 +342,19 @@ export const docsArticles: DocsArticle[] = [
 	{
 		slug: 'deleting-your-data',
 		title: 'Deleting your data',
-		description: 'Plan deletion so operational ownership and records are handled intentionally.',
+		description: 'Manage operational records with intention.',
 		category: 'Administration',
 		blocks: [
 			{
-				title: 'Before deletion',
+				title: 'Calculated removal',
 				body: [
-					'Confirm which workspace, records, or user data you intend to remove. Deletion should be specific enough that no one is surprised by the operational impact.',
-					'If the atlas is being replaced, decide where the source of truth will live afterward.'
+					'Before deleting workspaces or records, check the operational impact to make sure you do not break active workflows.'
 				]
 			},
 			{
-				title: 'Operational handoff',
+				title: 'Managed transitions',
 				body: [
-					'Before deleting material that people still rely on, assign a role to own the transition.',
-					'The goal is not to preserve everything forever. The goal is to avoid deleting the map while the team is still using it to operate.'
+					'If you delete or change a process, assign a role to manage the transition so the team is not left without a clear standard.'
 				]
 			}
 		]

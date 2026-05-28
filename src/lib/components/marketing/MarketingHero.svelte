@@ -9,6 +9,7 @@
 	};
 
 	let {
+		kicker,
 		headline,
 		rotatingWords = [],
 		subhead,
@@ -19,8 +20,10 @@
 		primaryExternal = false,
 		secondaryExternal = false,
 		onPrimaryClick,
-		onSecondaryClick
+		onSecondaryClick,
+		onImageClick
 	}: {
+		kicker?: string;
 		headline: string;
 		rotatingWords?: string[];
 		subhead: string;
@@ -32,13 +35,17 @@
 		secondaryExternal?: boolean;
 		onPrimaryClick?: () => void;
 		onSecondaryClick?: () => void;
+		onImageClick?: () => void;
 	} = $props();
 </script>
 
 <section class="marketing-section marketing-section-hero">
 	<div class="marketing-container-narrow hero-grid">
 		<div class="hero-content">
-			<h1 class="hero-title">
+			{#if kicker}
+				<p class="hero-kicker"><BrandText text={kicker} /></p>
+			{/if}
+			<h1 class="hero-title" class:hero-title-with-kicker={Boolean(kicker)}>
 				{#if rotatingWords.length}
 					<span class="hero-title-grid">
 						<span class="hero-title-lead"><BrandText text={headline} />&nbsp;</span>
@@ -78,7 +85,30 @@
 		<div class="hero-visual" class:hero-visual-framed={Boolean(imageSrc)}>
 			{#if imageSrc}
 				<div class="hero-image-shell">
-					<img class="hero-image" src={imageSrc} alt={imageAlt} loading="eager" decoding="async" />
+					{#if onImageClick}
+						<button
+							type="button"
+							class="hero-image-btn"
+							onclick={onImageClick}
+							aria-label="Zoom in on hero interface diagram"
+						>
+							<img
+								class="hero-image"
+								src={imageSrc}
+								alt={imageAlt}
+								loading="eager"
+								decoding="async"
+							/>
+						</button>
+					{:else}
+						<img
+							class="hero-image"
+							src={imageSrc}
+							alt={imageAlt}
+							loading="eager"
+							decoding="async"
+						/>
+					{/if}
 				</div>
 			{:else}
 				<AtlasHeroVisual />
@@ -88,11 +118,29 @@
 </section>
 
 <style>
+	.hero-kicker {
+		font-size: var(--fs-small, 0.875rem);
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: rgb(var(--accent));
+		margin: 0 0 0.5rem;
+	}
+
 	.hero-grid {
 		display: grid;
 		grid-template-columns: 1fr 1fr;
 		gap: 4rem;
 		align-items: center;
+	}
+
+	.hero-image-btn {
+		display: block;
+		width: 100%;
+		border: none;
+		background: none;
+		padding: 0;
+		cursor: zoom-in;
 	}
 
 	.hero-visual {

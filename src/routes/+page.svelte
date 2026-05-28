@@ -1,6 +1,6 @@
 <script lang="ts">
+	import ImageModal from '$lib/components/ImageModal.svelte';
 	import CardGridSection from '$lib/components/marketing/CardGridSection.svelte';
-	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
 	import PricingSection from '$lib/components/marketing/PricingSection.svelte';
@@ -9,8 +9,8 @@
 	import { site } from './content';
 
 	const footerLinks = [
-		{ label: 'What sets us apart', href: '/#problem' },
-		{ label: 'Reactions', href: '/#reactions' },
+		{ label: 'Our Edge', href: '/#problem' },
+		{ label: 'User Reactions', href: '/#reactions' },
 		{ label: 'Pricing', href: '/#pricing' },
 		{ label: 'How', href: '/method' },
 		{ label: 'Docs', href: '/docs' },
@@ -44,6 +44,9 @@
 			trackSignupStart(location);
 		}
 	};
+
+	let activeModalImage = $state<string | null>(null);
+	let activeModalAlt = $state('');
 </script>
 
 <svelte:head>
@@ -68,6 +71,10 @@
 			imageAlt={site.hero.imageAlt}
 			onPrimaryClick={trackHeroPrimaryCta}
 			onSecondaryClick={() => trackDemoClick('home_hero_secondary')}
+			onImageClick={() => {
+				activeModalImage = site.hero.imageSrc;
+				activeModalAlt = site.hero.imageAlt ?? '';
+			}}
 		/>
 
 		<CardGridSection
@@ -94,25 +101,8 @@
 			onFreeLinkClick={() => trackSignupStart('home_pricing_free_link')}
 		/>
 
-		<CardGridSection
-			id="trust"
-			headline={site.trust.headline}
-			subhead={site.trust.subhead}
-			items={site.trust.items}
-		/>
-
-		<FinalCtaSection
-			headline={site.finalCta.headline}
-			text={site.finalCta.text}
-			ctas={[
-				{
-					label: site.finalCta.cta.label,
-					href: site.finalCta.cta.href,
-					onclick: () => trackSignupStart('home_final_cta')
-				}
-			]}
-		/>
-
 		<MarketingFooter links={footerLinks} />
 	</div>
 </div>
+
+<ImageModal src={activeModalImage} alt={activeModalAlt} onClose={() => (activeModalImage = null)} />

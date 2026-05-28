@@ -287,7 +287,7 @@ export const site = {
 	},
 
 	footer: {
-		tagline: 'Handle Your Business.',
+		tagline: 'Own it.',
 		copyrightName: 'Quaestor'
 	} as const
 } as const;
