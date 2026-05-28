@@ -375,8 +375,7 @@ export const site = {
 		legalLinks: [
 			{ label: 'Privacy', href: '/legal#privacy' },
 			{ label: 'Terms', href: '/legal#terms' },
-			{ label: 'DPA', href: '/legal#dpa' },
-			{ label: 'Subprocessors', href: '/legal#subprocessors' }
+			{ label: 'DPA', href: '/legal#dpa' }
 		],
 		productLinks: [
 			{ label: 'Our Edge', href: '/#problem' },

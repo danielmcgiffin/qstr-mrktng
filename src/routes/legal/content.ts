@@ -1,5 +1,3 @@
-import { securityContent } from '../security/content';
-
 export type LegalSection = {
 	id: string;
 	title: string;
@@ -63,17 +61,6 @@ export const legalContent: LegalContent = {
 				'A Data Processing Addendum is available for customers who need one for procurement, vendor review, or privacy review.',
 				`Request a DPA at ${'support@cursus.tools'}.`
 			]
-		},
-		{
-			id: 'subprocessors',
-			title: 'Subprocessors',
-			paragraphs: [
-				'Quaestor uses a limited set of infrastructure and service providers to operate the product and public trust-signal flows.'
-			],
-			items: securityContent.subprocessors.items.map(
-				(provider) => `${provider.name}: ${provider.purpose}`
-			),
-			links: [{ label: 'Read security posture', href: '/security' }]
 		}
 	]
 };
