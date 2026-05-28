@@ -3,8 +3,6 @@
 	import BrandText from '$lib/components/BrandText.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import { legalContent as content } from './content';
-
-	const supportHref = `mailto:${content.supportEmail}`;
 </script>
 
 <svelte:head>
@@ -24,11 +22,6 @@
 			<div class="marketing-container-narrow">
 				<h1 class="hero-title legal-title"><BrandText text={content.title} /></h1>
 				<p class="legal-intro"><BrandText text={content.intro} /></p>
-
-				<div class="legal-contact-card">
-					<p><BrandText text={content.entityName} /></p>
-					<a href={supportHref}>{content.supportEmail}</a>
-				</div>
 			</div>
 		</section>
 
@@ -94,32 +87,12 @@
 		text-wrap: pretty;
 	}
 
-	.legal-contact-card {
-		display: grid;
-		gap: 0.25rem;
-		width: fit-content;
-		margin-top: 2rem;
-		border: 1px solid rgb(var(--border));
-		border-radius: var(--radius-lg);
-		background: rgb(var(--bg-panel));
-		padding: 1rem;
-		font-size: var(--fs-small);
-	}
-
-	.legal-contact-card p {
-		margin: 0;
-		color: rgb(var(--surface-text-strong));
-		font-weight: 600;
-	}
-
-	.legal-contact-card a,
 	.legal-row-links a {
 		color: rgb(var(--accent));
 		font-weight: 500;
 		text-decoration: none;
 	}
 
-	.legal-contact-card a:hover,
 	.legal-row-links a:hover {
 		color: rgb(var(--accent-deep));
 	}

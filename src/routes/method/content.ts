@@ -79,7 +79,7 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'map-reality',
 						title: 'Map the reality',
-						desc: 'Audit what you already have: Slack threads, screenshots, and the checklists your team actually uses. Start exactly where it hurts—the recurring question, the dropped handoff, or the bottleneck that stops execution.'
+						desc: 'Audit what you already have: Slack threads, screenshots, and the checklists your team actually uses. Start exactly where it hurts: the recurring question, the dropped handoff, or the bottleneck that stops execution.'
 					},
 					{
 						id: 'define-handoffs',
@@ -128,7 +128,7 @@ export const methodContent: MethodContentSection[] = [
 					{
 						id: 'no-consultant-theater',
 						title: 'No consultant theater',
-						desc: 'We map the real territory. No maturity models, no abstract slides, and no heavy frameworks that die on day one.'
+						desc: 'We map the real territory. No "maturity models" or abstract slides. And no heavy frameworks that die on day one.'
 					},
 					{
 						id: 'relationships-not-documents',
