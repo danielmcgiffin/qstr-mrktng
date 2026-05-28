@@ -564,19 +564,14 @@
 		<section class="relative py-12 md:py-20">
 			<div class="mx-auto w-full max-w-5xl px-6">
 				<div class="text-center">
-					<span
-						class="mx-auto inline-flex w-fit items-center gap-2 rounded-full border border-[rgb(var(--accent))]/20 bg-[rgb(var(--accent))]/5 px-3 py-1 text-xs text-[rgb(var(--accent))]"
-					>
-						SOP score
-					</span>
-					<h1 class="mt-6 text-4xl font-semibold tracking-tight text-balance md:text-5xl">
+					<h1 class="text-4xl font-semibold tracking-tight text-balance md:text-5xl">
 						Paste an SOP.
 					</h1>
 					<h2 class="mt-4 text-2xl font-semibold tracking-tight text-balance md:text-3xl">
 						Get two scores. See what breaks.
 					</h2>
 					<p class="mx-auto mt-4 max-w-2xl text-pretty text-[rgb(var(--muted))]">
-						Paste the process. Add your email. Get the score. Fix what breaks.
+						Paste the process. Add your email. Get the score. Find what's broken.
 					</p>
 				</div>
 
