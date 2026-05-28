@@ -110,12 +110,12 @@ select {
 
 .marketing-section-hero {
 	padding-block: 2.625rem 3.75rem;
-	background-color: #2b1a1a;
+	background-color: #1b1b1b;
 	--text: 249 245 236; /* Cream / parchment */
 	--text-muted: 195 186 170; /* Muted cream */
 	--muted: 195 186 170;
 	--accent: 163 31 33; /* Anchor crimson */
-	--border: 90 75 75; /* Dark warm border */
+	--border: 48 48 48; /* Neutral dark border */
 }
 
 .marketing-section-hero .btn-secondary {
