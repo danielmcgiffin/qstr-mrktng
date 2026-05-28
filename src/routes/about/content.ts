@@ -65,9 +65,8 @@ export const aboutContent: AboutContent = {
 			headshotSrc: '/John_headshot.jpeg',
 			headshotAlt: 'Headshot of John Marlett',
 			bio: [
-				"John turns Quaestor's atlas model into working product infrastructure.",
-				'He works closest to the places where product claims become real: user experience, architecture, data, security, and the application itself.'
-			]
+				"John is like a happy little house elf, quietly humming away on making sure this thing turns on."
+				]
 		}
 	],
 	finalCta: {
