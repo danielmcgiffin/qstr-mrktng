@@ -65,7 +65,9 @@ export const aboutContent: AboutContent = {
 			headshotSrc: '/John_headshot.jpeg',
 			headshotAlt: 'Headshot of John Marlett',
 			bio: [
-				'John is like a happy little house elf, quietly humming away on making sure this thing turns on.'
+				"It's often said the best solution is the simplest one.",
+				'John likes writing things down and designing systems that work for everyone.',
+				'Quaestor is his solution to the business problem of **needing to write things down**.'
 			]
 		}
 	],
