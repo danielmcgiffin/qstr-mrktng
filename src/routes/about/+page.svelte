@@ -107,6 +107,7 @@
 
 	.founder-card {
 		display: grid;
+		align-content: start;
 		gap: 1.25rem;
 		border: 1px solid rgb(var(--border));
 		border-radius: var(--radius-lg);
