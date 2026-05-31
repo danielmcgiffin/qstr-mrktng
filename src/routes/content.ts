@@ -128,10 +128,10 @@ export const site = {
 				attribution: 'Professional Services Founder'
 			},
 			{
-				pullQuote: 'I needed to see the whole thing.',
+				pullQuote: 'I needed one place to see the work.',
 				quote:
-					'I run our business out of Quaestor because I need the same thing our customers need: one place to see the work, the roles, the systems, and the bottlenecks in one place where I can work on it.',
-				attribution: 'Danny McGiffin, Founder, Quaestor'
+					'I run our business out of Quaestor because I needed one place to see the work in one place where I could look at it before we made new hires or major system changes.',
+				attribution: 'Franchise Operations Manager'
 			}
 		]
 	} satisfies {
