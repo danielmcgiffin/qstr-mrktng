@@ -122,9 +122,9 @@ export const site = {
 				attribution: 'Podcast Producer'
 			},
 			{
-				pullQuote: 'We\'re excited to have Quaestor.',
+				pullQuote: "We're excited to have Quaestor.",
 				quote:
-					'We\'re excited to have Quaestor serve as our operations\'s central hub. It lets us document and share key workflows with our team and helps us scale our business with confidence.',
+					"We're excited to have Quaestor serve as our operations's central hub. It lets us document and share key workflows with our team and helps us scale our business with confidence.",
 				attribution: 'Franchise Operations Manager'
 			},
 			{
