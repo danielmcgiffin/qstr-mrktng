@@ -122,16 +122,16 @@ export const site = {
 				attribution: 'Podcast Producer'
 			},
 			{
-				pullQuote: 'He was off to the races.',
+				pullQuote: 'We\'re excited to have Quaestor.',
 				quote:
-					'I got Quaestor set up before I made my first operations hire and he was off to the races. Literally been keeping me sane.',
-				attribution: 'Professional Services Founder'
+					'We\'re excited to have Quaestor serve as our operations\'s central hub. It lets us document and share key workflows with our team and helps us scale our business with confidence.',
+				attribution: 'Franchise Operations Manager'
 			},
 			{
 				pullQuote: 'I needed one place to see the work.',
 				quote:
 					'I run our business out of Quaestor because I needed one place to see the work in one place where I could look at it before we made new hires or major system changes.',
-				attribution: 'Franchise Operations Manager'
+				attribution: 'Technology Founder'
 			}
 		]
 	} satisfies {
