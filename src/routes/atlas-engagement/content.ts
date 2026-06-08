@@ -44,7 +44,7 @@ export type AtlasEngagementContent = {
 	footerLine: string;
 };
 
-const bookingHref = 'https://tidycal.com/atlas-build/explo';
+const bookingHref = 'https://tidycal.com/atlas-build/atlas';
 
 export const atlasEngagementContent: AtlasEngagementContent = {
 	eyebrow: 'The Atlas Engagement',
@@ -105,8 +105,8 @@ export const atlasEngagementContent: AtlasEngagementContent = {
 		"No pretending AI alone fixes operations. We extract what is in people's heads."
 	],
 	priceHeading: 'Price',
-	price: '$7,500 one-time',
-	priceSubtext: 'Includes the 4-week engagement and 12 months of platform access.',
+	price: '$7,500',
+	priceSubtext: 'Includes the 4-week engagement and 12 months of Quaestor.',
 	priceAfterYearOne: 'After year 1, platform access is $3,000/yr, flat.',
 	guaranteeHeading: 'Our guarantee',
 	guaranteeParagraphs: [

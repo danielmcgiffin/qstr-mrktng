@@ -1,4 +1,7 @@
 <script lang="ts">
+	import BrandText from '$lib/components/BrandText.svelte';
+	import ImageModal from '$lib/components/ImageModal.svelte';
+	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import { trackEvent } from '$lib/analytics';
 	import { atlasEngagementContent as content } from './content';
@@ -10,6 +13,9 @@
 	const trackTransitionApply = (location: string) => {
 		trackEvent('booking_click', { location, type: 'transition_atlas' });
 	};
+
+	let activeModalImage = $state<string | null>(null);
+	let activeModalAlt = $state('');
 </script>
 
 <svelte:head>
@@ -22,19 +28,22 @@
 
 <div class="marketing-page">
 	<div class="marketing-page-inner atlas-engagement-page">
+		<!-- HERO SECTION -->
 		<section class="marketing-section marketing-section-hero">
-			<div class="marketing-container-narrow">
-				<div class="atlas-hero panel-card">
-					<h1 class="hero-title atlas-hero-title">{content.headline}</h1>
-					<p class="atlas-subheadline">{content.subheadline}</p>
+			<div class="marketing-container-narrow hero-grid">
+				<div class="hero-content">
+					<h1 class="hero-title"><BrandText text={content.headline} /></h1>
+					<p class="hero-subhead"><BrandText text={content.subheadline} /></p>
 
-					<div class="atlas-copy">
+					<div
+						style="margin-top: 1rem; display: grid; gap: 0.75rem; color: rgb(var(--muted)); font-size: 0.975rem; line-height: 1.65;"
+					>
 						{#each content.heroParagraphs as paragraph}
-							<p>{paragraph}</p>
+							<p><BrandText text={paragraph} /></p>
 						{/each}
 					</div>
 
-					<div class="atlas-hero-cta">
+					<div class="button-row" style="margin-top: 1.5rem;">
 						<a
 							class="btn btn-primary"
 							href={content.primaryCta.href}
@@ -42,54 +51,83 @@
 							rel="noreferrer"
 							onclick={() => trackAtlasFitCall('atlas_hero_primary')}
 						>
-							{content.primaryCta.label}
+							{content.primaryCta.label} <span aria-hidden="true">&rarr;</span>
 						</a>
-						<p class="atlas-note">{content.heroAvailabilityNote}</p>
+					</div>
+					<p style="margin-top: 0.6rem; color: rgb(var(--muted)); font-size: var(--fs-small);">
+						{content.heroAvailabilityNote}
+					</p>
+				</div>
+				<div class="hero-visual hero-visual-framed">
+					<div class="hero-image-shell">
+						<button
+							type="button"
+							class="hero-image-btn"
+							onclick={() => {
+								activeModalImage = '/Hero.png';
+								activeModalAlt = 'Quaestor operational atlas hero image.';
+							}}
+							aria-label="Zoom in on hero interface diagram"
+						>
+							<img
+								class="hero-image"
+								src="/Hero.png"
+								alt="Quaestor operational atlas hero image."
+								loading="eager"
+								decoding="async"
+							/>
+						</button>
 					</div>
 				</div>
 			</div>
 		</section>
 
-		<section class="marketing-section atlas-section-tight">
+		<!-- WEEKS SECTION -->
+		<section class="marketing-section">
 			<div class="marketing-container-narrow">
-				<h2 class="section-title atlas-section-title-left">{content.weeksHeading}</h2>
-				<div class="atlas-grid atlas-grid-2">
+				<div class="section-header">
+					<h2 class="section-title"><BrandText text={content.weeksHeading} /></h2>
+				</div>
+				<div class="card-grid card-grid-two">
 					{#each content.weeks as week}
-						<article class="panel-card atlas-week-card">
-							<span class="atlas-week-badge">{week.badge}</span>
-							<h3 class="card-title atlas-card-title">{week.title}</h3>
-							<p class="card-copy atlas-card-copy">{week.body}</p>
+						<article class="panel-card">
+							<span class="step-badge" style="margin-bottom: 0.75rem;">{week.badge}</span>
+							<h3 class="card-title"><BrandText text={week.title} /></h3>
+							<p class="card-copy" style="margin-top: 0.65rem;"><BrandText text={week.body} /></p>
 						</article>
 					{/each}
 				</div>
 			</div>
 		</section>
 
-		<section class="marketing-section atlas-section-tight">
-			<div class="marketing-container-narrow">
-				<div class="panel-card atlas-list-card">
-					<h2 class="section-title atlas-section-title-left">{content.includedHeading}</h2>
-					<ul class="atlas-list atlas-list-check">
+		<!-- WHAT'S INCLUDED & NOT INCLUDED SECTION -->
+		<section class="marketing-section">
+			<div class="marketing-container-narrow" style="display: grid; gap: 1.5rem;">
+				<div class="panel-card">
+					<h2 class="section-title" style="margin-bottom: 1.5rem;">
+						<BrandText text={content.includedHeading} />
+					</h2>
+					<ul class="check-list">
 						{#each content.includedItems as item}
 							<li>
-								<span class="atlas-list-mark" aria-hidden="true">✓</span>
-								<span>{item}</span>
+								<span class="check-mark" aria-hidden="true">&#10003;</span>
+								<span><BrandText text={item} /></span>
 							</li>
 						{/each}
 					</ul>
 				</div>
-			</div>
-		</section>
-
-		<section class="marketing-section atlas-section-tight">
-			<div class="marketing-container-narrow">
-				<div class="panel-card panel-card-soft atlas-list-card atlas-negative-card">
-					<h2 class="section-title atlas-section-title-left">{content.notIncludedHeading}</h2>
-					<ul class="atlas-list atlas-list-negative">
+				<div class="panel-card panel-card-soft">
+					<h2 class="section-title" style="margin-bottom: 1.5rem;">
+						<BrandText text={content.notIncludedHeading} />
+					</h2>
+					<ul class="check-list" style="color: rgb(var(--text-muted));">
 						{#each content.notIncludedItems as item}
 							<li>
-								<span class="atlas-list-mark" aria-hidden="true">×</span>
-								<span>{item}</span>
+								<span
+									style="color: rgb(var(--accent)); font-weight: 600; font-family: var(--font-mono); margin-right: 0.25rem;"
+									>×</span
+								>
+								<span><BrandText text={item} /></span>
 							</li>
 						{/each}
 					</ul>
@@ -97,42 +135,47 @@
 			</div>
 		</section>
 
-		<section class="marketing-section atlas-section-tight">
-			<div class="marketing-container-tight atlas-price-wrap">
-				<h2 class="section-title">{content.priceHeading}</h2>
-				<p class="atlas-price-value">{content.price}</p>
-				<p class="section-copy section-copy-large atlas-price-copy">{content.priceSubtext}</p>
-				<p class="section-copy atlas-price-copy-subtle">{content.priceAfterYearOne}</p>
+		<!-- PRICE SECTION -->
+		<section class="marketing-section">
+			<div class="marketing-container-tight" style="text-align: center;">
+				<p
+					style="font-family: var(--font-display); font-size: clamp(2.5rem, 6vw, 3.5rem); font-weight: 700; color: rgb(var(--text)); margin-top: 0.5rem;"
+				>
+					<BrandText text={content.price} />
+				</p>
+				<p class="section-copy section-copy-large" style="margin-inline: auto;">
+					<BrandText text={content.priceSubtext} />
+				</p>
 			</div>
 		</section>
 
-		<!--
-		<section class="marketing-section atlas-section-tight">
+		<!-- IS THIS FOR YOU SECTION -->
+		<section class="marketing-section">
 			<div class="marketing-container-narrow">
-				<div class="final-cta atlas-guarantee">
-					<h2 class="final-cta-title">{content.guaranteeHeading}</h2>
-					<div class="atlas-guarantee-copy">
-						{#each content.guaranteeParagraphs as paragraph}
-							<p>{paragraph}</p>
-						{/each}
-					</div>
+				<div class="section-header">
+					<h2 class="section-title"><BrandText text={content.qualificationHeading} /></h2>
 				</div>
-			</div>
-		</section>
-		-->
-
-		<section class="marketing-section atlas-section-tight">
-			<div class="marketing-container-narrow">
-				<h2 class="section-title atlas-section-title-left">{content.qualificationHeading}</h2>
-				<div class="atlas-grid atlas-grid-2">
+				<div class="card-grid card-grid-two">
 					{#each content.qualificationColumns as column}
-						<div class="panel-card atlas-qualification-card">
-							<h3 class="card-title atlas-card-title">{column.heading}</h3>
-							<ul class="atlas-list atlas-list-dot">
+						<div class="panel-card">
+							<h3
+								class="card-title"
+								style="font-size: var(--fs-h3); font-family: var(--font-body); font-weight: 600; margin-bottom: 1rem;"
+							>
+								<BrandText text={column.heading} />
+							</h3>
+							<ul class="check-list">
 								{#each column.items as item}
 									<li>
-										<span class="atlas-list-mark" aria-hidden="true">•</span>
-										<span>{item}</span>
+										{#if column.heading.includes('not')}
+											<span
+												style="color: rgb(var(--text-muted)); font-weight: bold; margin-right: 0.25rem;"
+												>•</span
+											>
+										{:else}
+											<span class="check-mark" aria-hidden="true">&#10003;</span>
+										{/if}
+										<span><BrandText text={item} /></span>
 									</li>
 								{/each}
 							</ul>
@@ -142,31 +185,30 @@
 			</div>
 		</section>
 
-		<section class="marketing-section atlas-section-tight">
-			<div class="marketing-container-tight atlas-availability-wrap">
-				<h2 class="section-title">{content.availabilityHeading}</h2>
-				<p class="section-copy section-copy-large atlas-availability-copy">
-					{content.availabilityBody}
-				</p>
-				<a
-					class="btn btn-primary"
-					href={content.primaryCta.href}
-					target="_blank"
-					rel="noreferrer"
-					onclick={() => trackAtlasFitCall('atlas_availability_primary')}
-				>
-					{content.primaryCta.label}
-				</a>
-			</div>
-		</section>
+		<!-- AVAILABILITY SECTION -->
+		<FinalCtaSection
+			headline={content.availabilityHeading}
+			text={content.availabilityBody}
+			ctas={[
+				{
+					label: content.primaryCta.label,
+					href: content.primaryCta.href,
+					external: true,
+					onclick: () => trackAtlasFitCall('atlas_availability_primary')
+				}
+			]}
+		/>
 
-		<section class="marketing-section atlas-section-tight">
+		<!-- UPSELL SECTION -->
+		<section class="marketing-section">
 			<div class="marketing-container-narrow">
-				<div class="panel-card panel-card-soft atlas-upsell-card">
-					<h2 class="section-title atlas-section-title-left">{content.upsellHeading}</h2>
-					<div class="atlas-copy atlas-upsell-copy">
+				<div class="panel-card panel-card-soft">
+					<h2 class="section-title" style="margin-bottom: 1rem;">
+						<BrandText text={content.upsellHeading} />
+					</h2>
+					<div class="section-copy" style="margin-bottom: 1.5rem; display: grid; gap: 0.75rem;">
 						{#each content.upsellParagraphs as paragraph}
-							<p>{paragraph}</p>
+							<p><BrandText text={paragraph} /></p>
 						{/each}
 					</div>
 					<a
@@ -182,9 +224,14 @@
 			</div>
 		</section>
 
-		<section class="marketing-section atlas-section-tight atlas-footer-line-section">
+		<!-- FOOTER LINE SECTION -->
+		<section class="marketing-section" style="padding-top: 1rem; padding-bottom: 2rem;">
 			<div class="marketing-container-narrow">
-				<p class="atlas-footer-line">{content.footerLine}</p>
+				<p
+					style="margin: 0; font-size: var(--fs-small); line-height: 1.65; font-style: italic; color: rgb(var(--text-muted)); text-align: center;"
+				>
+					<BrandText text={content.footerLine} />
+				</p>
 			</div>
 		</section>
 
@@ -192,196 +239,68 @@
 	</div>
 </div>
 
+<ImageModal src={activeModalImage} alt={activeModalAlt} onClose={() => (activeModalImage = null)} />
+
 <style>
 	.atlas-engagement-page {
 		padding-top: 0.5rem;
 	}
 
-	.atlas-section-tight {
-		padding-block: 1.35rem;
-	}
-
-	.atlas-hero {
-		text-align: left;
-		padding: 1.75rem;
-	}
-
-	.atlas-hero-title {
-		margin-top: 0.75rem;
-		font-size: clamp(2.1rem, 6vw, 3.6rem);
-		text-align: left;
-	}
-
-	.atlas-subheadline {
-		margin: 0.85rem 0 0;
-		font-size: clamp(1.15rem, 2.2vw, 1.5rem);
-		font-weight: 500;
-		line-height: 1.35;
-		color: rgb(var(--surface-text-strong));
-	}
-
-	.atlas-copy {
-		margin-top: 1rem;
+	.hero-grid {
 		display: grid;
-		gap: 0.75rem;
-		color: rgb(var(--muted));
-		font-size: 0.975rem;
-		line-height: 1.65;
-	}
-
-	.atlas-hero-cta {
-		margin-top: 1.35rem;
-	}
-
-	.atlas-note {
-		margin: 0.6rem 0 0;
-		color: rgb(var(--muted));
-		font-size: var(--fs-small);
-	}
-
-	.atlas-section-title-left {
-		text-align: left;
-		font-size: clamp(1.65rem, 3.2vw, 2.25rem);
-	}
-
-	.atlas-grid {
-		display: grid;
-		gap: 1rem;
-		margin-top: 1rem;
-	}
-
-	.atlas-grid-2 {
 		grid-template-columns: 1fr;
+		gap: 2.5rem;
+		align-items: center;
 	}
 
-	.atlas-week-card,
-	.atlas-qualification-card,
-	.atlas-list-card,
-	.atlas-upsell-card {
-		padding: 1.25rem;
+	.hero-visual-framed {
+		justify-self: stretch;
 	}
 
-	.atlas-week-badge {
-		display: inline-flex;
-		padding: 0.2rem 0.65rem;
-		border-radius: var(--radius-pill);
-		border: 1px solid rgb(var(--accent));
-		background: rgb(var(--accent-tint));
-		color: rgb(var(--accent));
-		font-family: var(--font-mono);
-		font-size: 0.6875rem;
-		line-height: 1;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
+	.hero-image-shell {
+		position: relative;
+		width: min(100%, 34rem);
+		margin-inline: auto;
+		padding: clamp(0.625rem, 1.2vw, 0.95rem);
+		border: 1px solid rgb(var(--border));
+		border-radius: calc(var(--radius-lg) + 0.75rem);
+		background: rgb(var(--bg-panel));
+		box-shadow:
+			0 18px 36px rgb(var(--text) / 0.08),
+			inset 0 1px 0 rgb(255 255 255 / 0.65);
 	}
 
-	.atlas-card-title {
-		margin-top: 0.75rem;
-		font-size: 1.05rem;
+	.hero-image {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: var(--radius-lg);
+		box-shadow: 0 0 0 1px rgb(var(--border) / 0.55);
 	}
 
-	.atlas-card-copy {
-		margin-top: 0.65rem;
-		line-height: 1.65;
+	.hero-visual {
+		min-width: 0;
 	}
 
-	.atlas-list {
-		margin: 1rem 0 0;
+	.hero-image-btn {
+		display: block;
+		width: 100%;
+		border: none;
+		background: none;
 		padding: 0;
-		display: grid;
-		gap: 0.65rem;
-		list-style: none;
-	}
-
-	.atlas-list li {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.55rem;
-		color: rgb(var(--muted));
-		font-size: 0.95rem;
-		line-height: 1.6;
-	}
-
-	.atlas-list-mark {
-		flex: 0 0 auto;
-		font-weight: 600;
-		color: rgb(var(--accent));
-	}
-
-	.atlas-negative-card {
-		border-color: rgb(var(--border-strong));
-	}
-
-	.atlas-price-wrap,
-	.atlas-availability-wrap {
-		text-align: center;
-	}
-
-	.atlas-price-value {
-		margin: 0.6rem 0 0;
-		font-size: clamp(2.35rem, 7vw, 3.4rem);
-		font-weight: 600;
-		line-height: 1.08;
-		color: rgb(var(--surface-text-strong));
-	}
-
-	.atlas-price-copy {
-		margin-top: 0.65rem;
-	}
-
-	.atlas-price-copy-subtle {
-		margin-top: 0.2rem;
-	}
-
-	/*
-	.atlas-guarantee {
-		text-align: left;
-		padding: 1.75rem;
-	}
-
-	.atlas-guarantee-copy {
-		margin-top: 1rem;
-		display: grid;
-		gap: 0.7rem;
-		color: rgb(var(--muted));
-		font-size: 0.96rem;
-		line-height: 1.62;
-	}
-	*/
-
-	.atlas-availability-copy {
-		margin-bottom: 1rem;
-	}
-
-	.atlas-upsell-copy {
-		margin-bottom: 1.05rem;
-	}
-
-	.atlas-footer-line-section {
-		padding-top: 1.1rem;
-		padding-bottom: 2.25rem;
-	}
-
-	.atlas-footer-line {
-		margin: 0;
-		font-size: var(--fs-small);
-		line-height: 1.65;
-		font-style: italic;
-		color: rgb(var(--muted));
-		text-align: center;
+		cursor: zoom-in;
 	}
 
 	@media (min-width: 768px) {
-		.atlas-grid-2 {
-			grid-template-columns: repeat(2, minmax(0, 1fr));
+		.hero-grid {
+			grid-template-columns: 1fr 1fr;
+			gap: 4rem;
 		}
+	}
 
-		.atlas-week-card,
-		.atlas-qualification-card,
-		.atlas-list-card,
-		.atlas-upsell-card,
-		.atlas-hero {
-			padding: 1.5rem;
+	@media (max-width: 768px) {
+		.hero-image-shell {
+			width: min(100%, 28rem);
 		}
 	}
 </style>
