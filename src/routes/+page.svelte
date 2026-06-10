@@ -2,11 +2,12 @@
 	import ImageModal from '$lib/components/ImageModal.svelte';
 	import BulletSection from '$lib/components/marketing/BulletSection.svelte';
 	import CardGridSection from '$lib/components/marketing/CardGridSection.svelte';
+	import FaqSection from '$lib/components/marketing/FaqSection.svelte';
 	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
 	import PricingSection from '$lib/components/marketing/PricingSection.svelte';
-	import ProofFaqSection from '$lib/components/marketing/ProofFaqSection.svelte';
+	import ProofSection from '$lib/components/marketing/ProofSection.svelte';
 	import SocialProofSection from '$lib/components/marketing/SocialProofSection.svelte';
 	import StepsSection from '$lib/components/marketing/StepsSection.svelte';
 	import { trackEvent } from '$lib/analytics';
@@ -66,6 +67,7 @@
 			secondaryCta={site.hero.secondaryCta}
 			imageSrc={site.hero.imageSrc}
 			imageAlt={site.hero.imageAlt}
+			imageCaption={site.hero.imageCaption}
 			onPrimaryClick={trackHeroPrimaryCta}
 			onSecondaryClick={() => trackDemoClick('home_hero_secondary')}
 			onImageClick={() => {
@@ -89,6 +91,20 @@
 			items={site.shadowOps.points}
 		/>
 
+		<ProofSection
+			id="proof"
+			headline={site.proof.headline}
+			subhead={site.proof.subhead}
+			items={site.proof.items}
+			demoVideo={site.demo}
+			demoCta={{ label: 'See the demo', href: site.hero.secondaryCta.href }}
+			onDemoClick={() => trackDemoClick('home_proof_demo')}
+			onImageOpen={(src, alt) => {
+				activeModalImage = src;
+				activeModalAlt = alt;
+			}}
+		/>
+
 		<StepsSection
 			id="workflow"
 			headline={site.howItWorks.headline}
@@ -101,22 +117,6 @@
 			headline={site.setsApart.headline}
 			subhead={site.setsApart.subhead}
 			items={site.setsApart.items}
-		/>
-
-		<ProofFaqSection
-			id="proof"
-			headline={site.proof.headline}
-			subhead={site.proof.subhead}
-			items={site.proof.items}
-			demoVideo={site.demo}
-			faqHeadline={site.faq.headline}
-			faqItems={site.faq.items}
-			demoCta={{ label: 'See the demo', href: site.hero.secondaryCta.href }}
-			onDemoClick={() => trackDemoClick('home_proof_demo')}
-			onImageOpen={(src, alt) => {
-				activeModalImage = src;
-				activeModalAlt = alt;
-			}}
 		/>
 
 		<SocialProofSection
@@ -141,6 +141,8 @@
 			onPlanClick={trackPricingPlanClick}
 			onFreeLinkClick={() => trackSignupStart('home_pricing_free_link')}
 		/>
+
+		<FaqSection id="faq" headline={site.faq.headline} items={site.faq.items} />
 
 		<FinalCtaSection
 			headline={site.finalCta.headline}

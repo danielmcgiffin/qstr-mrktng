@@ -36,7 +36,7 @@ export const site = {
 	] satisfies NavItem[],
 
 	navCta: {
-		label: 'Map your business',
+		label: 'Build your workspace',
 		href: `${signupBaseHref}&utm_content=nav`
 	} satisfies CTA,
 
@@ -48,12 +48,14 @@ export const site = {
 		subhead:
 			'Twenty people. Forty. Five, six, eight million in revenue. Real payroll, real clients, and every hard question still routes through you. Quaestor maps who owns what, where it happens, and how the work moves, so your team finds answers without you.',
 		primaryCta: {
-			label: 'Map your business',
+			label: 'Build your workspace',
 			href: `${signupBaseHref}&utm_content=hero`
 		},
-		secondaryCta: { label: 'See how it works', href: demoHref },
+		secondaryCta: { label: 'See how Quaestor works', href: demoHref },
 		imageSrc: '/Hero.webp',
-		imageAlt: 'Quaestor operational atlas: an annotated role map of processes, steps, and systems.'
+		imageAlt: 'Quaestor operational atlas: an annotated role map of processes, steps, and systems.',
+		imageCaption:
+			'One role, mapped: the processes it owns, the steps it runs, the systems it touches. Click to enlarge.'
 	} satisfies {
 		headline: string;
 		subhead: string;
@@ -61,6 +63,7 @@ export const site = {
 		secondaryCta: CTA;
 		imageSrc?: string;
 		imageAlt?: string;
+		imageCaption?: string;
 	},
 
 	// ───────────────────────────────────────────
@@ -195,12 +198,6 @@ export const site = {
 				quote:
 					"Super intuitive. Quaestor breaks down process entry into the questions that actually make written workflows usable. Then it lets you sort and re-sort those processes according to what you need, so they're genuinely transferable - not just useful to the person who wrote them.",
 				attribution: 'Mary, Podcast Producer'
-			},
-			{
-				pullQuote: "We're excited to have Quaestor.",
-				quote:
-					"We're excited to have Quaestor serve as our operations's central hub. It lets us document and share key workflows with our team and helps us scale our business with confidence.",
-				attribution: 'Thomas, Franchise Operations Manager'
 			},
 			{
 				pullQuote: 'I needed one place to see the work.',
@@ -374,6 +371,7 @@ export const site = {
 			{ label: 'Convictions', href: '/#convictions' },
 			{ label: 'Pricing', href: '/#pricing' },
 			{ label: 'How', href: '/method' },
+			{ label: 'AI Score', href: '/ai-score' },
 			{ label: 'Manifesto', href: '/manifesto' },
 			{ label: 'Partners', href: '/partners' },
 			{ label: 'About', href: '/about' }

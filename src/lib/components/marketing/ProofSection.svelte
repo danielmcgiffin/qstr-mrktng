@@ -7,11 +7,6 @@
 		gifSrc?: string;
 	};
 
-	type FaqItem = {
-		q: string;
-		a: string;
-	};
-
 	type CTA = {
 		label: string;
 		href: string;
@@ -30,8 +25,6 @@
 		subhead,
 		items,
 		demoVideo,
-		faqHeadline,
-		faqItems,
 		demoCta,
 		onDemoClick,
 		onImageOpen
@@ -41,8 +34,6 @@
 		subhead: string;
 		items: readonly DetailItem[];
 		demoVideo?: DemoVideo;
-		faqHeadline: string;
-		faqItems: readonly FaqItem[];
 		demoCta: CTA;
 		onDemoClick?: () => void;
 		onImageOpen?: (src: string, alt: string) => void;
@@ -101,25 +92,10 @@
 			{/each}
 		</div>
 
-		<div class="faq-wrap">
-			<h3 class="faq-heading"><BrandText text={faqHeadline} /></h3>
-			<div class="faq-list">
-				{#each faqItems as item}
-					<details class="faq-item">
-						<summary>
-							<span><BrandText text={item.q} /></span>
-							<span class="faq-indicator" aria-hidden="true">&rsaquo;</span>
-						</summary>
-						<p class="card-copy"><BrandText text={item.a} /></p>
-					</details>
-				{/each}
-			</div>
-
-			<div class="proof-cta">
-				<a class="btn btn-secondary" href={demoCta.href} onclick={() => onDemoClick?.()}>
-					{demoCta.label}
-				</a>
-			</div>
+		<div class="proof-cta">
+			<a class="btn btn-secondary" href={demoCta.href} onclick={() => onDemoClick?.()}>
+				{demoCta.label}
+			</a>
 		</div>
 	</div>
 </section>

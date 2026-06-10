@@ -20,10 +20,12 @@
 			{ label: 'DPA', href: '/legal#dpa' }
 		],
 		productLinks: [
-			{ label: 'Our Edge', href: '/#problem' },
-			{ label: 'User Reactions', href: '/#reactions' },
+			{ label: 'The Problem', href: '/#problem' },
+			{ label: 'Convictions', href: '/#convictions' },
 			{ label: 'Pricing', href: '/#pricing' },
 			{ label: 'How', href: '/method' },
+			{ label: 'AI Score', href: '/ai-score' },
+			{ label: 'Manifesto', href: '/manifesto' },
 			{ label: 'Partners', href: '/partners' },
 			{ label: 'About', href: '/about' }
 		]

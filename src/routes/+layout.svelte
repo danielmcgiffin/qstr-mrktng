@@ -93,20 +93,13 @@
 		if (currentPath === '/partners') {
 			return {
 				primary: { label: 'Book a partner call', href: bookingHref },
-				secondary: { label: 'See the Demo', href: demoHref }
-			};
-		}
-
-		if (currentPath === '/ai-score') {
-			return {
-				primary: { label: 'Map your business', href: signupHref },
-				secondary: { label: 'See the Demo', href: demoHref }
+				secondary: { label: 'See the demo', href: demoHref }
 			};
 		}
 
 		return {
-			primary: { label: 'Map your business', href: signupHref },
-			secondary: { label: 'Get your ops AI-ready', href: '/ai-score' }
+			primary: { label: 'Build your workspace', href: signupHref },
+			secondary: { label: 'See the demo', href: demoHref }
 		};
 	});
 	const primaryHeaderCtaAttrs = $derived(getHeaderCtaAttrs(headerCtas.primary.href));

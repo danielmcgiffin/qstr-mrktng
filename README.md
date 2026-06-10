@@ -54,7 +54,7 @@ npm run lint
 
 ### Routes
 
-- `src/routes/+page.svelte` — homepage (hero → pain → mechanism → convictions → proof/FAQ → reactions → tests → pricing → final CTA).
+- `src/routes/+page.svelte` — homepage (hero → pain → diagnosis → product proof → method → convictions → reactions → tests → pricing → FAQ → final CTA).
 - `src/routes/manifesto/+page.svelte` — manifesto page.
 - `src/routes/ai-score/+page.svelte` — **AI Score** (lead-gen tool; previously "Ops Grader").
 - `src/routes/method/+page.svelte` — method landing page.
