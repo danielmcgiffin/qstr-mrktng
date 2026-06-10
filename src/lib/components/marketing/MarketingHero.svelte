@@ -14,6 +14,7 @@
 		secondaryCta,
 		imageSrc,
 		imageAlt = '',
+		imageCaption,
 		primaryExternal = false,
 		secondaryExternal = false,
 		onPrimaryClick,
@@ -27,6 +28,7 @@
 		secondaryCta: CTA;
 		imageSrc?: string;
 		imageAlt?: string;
+		imageCaption?: string;
 		primaryExternal?: boolean;
 		secondaryExternal?: boolean;
 		onPrimaryClick?: () => void;
@@ -70,7 +72,7 @@
 			</div>
 		</div>
 		{#if imageSrc}
-			<div class="hero-visual hero-visual-framed">
+			<figure class="hero-visual hero-visual-framed">
 				<div class="hero-image-shell">
 					{#if onImageClick}
 						<button
@@ -103,7 +105,10 @@
 						/>
 					{/if}
 				</div>
-			</div>
+				{#if imageCaption}
+					<figcaption class="hero-image-caption">{imageCaption}</figcaption>
+				{/if}
+			</figure>
 		{/if}
 	</div>
 </section>
@@ -120,8 +125,8 @@
 
 	.hero-grid {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		gap: 4rem;
+		grid-template-columns: 0.95fr 1.05fr;
+		gap: 3.5rem;
 		align-items: center;
 	}
 
@@ -136,15 +141,26 @@
 
 	.hero-visual {
 		min-width: 0;
+		margin: 0;
 	}
 
 	.hero-visual-framed {
 		justify-self: stretch;
 	}
 
+	.hero-image-caption {
+		max-width: 38rem;
+		margin: 0.85rem auto 0;
+		color: rgb(var(--text-muted));
+		font-size: var(--fs-small);
+		line-height: 1.5;
+		text-align: center;
+		text-wrap: pretty;
+	}
+
 	.hero-image-shell {
 		position: relative;
-		width: min(100%, 34rem);
+		width: min(100%, 38rem);
 		margin-inline: auto;
 		padding: clamp(0.625rem, 1.2vw, 0.95rem);
 		border: 1px solid rgb(var(--border));

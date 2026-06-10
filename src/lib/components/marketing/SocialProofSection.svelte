@@ -103,7 +103,7 @@
 
 	@media (min-width: 900px) {
 		.testimonial-grid {
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+			grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
 		}
 	}
 </style>
