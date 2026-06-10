@@ -5,6 +5,7 @@
 	import { page } from '$app/stores';
 	import { tick } from 'svelte';
 	import {
+		initializeGoogleAnalytics,
 		installInteractionTracking,
 		installPageExposureTracking,
 		normalizeAnalyticsPath,
@@ -13,7 +14,6 @@
 		type AnalyticsPageContext
 	} from '$lib/analytics';
 	import { site } from './content';
-	import { site as partnerSite } from './partners/content';
 
 	let { children } = $props();
 
@@ -34,23 +34,31 @@
 		};
 	};
 
-	const plausibleDomain = env.PUBLIC_PLAUSIBLE_DOMAIN || 'cursus.tools';
 	const defaultGaMeasurementId = 'G-PMQNSJP905';
 	const gaMeasurementId = (env.PUBLIC_GA_MEASUREMENT_ID ?? defaultGaMeasurementId).trim();
 	const validGaMeasurementId = /^G-[A-Z0-9-]+$/i.test(gaMeasurementId) ? gaMeasurementId : '';
 	const gaScriptSrc = validGaMeasurementId
 		? `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(validGaMeasurementId)}`
 		: undefined;
-	const gaBootstrapHtml = validGaMeasurementId
-		? `<script>window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${validGaMeasurementId}',{send_page_view:false});window.qstrGaConfigured='${validGaMeasurementId}';` +
-			'</' +
-			'script>'
-		: '';
 	const siteOrigin = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
+	const siteHost = (() => {
+		try {
+			return new URL(siteOrigin).hostname;
+		} catch {
+			return '';
+		}
+	})();
+	// Keep preview deploys and local dev out of the production GA property.
+	const isGaAllowedHost = (hostname: string): boolean =>
+		Boolean(siteHost) && (hostname === siteHost || hostname === `www.${siteHost}`);
+	const gaEnabled = (): boolean =>
+		Boolean(validGaMeasurementId) &&
+		typeof window !== 'undefined' &&
+		isGaAllowedHost(window.location.hostname);
 	const demoHref = 'https://qstr.cursus.tools/demo/process';
 	const bookingHref = 'https://cal.com/danny-cursus/15min';
 	const signupHref =
-		'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=header';
+		'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=header';
 
 	const normalizePath = normalizeAnalyticsPath;
 	const isPublicAnalyticsPath = (pagePath: string): boolean => !pagePath.startsWith('/admin');
@@ -76,43 +84,28 @@
 	});
 	const logoSrc = $derived(`${proxyPrefix}/quaestor-logo.png`);
 	const faviconHref = $derived(`${proxyPrefix}/favicon.png`);
-	const ogImageHref = `${siteOrigin}/demo-screenshot.png`;
+	const ogImageHref = `${siteOrigin}/og-card.png`;
 	const canonicalHref = $derived(`${siteOrigin}${currentPath}`);
-	const currentHomeHref = $derived(currentPath === '/ops' ? '/ops' : '/');
 	const headerNavItems = $derived(
-		site.nav.filter((item) => !['Home', 'Operators', 'Partners', 'Demo'].includes(item.label))
+		site.nav.filter((item) => !['Home', 'Partners', 'Demo'].includes(item.label))
 	);
 	const headerCtas = $derived.by((): { primary: HeaderCta; secondary: HeaderCta } => {
 		if (currentPath === '/partners') {
-			if (partnerSite.partnerApply.live) {
-				return {
-					primary: { label: partnerSite.partnerApply.label, href: partnerSite.partnerApply.href },
-					secondary: { label: 'Book a partner call', href: bookingHref }
-				};
-			}
-
 			return {
 				primary: { label: 'Book a partner call', href: bookingHref },
 				secondary: { label: 'See the Demo', href: demoHref }
 			};
 		}
 
-		if (currentHomeHref === '/ops') {
-			return {
-				primary: { label: 'Get my AI-readiness score', href: '/ai-score' },
-				secondary: { label: 'See the Demo', href: demoHref }
-			};
-		}
-
 		if (currentPath === '/ai-score') {
 			return {
-				primary: { label: 'Start free', href: signupHref },
+				primary: { label: 'Map your business', href: signupHref },
 				secondary: { label: 'See the Demo', href: demoHref }
 			};
 		}
 
 		return {
-			primary: { label: 'Start free', href: signupHref },
+			primary: { label: 'Map your business', href: signupHref },
 			secondary: { label: 'Get your ops AI-ready', href: '/ai-score' }
 		};
 	});
@@ -125,7 +118,7 @@
 	});
 
 	const trackLinkClick = (href: string, location: string) => {
-		if (href === '#partner-intake' || href.includes('/partners') || href.includes('tally.so')) {
+		if (href.includes('/partners') || href.includes('/contact?type=partner')) {
 			trackEvent('partner_intake_click', { location });
 			return;
 		}
@@ -186,6 +179,21 @@
 		});
 	});
 
+	// Load GA at runtime, and only on the production host, so preview
+	// deploys and local dev never report into the production property.
+	$effect(() => {
+		if (!gaEnabled() || !gaScriptSrc) return;
+
+		initializeGoogleAnalytics(validGaMeasurementId);
+
+		if (!document.querySelector(`script[src="${gaScriptSrc}"]`)) {
+			const script = document.createElement('script');
+			script.async = true;
+			script.src = gaScriptSrc;
+			document.head.appendChild(script);
+		}
+	});
+
 	$effect(() => {
 		const url = $page.url;
 		if (typeof window === 'undefined') return;
@@ -199,8 +207,8 @@
 			const context = getAnalyticsPageContext(url);
 			if (!isPublicAnalyticsPath(context.pagePath)) return;
 
-			if (gaMeasurementId) {
-				trackPageView(gaMeasurementId, context);
+			if (gaEnabled()) {
+				trackPageView(validGaMeasurementId, context);
 			}
 
 			stopExposureTracking = installPageExposureTracking(context, {
@@ -265,16 +273,6 @@
 	<meta property="og:image" content={ogImageHref} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content={ogImageHref} />
-	{#if gaBootstrapHtml && gaScriptSrc}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html gaBootstrapHtml}
-		<script async src={gaScriptSrc}></script>
-	{/if}
-	<script
-		defer
-		data-domain={plausibleDomain}
-		src="https://plausible.io/js/script.tagged-events.outbound-links.js"
-	></script>
 </svelte:head>
 
 <header

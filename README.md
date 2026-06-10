@@ -40,9 +40,9 @@ npm run lint
 
 ### High-signal content files
 
-- `src/routes/content.ts` — marketing copy for the default homepage (`/`).
-- `src/routes/ops/content.ts` — marketing copy for the **Operators** homepage (`/ops`).
-- `src/routes/partners/content.ts` — marketing copy for the **Partners** page (`/partners`).
+- `src/routes/content.ts` — marketing copy for the homepage (`/`), including the full funnel sections.
+- `src/routes/manifesto/content.ts` — the Quaestor manifesto (`/manifesto`).
+- `src/routes/partners/content.ts` — copy for the single-section **Partners** page (`/partners`).
 - `src/routes/about/content.ts` — founder cards and about page copy.
 - `src/routes/docs/content.ts` — docs index copy.
 - `src/routes/changelog/content.ts` — changelog skeleton copy.
@@ -54,8 +54,8 @@ npm run lint
 
 ### Routes
 
-- `src/routes/+page.svelte` — default homepage.
-- `src/routes/ops/+page.svelte` — **Operators** homepage.
+- `src/routes/+page.svelte` — homepage (hero → pain → mechanism → convictions → proof/FAQ → reactions → tests → pricing → final CTA).
+- `src/routes/manifesto/+page.svelte` — manifesto page.
 - `src/routes/ai-score/+page.svelte` — **AI Score** (lead-gen tool; previously "Ops Grader").
 - `src/routes/method/+page.svelte` — method landing page.
 - `src/routes/method/[slug]/+page.svelte` + `+page.ts` — chapter pages.
@@ -73,13 +73,14 @@ npm run lint
 
 The site uses a dynamic header that adjusts its Primary CTA based on the user's current context:
 
-- **Operators view (`/ops`)**: Primary CTA is "Get my AI-readiness score" (`/ai-score`).
-- **Partners view (`/partners`)**: Primary CTA is the partner call/apply path from `src/routes/partners/content.ts`.
-- **Default**: Primary CTA is the signup path from `src/routes/content.ts`.
+- **Partners page (`/partners`)**: Primary CTA is "Book a partner call" (cal.com).
+- **Default (including `/ai-score`)**: Primary CTA is "Map your business" (signup path).
+
+Partner interest is flagged through the contact form's optional reason select (`/contact?type=partner` preselects it).
 
 ### Shared utilities
 
-- `src/lib/analytics.ts` — global analytics helper for GA4/Plausible/dataLayer events.
+- `src/lib/analytics.ts` — global analytics helper for GA4/dataLayer events.
 - `static/` — image/video assets used by pages.
 
 ### Analytics coverage
@@ -101,10 +102,7 @@ Copy from `.env.example` and fill only what you need.
 Public runtime vars (safe for browser exposure):
 
 - `PUBLIC_SITE_ORIGIN` (optional, defaults to `https://qstr.tools`)
-- `PUBLIC_PLAUSIBLE_DOMAIN` (optional, defaults to `cursus.tools`)
-- `PUBLIC_GA_MEASUREMENT_ID` (optional GA4 measurement ID override; defaults to `G-PMQNSJP905`, set to an empty value to disable GA)
-- `PUBLIC_PARTNER_INTAKE_ENDPOINT` (optional; if empty, partner intake falls back to `mailto:`)
-- `PUBLIC_PARTNER_INTAKE_EMAIL` (optional fallback email)
+- `PUBLIC_GA_MEASUREMENT_ID` (optional GA4 measurement ID override; defaults to `G-PMQNSJP905`, set to an empty value to disable GA). GA only loads when the page is served from `PUBLIC_SITE_ORIGIN`'s hostname, so preview deploys and local dev never report into the production property.
 
 Server runtime vars (secret; never commit values):
 

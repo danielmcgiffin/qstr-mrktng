@@ -24,13 +24,13 @@ export type PricingContent = {
 };
 
 const signupBaseHref =
-	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch';
+	'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch';
 
 export const pricingContent: PricingContent = {
 	eyebrow: 'Pricing',
 	headline: 'Simple price. Serious leverage.',
 	subhead:
-		'Start with the software. Or have us help build your first operating atlas. Priced by workspace, not by seat, because the point is to get the whole team using the same map.',
+		'Start with the software. Or have us build the first version with you. One flat price per workspace, not per seat. Your headcount is not our revenue model.',
 	plans: [
 		{
 			name: 'Quaestor Workspace',
@@ -70,7 +70,7 @@ export const pricingContent: PricingContent = {
 			},
 			featured: true,
 			badge: 'Fastest path to value',
-			note: 'Best if the work is still mostly in your head.'
+			note: 'Delivered in 30 days or it’s free. Best if the work is still mostly in your head.'
 		}
 	]
 };

@@ -1,7 +1,5 @@
 <script lang="ts">
 	import BrandText from '$lib/components/BrandText.svelte';
-	import AtlasHeroVisual from '$lib/components/marketing/AtlasHeroVisual.svelte';
-	import RotatingWords from '$lib/components/RotatingWords.svelte';
 
 	type CTA = {
 		label: string;
@@ -11,7 +9,6 @@
 	let {
 		kicker,
 		headline,
-		rotatingWords = [],
 		subhead,
 		primaryCta,
 		secondaryCta,
@@ -25,7 +22,6 @@
 	}: {
 		kicker?: string;
 		headline: string;
-		rotatingWords?: string[];
 		subhead: string;
 		primaryCta: CTA;
 		secondaryCta: CTA;
@@ -46,16 +42,7 @@
 				<p class="hero-kicker"><BrandText text={kicker} /></p>
 			{/if}
 			<h1 class="hero-title" class:hero-title-with-kicker={Boolean(kicker)}>
-				{#if rotatingWords.length}
-					<span class="hero-title-grid">
-						<span class="hero-title-lead"><BrandText text={headline} />&nbsp;</span>
-						<span class="hero-title-rotating">
-							<RotatingWords words={rotatingWords} />
-						</span>
-					</span>
-				{:else}
-					<BrandText text={headline} />
-				{/if}
+				<BrandText text={headline} />
 			</h1>
 
 			<p class="hero-subhead"><BrandText text={subhead} /></p>
@@ -82,8 +69,8 @@
 				</a>
 			</div>
 		</div>
-		<div class="hero-visual" class:hero-visual-framed={Boolean(imageSrc)}>
-			{#if imageSrc}
+		{#if imageSrc}
+			<div class="hero-visual hero-visual-framed">
 				<div class="hero-image-shell">
 					{#if onImageClick}
 						<button
@@ -98,6 +85,9 @@
 								alt={imageAlt}
 								loading="eager"
 								decoding="async"
+								fetchpriority="high"
+								width="1560"
+								height="1486"
 							/>
 						</button>
 					{:else}
@@ -107,13 +97,14 @@
 							alt={imageAlt}
 							loading="eager"
 							decoding="async"
+							fetchpriority="high"
+							width="1560"
+							height="1486"
 						/>
 					{/if}
 				</div>
-			{:else}
-				<AtlasHeroVisual />
-			{/if}
-		</div>
+			</div>
+		{/if}
 	</div>
 </section>
 

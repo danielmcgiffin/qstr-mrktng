@@ -5,10 +5,10 @@ import { changelogContent } from '../routes/changelog/content';
 import { docsArticles } from '../routes/docs/articles';
 import { docsContent } from '../routes/docs/content';
 import { legalContent } from '../routes/legal/content';
+import { manifestoContent } from '../routes/manifesto/content';
 import { methodContent } from '../routes/method/content';
 import { methodPath } from '../routes/method/nav';
-import { site as opsHomeSite } from '../routes/ops/content';
-import { site as partnersHomeSite } from '../routes/partners/content';
+import { partnersContent } from '../routes/partners/content';
 import { securityContent } from '../routes/security/content';
 
 export const SITE_ORIGIN = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
@@ -246,17 +246,36 @@ ${next ? `- Next: [${next.title}](${absoluteUrl(methodPath(next.slug))})` : `- N
 - Method index: [The Quaestor Method](${absoluteUrl('/method')})`;
 };
 
-const renderPartnersMarkdown = (): string =>
-	renderHomeMarkdown(partnersHomeSite, {
-		title: 'Quaestor — Partner-first operational atlas',
-		description:
-			'Quaestor helps ops partners deploy living operational atlases that stay useful after the engagement ends.',
-		primaryAudience: 'Ops consultants, fractional operators, and implementation partners',
-		primaryCtaLabel: 'Book a partner call',
-		primaryCtaHref: 'https://cal.com/danny-cursus/15min',
-		secondaryCtaLabel: 'See the Demo',
-		secondaryCtaHref: 'https://qstr.cursus.tools/demo/process'
-	});
+const renderPartnersMarkdown = (): string => `# ${partnersContent.seo.title}
+
+${partnersContent.subhead}
+
+${partnersContent.body.join('\n\n')}
+
+## Primary actions
+- [${partnersContent.primaryCta.label}](${absoluteUrl(partnersContent.primaryCta.href)})
+- [${partnersContent.secondaryCta.label}](${absoluteUrl(partnersContent.secondaryCta.href)})
+
+## Links
+- [Home](${absoluteUrl('/')})
+- [Contact](${absoluteUrl('/contact')})
+- [Demo](https://qstr.cursus.tools/demo/process)`;
+
+const renderManifestoMarkdown = (): string => `# ${manifestoContent.seo.ogTitle}
+
+${manifestoContent.paragraphs.join('\n\n')}
+
+## ${manifestoContent.convictionsHeading}
+${manifestoContent.convictions.map((conviction) => `- **${conviction.title}:** ${conviction.desc}`).join('\n')}
+
+${manifestoContent.closingParagraphs.join('\n\n')}
+
+${manifestoContent.close.join(' ')}
+
+## Links
+- [${manifestoContent.cta.label}](${manifestoContent.cta.href})
+- [Home](${absoluteUrl('/')})
+- [Contact](${absoluteUrl('/contact')})`;
 
 const renderContactMarkdown = (): string => `# Contact Quaestor
 
@@ -404,33 +423,19 @@ export const getMarkdownForPath = (pathname: string): string | null => {
 
 	if (normalizedPath === '/') {
 		return renderHomeMarkdown(universalHomeSite, {
-			title: "Quaestor - It doesn't have to be this hard.",
-			description: 'Quaestor maps the business, so every answer stops routing through you.',
-			primaryAudience: 'Founders and operators carrying the business in their heads',
+			title: 'Quaestor - Don’t let your business run you.',
+			description:
+				'Quaestor maps who owns what, where it happens, and how the work moves, so every answer stops routing through you.',
+			primaryAudience: 'Owner-operators carrying the business in their heads',
 			primaryCtaLabel: 'Map your business',
 			primaryCtaHref:
-				'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=hero',
+				'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=hero',
 			secondaryCtaLabel: 'See how it works',
-			secondaryCtaHref: 'https://qstr.cursus.tools/demo/process',
-			includeHowItWorks: false,
-			includeProof: false
-		});
-	}
-
-	if (normalizedPath === '/ops') {
-		return renderHomeMarkdown(opsHomeSite, {
-			title: 'Quaestor — Your operational atlas',
-			description:
-				'Quaestor maps who does what, in which system, as a connected graph so your team finds answers instead of asking you.',
-			primaryAudience:
-				'Founders and operator teams dealing with wiki sprawl, tribal knowledge, and dropped handoffs',
-			primaryCtaLabel: 'Get my AI-readiness score',
-			primaryCtaHref: '/ai-score',
-			secondaryCtaLabel: 'See the Demo',
 			secondaryCtaHref: 'https://qstr.cursus.tools/demo/process'
 		});
 	}
 
+	if (normalizedPath === '/manifesto') return renderManifestoMarkdown();
 	if (normalizedPath === '/partners') return renderPartnersMarkdown();
 	if (normalizedPath === '/about') return renderAboutMarkdown();
 	if (normalizedPath === '/docs') return renderDocsMarkdown();

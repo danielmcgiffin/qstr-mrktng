@@ -30,9 +30,9 @@
 	const FILE_ACCEPT =
 		'.docx,.pptx,.md,.txt,.html,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/markdown,text/plain,text/html';
 	const selfServeSignupHref =
-		'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_result';
+		'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_result';
 	const implementationIntakeHref =
-		'https://cal.com/danny-cursus/15min?utm_source=cursus.tools&utm_medium=website&utm_campaign=ai_score&utm_content=implementation_intake';
+		'https://cal.com/danny-cursus/15min?utm_source=qstr.tools&utm_medium=website&utm_campaign=ai_score&utm_content=implementation_intake';
 	const seo = {
 		title: 'AI Score for SOPs | Quaestor',
 		description:
@@ -773,7 +773,7 @@
 							<div class="mt-5">
 								<a
 									class="btn btn-secondary w-full text-center"
-									href="https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_wish"
+									href="https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_wish"
 								>
 									Start mapping free &rarr;
 								</a>
