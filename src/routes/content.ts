@@ -79,14 +79,15 @@ export const site = {
 	// ───────────────────────────────────────────
 	forYou: {
 		headline: 'This was supposed to be the part where you stepped back.',
-		intro: 'First, there was no money. You fixed that. Now there is no time.',
+		intro: 'First, there was no money. You fixed that. \nNow there is no time.',
 		bullets: [
 			'Every escalation. Every exception. Every “hey, quick question.”',
 			'A calendar full of work you thought you’d have delegated by now.',
 			'Phone buzzing at dinner. Laptop open on vacation.',
 			'You’re not just running the company. You are being the company.'
 		],
-		punchline: 'Atlas, holding it up forever.\nThat’s not ownership. That’s a hostage situation.'
+		punchline:
+			'Now you\’re Atlas, holding it up forever.\nThat’s not ownership. That’s a hostage situation.'
 	} satisfies {
 		headline: string;
 		intro: string;
@@ -100,7 +101,7 @@ export const site = {
 	shadowOps: {
 		headline: 'Memory is not an operating system.',
 		subhead:
-			'Docs stale. People improvise. Owners blur. Then every hard question routes back to whoever remembers.',
+			'Docs go stale. People improvise. Responsibility blurs. \n Then every hard question routes back to whoever remembers.',
 		points: [
 			{
 				title: 'The answer lives in a person',
@@ -127,7 +128,7 @@ export const site = {
 	howItWorks: {
 		headline: 'Break the loop.',
 		subhead:
-			'Pick the process that drags you back. Map who owns it, where it happens, and what done means. Ship it. Tighten it. Keep moving.',
+			'Pick the process that drags you back. Map who owns it, where it happens, and what done means. \n Ship it. Tighten it. Keep moving.',
 		steps: [
 			{
 				n: '01',
@@ -147,7 +148,7 @@ export const site = {
 			{
 				n: '04',
 				title: 'Keep it alive',
-				desc: 'Flags catch drift before the map goes stale.'
+				desc: 'Create flags to catch drift before it goes stale.'
 			}
 		]
 	} satisfies {
@@ -162,7 +163,7 @@ export const site = {
 	setsApart: {
 		headline: 'Built on three convictions.',
 		subhead:
-			'Repositories store files. Recorders capture tasks. Project tools track work. Quaestor maps the operating model underneath it all.',
+			'Repositories store files. Recorders capture tasks. Project tools track work.\n Quaestor maps the operating model underneath it all.',
 		items: [
 			{
 				title: 'Relationships, not documents',
@@ -187,25 +188,25 @@ export const site = {
 	// SOCIAL PROOF
 	// ───────────────────────────────────────────
 	socialProof: {
-		headline: 'Early User Reactions',
+		headline: 'User Reactions',
 		items: [
 			{
 				pullQuote: "It's process documentation people will USE.",
 				quote:
 					"Super intuitive. Quaestor breaks down process entry into the questions that actually make written workflows usable. Then it lets you sort and re-sort those processes according to what you need, so they're genuinely transferable - not just useful to the person who wrote them.",
-				attribution: 'Podcast Producer'
+				attribution: 'Mary, Podcast Producer'
 			},
 			{
 				pullQuote: "We're excited to have Quaestor.",
 				quote:
 					"We're excited to have Quaestor serve as our operations's central hub. It lets us document and share key workflows with our team and helps us scale our business with confidence.",
-				attribution: 'Franchise Operations Manager'
+				attribution: 'Thomas, Franchise Operations Manager'
 			},
 			{
 				pullQuote: 'I needed one place to see the work.',
 				quote:
 					'I run our business out of Quaestor because I needed one place to see the work in one place where I could look at it before we made new hires or major system changes.',
-				attribution: 'Technology Founder'
+				attribution: 'J., Technology Founder'
 			}
 		]
 	} satisfies {
@@ -254,7 +255,7 @@ export const site = {
 	proof: {
 		headline: 'Hand this to the next operator.',
 		subhead:
-			'Open the atlas. See the role, the process, the system, and the risk. Not a folder. A command map.',
+			'Open the atlas. See the role, the process, the system, and the risk. \n Not a folder. An atlas.',
 		items: [
 			{
 				title: 'Role manual',
@@ -316,11 +317,11 @@ export const site = {
 		items: [
 			{
 				q: 'Is this just another documentation tool?',
-				a: 'No. Wikis store pages. Quaestor maps roles, processes, systems, and ownership. The worker gets the answer, not another folder.'
+				a: 'No. Wikis store pages. Quaestor maps roles, processes, systems, and ownership. The worker gets the answer, not a treasure hunt.'
 			},
 			{
 				q: 'How do I get up and running fast?',
-				a: 'Start with the process chained to your phone. Map it. Publish it. Let the team use it.'
+				a: 'Start with the process keeping you chained to your phone. Map it. Publish it. Let the team run with it.'
 			},
 			{
 				q: 'What if we already have SOPs and docs?',
@@ -328,7 +329,7 @@ export const site = {
 			},
 			{
 				q: 'Why won’t this die like my last solution?',
-				a: 'Because drift gets flagged in the work. No annual cleanup ritual. No guilt project. Keep it alive or cut it.'
+				a: 'Because drift gets flagged in the work, and everyone can help keep it updated. No annual cleanup ritual. No guilt project.'
 			}
 		]
 	} satisfies {
@@ -362,7 +363,7 @@ export const site = {
 		copyrightName: 'Quaestor',
 		entityName: 'Cursus Tools, LLC',
 		supportEmail: 'support@cursus.tools',
-		linkedinHref: 'https://www.linkedin.com/company/cursus-tools',
+		linkedinHref: 'https://www.linkedin.com/company/qstr-tools',
 		legalLinks: [
 			{ label: 'Privacy', href: '/legal#privacy' },
 			{ label: 'Terms', href: '/legal#terms' },
