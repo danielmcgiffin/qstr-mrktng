@@ -8,7 +8,7 @@ export async function GET() {
 	const domain = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
 	const pages = [
 		'',
-		'/ops',
+		'/manifesto',
 		'/partners',
 		'/about',
 		'/docs',

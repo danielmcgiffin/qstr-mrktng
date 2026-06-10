@@ -25,6 +25,10 @@ export type AboutContent = {
 	title: string;
 	foundersIntro: string;
 	founders: FounderCard[];
+	anthem: {
+		heading: string;
+		lines: string[];
+	};
 	finalCta: {
 		headline: string;
 		text: string;
@@ -71,6 +75,17 @@ export const aboutContent: AboutContent = {
 			]
 		}
 	],
+	anthem: {
+		heading: 'Here’s to the owners.',
+		lines: [
+			'The operators. The builders. The ones standing in the gap.',
+			'The ones who signed the loan, took the calls, made payroll, and carried the thing further than anyone could guess.',
+			'They do not need another binder, another framework, or another person’s ideas about the thing they have poured themselves into.',
+			'They need the work made visible. Not trapped in their head. Not buried in PowerPoint. Not scattered across docs nobody trusts.',
+			'Ownership is not just having your name on the paperwork. Ownership is command. A business you have to drag by hand is still another chain.',
+			'Map it. Shape it. Hand it off. **Own it.**'
+		]
+	},
 	finalCta: {
 		headline: 'Bring the bottleneck.',
 		text: 'If the business still depends on who remembers, start there. That is where the map begins.',

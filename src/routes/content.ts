@@ -11,18 +11,18 @@ import type {
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
 const signupBaseHref =
-	'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch';
+	'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch';
 
 export const site = {
 	brand: 'Quaestor',
 
 	seo: {
-		title: "Quaestor - It doesn't have to be this hard.",
+		title: 'Quaestor - Don’t let your business run you.',
 		description:
-			'Quaestor maps the business into a living atlas, so every answer stops routing through you.',
-		ogTitle: 'Quaestor - How your business actually works.',
+			'Quaestor maps who owns what, where it happens, and how the work moves, so every answer stops routing through you.',
+		ogTitle: 'Don’t let your business run you. Own it.',
 		ogDescription: 'Map roles, processes, and systems. Stop being the answer key.',
-		imageAlt: 'Quaestor operational atlas interface preview.'
+		imageAlt: 'Quaestor: how your business actually works.'
 	} satisfies SeoContent,
 
 	nav: [
@@ -44,16 +44,16 @@ export const site = {
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
-		headline: 'Retake Command',
+		headline: 'You built it from nothing.',
 		subhead:
-			"Quaestor turns the way your business actually runs into a map of workflows, roles, systems, and handoffs, so your team can find answers and you can see what's bending before it breaks.",
+			'Twenty people. Forty. Five, six, eight million in revenue. Real payroll, real clients, and every hard question still routes through you. Quaestor maps who owns what, where it happens, and how the work moves, so your team finds answers without you.',
 		primaryCta: {
 			label: 'Map your business',
 			href: `${signupBaseHref}&utm_content=hero`
 		},
 		secondaryCta: { label: 'See how it works', href: demoHref },
-		imageSrc: '/Hero.png',
-		imageAlt: 'Quaestor operational atlas hero image.'
+		imageSrc: '/Hero.webp',
+		imageAlt: 'Quaestor operational atlas: an annotated role map of processes, steps, and systems.'
 	} satisfies {
 		headline: string;
 		subhead: string;
@@ -75,88 +75,18 @@ export const site = {
 	},
 
 	// ───────────────────────────────────────────
-	// WHAT SETS US APART
-	// ───────────────────────────────────────────
-	setsApart: {
-		headline: 'What Sets Us Apart',
-		subhead:
-			'Repositories store files. Recorders capture tasks. Project tools track work. Quaestor maps the operating model underneath it all.',
-		items: [
-			{
-				title: 'See the whole operation',
-				desc: 'A map of your workflows, roles, systems, and handoffs. Not a folder, not a wiki, not a mind-map, but everything connected together in one place.'
-			},
-			{
-				title: 'People at the center',
-				desc: 'Open a role and see what it owns, what it touches, and which systems it uses. No more rebuilding a manual every time someone changes seats.'
-			},
-			{
-				title: 'Update once, everywhere',
-				desc: 'When the work changes, easily update the source. The connected views stay current without you needing to rewrite five different docs.'
-			},
-			{
-				title: 'Find the weak spots',
-				desc: 'Your team can flag outdated, incomplete, or unclear areas right where the work lives. You see what needs fixing instead of waiting for the next fire.'
-			},
-			{
-				title: 'One map, many views',
-				desc: 'Use the same workspace to onboard a hire, review a role, plan an expansion, prepare for implementing a new system, and fix where the owner is still the bottleneck.'
-			}
-		]
-	} satisfies {
-		headline: string;
-		subhead: string;
-		items: DetailItem[];
-	},
-
-	// ───────────────────────────────────────────
-	// SOCIAL PROOF
-	// ───────────────────────────────────────────
-	socialProof: {
-		headline: 'Early User Reactions',
-		items: [
-			{
-				pullQuote: "It's process documentation people will USE.",
-				quote:
-					"Super intuitive. Quaestor breaks down process entry into the questions that actually make written workflows usable. Then it lets you sort and re-sort those processes according to what you need, so they're genuinely transferable - not just useful to the person who wrote them.",
-				attribution: 'Podcast Producer'
-			},
-			{
-				pullQuote: "We're excited to have Quaestor.",
-				quote:
-					"We're excited to have Quaestor serve as our operations's central hub. It lets us document and share key workflows with our team and helps us scale our business with confidence.",
-				attribution: 'Franchise Operations Manager'
-			},
-			{
-				pullQuote: 'I needed one place to see the work.',
-				quote:
-					'I run our business out of Quaestor because I needed one place to see the work in one place where I could look at it before we made new hires or major system changes.',
-				attribution: 'Technology Founder'
-			}
-		]
-	} satisfies {
-		headline: string;
-		items: {
-			pullQuote: string;
-			quote: string;
-			attribution: string;
-		}[];
-	},
-
-	// ───────────────────────────────────────────
 	// PAIN
 	// ───────────────────────────────────────────
 	forYou: {
-		headline: "The Founder's Bottleneck",
-		intro:
-			'The official process says one thing. The real work says another. That gap burns time, money, and sanity.',
+		headline: 'This was supposed to be the part where you stepped back.',
+		intro: 'First, there was no money. You fixed that. Now there is no time.',
 		bullets: [
-			'Your team waits for your answer.',
-			'You leave. Work stalls.',
-			'They leave. The work lands back on you.',
-			'Memory works until it fails.'
+			'Every escalation. Every exception. Every “hey, quick question.”',
+			'A calendar full of work you thought you’d have delegated by now.',
+			'Phone buzzing at dinner. Laptop open on vacation.',
+			'You’re not just running the company. You are being the company.'
 		],
-		punchline: 'If it needs you to run, it owns you.'
+		punchline: 'Atlas, holding it up forever.\nThat’s not ownership. That’s a hostage situation.'
 	} satisfies {
 		headline: string;
 		intro: string;
@@ -224,6 +154,67 @@ export const site = {
 		headline: string;
 		subhead: string;
 		steps: StepItem[];
+	},
+
+	// ───────────────────────────────────────────
+	// THREE CONVICTIONS
+	// ───────────────────────────────────────────
+	setsApart: {
+		headline: 'Built on three convictions.',
+		subhead:
+			'Repositories store files. Recorders capture tasks. Project tools track work. Quaestor maps the operating model underneath it all.',
+		items: [
+			{
+				title: 'Relationships, not documents',
+				desc: 'Your business is not made of pages. It is made of flows, handoffs, roles, systems, decisions, and conditions. Map the relationships and the documents become outputs, not the foundation.'
+			},
+			{
+				title: 'Structure at the point of work',
+				desc: 'Your people do not need more text blobs or another wiki. They need structure they can use where the work happens. Operations structured clearly enough for people are structured enough for AI, too.'
+			},
+			{
+				title: 'Owners, not cap tables',
+				desc: 'Most software makes more money every time you hire. We do not. One flat price per workspace, not per seat. Your headcount is not our revenue model.'
+			}
+		]
+	} satisfies {
+		headline: string;
+		subhead: string;
+		items: DetailItem[];
+	},
+
+	// ───────────────────────────────────────────
+	// SOCIAL PROOF
+	// ───────────────────────────────────────────
+	socialProof: {
+		headline: 'Early User Reactions',
+		items: [
+			{
+				pullQuote: "It's process documentation people will USE.",
+				quote:
+					"Super intuitive. Quaestor breaks down process entry into the questions that actually make written workflows usable. Then it lets you sort and re-sort those processes according to what you need, so they're genuinely transferable - not just useful to the person who wrote them.",
+				attribution: 'Podcast Producer'
+			},
+			{
+				pullQuote: "We're excited to have Quaestor.",
+				quote:
+					"We're excited to have Quaestor serve as our operations's central hub. It lets us document and share key workflows with our team and helps us scale our business with confidence.",
+				attribution: 'Franchise Operations Manager'
+			},
+			{
+				pullQuote: 'I needed one place to see the work.',
+				quote:
+					'I run our business out of Quaestor because I needed one place to see the work in one place where I could look at it before we made new hires or major system changes.',
+				attribution: 'Technology Founder'
+			}
+		]
+	} satisfies {
+		headline: string;
+		items: {
+			pullQuote: string;
+			quote: string;
+			attribution: string;
+		}[];
 	},
 
 	// ───────────────────────────────────────────
@@ -351,8 +342,8 @@ export const site = {
 	// FINAL CTA
 	// ───────────────────────────────────────────
 	finalCta: {
-		headline: 'Start with the chain.',
-		text: 'Pick the process that keeps pulling you back. Map it. Hand it off. Take back ground.',
+		headline: 'Retake Command',
+		text: 'Map it. Shape it. Hand it off. Own it.',
 		cta: {
 			label: 'Map your business',
 			href: `${signupBaseHref}&utm_content=final_cta`
@@ -378,10 +369,11 @@ export const site = {
 			{ label: 'DPA', href: '/legal#dpa' }
 		],
 		productLinks: [
-			{ label: 'Our Edge', href: '/#problem' },
-			{ label: 'User Reactions', href: '/#reactions' },
+			{ label: 'The Problem', href: '/#problem' },
+			{ label: 'Convictions', href: '/#convictions' },
 			{ label: 'Pricing', href: '/#pricing' },
 			{ label: 'How', href: '/method' },
+			{ label: 'Manifesto', href: '/manifesto' },
 			{ label: 'Partners', href: '/partners' },
 			{ label: 'About', href: '/about' }
 		]

@@ -1,21 +1,18 @@
 <script lang="ts">
 	import ImageModal from '$lib/components/ImageModal.svelte';
+	import BulletSection from '$lib/components/marketing/BulletSection.svelte';
 	import CardGridSection from '$lib/components/marketing/CardGridSection.svelte';
+	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
 	import PricingSection from '$lib/components/marketing/PricingSection.svelte';
+	import ProofFaqSection from '$lib/components/marketing/ProofFaqSection.svelte';
 	import SocialProofSection from '$lib/components/marketing/SocialProofSection.svelte';
+	import StepsSection from '$lib/components/marketing/StepsSection.svelte';
 	import { trackEvent } from '$lib/analytics';
 	import { site } from './content';
 
-	const footerLinks = [
-		{ label: 'Our Edge', href: '/#problem' },
-		{ label: 'User Reactions', href: '/#reactions' },
-		{ label: 'Pricing', href: '/#pricing' },
-		{ label: 'How', href: '/method' },
-		{ label: 'Docs', href: '/docs' },
-		{ label: 'About', href: '/about' }
-	] as const;
+	const footerLinks = site.footer.productLinks;
 
 	const trackHeroPrimaryCta = () => {
 		const href = site.hero.primaryCta.href;
@@ -77,18 +74,62 @@
 			}}
 		/>
 
-		<CardGridSection
+		<BulletSection
 			id="problem"
+			headline={site.forYou.headline}
+			intro={site.forYou.intro}
+			bullets={site.forYou.bullets}
+			punchline={site.forYou.punchline}
+		/>
+
+		<CardGridSection
+			id="why"
+			headline={site.shadowOps.headline}
+			subhead={site.shadowOps.subhead}
+			items={site.shadowOps.points}
+		/>
+
+		<StepsSection
+			id="workflow"
+			headline={site.howItWorks.headline}
+			subhead={site.howItWorks.subhead}
+			steps={site.howItWorks.steps}
+		/>
+
+		<CardGridSection
+			id="convictions"
 			headline={site.setsApart.headline}
 			subhead={site.setsApart.subhead}
 			items={site.setsApart.items}
-			layout="stack"
+		/>
+
+		<ProofFaqSection
+			id="proof"
+			headline={site.proof.headline}
+			subhead={site.proof.subhead}
+			items={site.proof.items}
+			demoVideo={site.demo}
+			faqHeadline={site.faq.headline}
+			faqItems={site.faq.items}
+			demoCta={{ label: 'See the demo', href: site.hero.secondaryCta.href }}
+			onDemoClick={() => trackDemoClick('home_proof_demo')}
+			onImageOpen={(src, alt) => {
+				activeModalImage = src;
+				activeModalAlt = alt;
+			}}
 		/>
 
 		<SocialProofSection
 			id="reactions"
 			headline={site.socialProof.headline}
 			items={site.socialProof.items}
+		/>
+
+		<CardGridSection
+			id="tests"
+			headline={site.trust.headline}
+			subhead={site.trust.subhead}
+			items={site.trust.items}
 		/>
 
 		<PricingSection
@@ -99,6 +140,18 @@
 			freeLink={site.pricing.freeLink}
 			onPlanClick={trackPricingPlanClick}
 			onFreeLinkClick={() => trackSignupStart('home_pricing_free_link')}
+		/>
+
+		<FinalCtaSection
+			headline={site.finalCta.headline}
+			text={site.finalCta.text}
+			ctas={[
+				{
+					label: site.finalCta.cta.label,
+					href: site.finalCta.cta.href,
+					onclick: () => trackSignupStart('home_final_cta')
+				}
+			]}
 		/>
 
 		<MarketingFooter links={footerLinks} />

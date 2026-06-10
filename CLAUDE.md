@@ -29,7 +29,7 @@ Maintain and improve the Quaestor marketing site while preserving:
 - **Build mode:** static prerender (`src/routes/+layout.ts` exports `prerender = true`).
 - **Styling:** global styles in `src/app.css`, design tokens in `src/tokens.css`, and route/layout CSS.
 - **Assets:** `static/`.
-- **Analytics:** event helper in `src/lib/analytics.ts` (Plausible/gtag/dataLayer compatible).
+- **Analytics:** GA4 event helper in `src/lib/analytics.ts` (gtag/dataLayer). GA loads at runtime only on the production hostname (`PUBLIC_SITE_ORIGIN`), so previews and dev stay out of the property.
 
 ## Hard constraints
 
@@ -66,9 +66,10 @@ A task is done only when:
 
 - **Homepage copy/CTA/pricing/nav/FAQ edits:** `src/routes/content.ts`
 - **Method chapter edits/additions:** `src/routes/method/content.ts` (+ optional route polish)
+- **Manifesto edits:** `src/routes/manifesto/content.ts`
 - **Header/nav/tracking adjustments:** `src/routes/+layout.svelte`
-- **Partner intake behavior:** `src/routes/partners/+page.svelte`
-- **Contact page content:** `src/routes/contact/+page.svelte`
+- **Partner page copy:** `src/routes/partners/content.ts` (single-section page; partner interest is flagged via the contact form's reason select)
+- **Contact page content/intake:** `src/routes/contact/+page.svelte` (+ `src/routes/contact/submit/+server.ts`)
 
 ## Non-goals by default
 

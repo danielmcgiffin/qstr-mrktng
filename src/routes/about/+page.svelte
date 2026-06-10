@@ -71,6 +71,15 @@
 			</div>
 		</section>
 
+		<section id="owners" class="marketing-section about-anthem-section">
+			<div class="marketing-container-tight">
+				<h2 class="anthem-heading"><BrandText text={content.anthem.heading} /></h2>
+				{#each content.anthem.lines as line (line)}
+					<p class="anthem-line"><BrandText text={line} /></p>
+				{/each}
+			</div>
+		</section>
+
 		<FinalCtaSection
 			headline={content.finalCta.headline}
 			text={content.finalCta.text}
@@ -181,5 +190,30 @@
 
 	.founder-card {
 		padding: 1.5rem;
+	}
+
+	.about-anthem-section {
+		padding-top: 1rem;
+	}
+
+	.anthem-heading {
+		margin: 0;
+		font-size: var(--fs-h2);
+		line-height: 1.2;
+	}
+
+	.anthem-line {
+		margin: 1.25rem 0 0;
+		color: rgb(var(--text-muted));
+		font-size: 1.0625rem;
+		line-height: 1.7;
+		text-wrap: pretty;
+	}
+
+	.anthem-line:last-child {
+		color: rgb(var(--text));
+		font-family: var(--font-display);
+		font-size: 1.35rem;
+		font-weight: 600;
 	}
 </style>

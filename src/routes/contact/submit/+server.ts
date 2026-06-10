@@ -18,6 +18,7 @@ export const POST: RequestHandler = async (event) => {
 		name?: unknown;
 		email?: unknown;
 		message?: unknown;
+		reason?: unknown;
 	};
 	try {
 		payload = (await event.request.json()) as typeof payload;
@@ -28,6 +29,12 @@ export const POST: RequestHandler = async (event) => {
 	const name = typeof payload.name === 'string' ? payload.name.trim() : '';
 	const email = typeof payload.email === 'string' ? payload.email.trim() : '';
 	const message = typeof payload.message === 'string' ? payload.message.trim() : '';
+	const allowedReasons = ['owner', 'partner', 'other'] as const;
+	const reason =
+		typeof payload.reason === 'string' &&
+		(allowedReasons as readonly string[]).includes(payload.reason)
+			? (payload.reason as (typeof allowedReasons)[number])
+			: undefined;
 
 	if (!name) {
 		return json({ error: 'Name is required.' }, { status: 400, headers: NO_STORE_HEADERS });
@@ -44,7 +51,7 @@ export const POST: RequestHandler = async (event) => {
 	}
 
 	try {
-		await sendContactFormEmail({ name, email, message });
+		await sendContactFormEmail({ name, email, message, reason });
 	} catch (error) {
 		console.error('Failed to send contact email:', error);
 		const errMsg = error instanceof Error ? error.message : '';

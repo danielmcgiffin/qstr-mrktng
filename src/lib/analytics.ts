@@ -17,10 +17,6 @@ type InteractionTrackingOptions = AnalyticsTrackingOptions & {
 
 declare global {
 	interface Window {
-		plausible?: (
-			eventName: string,
-			options?: { props?: Record<string, AnalyticsPrimitive> }
-		) => void;
 		dataLayer?: Array<Record<string, unknown> | unknown[]>;
 		gtag?: (...args: unknown[]) => void;
 		qstrGaConfigured?: string;
@@ -221,10 +217,6 @@ export const trackEvent = (eventName: string, props: AnalyticsProps = {}) => {
 
 	if (typeof window.gtag === 'function') {
 		window.gtag('event', eventName, cleaned);
-	}
-
-	if (typeof window.plausible === 'function') {
-		window.plausible(eventName, { props: cleaned });
 	}
 
 	window.dispatchEvent(

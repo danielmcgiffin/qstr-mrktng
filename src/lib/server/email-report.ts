@@ -27,7 +27,7 @@ export const buildEmailReportPayload = (params: {
 	const from = env.AI_SCORE_FROM_EMAIL?.trim() || env.PRIVATE_FROM_ADMIN_EMAIL?.trim() || '';
 	const ctaHref =
 		params.result.follow_up_cta === 'try_quaestor_free'
-			? 'https://qstr.cursus.tools/login?utm_source=cursus.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_result'
+			? 'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_result'
 			: 'https://cal.com/danny-cursus/15min';
 	const ctaLabel =
 		params.result.follow_up_cta === 'try_quaestor_free' ? 'Try Quaestor free' : 'Book a demo';

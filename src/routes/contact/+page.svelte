@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { trackEvent } from '$lib/analytics';
 
 	const seo = {
@@ -8,16 +9,28 @@
 		ogDescription: 'Get in touch with the Quaestor team.'
 	};
 
+	const reasonOptions = [
+		{ value: 'owner', label: 'I run a business' },
+		{ value: 'partner', label: 'I’m a consultant or agency (partner)' },
+		{ value: 'other', label: 'Something else' }
+	] as const;
+
 	let name = $state('');
 	let email = $state('');
+	let reason = $state('');
 	let message = $state('');
 	let status = $state<'idle' | 'submitting' | 'success' | 'error'>('idle');
 	let errorMessage = $state('');
 
+	onMount(() => {
+		const type = new URLSearchParams(window.location.search).get('type');
+		if (type === 'partner') reason = 'partner';
+	});
+
 	const handleSubmit = async (event?: Event) => {
 		if (event) event.preventDefault();
 		if (!name || !email || !message) {
-			errorMessage = 'All fields are required.';
+			errorMessage = 'Name, email, and message are required.';
 			status = 'error';
 			return;
 		}
@@ -31,7 +44,7 @@
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				body: JSON.stringify({ name, email, message })
+				body: JSON.stringify({ name, email, message, reason: reason || undefined })
 			});
 
 			const result = await response.json();
@@ -43,9 +56,13 @@
 			}
 
 			status = 'success';
-			trackEvent('contact_form_success');
+			trackEvent('contact_form_success', { reason: reason || 'unspecified' });
+			if (reason === 'partner') {
+				trackEvent('partner_intake_click', { location: 'contact_form_submit' });
+			}
 			name = '';
 			email = '';
+			reason = '';
 			message = '';
 		} catch (err) {
 			console.error('Contact submission error:', err);
@@ -99,7 +116,7 @@
 						</button>
 					</div>
 				{:else}
-					<form onsubmit={(e) => e.preventDefault()} class="space-y-5">
+					<form onsubmit={handleSubmit} class="space-y-5">
 						{#if status === 'error'}
 							<div class="error-banner">
 								{errorMessage}
@@ -135,6 +152,22 @@
 						</div>
 
 						<div class="form-group">
+							<label for="reason" class="form-label">What brings you?</label>
+							<select
+								id="reason"
+								name="reason"
+								bind:value={reason}
+								disabled={status === 'submitting'}
+								class="form-input"
+							>
+								<option value="">Choose one (optional)</option>
+								{#each reasonOptions as option (option.value)}
+									<option value={option.value}>{option.label}</option>
+								{/each}
+							</select>
+						</div>
+
+						<div class="form-group">
 							<label for="message" class="form-label">Message</label>
 							<textarea
 								id="message"
@@ -150,8 +183,7 @@
 
 						<div class="flex justify-end pt-2">
 							<button
-								type="button"
-								onclick={handleSubmit}
+								type="submit"
 								disabled={status === 'submitting'}
 								class="btn btn-primary min-w-[140px]"
 							>

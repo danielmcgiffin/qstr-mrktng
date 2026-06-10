@@ -64,15 +64,15 @@
 							type="button"
 							class="hero-image-btn"
 							onclick={() => {
-								activeModalImage = '/Hero.png';
-								activeModalAlt = 'Quaestor operational atlas hero image.';
+								activeModalImage = '/Hero.webp';
+								activeModalAlt = 'Annotated diagram of the Quaestor operational atlas.';
 							}}
 							aria-label="Zoom in on hero interface diagram"
 						>
 							<img
 								class="hero-image"
-								src="/Hero.png"
-								alt="Quaestor operational atlas hero image."
+								src="/Hero.webp"
+								alt="Annotated diagram of the Quaestor operational atlas."
 								loading="eager"
 								decoding="async"
 							/>

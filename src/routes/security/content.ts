@@ -141,7 +141,7 @@ export const securityContent: SecurityContent = {
 				purpose: 'Email delivery for public-site intake and AI Score review flows where configured.'
 			},
 			{
-				name: 'Plausible Analytics and Google Analytics',
+				name: 'Google Analytics',
 				purpose:
 					'Public-site analytics. Workspace content should not be sent to analytics providers.'
 			}

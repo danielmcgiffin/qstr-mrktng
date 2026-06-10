@@ -1,147 +1,69 @@
 <script lang="ts">
-	import ImageModal from '$lib/components/ImageModal.svelte';
-	import BulletSection from '$lib/components/marketing/BulletSection.svelte';
-	import CardGridSection from '$lib/components/marketing/CardGridSection.svelte';
-	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
+	import BrandText from '$lib/components/BrandText.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
-	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
-	import PricingSection from '$lib/components/marketing/PricingSection.svelte';
-	import ProofFaqSection from '$lib/components/marketing/ProofFaqSection.svelte';
-	import StepsSection from '$lib/components/marketing/StepsSection.svelte';
 	import { trackEvent } from '$lib/analytics';
-	import { site } from './content';
-
-	type FinalCta = {
-		label: string;
-		href: string;
-		variant?: 'primary' | 'secondary';
-		external?: boolean;
-		onclick?: () => void;
-		showArrow?: boolean;
-	};
-
-	let activeModalImage = $state<string | null>(null);
-	let activeModalAlt = $state('');
-
-	const trackPartnerCall = (location: string) => {
-		trackEvent('booking_click', { location });
-	};
-
-	const trackDemoClick = (location: string) => {
-		trackEvent('demo_click', { location });
-	};
-
-	const trackPartnerNote = (location: string) => {
-		trackEvent('partner_intake_click', { location });
-	};
-
-	const trackSignupStart = (location: string) => {
-		trackEvent('signup_start', { location });
-	};
-
-	const trackPricingPlanClick = (planName: string, href: string) => {
-		const location = `partners_pricing_${planName.toLowerCase().replace(/\s+/g, '_')}`;
-		trackEvent('pricing_plan_click', { location, plan_name: planName, href });
-
-		if (href.includes('qstr.cursus.tools/login')) {
-			trackSignupStart(location);
-		}
-	};
-
-	const finalCtas: FinalCta[] = [
-		{
-			label: site.finalCta.primaryCta.label,
-			href: site.finalCta.primaryCta.href,
-			external: true,
-			onclick: () => trackPartnerCall('partners_final_cta_primary')
-		},
-		{
-			label: site.partnerNote.label,
-			href: site.partnerNote.href,
-			variant: 'secondary',
-			onclick: () => trackPartnerNote('partners_final_cta_note'),
-			showArrow: false
-		}
-	];
+	import { partnersContent as content } from './content';
 </script>
 
 <svelte:head>
-	<title>{site.seo.title}</title>
-	<meta name="description" content={site.seo.description} />
-	<meta property="og:title" content={site.seo.ogTitle ?? site.seo.title} />
-	<meta property="og:description" content={site.seo.ogDescription ?? site.seo.description} />
-	<meta property="og:image:alt" content={site.seo.imageAlt} />
-	<meta name="twitter:title" content={site.seo.ogTitle ?? site.seo.title} />
-	<meta name="twitter:description" content={site.seo.ogDescription ?? site.seo.description} />
-	<meta name="twitter:image:alt" content={site.seo.imageAlt} />
+	<title>{content.seo.title}</title>
+	<meta name="description" content={content.seo.description} />
+	<meta property="og:title" content={content.seo.ogTitle ?? content.seo.title} />
+	<meta property="og:description" content={content.seo.ogDescription ?? content.seo.description} />
+	<meta property="og:image:alt" content={content.seo.imageAlt} />
+	<meta name="twitter:title" content={content.seo.ogTitle ?? content.seo.title} />
+	<meta name="twitter:description" content={content.seo.ogDescription ?? content.seo.description} />
+	<meta name="twitter:image:alt" content={content.seo.imageAlt} />
 </svelte:head>
 
 <div class="marketing-page">
 	<div class="marketing-page-inner">
-		<MarketingHero
-			kicker={site.hero.kicker}
-			headline={site.hero.headline}
-			rotatingWords={site.hero.rotatingWords}
-			subhead={site.hero.subhead}
-			primaryCta={site.hero.primaryCta}
-			secondaryCta={site.hero.secondaryCta}
-			primaryExternal
-			onPrimaryClick={() => trackPartnerCall('partners_hero_primary')}
-			onSecondaryClick={() => trackDemoClick('partners_hero_secondary')}
-		/>
+		<section class="marketing-section marketing-section-hero">
+			<div class="marketing-container-tight">
+				<p class="label-cap">{content.kicker}</p>
+				<h1 class="hero-title partners-title"><BrandText text={content.headline} /></h1>
+				<p class="hero-subhead"><BrandText text={content.subhead} /></p>
 
-		<BulletSection
-			id="problem"
-			headline={site.forYou.headline}
-			intro={site.forYou.intro}
-			bullets={site.forYou.bullets}
-			punchline={site.forYou.punchline}
-		/>
+				{#each content.body as paragraph (paragraph)}
+					<p class="partners-body"><BrandText text={paragraph} /></p>
+				{/each}
 
-		<CardGridSection
-			id="why"
-			headline={site.shadowOps.headline}
-			subhead={site.shadowOps.subhead}
-			items={site.shadowOps.points}
-		/>
-
-		<StepsSection
-			id="workflow"
-			headline={site.howItWorks.headline}
-			subhead={site.howItWorks.subhead}
-			steps={site.howItWorks.steps}
-		/>
-
-		<ProofFaqSection
-			id="proof"
-			headline={site.proof.headline}
-			subhead={site.proof.subhead}
-			items={site.proof.items}
-			demoVideo={site.demo}
-			faqHeadline={site.faq.headline}
-			faqItems={site.faq.items}
-			demoCta={{ label: 'See the demo', href: site.hero.secondaryCta.href }}
-			onDemoClick={() => trackDemoClick('partners_proof_demo')}
-			onImageOpen={(src, alt) => {
-				activeModalImage = src;
-				activeModalAlt = alt;
-			}}
-		/>
-
-		<PricingSection
-			id="pricing"
-			headline={site.pricing.headline}
-			subhead={site.pricing.subhead}
-			plans={site.pricing.plans}
-			freeLink={site.pricing.freeLink}
-			onPlanClick={trackPricingPlanClick}
-			onFreeLinkClick={() => trackSignupStart('partners_pricing_free_link')}
-		/>
-
-		<FinalCtaSection headline={site.finalCta.headline} text={site.finalCta.text} ctas={finalCtas} />
+				<div class="button-row">
+					<a
+						class="btn btn-primary"
+						href={content.primaryCta.href}
+						target="_blank"
+						rel="noreferrer"
+						onclick={() => trackEvent('booking_click', { location: 'partners_primary' })}
+					>
+						{content.primaryCta.label} <span aria-hidden="true">&rarr;</span>
+					</a>
+					<a
+						class="btn btn-secondary"
+						href={content.secondaryCta.href}
+						onclick={() => trackEvent('partner_intake_click', { location: 'partners_secondary' })}
+					>
+						{content.secondaryCta.label}
+					</a>
+				</div>
+			</div>
+		</section>
 
 		<MarketingFooter />
 	</div>
 </div>
 
-<ImageModal src={activeModalImage} alt={activeModalAlt} onClose={() => (activeModalImage = null)} />
+<style>
+	.partners-title {
+		margin-top: 1rem;
+	}
+
+	.partners-body {
+		max-width: 64ch;
+		margin: 1.25rem 0 0;
+		color: rgb(var(--text-muted));
+		font-size: 1rem;
+		line-height: 1.65;
+		text-wrap: pretty;
+	}
+</style>

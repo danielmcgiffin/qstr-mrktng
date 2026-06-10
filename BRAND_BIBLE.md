@@ -2,19 +2,31 @@
 
 ## 1. North Star
 
-**Quaestor is an operational atlas for founder-led businesses.** It maps roles → processes → systems as connected, navigable relationships so the people doing the work can answer their own questions, the founder can stop being the help desk, and the business can grow smoothly.
+**Quaestor is an operational atlas for owner-led businesses.** It maps roles → processes → systems as connected, navigable relationships so the people doing the work can answer their own questions, the owner can stop being the help desk, and the business can grow smoothly.
 
 One-liner: _How your business actually works._
+
+**Audience term (settled):** the customer is the **owner / owner-operator** — the person whose name is on the paperwork, who signed the loan and makes payroll. "Founder" is acceptable in startup-adjacent contexts but owner is the default. Do not mix the two on one surface.
 
 Every design or copy decision must reinforce "atlas": connected, navigable, alive, authoritative. If it doesn't, it's wrong.
 
 ### Taglines (in the arsenal)
 
+- _Own it._ closing mark — signs off surfaces (footer, final CTAs, anthem and manifesto closes)
+- _Retake Command._ closing imperative — final-CTA headlines only; never the hero (it closes arguments, it doesn't open them)
 - _Handle Your Business._ short-form lockup tagline
 - _Clarity is freedom._ philosophical positioning line
 - _Team operations for the AI age._ longer-form positioning kicker
 
-Short-form primary: **Handle Your Business.** Pair with the lockup. Never stack two taglines on one surface.
+Short-form primary: **Handle Your Business.** Pair with the lockup. Never stack two taglines on one surface. One sanctioned exception: the manifesto close — _Retake Command. / Don't let your business run you. / Own it._ — is a fixed three-line lockup, allowed only on manifesto-register surfaces (see §3).
+
+### The three convictions (canonical wording)
+
+Quoted verbatim wherever the convictions appear. Do not paraphrase, reorder, or fork the wording ("data, not documents" is a rejected variant — relationships is the claim).
+
+1. **Relationships, not documents.** Your business is not made of pages. It is made of flows, handoffs, roles, systems, decisions, and conditions. Map the relationships and the documents become outputs, not the foundation.
+2. **Structure at the point of work.** Your people do not need more text blobs or another wiki. They need structure they can use where the work happens. Operations structured clearly enough for people are structured enough for AI, too.
+3. **Owners, not cap tables.** Most software makes more money every time you hire. We do not. One flat price per workspace, not per seat. Your headcount is not our revenue model.
 
 ---
 
@@ -47,6 +59,8 @@ A graph of typed relationships beats a library of prose. The brand expresses thi
 ### E. Witness, not thought leader
 
 The voice observes and names. It does not evangelize, mentor, or launch. Senior operator who has seen what breaks, not marketer who has decided what should work.
+
+**Sanctioned exception — the manifesto register.** `/manifesto`, the sales deck, and launch posts may argue a worldview (consolidation, imposed legibility, the false-prophet bargain). That register is allowed to evangelize; it never leaks into product UI, docs, pricing, or the homepage funnel. If a conversion surface starts sermonizing, cut it back to witness.
 
 ---
 
@@ -108,8 +122,11 @@ Read aloud. Does it sound like Danny at a dinner, or a launch blog? If the secon
 | Handle Your Business              | Primary tagline / lockup                |
 | Documentation graveyard / theater | Naming the antipattern                  |
 | Shadow ops                        | Undocumented tacit operations           |
-| Heroic operations                 | Founder-as-help-desk pattern            |
+| Heroic operations                 | Owner-as-help-desk pattern              |
 | Frankenstein systems              | Ad-hoc assembled ops stacks             |
+| Owner / owner-operator            | The customer (default audience term)    |
+| Legibility from within            | Our claim vs. imposed frameworks        |
+| Three convictions                 | The canonical product beliefs (§1)      |
 
 ---
 
@@ -262,7 +279,10 @@ The mark is the vocabulary. All derivative motifs extend from it.
 
 - Stock photography of offices, handshakes, laptops, plants → none.
 - 3D blobs or friendly AI mascots → none.
-- Product screenshots as sole hero image → none. Screenshots are proof, page 2.
+- 3D-rendered abstractions (the helices visual is retired — off-motif, reads as generated art) → none.
+- Raw product screenshots as sole hero image → none. Screenshots are proof, page 2.
+
+**Sanctioned hero visual:** annotated product markup — a product diagram with numbered concept callouts ("start with a role," "drill into the work") that teaches the concept while showing the surface. This is concept-first and allowed in the hero slot. An unannotated screenshot is not.
 
 Hero images communicate the _concept_ before they show the _UI_.
 
@@ -339,7 +359,7 @@ Two questions = two sections. Split or cut.
 3. **Mid-section CTAs that scroll to a later section.** CTAs close arguments — they don't interrupt them.
 4. **Two "how it works" flows on the same page.** One mechanism per page.
 5. **Taupe muted bars for benefits.** Reads as disabled UI. Don't mute what matters.
-6. **Product screenshots as hero.** Hero communicates the concept. Screenshots are proof, page 2.
+6. **Raw product screenshots as hero.** Hero communicates the concept. Annotated product markup (§6) qualifies; an unannotated screenshot does not. Screenshots are proof, page 2.
 7. **"Learn more" and "Get started" CTAs.** Say what the user is about to do.
 8. **Dark-mode styles leaking into light pages.** One palette per page. No stray `bg-black` / `text-white` classes.
 9. **Mixing Attention Palette into Use Palette pages.** Bright `#E13339` on marketing = wrong register. Use canonical `#A31F21`.
