@@ -87,7 +87,7 @@ export const site = {
 			'You’re not just running the company. You are being the company.'
 		],
 		punchline:
-			'Now you\’re Atlas, holding it up forever.\nThat’s not ownership. That’s a hostage situation.'
+			'Now you’re Atlas, holding it up forever.\nThat’s not ownership. That’s a hostage situation.'
 	} satisfies {
 		headline: string;
 		intro: string;
