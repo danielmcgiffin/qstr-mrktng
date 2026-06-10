@@ -43,7 +43,7 @@
 			}
 
 			status = 'success';
-			trackEvent('contact_form_success', { email });
+			trackEvent('contact_form_success');
 			name = '';
 			email = '';
 			message = '';

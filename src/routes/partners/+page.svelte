@@ -23,8 +23,6 @@
 	let activeModalImage = $state<string | null>(null);
 	let activeModalAlt = $state('');
 
-	const showPartnerApply = $derived(site.partnerApply.live);
-
 	const trackPartnerCall = (location: string) => {
 		trackEvent('booking_click', { location });
 	};
@@ -33,7 +31,7 @@
 		trackEvent('demo_click', { location });
 	};
 
-	const trackPartnerApply = (location: string) => {
+	const trackPartnerNote = (location: string) => {
 		trackEvent('partner_intake_click', { location });
 	};
 
@@ -50,29 +48,21 @@
 		}
 	};
 
-	const finalCtas = $derived.by((): FinalCta[] => {
-		const ctas: FinalCta[] = [
-			{
-				label: site.finalCta.primaryCta.label,
-				href: site.finalCta.primaryCta.href,
-				external: true,
-				onclick: () => trackPartnerCall('partners_final_cta_primary')
-			}
-		];
-
-		if (showPartnerApply) {
-			ctas.push({
-				label: site.partnerApply.label,
-				href: site.partnerApply.href,
-				variant: 'secondary',
-				external: true,
-				onclick: () => trackPartnerApply('partners_final_cta_apply'),
-				showArrow: false
-			});
+	const finalCtas: FinalCta[] = [
+		{
+			label: site.finalCta.primaryCta.label,
+			href: site.finalCta.primaryCta.href,
+			external: true,
+			onclick: () => trackPartnerCall('partners_final_cta_primary')
+		},
+		{
+			label: site.partnerNote.label,
+			href: site.partnerNote.href,
+			variant: 'secondary',
+			onclick: () => trackPartnerNote('partners_final_cta_note'),
+			showArrow: false
 		}
-
-		return ctas;
-	});
+	];
 </script>
 
 <svelte:head>

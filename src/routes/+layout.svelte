@@ -9,11 +9,9 @@
 		installPageExposureTracking,
 		normalizeAnalyticsPath,
 		trackEvent,
-		trackPageView,
 		type AnalyticsPageContext
 	} from '$lib/analytics';
 	import { site } from './content';
-	import { site as partnerSite } from './partners/content';
 
 	let { children } = $props();
 
@@ -35,17 +33,6 @@
 	};
 
 	const plausibleDomain = env.PUBLIC_PLAUSIBLE_DOMAIN || 'cursus.tools';
-	const defaultGaMeasurementId = 'G-PMQNSJP905';
-	const gaMeasurementId = (env.PUBLIC_GA_MEASUREMENT_ID ?? defaultGaMeasurementId).trim();
-	const validGaMeasurementId = /^G-[A-Z0-9-]+$/i.test(gaMeasurementId) ? gaMeasurementId : '';
-	const gaScriptSrc = validGaMeasurementId
-		? `https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(validGaMeasurementId)}`
-		: undefined;
-	const gaBootstrapHtml = validGaMeasurementId
-		? `<script>window.dataLayer=window.dataLayer||[];window.gtag=window.gtag||function(){window.dataLayer.push(arguments);};window.gtag('js',new Date());window.gtag('config','${validGaMeasurementId}',{send_page_view:false});window.qstrGaConfigured='${validGaMeasurementId}';` +
-			'</' +
-			'script>'
-		: '';
 	const siteOrigin = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
 	const demoHref = 'https://qstr.cursus.tools/demo/process';
 	const bookingHref = 'https://cal.com/danny-cursus/15min';
@@ -84,13 +71,6 @@
 	);
 	const headerCtas = $derived.by((): { primary: HeaderCta; secondary: HeaderCta } => {
 		if (currentPath === '/partners') {
-			if (partnerSite.partnerApply.live) {
-				return {
-					primary: { label: partnerSite.partnerApply.label, href: partnerSite.partnerApply.href },
-					secondary: { label: 'Book a partner call', href: bookingHref }
-				};
-			}
-
 			return {
 				primary: { label: 'Book a partner call', href: bookingHref },
 				secondary: { label: 'See the Demo', href: demoHref }
@@ -199,10 +179,6 @@
 			const context = getAnalyticsPageContext(url);
 			if (!isPublicAnalyticsPath(context.pagePath)) return;
 
-			if (gaMeasurementId) {
-				trackPageView(gaMeasurementId, context);
-			}
-
 			stopExposureTracking = installPageExposureTracking(context, {
 				shouldTrackPath: isPublicAnalyticsPath
 			});
@@ -265,11 +241,6 @@
 	<meta property="og:image" content={ogImageHref} />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content={ogImageHref} />
-	{#if gaBootstrapHtml && gaScriptSrc}
-		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html gaBootstrapHtml}
-		<script async src={gaScriptSrc}></script>
-	{/if}
 	<script
 		defer
 		data-domain={plausibleDomain}

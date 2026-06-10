@@ -117,13 +117,13 @@ Read aloud. Does it sound like Danny at a dinner, or a launch blog? If the secon
 
 ### Stack
 
-| Role                              | Typeface                          | Weights            | Notes                                                                                                                         |
-| --------------------------------- | --------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| Display / H1 / Wordmark character | **Fraunces** (working substitute) | 600, 700           | Bracketed serif with architectural weight. Matches Patrick's wordmark character. Swap for Patrick-spec'd face when confirmed. |
-| Body / UI                         | **Inter**                         | 400, 500, 600, 700 | Workhorse. Keep.                                                                                                              |
-| Mono / Data / Labels              | **IBM Plex Mono**                 | 400, 500           | Process IDs, metrics, triad labels, table headers in caps. Never decorative.                                                  |
+| Role                              | Typeface                                                                 | Weights            | Notes                                                                                            |
+| --------------------------------- | ------------------------------------------------------------------------ | ------------------ | ------------------------------------------------------------------------------------------------ |
+| Display / H1 / Wordmark character | **Charter** (system stack: Charter, 'Bitstream Charter', Georgia, serif) | 600, 700           | Workhorse text serif with quiet authority. Ships with the OS — no webfont cost, no layout shift. |
+| Body / UI                         | **Inter**                                                                | 400, 500, 600, 700 | Workhorse. Keep.                                                                                 |
+| Mono / Data / Labels              | **IBM Plex Mono**                                                        | 400, 500           | Process IDs, metrics, triad labels, table headers in caps. Never decorative.                     |
 
-⚠ **Open typography decision:** confirm Patrick's specific display serif. Fraunces is a solid free stand-in. Alternatives: Source Serif 4, Tiempos Headline, Canela, GT Super. NOT Cormorant Garamond (too delicate for this character).
+**Typography decision (settled):** Charter via the system font stack, matching `--font-display` in `src/tokens.css`. Fraunces was rejected as an overused AI-design tell. If a bespoke display face is ever commissioned it replaces Charter here; until then, do not introduce display webfonts.
 
 ### Rules
 

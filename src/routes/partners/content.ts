@@ -44,15 +44,10 @@ export const site = {
 		href: bookingHref
 	} satisfies CTA,
 
-	// Future Tally form scaffold:
-	// - replace `href` with the real Tally URL
-	// - flip `live` to `true`
-	// - header + page CTAs will update automatically
-	partnerApply: {
-		label: 'Apply to partner program',
-		href: bookingHref,
-		live: false
-	} satisfies CTA & { live: boolean },
+	partnerNote: {
+		label: 'Or send a note',
+		href: '/contact'
+	} satisfies CTA,
 
 	// ───────────────────────────────────────────
 	// HERO

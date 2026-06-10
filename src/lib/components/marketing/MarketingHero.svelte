@@ -98,6 +98,8 @@
 								alt={imageAlt}
 								loading="eager"
 								decoding="async"
+								width="1560"
+								height="1486"
 							/>
 						</button>
 					{:else}
@@ -107,6 +109,8 @@
 							alt={imageAlt}
 							loading="eager"
 							decoding="async"
+							width="1560"
+							height="1486"
 						/>
 					{/if}
 				</div>
