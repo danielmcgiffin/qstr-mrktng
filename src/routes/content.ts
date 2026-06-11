@@ -336,18 +336,7 @@ export const site = {
 		items: FaqItem[];
 	},
 
-	// ───────────────────────────────────────────
-	// NEWSLETTER
-	// ───────────────────────────────────────────
-	newsletter: {
-		headline: 'Stay in the loop',
-		text: 'Field notes on running a tighter operation, straight to your inbox.',
-		formId: '5c2c6c68-41c3-484d-b54d-7d5c08a90f87'
-	} satisfies {
-		headline: string;
-		text: string;
-		formId: string;
-	},
+	beehiivFormId: '5c2c6c68-41c3-484d-b54d-7d5c08a90f87',
 
 	// ───────────────────────────────────────────
 	// FINAL CTA

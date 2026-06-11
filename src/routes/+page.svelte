@@ -6,11 +6,11 @@
 	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
-	import NewsletterSection from '$lib/components/marketing/NewsletterSection.svelte';
 	import PricingSection from '$lib/components/marketing/PricingSection.svelte';
 	import ProofSection from '$lib/components/marketing/ProofSection.svelte';
 	import SocialProofSection from '$lib/components/marketing/SocialProofSection.svelte';
 	import StepsSection from '$lib/components/marketing/StepsSection.svelte';
+	import { onMount } from 'svelte';
 	import { trackEvent } from '$lib/analytics';
 	import { site } from './content';
 
@@ -46,6 +46,26 @@
 
 	let activeModalImage = $state<string | null>(null);
 	let activeModalAlt = $state('');
+
+	onMount(() => {
+		if (site.beehiivFormId) {
+			const loader = document.createElement('script');
+			loader.async = true;
+			loader.src = 'https://subscribe-forms.beehiiv.com/v3/loader.js';
+			loader.dataset.beehiivForm = site.beehiivFormId;
+			document.body.appendChild(loader);
+
+			const attribution = document.createElement('script');
+			attribution.async = true;
+			attribution.src = 'https://subscribe-forms.beehiiv.com/attribution.js';
+			document.body.appendChild(attribution);
+
+			return () => {
+				loader.remove();
+				attribution.remove();
+			};
+		}
+	});
 </script>
 
 <svelte:head>
@@ -144,13 +164,6 @@
 		/>
 
 		<FaqSection id="faq" headline={site.faq.headline} items={site.faq.items} />
-
-		<NewsletterSection
-			id="newsletter"
-			headline={site.newsletter.headline}
-			text={site.newsletter.text}
-			formId={site.newsletter.formId}
-		/>
 
 		<FinalCtaSection
 			headline={site.finalCta.headline}
