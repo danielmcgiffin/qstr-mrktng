@@ -6,6 +6,7 @@
 	import FinalCtaSection from '$lib/components/marketing/FinalCtaSection.svelte';
 	import MarketingFooter from '$lib/components/marketing/MarketingFooter.svelte';
 	import MarketingHero from '$lib/components/marketing/MarketingHero.svelte';
+	import NewsletterSection from '$lib/components/marketing/NewsletterSection.svelte';
 	import PricingSection from '$lib/components/marketing/PricingSection.svelte';
 	import ProofSection from '$lib/components/marketing/ProofSection.svelte';
 	import SocialProofSection from '$lib/components/marketing/SocialProofSection.svelte';
@@ -143,6 +144,13 @@
 		/>
 
 		<FaqSection id="faq" headline={site.faq.headline} items={site.faq.items} />
+
+		<NewsletterSection
+			id="newsletter"
+			headline={site.newsletter.headline}
+			text={site.newsletter.text}
+			formId={site.newsletter.formId}
+		/>
 
 		<FinalCtaSection
 			headline={site.finalCta.headline}
