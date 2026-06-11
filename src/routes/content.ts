@@ -44,6 +44,7 @@ export const site = {
 	// HERO
 	// ───────────────────────────────────────────
 	hero: {
+		kicker: 'Business Owners',
 		headline: 'You built it from nothing.',
 		subhead:
 			'Twenty people. Forty. Five, six, eight million in revenue. Real payroll, real clients, and every hard question still routes through you. Quaestor maps who owns what, where it happens, and how the work moves, so your team finds answers without you.',
@@ -57,6 +58,7 @@ export const site = {
 		imageCaption:
 			'One role, mapped: the processes it owns, the steps it runs, the systems it touches. Click to enlarge.'
 	} satisfies {
+		kicker?: string;
 		headline: string;
 		subhead: string;
 		primaryCta: CTA;

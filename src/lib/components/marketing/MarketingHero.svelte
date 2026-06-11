@@ -115,12 +115,20 @@
 
 <style>
 	.hero-kicker {
-		font-size: var(--fs-small, 0.875rem);
-		font-weight: 700;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
+		display: inline-flex;
+		align-items: center;
+		border: 1px solid rgb(var(--accent));
+		border-radius: var(--radius-pill);
+		background: #ffffff;
+		padding: 0.35rem 0.75rem;
 		color: rgb(var(--accent));
-		margin: 0 0 0.5rem;
+		font-family: var(--font-mono);
+		font-size: var(--fs-micro, 0.75rem);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		margin: 0 0 1.25rem;
+		line-height: 1;
 	}
 
 	.hero-grid {

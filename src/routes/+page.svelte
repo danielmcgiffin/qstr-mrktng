@@ -82,6 +82,7 @@
 <div class="marketing-page">
 	<div class="marketing-page-inner">
 		<MarketingHero
+			kicker={site.hero.kicker}
 			headline={site.hero.headline}
 			subhead={site.hero.subhead}
 			primaryCta={site.hero.primaryCta}
