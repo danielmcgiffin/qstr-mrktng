@@ -45,7 +45,7 @@ export const site = {
 	// ───────────────────────────────────────────
 	hero: {
 		kicker: 'Business Owners',
-		headline: "You don't have a business, you have a job.",
+		headline: "You don't have a business,\nyou have a job.",
 		subhead:
 			'You built it from nothing. Twenty people. Forty. Five, six, eight million in revenue. Real payroll, real clients, and every hard question still routes through you. Quaestor maps who owns what, where it happens, and how the work moves, so your team finds answers without you.',
 		primaryCta: {

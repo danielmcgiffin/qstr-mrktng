@@ -171,7 +171,7 @@
 		width: min(100%, 38rem);
 		margin-inline: auto;
 		padding: clamp(0.625rem, 1.2vw, 0.95rem);
-		border: 1px solid rgb(var(--border));
+		border: 1px solid rgb(var(--text));
 		border-radius: calc(var(--radius-lg) + 0.75rem);
 		background: rgb(var(--bg-panel));
 		box-shadow:
