@@ -183,6 +183,7 @@
 		display: block;
 		width: 100%;
 		height: auto;
+		border: 1px solid rgb(var(--text));
 		border-radius: var(--radius-lg);
 		box-shadow: 0 0 0 1px rgb(var(--border) / 0.55);
 	}
