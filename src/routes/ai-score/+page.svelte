@@ -770,10 +770,7 @@
 								and start with your easiest process.
 							</p>
 							<div class="mt-5">
-								<a
-									class="btn btn-secondary w-full text-center"
-									href={selfServeSignupHref}
-								>
+								<a class="btn btn-secondary w-full text-center" href={selfServeSignupHref}>
 									Start mapping free &rarr;
 								</a>
 							</div>
