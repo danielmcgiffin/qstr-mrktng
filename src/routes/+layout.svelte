@@ -55,10 +55,9 @@
 		Boolean(validGaMeasurementId) &&
 		typeof window !== 'undefined' &&
 		isGaAllowedHost(window.location.hostname);
-	const demoHref = 'https://qstr.cursus.tools/demo/process';
 	const bookingHref = 'https://cal.com/danny-cursus/15min';
-	const signupHref =
-		'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=header';
+	const signupHref = 'https://qstr.cursus.tools/login?initialState=new';
+	const navSecondaryHref = 'https://qstr.tools/ai-score';
 
 	const normalizePath = normalizeAnalyticsPath;
 	const isPublicAnalyticsPath = (pagePath: string): boolean => !pagePath.startsWith('/admin');
@@ -68,7 +67,8 @@
 		pageTitle: typeof document === 'undefined' ? undefined : document.title
 	});
 
-	const isBookingLink = (href: string): boolean => href.includes('cal.com');
+	const isBookingLink = (href: string): boolean =>
+		href.includes('cal.com') || href.includes('tidycal.com');
 
 	const getHeaderCtaAttrs = (href: string) => ({
 		target: isBookingLink(href) ? '_blank' : undefined,
@@ -93,13 +93,13 @@
 		if (currentPath === '/partners') {
 			return {
 				primary: { label: 'Book a partner call', href: bookingHref },
-				secondary: { label: 'See the demo', href: demoHref }
+				secondary: { label: 'Are your SOPs AI ready?', href: navSecondaryHref }
 			};
 		}
 
 		return {
-			primary: { label: 'Build your workspace', href: signupHref },
-			secondary: { label: 'See the demo', href: demoHref }
+			primary: { label: 'Offload your first process', href: signupHref },
+			secondary: { label: 'Are your SOPs AI ready?', href: navSecondaryHref }
 		};
 	});
 	const primaryHeaderCtaAttrs = $derived(getHeaderCtaAttrs(headerCtas.primary.href));

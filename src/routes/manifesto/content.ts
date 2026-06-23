@@ -62,7 +62,7 @@ export const manifestoContent: ManifestoContent = {
 	],
 	close: ['Retake Command.', 'Don’t let your business run you.', 'Own it.'],
 	cta: {
-		label: 'Map your business',
-		href: 'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=manifesto'
+		label: 'Offload your first process',
+		href: 'https://qstr.cursus.tools/login?initialState=new'
 	}
 };

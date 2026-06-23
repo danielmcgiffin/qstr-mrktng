@@ -23,8 +23,7 @@ export type PricingContent = {
 	freeLink?: PricingCta;
 };
 
-const signupBaseHref =
-	'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch';
+const signupHref = 'https://qstr.cursus.tools/login?initialState=new';
 
 export const pricingContent: PricingContent = {
 	eyebrow: 'Pricing',
@@ -45,8 +44,8 @@ export const pricingContent: PricingContent = {
 				'Updates that keep connected views current'
 			],
 			cta: {
-				label: 'Start your workspace',
-				href: `${signupBaseHref}&utm_content=pricing_growth`
+				label: 'Offload your first process →',
+				href: signupHref
 			},
 			featured: false,
 			badge: 'Software only',

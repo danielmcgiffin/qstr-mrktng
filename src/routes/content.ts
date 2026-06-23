@@ -10,8 +10,8 @@ import type {
 } from '$lib/marketing-content';
 
 const demoHref = 'https://qstr.cursus.tools/demo/process';
-const signupBaseHref =
-	'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch';
+const signupHref = 'https://qstr.cursus.tools/login?initialState=new';
+const fitHref = 'https://tidycal.com/qstr/fit';
 
 export const site = {
 	brand: 'Quaestor',
@@ -36,8 +36,8 @@ export const site = {
 	] satisfies NavItem[],
 
 	navCta: {
-		label: 'Build your workspace',
-		href: `${signupBaseHref}&utm_content=nav`
+		label: 'Offload your first process',
+		href: signupHref
 	} satisfies CTA,
 
 	// ───────────────────────────────────────────
@@ -49,10 +49,10 @@ export const site = {
 		subhead:
 			'You built it from nothing. Twenty people. Forty. Five, six, eight million in revenue. Real payroll, real clients, and every hard question still routes through you. Quaestor maps who owns what, where it happens, and how the work moves, so your team finds answers without you.',
 		primaryCta: {
-			label: 'Build your workspace',
-			href: `${signupBaseHref}&utm_content=hero`
+			label: 'Offload your first process',
+			href: signupHref
 		},
-		secondaryCta: { label: 'See how Quaestor works', href: demoHref },
+		secondaryCta: { label: "Find out if it's right for you", href: fitHref },
 		imageSrc: '/Hero.webp',
 		imageAlt: 'Quaestor operational atlas: an annotated role map of processes, steps, and systems.',
 		imageCaption:
@@ -347,8 +347,8 @@ export const site = {
 		headline: 'Retake Command',
 		text: 'Map it. Shape it. Hand it off. Own it.',
 		cta: {
-			label: 'Map your business',
-			href: `${signupBaseHref}&utm_content=final_cta`
+			label: 'Offload your first process',
+			href: signupHref
 		}
 	} satisfies {
 		headline: string;

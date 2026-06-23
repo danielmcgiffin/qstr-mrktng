@@ -29,8 +29,7 @@
 	const ALLOWED_EXTENSIONS = ['.docx', '.pptx', '.md', '.txt', '.html'] as const;
 	const FILE_ACCEPT =
 		'.docx,.pptx,.md,.txt,.html,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/vnd.openxmlformats-officedocument.presentationml.presentation,text/markdown,text/plain,text/html';
-	const selfServeSignupHref =
-		'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_result';
+	const selfServeSignupHref = 'https://qstr.cursus.tools/login?initialState=new';
 	const implementationIntakeHref =
 		'https://cal.com/danny-cursus/15min?utm_source=qstr.tools&utm_medium=website&utm_campaign=ai_score&utm_content=implementation_intake';
 	const seo = {
@@ -773,7 +772,7 @@
 							<div class="mt-5">
 								<a
 									class="btn btn-secondary w-full text-center"
-									href="https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=ai_score_wish"
+									href={selfServeSignupHref}
 								>
 									Start mapping free &rarr;
 								</a>

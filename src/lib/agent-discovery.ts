@@ -427,11 +427,10 @@ export const getMarkdownForPath = (pathname: string): string | null => {
 			description:
 				'Quaestor maps who owns what, where it happens, and how the work moves, so every answer stops routing through you.',
 			primaryAudience: 'Owner-operators carrying the business in their heads',
-			primaryCtaLabel: 'Map your business',
-			primaryCtaHref:
-				'https://qstr.cursus.tools/login?utm_source=qstr.tools&utm_medium=website&utm_campaign=v1_launch&utm_content=hero',
-			secondaryCtaLabel: 'See how it works',
-			secondaryCtaHref: 'https://qstr.cursus.tools/demo/process'
+			primaryCtaLabel: 'Offload your first process',
+			primaryCtaHref: 'https://qstr.cursus.tools/login?initialState=new',
+			secondaryCtaLabel: "Find out if it's right for you",
+			secondaryCtaHref: 'https://tidycal.com/qstr/fit'
 		});
 	}
 

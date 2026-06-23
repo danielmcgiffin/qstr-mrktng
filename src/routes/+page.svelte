@@ -15,6 +15,10 @@
 	import { site } from './content';
 
 	const footerLinks = site.footer.productLinks;
+	const demoHref = 'https://qstr.cursus.tools/demo/process';
+
+	const isBookingHref = (href: string): boolean =>
+		href.includes('cal.com') || href.includes('tidycal.com');
 
 	const trackHeroPrimaryCta = () => {
 		const href = site.hero.primaryCta.href;
@@ -29,6 +33,20 @@
 
 	const trackDemoClick = (location: string) => {
 		trackEvent('demo_click', { location });
+	};
+
+	const trackHeroSecondaryCta = () => {
+		const href = site.hero.secondaryCta.href;
+		const location = 'home_hero_secondary';
+
+		if (isBookingHref(href)) {
+			trackEvent('booking_click', { location });
+			return;
+		}
+
+		if (href.includes('demo/process')) {
+			trackDemoClick(location);
+		}
 	};
 
 	const trackSignupStart = (location: string) => {
@@ -90,8 +108,9 @@
 			imageSrc={site.hero.imageSrc}
 			imageAlt={site.hero.imageAlt}
 			imageCaption={site.hero.imageCaption}
+			secondaryExternal={isBookingHref(site.hero.secondaryCta.href)}
 			onPrimaryClick={trackHeroPrimaryCta}
-			onSecondaryClick={() => trackDemoClick('home_hero_secondary')}
+			onSecondaryClick={trackHeroSecondaryCta}
 			onImageClick={() => {
 				activeModalImage = site.hero.imageSrc;
 				activeModalAlt = site.hero.imageAlt ?? '';
@@ -119,7 +138,7 @@
 			subhead={site.proof.subhead}
 			items={site.proof.items}
 			demoVideo={site.demo}
-			demoCta={{ label: 'See the demo', href: site.hero.secondaryCta.href }}
+			demoCta={{ label: 'See the demo', href: demoHref }}
 			onDemoClick={() => trackDemoClick('home_proof_demo')}
 			onImageOpen={(src, alt) => {
 				activeModalImage = src;
