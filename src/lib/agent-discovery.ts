@@ -1,4 +1,5 @@
-import { env } from '$env/dynamic/public';
+import * as envStatic from '$env/static/public';
+const env = envStatic as Record<string, string>;
 import { site as universalHomeSite } from '../routes/content';
 import { aboutContent } from '../routes/about/content';
 import { changelogContent } from '../routes/changelog/content';

@@ -177,9 +177,10 @@ export const initializeGoogleAnalytics = (measurementId: string): boolean => {
 	window.dataLayer = window.dataLayer ?? [];
 	window.gtag =
 		window.gtag ??
-		((...args: unknown[]) => {
-			window.dataLayer?.push(args);
-		});
+		function () {
+			/* eslint-disable-next-line prefer-rest-params, @typescript-eslint/no-explicit-any */
+			window.dataLayer?.push(arguments as any);
+		};
 
 	if (activeGaMeasurementId !== measurementId && window.qstrGaConfigured !== measurementId) {
 		window.gtag('js', new Date());

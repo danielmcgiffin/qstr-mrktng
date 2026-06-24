@@ -1,4 +1,5 @@
-import { env } from '$env/dynamic/public';
+import * as envStatic from '$env/static/public';
+const env = envStatic as Record<string, string>;
 import { docsArticles } from '../docs/articles';
 import { methodContent } from '../method/content';
 

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import './layout.css';
 	import '../app.css';
-	import { env } from '$env/dynamic/public';
+	import * as envStatic from '$env/static/public';
+	const env = envStatic as Record<string, string>;
 	import { page } from '$app/stores';
 	import { tick } from 'svelte';
 	import {
@@ -43,14 +44,18 @@
 	const siteOrigin = (env.PUBLIC_SITE_ORIGIN || 'https://qstr.tools').replace(/\/+$/, '');
 	const siteHost = (() => {
 		try {
-			return new URL(siteOrigin).hostname;
+			const urlString = siteOrigin.includes('://') ? siteOrigin : `https://${siteOrigin}`;
+			return new URL(urlString).hostname.replace(/^www\./i, '').toLowerCase();
 		} catch {
 			return '';
 		}
 	})();
 	// Keep preview deploys and local dev out of the production GA property.
-	const isGaAllowedHost = (hostname: string): boolean =>
-		Boolean(siteHost) && (hostname === siteHost || hostname === `www.${siteHost}`);
+	const isGaAllowedHost = (hostname: string): boolean => {
+		if (!siteHost) return false;
+		const cleanHost = hostname.replace(/^www\./i, '').toLowerCase();
+		return cleanHost === siteHost;
+	};
 	const gaEnabled = (): boolean =>
 		Boolean(validGaMeasurementId) &&
 		typeof window !== 'undefined' &&
